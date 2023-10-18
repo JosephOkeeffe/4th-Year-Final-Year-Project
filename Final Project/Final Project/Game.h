@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include "Grid.h"
 #include "GameView.h"
+#include "Textures.h"
+#include "Warrior.h"
 
 class Game
 {
@@ -27,8 +29,11 @@ private:
     sf::Font m_font;
     bool m_exitGame;
 
+    Textures textures;
     Grid grid;
     GameView gameView{ m_window };
+
+    Warrior warrior;
 
 };
 
