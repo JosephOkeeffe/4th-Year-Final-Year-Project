@@ -5,6 +5,8 @@ Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
     textures(),
+    grid(m_window),
+    gameView(m_window),
     warrior(textures.textureMap.find("warrior")->second)
     
 {
@@ -58,17 +60,17 @@ void Game::ProcessKeys(sf::Event t_event)
 }
 void Game::ProcessMouse(sf::Event t_event)
 {
-    //gameView.handleInput(t_event, m_window);
+   //gameView.handleInput(t_event);
 }
 void Game::Init()
 {
-    grid.Init(m_window);
+    grid.Init();
 }
 
 void Game::Render()
 {
     m_window.clear(sf::Color::Black);
-    grid.Render(m_window);
+    grid.Render();
 
     warrior.DrawWarrior(m_window);
 
@@ -79,7 +81,9 @@ void Game::Render()
 void Game::Update(sf::Time t_deltaTime)
 {
     if (m_exitGame){m_window.close();}
-    grid.Update(gameView.GetMousePos());
+    gameView.MoveScreen();
+
+    grid.Update();
     warrior.Update(m_window);
 }
 

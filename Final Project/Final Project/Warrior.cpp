@@ -15,12 +15,13 @@ void Warrior::Update(sf::RenderWindow& window)
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateWarrior();
+	SelectCharacter(warriorSprite, window);
 	MoveWarrior(window);
 }
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected) 
 	{
 		mousePosition = sf::Mouse::getPosition(window);
 		worldMousePosition = window.mapPixelToCoords(mousePosition);

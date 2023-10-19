@@ -1,26 +1,25 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Globals.h"
 
 class GameView 
 {
 public:
-    static GameView& GetInstance(sf::RenderWindow& window);
-    GameView(sf::RenderWindow& window);
+    //static GameView& GetInstance(sf::RenderWindow& window);
+    GameView(sf::RenderWindow& t_window);
 
-    // Zoom the view in or out.
     void zoom(float factor);
 
-    // Move the view based on an offset.
     void move(sf::Vector2f offset);
 
-    // Update the view in response to user input, e.g., mouse scrolling and dragging.
-    void handleInput(sf::Event& event, sf::RenderWindow& window);
+    void handleInput(sf::Event& event);
 
-    // Set the target to draw to.
-    void setView(sf::RenderWindow& window);
+    void setView();
 
     void SetMousePos(sf::Vector2i mousePos);
-    sf::Vector2i GetMousePos();
+
+    void MoveScreen();
+    sf::Vector2f GetMousePos();
 
 private:
     sf::View view;
@@ -30,7 +29,12 @@ private:
     float maxX = 5000.0f;
     float maxY = 5000.0f;
 
-    sf::Vector2i currentMousePos;
+    float screenMoveSpeed = 5;
+
+    sf::Vector2f currentMousePos;
+
+    sf::RenderWindow& window;
+
 
 };
 

@@ -5,10 +5,10 @@
 class Grid
 {
 public:	
-	Grid();
-	void Init(sf::RenderWindow& window);
-	void Render(sf::RenderWindow& t_window);
-	void Update(sf::Vector2i mousePos);
+	Grid(sf::RenderWindow& window);
+	void Init();
+	void Render();
+	void Update();
 	void SetupGrid();
 
 	bool showGrid = true;
@@ -19,5 +19,6 @@ public:
 	float gridThickness = 0.5;
 	sf::RectangleShape cell[ROWS][COLS];
 
+	sf::RenderWindow& window;
 };
 

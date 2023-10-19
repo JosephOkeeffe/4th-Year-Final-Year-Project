@@ -1,15 +1,15 @@
 #include "Grid.h"
 
-Grid::Grid()
+Grid::Grid(sf::RenderWindow& t_window) : window(t_window)
 {
 }
 
-void Grid::Init(sf::RenderWindow& window)
+void Grid::Init()
 {
 	SetupGrid();
 }
 
-void Grid::Render(sf::RenderWindow& t_window)
+void Grid::Render()
 {
 	if (showGrid)
 	{
@@ -17,28 +17,28 @@ void Grid::Render(sf::RenderWindow& t_window)
 		{
 			for (int col = 0; col < COLS; col++)
 			{
-				t_window.draw(cell[row][col]);
+				window.draw(cell[row][col]);
 			}
 		}
 	}
 }
 
-void Grid::Update(sf::Vector2i mousePos)
+void Grid::Update()
 {
-	sf::FloatRect mouseRect(sf::Vector2f(mousePos.x, mousePos.y), sf::Vector2f(1.0f, 1.0f));
-
-	for (int row = 0; row < ROWS; row++)
+	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+	sf::Vector2f localMousePos = window.mapPixelToCoords(mousePos);
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
-		for (int col = 0; col < COLS; col++)
+		for (int row = 0; row < ROWS; row++)
 		{
-			sf::FloatRect cellRect = cell[row][col].getGlobalBounds();
-
-			if (mouseRect.intersects(cellRect)) 
+			for (int col = 0; col < COLS; col++)
 			{
-				cell[row][col].setFillColor(sf::Color::Red);
+				if (cell[row][col].getGlobalBounds().contains(sf::Vector2f(localMousePos)))
+				{
+					cell[row][col].setFillColor(sf::Color::Red);
+				}
 			}
 		}
-
 	}
 }
 void Grid::SetupGrid()

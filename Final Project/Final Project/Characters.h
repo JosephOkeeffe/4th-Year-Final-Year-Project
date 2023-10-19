@@ -5,10 +5,11 @@ class Characters
 {
 public:
 
-	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect textureSize);
+	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
 	void Render(sf::RenderWindow& window, sf::Sprite& sprite);
 
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
+	void SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window);
 
 	int animationCount = 0; // 89 * 0, 89 * 1, 89 * 2, 89 * 3
 	int m_frameNo{ 0 };
@@ -16,5 +17,8 @@ public:
 	float animationSpeed{ 0.2 };
 	int playerAnimation = 0;
 	bool isDeadAnimationPending = false;
+
+	bool isSelected = false;
+	sf::Clock selectionCooldown;
 };
 

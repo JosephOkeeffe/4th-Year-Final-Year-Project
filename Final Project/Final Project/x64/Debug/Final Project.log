@@ -1,7 +1,7 @@
 ﻿  Warrior.cpp
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(16,24): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(44,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(44,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(44,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(44,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Characters.h(17,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(45,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(45,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(45,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(45,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Final Project.vcxproj -> C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\x64\Debug\Final Project.exe
