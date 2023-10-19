@@ -14,7 +14,7 @@ public:
 
 	};
 
-	Warrior(sf::Texture& warriorTexture);
+	Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window);
 	void DrawWarrior(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
 
@@ -43,5 +43,6 @@ private:
 	sf::Vector2f direction;
 	float moveSpeed = 2.0f;
 
+	sf::RenderWindow& window;
 };
 

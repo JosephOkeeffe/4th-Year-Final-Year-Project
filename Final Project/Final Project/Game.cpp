@@ -7,7 +7,7 @@ Game::Game() :
     textures(),
     grid(m_window),
     gameView(m_window),
-    warrior(textures.textureMap.find("warrior")->second)
+    warrior(textures.textureMap.find("warrior")->second, m_window)
     
 {
     Init();

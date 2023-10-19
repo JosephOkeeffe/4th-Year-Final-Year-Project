@@ -1,6 +1,6 @@
 #include "Warrior.h"
 
-Warrior::Warrior(sf::Texture& warriorTexture)
+Warrior::Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window) : window(t_window)
 {
 	Init(warriorTexture, warriorSprite, warriorRect);
 }
