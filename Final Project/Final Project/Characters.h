@@ -19,6 +19,7 @@ public:
 	bool isDeadAnimationPending = false;
 
 	bool isSelected = false;
+	bool isMoving = false;
 	sf::Clock selectionCooldown;
 };
 

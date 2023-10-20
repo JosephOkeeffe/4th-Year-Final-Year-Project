@@ -21,20 +21,36 @@ void Warrior::Update(sf::RenderWindow& window)
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected) 
+	float length = 0;
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
+		isMoving = true;
 		mousePosition = sf::Mouse::getPosition(window);
 		worldMousePosition = window.mapPixelToCoords(mousePosition);
+		
+	}
+	
+	if (isMoving)
+	{
 		direction = worldMousePosition - warriorSprite.getPosition();
 
-		float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+		length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-		if (length != 0) 
+		if (length != 0)
 		{
 			direction /= length;
 		}
-		warriorSprite.move(direction * moveSpeed);
+
+		if (length > 5)
+		{
+			warriorSprite.move(direction * moveSpeed);
+		}
+		else
+		{
+			isMoving = false;
+		}
 	}
+	
 
 	// Implement Arrive behaviour from oisins lab
 }

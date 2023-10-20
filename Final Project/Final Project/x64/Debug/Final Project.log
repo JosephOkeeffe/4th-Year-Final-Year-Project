@@ -1,3 +1,7 @@
-﻿  Game.cpp
+﻿  Warrior.cpp
 C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Characters.h(17,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Final Project.vcxproj -> C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\x64\Debug\Final Project.exe
