@@ -1,7 +1,26 @@
-﻿  Warrior.cpp
-C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Characters.h(17,24): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\Final Project\Warrior.cpp(63,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Final Project.vcxproj -> C:\Users\labuser\Desktop\Project\4th-Year-Final-Year-Project-\Final Project\x64\Debug\Final Project.exe
+﻿  Archer.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(30,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(24,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(25,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(7,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(70,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(70,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(70,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(70,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe

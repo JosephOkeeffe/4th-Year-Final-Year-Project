@@ -6,6 +6,7 @@
 class Textures
 {
 	sf::Texture warriorTexture;
+	sf::Texture archerTexture;
 	
 public:
 

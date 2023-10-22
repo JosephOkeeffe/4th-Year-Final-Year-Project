@@ -1,4 +1,5 @@
 #include "Warrior.h"
+#include "Globals.h"
 
 Warrior::Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window) : window(t_window)
 {
@@ -15,8 +16,13 @@ void Warrior::Update(sf::RenderWindow& window)
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateWarrior();
-	SelectCharacter(warriorSprite, window);
+	
 	MoveWarrior(window);
+}
+
+void Warrior::MouseUp(sf::RenderWindow& window)
+{
+	SelectCharacter(warriorSprite, window);
 }
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
@@ -25,21 +31,23 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
 		isMoving = true;
-		mousePosition = sf::Mouse::getPosition(window);
-		worldMousePosition = window.mapPixelToCoords(mousePosition);
-		
+		targetPos = Global::GetMousePos(window);
 	}
 	
 	if (isMoving)
 	{
-		direction = worldMousePosition - warriorSprite.getPosition();
-
-		length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+		isSelected = false;
+		CheckIfSelected(warriorSprite);
+		direction = behaviour->GetDirectionFacing(targetPos, warriorSprite.getPosition());
+		length = behaviour->VectorLength(direction);
 
 		if (length != 0)
 		{
 			direction /= length;
 		}
+
+		FlipSprite(direction, warriorSprite);
+
 
 		if (length > 5)
 		{
@@ -57,18 +65,16 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 
 void Warrior::AnimateWarrior()
 {
-	
 	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, warriorSprite, amountOfSprites, isDead);
-	
 }
 
 void Warrior::ChangeAnimation()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) || !isMoving)
 	{
 		currentAnimation = ANIMATION::IDLE;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)|| isMoving)
 	{
 		currentAnimation = ANIMATION::RUNNING;
 	}

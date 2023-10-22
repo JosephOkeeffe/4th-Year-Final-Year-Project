@@ -130,21 +130,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameView.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Characters.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameView.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="SteeringOutput.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Warrior.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

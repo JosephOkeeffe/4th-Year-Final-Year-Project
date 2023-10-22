@@ -1,4 +1,5 @@
 #include "Characters.h"
+#include "Globals.h"
 #include <iostream>
 
 void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize)
@@ -34,30 +35,37 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 
 void Characters::SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window) 
 {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
+    if (sprite.getGlobalBounds().contains(sf::Vector2f(Global::GetMousePos(window)))) 
     {
-        if (selectionCooldown.getElapsedTime().asSeconds() >= 1)
-        {
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            sf::Vector2f localMousePos = window.mapPixelToCoords(mousePos);
-
-            if (sprite.getGlobalBounds().contains(sf::Vector2f(localMousePos))) 
-            {
-                isSelected = !isSelected;
-
-                if (isSelected) 
-                {
-                    sprite.setColor(sf::Color::Red);
-                }
-                else 
-                {
-                    sprite.setColor(sf::Color::White);
-                }
-
-                selectionCooldown.restart();
-            }
-        }
+        isSelected = !isSelected;
+        CheckIfSelected(sprite);
+        selectionCooldown.restart();
     }
+}
+
+void Characters::CheckIfSelected(sf::Sprite& sprite)
+{
+    if (isSelected)
+    {
+        sprite.setColor(sf::Color::Red);
+    }
+    else
+    {
+        sprite.setColor(sf::Color::White);
+    }
+}
+
+void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
+{
+	if (direction.x < 0)
+	{
+		sprite.setScale(-std::abs(sprite.getScale().x), sprite.getScale().y);
+	}
+	else
+	{
+		sprite.setScale(std::abs(sprite.getScale().x), sprite.getScale().y);
+
+	}
 }
 
 

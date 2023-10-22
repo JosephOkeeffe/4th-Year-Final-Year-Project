@@ -17,6 +17,7 @@ public:
 	Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window);
 	void DrawWarrior(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
+	void MouseUp(sf::RenderWindow& window);
 
 	void MoveWarrior(sf::RenderWindow& window);
 
@@ -25,6 +26,8 @@ public:
 	void CheckAnimationState();
 
 private:
+
+	sf::RenderWindow& window;
 
 	bool isDead = false;
 	sf::Sprite warriorSprite;
@@ -38,11 +41,7 @@ private:
 	sf::IntRect warriorRect{ 0,0, textureWidth, textureHeight };
 
 	// Moving
-	sf::Vector2i mousePosition;
-	sf::Vector2f worldMousePosition;
-	sf::Vector2f direction;
+	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
-
-	sf::RenderWindow& window;
 };
 
