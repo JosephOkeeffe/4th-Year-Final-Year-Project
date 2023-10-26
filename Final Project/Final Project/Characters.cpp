@@ -11,10 +11,18 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	
 	sprite.setScale(2, 2);
 
+	detectionCircle.setRadius(detectionRadius);
+	detectionCircle.setOrigin(detectionRadius / 2, detectionRadius /2);
+	//detectionCircle.setPosition(sprite.getPosition().x * 0.5, sprite.getPosition().y * 0.5);
+	detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
+
 }
 
 void Characters::Render(sf::RenderWindow& window, sf::Sprite& sprite)
 {
+	window.draw(detectionCircle);
+	detectionCircle.setPosition(sprite.getPosition().x - (sprite.getTextureRect().width), sprite.getPosition().y - (sprite.getTextureRect().height));
+
 	window.draw(sprite);
 }
 
@@ -66,6 +74,18 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 		sprite.setScale(std::abs(sprite.getScale().x), sprite.getScale().y);
 
 	}
+}
+
+SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
+{
+	SteeringOutput steeringOutput = behaviour->WanderBehaviour(sprite);
+	return steeringOutput;
+}
+
+SteeringOutput Characters::SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite)
+{
+	SteeringOutput steeringOutput = behaviour->SeekBehaviour(targetPos, sprite);
+	return steeringOutput;
 }
 
 

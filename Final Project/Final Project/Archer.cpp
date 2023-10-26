@@ -18,8 +18,10 @@ void Archer::Update(sf::RenderWindow& window)
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateArcher();
-
-	MoveArcher(window);
+	//m_velocity = SetWanderBehaviour(sprite).linear;
+	m_velocity = SetSeekBehaviour(sf::Vector2f{ 500, 500 }, sprite).linear;
+	sprite.move(m_velocity);
+	//MoveArcher(window);
 }
 
 void Archer::MouseUp(sf::RenderWindow& window)
@@ -50,7 +52,6 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 
 		FlipSprite(direction, sprite);
 
-
 		if (length > 5)
 		{
 			sprite.move(direction * moveSpeed);
@@ -60,9 +61,6 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 			isMoving = false;
 		}
 	}
-
-
-	// Implement Arrive behaviour from oisins lab
 }
 
 void Archer::AnimateArcher()

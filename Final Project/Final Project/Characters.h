@@ -19,6 +19,12 @@ public:
 		behaviour = newBehaviour;
 	}
 
+	SteeringOutput SetWanderBehaviour(sf::Sprite& sprite);
+	SteeringOutput SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite);
+
+	sf::CircleShape detectionCircle;
+	float detectionRadius = 100.0f;
+
 	Behaviour* behaviour;
 
 	sf::Vector2f m_velocity = { 0, 0 };
