@@ -35,8 +35,8 @@ private:
 
     Textures textures;
 
-
-    Tile tiles[Global::ROWS_COLUMNS][Global::ROWS_COLUMNS];
+    Tile** tiles;
+    //Tile tiles[Global::ROWS_COLUMNS][Global::ROWS_COLUMNS];
     GameView gameView{ m_window };
 
     Warrior warrior;

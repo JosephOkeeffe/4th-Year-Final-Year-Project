@@ -7,7 +7,6 @@ Textures::Textures()
 
 void Textures::SetupTextures()
 {
-
 	warriorTexture.loadFromFile("./assets/images/warrior.png");
 	textureMap["warrior"] = warriorTexture;
 

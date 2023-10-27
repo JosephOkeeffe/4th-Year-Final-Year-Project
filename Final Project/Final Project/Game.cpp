@@ -83,6 +83,12 @@ void Game::ProcessMouseUp(sf::Event t_event)
 }
 void Game::Init()
 {
+    tiles = new Tile * [Global::ROWS_COLUMNS];
+
+    for (int i = 0; i < Global::ROWS_COLUMNS; i++) 
+    {
+        tiles[i] = new Tile[Global::ROWS_COLUMNS];
+    }
     InitTiles();
 }
 
