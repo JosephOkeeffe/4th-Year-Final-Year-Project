@@ -12,6 +12,7 @@ public:
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
 	void SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window);
 	void CheckIfSelected(sf::Sprite& sprite);
+	void CalculateAngle(sf::Sprite& sprite, sf::Sprite& target);
 	void FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite);
 
 	inline void SetBehaviour(Behaviour* newBehaviour)

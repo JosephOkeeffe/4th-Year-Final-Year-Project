@@ -24,7 +24,7 @@ public:
 	void AnimateArcher();
 	void ChangeAnimation();
 	void CheckAnimationState();
-
+	sf::Sprite& GetSprite();	
 private:
 
 	sf::RenderWindow& window;

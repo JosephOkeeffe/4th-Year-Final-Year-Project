@@ -112,3 +112,7 @@ void Archer::CheckAnimationState()
 		isDead = false;
 	}
 }
+	sf::Sprite& Archer::GetSprite()
+	{
+		return sprite;
+	}

@@ -24,13 +24,14 @@ public:
 	void AnimateWarrior();
 	void ChangeAnimation();
 	void CheckAnimationState();
+	sf::Sprite& GetSprite();
 
 private:
 
 	sf::RenderWindow& window;
 
 	bool isDead = false;
-	sf::Sprite warriorSprite;
+	sf::Sprite sprite;
 
 	int currentAnimation = ANIMATION::IDLE;
 	int currentFrameX = 32;

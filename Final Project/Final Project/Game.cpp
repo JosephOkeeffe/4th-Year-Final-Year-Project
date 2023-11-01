@@ -5,7 +5,8 @@ Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
     textures(),
-    gameView(m_window),
+    view(m_window, gameView, hudView),
+    hud(m_window, m_font),
     warrior(textures.textureMap.find("warrior")->second, m_window),
     archer(textures.textureMap.find("archer")->second, m_window)
     
@@ -42,6 +43,7 @@ void Game::ProcessEvents()
         if (sf::Event::Closed == newEvent.type)
         {
             m_exitGame = true;
+            
         }
         if (sf::Event::KeyPressed == newEvent.type)
         {
@@ -50,11 +52,15 @@ void Game::ProcessEvents()
         if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseWheelScrolled == newEvent.type)
         {
             ProcessMouseDown(newEvent);
+            
         }
         if (sf::Event::MouseButtonReleased == newEvent.type)
         {
             ProcessMouseUp(newEvent);
         }
+
+        hud.HandleEvents(newEvent);
+        view.handleInput(newEvent);
     }
 }
 void Game::ProcessKeys(sf::Event t_event)
@@ -64,8 +70,6 @@ void Game::ProcessKeys(sf::Event t_event)
 }
 void Game::ProcessMouseDown(sf::Event t_event)
 {
-   //gameView.handleInput(t_event);
-
     if (sf::Mouse::Right == t_event.key.code)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window);
@@ -83,6 +87,7 @@ void Game::ProcessMouseUp(sf::Event t_event)
 }
 void Game::Init()
 {
+    m_font.loadFromFile("./assets/fonts/Flinton.otf");
     tiles = new Tile * [Global::ROWS_COLUMNS];
 
     for (int i = 0; i < Global::ROWS_COLUMNS; i++) 
@@ -90,6 +95,7 @@ void Game::Init()
         tiles[i] = new Tile[Global::ROWS_COLUMNS];
     }
     InitTiles();
+    hud.Init();
 }
 
 void Game::InitTiles()
@@ -108,27 +114,40 @@ void Game::InitTiles()
 void Game::Render()
 {
     m_window.clear(sf::Color::Black);
-    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
-    {
-        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
-        {
-           tiles[row][col].Render(m_window);
-        }
-    }
 
-    warrior.DrawWarrior(m_window);
-    archer.DrawArcher(m_window);
+    // Game
+    view.SetGameView();
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                tiles[row][col].Render(m_window);
+            }
+        }
+
+        warrior.DrawWarrior(m_window);
+        archer.DrawArcher(m_window);
+
+    // HUD
+    view.SetHudView();
+        hud.Render(m_window);
 
     m_window.display();
 }
 
-
 void Game::Update(sf::Time t_deltaTime)
 {
-    if (m_exitGame){m_window.close();}
-    gameView.MoveScreen();
+    if (m_exitGame) {
+        m_window.close();
+    }
+    view.MoveScreen();
 
+    // Handle input events for game objects
+    //view.SetGameView(); // Make sure the game view is active for input handling
     warrior.Update(m_window);
     archer.Update(m_window);
+    warrior.CalculateAngle(warrior.GetSprite(), archer.GetSprite());
+
 }
+
 

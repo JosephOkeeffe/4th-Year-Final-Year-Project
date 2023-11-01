@@ -3,12 +3,12 @@
 
 Warrior::Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window) : window(t_window)
 {
-	Init(warriorTexture, warriorSprite, warriorRect);
+	Init(warriorTexture, sprite, warriorRect);
 }
 
 void Warrior::DrawWarrior(sf::RenderWindow& window)
 {
-	Render(window, warriorSprite);
+	Render(window, sprite);
 }
 
 void Warrior::Update(sf::RenderWindow& window)
@@ -22,7 +22,7 @@ void Warrior::Update(sf::RenderWindow& window)
 
 void Warrior::MouseUp(sf::RenderWindow& window)
 {
-	SelectCharacter(warriorSprite, window);
+	SelectCharacter(sprite, window);
 }
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
@@ -37,8 +37,8 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 	if (isMoving)
 	{
 		isSelected = false;
-		CheckIfSelected(warriorSprite);
-		direction = behaviour->GetDirectionFacing(targetPos, warriorSprite.getPosition());
+		CheckIfSelected(sprite);
+		direction = behaviour->GetDirectionFacing(targetPos, sprite.getPosition());
 		length = behaviour->VectorLength(direction);
 
 		if (length != 0)
@@ -46,12 +46,12 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 			direction /= length;
 		}
 
-		FlipSprite(direction, warriorSprite);
+		FlipSprite(direction, sprite);
 
 
 		if (length > 5)
 		{
-			warriorSprite.move(direction * moveSpeed);
+			sprite.move(direction * moveSpeed);
 		}
 		else
 		{
@@ -65,7 +65,7 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 
 void Warrior::AnimateWarrior()
 {
-	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, warriorSprite, amountOfSprites, isDead);
+	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, sprite, amountOfSprites, isDead);
 }
 
 void Warrior::ChangeAnimation()
@@ -111,4 +111,9 @@ void Warrior::CheckAnimationState()
 	{
 		isDead = false;
 	}
+}
+
+sf::Sprite& Warrior::GetSprite()
+{
+	return sprite;
 }

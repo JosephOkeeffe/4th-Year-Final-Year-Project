@@ -8,12 +8,11 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	sprite.setTextureRect(textureSize);
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
 	sprite.setPosition(150, 150);
-	
 	sprite.setScale(2, 2);
 
 	detectionCircle.setRadius(detectionRadius);
-	detectionCircle.setOrigin(detectionRadius / 2, detectionRadius /2);
-	//detectionCircle.setPosition(sprite.getPosition().x * 0.5, sprite.getPosition().y * 0.5);
+	detectionCircle.setOrigin(detectionRadius, detectionRadius);
+	detectionCircle.setPosition(sprite.getPosition()); // Set the position of the circle to the sprite's position
 	detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
 
 }
@@ -21,10 +20,11 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 void Characters::Render(sf::RenderWindow& window, sf::Sprite& sprite)
 {
 	window.draw(detectionCircle);
-	detectionCircle.setPosition(sprite.getPosition().x - (sprite.getTextureRect().width), sprite.getPosition().y - (sprite.getTextureRect().height));
+	detectionCircle.setPosition(sprite.getPosition()); // Set the position of the circle to the sprite's position
 
 	window.draw(sprite);
 }
+
 
 void Characters::Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead)
 {
@@ -63,6 +63,26 @@ void Characters::CheckIfSelected(sf::Sprite& sprite)
     }
 }
 
+void Characters::CalculateAngle(sf::Sprite& sprite, sf::Sprite& target)
+{
+	float dx = sprite.getPosition().x - target.getPosition().x;
+	float dy = sprite.getPosition().y - target.getPosition().y;
+	float angle = atan2(dy, dx) * 180 / Global::PI;
+
+	float distance = std::hypot(dx, dy);
+
+	if (distance <= detectionRadius)
+	{
+		detectionCircle.setFillColor(sf::Color(255, 0, 0, 100)); 
+
+	}
+	else
+	{
+		detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+
+	}
+}
+
 void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 {
 	if (direction.x < 0)
@@ -72,7 +92,6 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 	else
 	{
 		sprite.setScale(std::abs(sprite.getScale().x), sprite.getScale().y);
-
 	}
 }
 

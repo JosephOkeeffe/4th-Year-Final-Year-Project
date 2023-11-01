@@ -8,6 +8,7 @@ public:
     static const int S_HEIGHT{ 720U };
     static const int ROWS_COLUMNS{ 100 };
     static const int CELL_SIZE{ 100 };
+    static constexpr float PI = 3.14159265359f;
 
 	static sf::Vector2f GetMousePos(sf::RenderWindow& window)
 	{

@@ -4,10 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.h"
 #include "Tile.h"
-#include "GameView.h"
+#include "View.h"
 #include "Textures.h"
 #include "Warrior.h"
 #include "Archer.h"
+#include "HUD.h"
 
 class Game
 {
@@ -33,11 +34,15 @@ private:
     sf::Font m_font;
     bool m_exitGame;
 
+    sf::View gameView;
+    sf::View hudView;
+
     Textures textures;
+    HUD hud;
 
     Tile** tiles;
     //Tile tiles[Global::ROWS_COLUMNS][Global::ROWS_COLUMNS];
-    GameView gameView{ m_window };
+    View view{ m_window, gameView, hudView };
 
     Warrior warrior;
     Archer archer;
