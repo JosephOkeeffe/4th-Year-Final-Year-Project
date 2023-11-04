@@ -14,7 +14,7 @@ public:
 
 	};
 
-	Archer(sf::Texture& texture, sf::RenderWindow& t_window);
+	Archer(sf::RenderWindow& t_window);
 	void DrawArcher(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
 	void MouseUp(sf::RenderWindow& window);

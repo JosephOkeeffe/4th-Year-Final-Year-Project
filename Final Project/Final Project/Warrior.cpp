@@ -1,9 +1,9 @@
 #include "Warrior.h"
 #include "Globals.h"
 
-Warrior::Warrior(sf::Texture& warriorTexture, sf::RenderWindow& t_window) : window(t_window)
+Warrior::Warrior(sf::RenderWindow& t_window) : window(t_window)
 {
-	Init(warriorTexture, sprite, warriorRect);
+	Init(Textures::GetInstance().GetTexture("warrior"),sprite, warriorRect);
 }
 
 void Warrior::DrawWarrior(sf::RenderWindow& window)

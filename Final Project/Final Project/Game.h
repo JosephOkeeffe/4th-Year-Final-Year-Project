@@ -37,7 +37,6 @@ private:
     sf::View gameView;
     sf::View hudView;
 
-    Textures textures;
     HUD hud;
 
     Tile** tiles;
@@ -46,7 +45,6 @@ private:
 
     Warrior warrior;
     Archer archer;
-
 };
 
 #endif

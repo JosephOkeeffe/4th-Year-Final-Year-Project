@@ -4,11 +4,11 @@
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
-    textures(),
+    /*textures(),*/
     view(m_window, gameView, hudView),
     hud(m_window, m_font),
-    warrior(textures.textureMap.find("warrior")->second, m_window),
-    archer(textures.textureMap.find("archer")->second, m_window)
+    warrior(m_window),
+    archer(m_window)
     
 {
     Init();

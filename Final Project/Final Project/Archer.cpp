@@ -1,9 +1,9 @@
 #include "Archer.h"
 #include "Globals.h"
 
-Archer::Archer(sf::Texture& texture, sf::RenderWindow& t_window) : window(t_window)
+Archer::Archer(sf::RenderWindow& t_window) : window(t_window)
 {
-	Init(texture, sprite, rect);
+	Init(Textures::GetInstance().GetTexture("archer"), sprite, rect);
 	animationSpeed = 0.04;
 	sprite.setScale(1.5, 1.5);
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Button.h"
+#include "Textures.h"
 
 class HUD
 {
@@ -19,6 +20,9 @@ public:
 	//Button button1{window, font, {200,200}, {100,100},sf::Color::Black, sf::Color::Green}
 
 	std::vector<Button> buttons;
+
+	sf::Text coinsText;
+	sf::Sprite coinSprite;
 	
 };
 

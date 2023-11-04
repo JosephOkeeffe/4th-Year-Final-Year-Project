@@ -1,6 +1,8 @@
 #include <iostream>
 #include "HUD.h"
 #include "Globals.h"
+#include "ResourceManagement.h"
+
 
 HUD::HUD(sf::RenderWindow& window, sf::Font& font) : window(window), font(font)
 {
@@ -19,8 +21,21 @@ void HUD::Init()
 	button1.setLabel("Warrior", font, 50, sf::Color::White);
 	button1.setCallback([]() 
 		{
-			std::cout << "Button 1 clicked!\n";
+			ResourceManagement::AddCoins(2);
+			std::cout << "Coins " << ResourceManagement::GetCoins() << "\n";
 		});
+
+
+
+	coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
+	coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
+	coinSprite.setPosition(Global::S_WIDTH * 0.95, Global::S_HEIGHT - bottomRectangle.getSize().y + 20);
+	coinSprite.setScale(0.1, 0.1);
+
+	coinsText.setFont(font);
+	coinsText.setCharacterSize(24);
+	coinsText.setOrigin(coinsText.getCharacterSize() / 2, coinsText.getCharacterSize() / 2);
+	coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
 
 	buttons.push_back(button1);
 }
@@ -36,6 +51,11 @@ void HUD::Render(sf::RenderWindow& window)
 		button.update();
 		button.render(window);
 	}
+
+	coinsText.setString("x" + std::to_string(ResourceManagement::GetCoins()));
+	window.draw(coinSprite);
+	window.draw(coinsText);
+
 	
 }
 

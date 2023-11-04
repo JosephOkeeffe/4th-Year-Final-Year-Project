@@ -1,18 +1,22 @@
+
 #pragma once
 #include <map>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-class Textures
-{
-	sf::Texture warriorTexture;
-	sf::Texture archerTexture;
-	
+class Textures {
 public:
+    static Textures& GetInstance();
 
-	Textures();
-	void SetupTextures();
+    void SetupTextures();
+    sf::Texture& GetTexture(const std::string& textureName);
 
-	std::map<std::string, sf::Texture> textureMap;
+private:
+    Textures();
+
+    sf::Texture warriorTexture;
+    sf::Texture archerTexture;
+    sf::Texture coinTexture;
+
+    std::map<std::string, sf::Texture> textureMap;
 };
-

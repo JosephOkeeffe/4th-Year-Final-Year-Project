@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Behaviour.h"
+#include "Textures.h"
 
 class Characters
 {

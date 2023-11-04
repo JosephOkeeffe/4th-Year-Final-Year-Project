@@ -1,16 +1,30 @@
 #include "Textures.h"
 
-Textures::Textures()
+Textures& Textures::GetInstance() 
 {
-	SetupTextures();
+    static Textures instance;
+    return instance;
 }
 
-void Textures::SetupTextures()
+// Private constructor to prevent instantiation
+Textures::Textures() 
 {
-	warriorTexture.loadFromFile("./assets/images/warrior.png");
-	textureMap["warrior"] = warriorTexture;
+    SetupTextures();
+}
 
-	archerTexture.loadFromFile("./assets/images/mage.png");
-	textureMap["archer"] = archerTexture;
+void Textures::SetupTextures() 
+{
+    warriorTexture.loadFromFile("./assets/images/warrior.png");
+    textureMap["warrior"] = warriorTexture;
 
+    archerTexture.loadFromFile("./assets/images/mage.png");
+    textureMap["archer"] = archerTexture;
+
+    coinTexture.loadFromFile("./assets/images/coin.png");
+    textureMap["coin"] = coinTexture;
+}
+
+sf::Texture& Textures::GetTexture(const std::string& textureName) 
+{
+    return textureMap[textureName];
 }
