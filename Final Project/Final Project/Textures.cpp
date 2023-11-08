@@ -22,6 +22,9 @@ void Textures::SetupTextures()
 
     coinTexture.loadFromFile("./assets/images/coin.png");
     textureMap["coin"] = coinTexture;
+    
+    shopTexture.loadFromFile("./assets/images/shop.png");
+    textureMap["shop"] = shopTexture;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

@@ -18,5 +18,7 @@ private:
     sf::Texture archerTexture;
     sf::Texture coinTexture;
 
+    sf::Texture shopTexture;
+
     std::map<std::string, sf::Texture> textureMap;
 };

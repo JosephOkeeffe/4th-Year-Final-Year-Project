@@ -1,6 +1,7 @@
 #include "ResourceManagement.h"
 
 int ResourceManagement::coins = 0;
+bool ResourceManagement::isPlacingShop = false;
 
 int ResourceManagement::GetCoins()
 {
@@ -20,3 +21,6 @@ void ResourceManagement::SpendCoins(int amount)
 		coins = 0; // Ensure that coins cannot go negative
 	}
 }
+
+// hover when shop is true
+//  

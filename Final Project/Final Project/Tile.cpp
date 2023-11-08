@@ -1,6 +1,7 @@
 #include "Tile.h"
 #include "Globals.h"
 #include <iostream>
+#include "Textures.h"
 
 void Tile::Init(sf::Vector2f& position)
 {
@@ -9,9 +10,15 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setOutlineThickness(0.5f);
 	tile.setOutlineColor(sf::Color(255, 255, 255, 100));
 	tile.setPosition(position);
+	
 }
 
 void Tile::Render(sf::RenderWindow& window)
 {
 	window.draw(tile);
+}
+
+void Tile::SetShop()
+{
+	tile.setTexture(&Textures::GetInstance().GetTexture("shop"));
 }

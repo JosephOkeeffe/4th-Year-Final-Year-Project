@@ -1,4 +1,4 @@
-﻿  HUD.cpp
+﻿  Tile.cpp
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(25,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
           with
           [
@@ -17,8 +17,4 @@ C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YE
           [
               T=int
           ]
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(33,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(33,22): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(37,85): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(37,51): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
   Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
