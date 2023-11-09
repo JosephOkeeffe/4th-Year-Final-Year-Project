@@ -28,8 +28,8 @@ void Game::run()
         while (timeSinceLastUpdate > timePerFrame)
         {
             timeSinceLastUpdate -= timePerFrame;
-            ProcessEvents(); // at least 60 fps
-            Update(timePerFrame); //60 fps
+            ProcessEvents(); 
+            Update(timePerFrame);
         }
         Render();
     }
@@ -72,10 +72,8 @@ void Game::ProcessMouseDown(sf::Event t_event)
 {
     if (sf::Mouse::Right == t_event.key.code)
     {
-        sf::Vector2i currentCell = Global::GetCurrentCell(m_window);
-        std::cout << "X: " << currentCell.x << "\n";
-        std::cout << "Y: " << currentCell.y<< "\n";
-        tiles[currentCell.x][currentCell.y].tile.setFillColor(sf::Color::Red);
+        sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
+        tiles[currentCell.x][currentCell.y].SetShop(Textures::GetInstance().GetTexture("shop"));
     }
 }
 void Game::ProcessMouseUp(sf::Event t_event)
@@ -87,6 +85,7 @@ void Game::ProcessMouseUp(sf::Event t_event)
 }
 void Game::Init()
 {
+   // m_window.setMouseCursorGrabbed(true);
     m_font.loadFromFile("./assets/fonts/Flinton.otf");
     tiles = new Tile * [Global::ROWS_COLUMNS];
 
@@ -94,6 +93,7 @@ void Game::Init()
     {
         tiles[i] = new Tile[Global::ROWS_COLUMNS];
     }
+    elapsedTime = incomeTimer.getElapsedTime();
     InitTiles();
     hud.Init();
 }
@@ -107,6 +107,18 @@ void Game::InitTiles()
             sf::Vector2f temp = { static_cast<float>(row * Global::CELL_SIZE), static_cast<float>(col * Global::CELL_SIZE) };
             tiles[row][col].Init(temp);
         }
+    }
+}
+
+void Game::ManageTimer()
+{
+    elapsedTime = incomeTimer.getElapsedTime();
+
+    if (elapsedTime.asSeconds() >= 5.0f)
+    {
+        std::cout << ResourceManagement::GetCoins() << "\n";
+        ResourceManagement::AddCoins(ResourceManagement::GetCoins());
+        incomeTimer.restart();
     }
 }
 
@@ -142,8 +154,36 @@ void Game::Update(sf::Time t_deltaTime)
     }
     view.MoveScreen();
 
-    // Handle input events for game objects
-    //view.SetGameView(); // Make sure the game view is active for input handling
+    ManageTimer();
+    
+    if (ResourceManagement::isPlacingShop)
+    {
+        //sf::Vector2i oldPos = Global::GetCurrentCell(m_window);
+        sf::Vector2f currentMousePos = Global::GetMousePos(m_window);
+        sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
+
+        if (currentMousePos.x >= 0 && currentMousePos.x < Global::ROWS_COLUMNS * Global::CELL_SIZE &&
+            currentMousePos.y >= 0 && currentMousePos.y < Global::ROWS_COLUMNS * Global::CELL_SIZE)
+        {
+            tiles[currentCellPos.x][currentCellPos.y].Hover(Textures::GetInstance().GetTexture("shop"));
+        }
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                if (tiles[row][col].tileType == TileType::NONE)
+                {
+                    if (row != currentCellPos.x
+                        || col != currentCellPos.y)
+                    {
+                        tiles[row][col].ResetTexture();
+                    }
+                }
+            }
+        }
+        
+    }
+    
     warrior.Update(m_window);
     archer.Update(m_window);
     warrior.CalculateAngle(warrior.GetSprite(), archer.GetSprite());

@@ -1,18 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "TileTypes.h"
 class Tile
 {
 public:
 
-	enum TileType
-	{
-		NONE,
-		SHOP,
-	};
+	TileType tileType = NONE;
 	void Init(sf::Vector2f& position);
 	void Render(sf::RenderWindow& window);
+	void Update();
 
-	void SetShop();
+	void SetShop(sf::Texture& texture);
+	void Hover(sf::Texture& texture);
+	void ResetTexture();
 
 	sf::RectangleShape tile;
 	int tileSize = 100;

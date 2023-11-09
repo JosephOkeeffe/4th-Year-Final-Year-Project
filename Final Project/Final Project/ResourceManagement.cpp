@@ -1,7 +1,8 @@
 #include "ResourceManagement.h"
 
 int ResourceManagement::coins = 0;
-bool ResourceManagement::isPlacingShop = false;
+bool ResourceManagement::isPlacingShop = false; 
+int ResourceManagement::amountOfShops = 0;
 
 int ResourceManagement::GetCoins()
 {
@@ -22,5 +23,12 @@ void ResourceManagement::SpendCoins(int amount)
 	}
 }
 
-// hover when shop is true
-//  
+void ResourceManagement::AddShops(int amount)
+{
+	amountOfShops++;
+}
+
+int ResourceManagement::GetShops(int amount)
+{
+	return amountOfShops;
+}

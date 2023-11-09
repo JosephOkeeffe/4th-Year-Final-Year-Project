@@ -9,6 +9,8 @@
 #include "Warrior.h"
 #include "Archer.h"
 #include "HUD.h"
+#include "ResourceManagement.h"
+#include "TileTypes.h"
 
 class Game
 {
@@ -30,6 +32,8 @@ private:
 
     void InitTiles();
 
+    void ManageTimer();
+
     sf::RenderWindow m_window;
     sf::Font m_font;
     bool m_exitGame;
@@ -40,11 +44,13 @@ private:
     HUD hud;
 
     Tile** tiles;
-    //Tile tiles[Global::ROWS_COLUMNS][Global::ROWS_COLUMNS];
     View view{ m_window, gameView, hudView };
 
     Warrior warrior;
     Archer archer;
+
+    sf::Clock incomeTimer;
+    sf::Time elapsedTime;
 };
 
 #endif

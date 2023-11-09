@@ -21,7 +21,6 @@ void HUD::Init()
 	button1.setLabel("Warrior", font, 50, sf::Color::White);
 	button1.setCallback([]() 
 		{
-			ResourceManagement::AddCoins(2);
 			ResourceManagement::isPlacingShop = true;
 			std::cout << "Coins " << ResourceManagement::GetCoins() << "\n";
 		});
@@ -29,6 +28,7 @@ void HUD::Init()
 
 
 	 
+	coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
 	coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
 	coinSprite.setPosition(Global::S_WIDTH * 0.95, Global::S_HEIGHT - bottomRectangle.getSize().y + 20);
 	coinSprite.setScale(0.1, 0.1);

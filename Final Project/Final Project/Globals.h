@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct Global
 {
@@ -16,16 +17,21 @@ public:
 		sf::Vector2f worldMousePosition = window.mapPixelToCoords(mousePos);
 		return worldMousePosition;
 	}
-    static sf::Vector2i GetCurrentCell(sf::RenderWindow& window)
+    static sf::Vector2i GetCurrentCell(sf::RenderWindow& window, sf::View& view)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        sf::Vector2f worldMousePosition = window.mapPixelToCoords(mousePos);
-
+        sf::Vector2f worldMousePosition = window.mapPixelToCoords(mousePos, view);
         sf::Vector2i cellPosition;
         cellPosition.x = worldMousePosition.x / Global::CELL_SIZE;
         cellPosition.y = worldMousePosition.y / Global::CELL_SIZE;
 
         return cellPosition;
     }
+
+   static enum TileType
+    {
+        NONE,
+        SHOP,
+    };
 
 };
