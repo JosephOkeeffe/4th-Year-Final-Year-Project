@@ -19,6 +19,7 @@ private:
     sf::Texture coinTexture;
 
     sf::Texture shopTexture;
+    sf::Texture tilesTexture;
 
     std::map<std::string, sf::Texture> textureMap;
 };

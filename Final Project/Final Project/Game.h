@@ -29,6 +29,10 @@ private:
     void Update(sf::Time t_deltaTime);
     void Render();
     void Init();
+    void Save();
+    // text file
+    // seperate by commas or spaces
+    void Load();
 
     void InitTiles();
 

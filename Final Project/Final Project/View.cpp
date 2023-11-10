@@ -30,7 +30,8 @@ void View::handleInput(sf::Event& event)
         SetGameView();
     }
 }
-
+// textures
+// save and load level
 void View::SetGameView() 
 {
    window.setView(gameView);

@@ -6,11 +6,21 @@
 
 void Tile::Init(sf::Vector2f& position)
 {
-	tile.setFillColor(sf::Color::Transparent);
+	//tile.setFillColor(sf::Color::Transparent);
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));
-	tile.setOutlineThickness(0.5f);
-	tile.setOutlineColor(sf::Color(255, 255, 255, 100));
+	//tile.setOutlineThickness(0.5f);
+	//tile.setOutlineColor(sf::Color(255, 255, 255, 100));
 	tile.setPosition(position);
+	
+	tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
+	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+
+	/*tile.setTexture(Textures::GetInstance().GetTexture("tiles"));
+	tile.setTextureRect(sf::IntRect(0, 0, 100, 100));
+	tile.setScale(2, 2);*/
+	//tile.setScale(100.f / 56.f, 100.f / 56.f);
+	tile.setPosition(position);
+
 	//tile.setTexture(&Textures::GetInstance().GetTexture("shop"));
 }
 
@@ -48,6 +58,13 @@ void Tile::Hover(sf::Texture& texture)
 
 void Tile::ResetTexture()
 {
-	tile.setFillColor(sf::Color::Transparent);
-	tile.setTexture(NULL);
+	tile.setFillColor(sf::Color::White);
+	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
 }
+
+
+
+
+
+
+

@@ -28,7 +28,7 @@ void ResourceManagement::AddShops(int amount)
 	amountOfShops++;
 }
 
-int ResourceManagement::GetShops(int amount)
+int ResourceManagement::GetShops()
 {
 	return amountOfShops;
 }

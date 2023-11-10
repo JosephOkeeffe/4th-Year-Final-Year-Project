@@ -7,7 +7,7 @@ public:
 
     static const int S_WIDTH{ 1280U };
     static const int S_HEIGHT{ 720U };
-    static const int ROWS_COLUMNS{ 100 };
+    static const int ROWS_COLUMNS{ 50 };
     static const int CELL_SIZE{ 100 };
     static constexpr float PI = 3.14159265359f;
 

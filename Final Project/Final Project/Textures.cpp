@@ -25,6 +25,9 @@ void Textures::SetupTextures()
     
     shopTexture.loadFromFile("./assets/images/shop.png");
     textureMap["shop"] = shopTexture;
+
+    tilesTexture.loadFromFile("./assets/images/tiles.png");
+    textureMap["tiles"] = tilesTexture;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

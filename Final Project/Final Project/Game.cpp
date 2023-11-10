@@ -117,7 +117,7 @@ void Game::ManageTimer()
     if (elapsedTime.asSeconds() >= 5.0f)
     {
         std::cout << ResourceManagement::GetCoins() << "\n";
-        ResourceManagement::AddCoins(ResourceManagement::GetCoins());
+        ResourceManagement::AddCoins(ResourceManagement::GetShops());
         incomeTimer.restart();
     }
 }

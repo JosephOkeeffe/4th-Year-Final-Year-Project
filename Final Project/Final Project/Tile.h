@@ -15,6 +15,7 @@ public:
 	void ResetTexture();
 
 	sf::RectangleShape tile;
+	//sf::Sprite tile;
 	int tileSize = 100;
 };
 
