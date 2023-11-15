@@ -95,6 +95,11 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 	}
 }
 
+void Characters::LoadSpriteData(sf::Sprite& sprite, sf::Vector2f& pos)
+{
+	sprite.setPosition(pos);
+}
+
 SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
 {
 	SteeringOutput steeringOutput = behaviour->WanderBehaviour(sprite);

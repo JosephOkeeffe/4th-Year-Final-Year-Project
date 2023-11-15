@@ -1,21 +1,2 @@
-﻿  View.cpp
-C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(35,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
-C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(25,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-          and
-          [
-              T=int
-          ]
-C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(26,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-          and
-          [
-              T=int
-          ]
-  Final Project.vcxproj -> C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+﻿  ResourceManagement.cpp
+  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe

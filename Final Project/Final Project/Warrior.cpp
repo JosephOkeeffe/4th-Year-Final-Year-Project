@@ -113,7 +113,18 @@ void Warrior::CheckAnimationState()
 	}
 }
 
+void Warrior::SetPosition(sf::Vector2f pos)
+{
+	LoadSpriteData(sprite, pos);
+}
+
 sf::Sprite& Warrior::GetSprite()
 {
 	return sprite;
+}
+
+sf::Vector2f& Warrior::GetPos()
+{
+	sf::Vector2f pos = sprite.getPosition();
+	return pos;
 }

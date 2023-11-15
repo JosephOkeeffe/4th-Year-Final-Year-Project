@@ -17,12 +17,18 @@ void HUD::Init()
 	bottomRectangle.setOutlineColor(sf::Color(255, 255, 255, 100));
 	bottomRectangle.setPosition(0, Global::S_HEIGHT - bottomRectangle.getSize().y);
 
-	Button button1(window, sf::Vector2f(150, bottomRectangle.getPosition().y + (bottomRectangle.getSize().y / 2)), sf::Vector2f(200, 50), sf::Color::Green, sf::Color::Magenta, font);
-	button1.setLabel("Warrior", font, 50, sf::Color::White);
-	button1.setCallback([]() 
+	Button shopButton(window, sf::Vector2f(150, 
+										bottomRectangle.getPosition().y + (bottomRectangle.getSize().y / 2)), 
+										sf::Vector2f(100, 100), 
+										sf::Color::White, 
+										sf::Color::Magenta, 
+										font,
+										Textures::GetInstance().GetTexture("shop"));
+
+	shopButton.setLabel("Shop", font, 50, sf::Color::Black);
+	shopButton.setCallback([]() 
 		{
 			ResourceManagement::isPlacingShop = true;
-			std::cout << "Coins " << ResourceManagement::GetCoins() << "\n";
 		});
 
 
@@ -38,7 +44,7 @@ void HUD::Init()
 	coinsText.setOrigin(coinsText.getCharacterSize() / 2, coinsText.getCharacterSize() / 2);
 	coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
 
-	buttons.push_back(button1);
+	buttons.push_back(shopButton);
 }
 
 

@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 class ResourceManagement
 {
 public:
@@ -7,6 +7,8 @@ public:
 	static void SpendCoins(int amount);
 	static void AddShops(int amount);
 	static int GetShops();
+
+	static void ResetAndLoad(int coins, int shops);
 
 	static bool isPlacingShop; 
 	

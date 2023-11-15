@@ -66,6 +66,8 @@ void Game::ProcessEvents()
 void Game::ProcessKeys(sf::Event t_event)
 {
     if (sf::Keyboard::Escape == t_event.key.code){m_exitGame = true;}
+    if (sf::Keyboard::Q == t_event.key.code) { Save(); }
+    if (sf::Keyboard::W == t_event.key.code) { Load(); }
    
 }
 void Game::ProcessMouseDown(sf::Event t_event)
@@ -98,6 +100,85 @@ void Game::Init()
     hud.Init();
 }
 
+void Game::Save()
+{
+    std::string xPos = std::to_string(warrior.GetSprite().getPosition().x);
+    std::string yPos = std::to_string(warrior.GetSprite().getPosition().y);
+    std::string coinsString = std::to_string(ResourceManagement::GetCoins());
+   // std::string shopsString = std::to_string(ResourceManagement::GetShops());
+
+    // Open file to write
+    std::ofstream file("saveFile.txt");
+
+    if (file.is_open()) 
+    {
+        // Saving the values to the file                                                                      
+        file << "X: " << xPos << "\n";
+        file << "Y: " << yPos << "\n";
+        file << "Coins: " << coinsString << "\n";
+       // file << "Shops: " << shopsString << "\n";
+
+        // Loop through map of tiles and check what kind of tile they are
+
+        // Close the file
+        file.close();
+        std::cout << "Saved Data:\n";
+        std::cout << "X: " << xPos << "\n";
+        std::cout << "Y: " << yPos << "\n";
+        std::cout << "Coins: " << coinsString << "\n";
+        // std::cout << "Shops: " << shops << "\n";
+    }
+    else 
+    {
+        std::cerr << "Error opening the file!" << std::endl;
+    }
+}
+
+void Game::Load()
+{
+    std::ifstream file("saveFile.txt");
+
+    if (file.is_open()) 
+    {
+        // Character Positions
+        std::string xPos;
+        std::getline(file, xPos);
+        float x = std::stof(xPos.substr(xPos.find(":") + 1));
+
+        std::string yPos;
+        std::getline(file, yPos);
+        float y = std::stof(yPos.substr(yPos.find(":") + 1));
+
+        sf::Vector2f warriorLoadedPos = { x, y };
+        warrior.SetPosition(warriorLoadedPos);
+
+        // Resources
+        std::string coinsString;
+        std::getline(file, coinsString);
+        float coins = std::stof(coinsString.substr(coinsString.find(":") + 1));
+
+     /*   std::string shopsString;
+        std::getline(file, shopsString);
+        float shops = std::stof(shopsString.substr(shopsString.find(":") + 1));*/
+
+      
+
+        ResourceManagement::ResetAndLoad(coins, 1);
+
+        file.close();
+
+        std::cout << "Loaded Data:\n";
+        std::cout << "X: " << warriorLoadedPos.x << "\n";
+        std::cout << "Y: " << warriorLoadedPos.y << "\n";
+        std::cout << "Coins: " << coins << "\n";
+       // std::cout << "Shops: " << shops << "\n";
+    }
+    else 
+    {
+        std::cerr << "Error opening the file!" << std::endl;
+    }
+}
+
 void Game::InitTiles()
 {
     for (int row = 0; row < Global::ROWS_COLUMNS; row++)
@@ -116,7 +197,6 @@ void Game::ManageTimer()
 
     if (elapsedTime.asSeconds() >= 5.0f)
     {
-        std::cout << ResourceManagement::GetCoins() << "\n";
         ResourceManagement::AddCoins(ResourceManagement::GetShops());
         incomeTimer.restart();
     }

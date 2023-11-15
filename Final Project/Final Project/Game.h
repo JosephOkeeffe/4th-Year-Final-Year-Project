@@ -2,6 +2,7 @@
 #define GAME_HPP
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <fstream>
 #include "Globals.h"
 #include "Tile.h"
 #include "View.h"

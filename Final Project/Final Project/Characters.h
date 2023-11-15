@@ -16,6 +16,8 @@ public:
 	void CalculateAngle(sf::Sprite& sprite, sf::Sprite& target);
 	void FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite);
 
+	void LoadSpriteData(sf::Sprite& sprite, sf::Vector2f& pos);
+
 	inline void SetBehaviour(Behaviour* newBehaviour)
 	{
 		behaviour = newBehaviour;

@@ -1,18 +1,22 @@
 #include "Button.h"
 #include "Globals.h"
-Button::Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& idleColour, const sf::Color& hoverColour, const sf::Font& font)
+Button::Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& idleColour, const sf::Color& hoverColour, const sf::Font& font, const sf::Texture& texture)
     : onClick(nullptr), isHovered(false), isPressed(false), idleColour(idleColour), hoverColour(hoverColour)
 {
     shape.setSize(size);
     shape.setOrigin(size / 2.0f);
     shape.setPosition(position);
     shape.setFillColor(idleColour);
+    shape.setTexture(&texture);
+    shape.setOutlineThickness(2);
+    shape.setOutlineColor(sf::Color::Black);
 
-    label.setFont(font); // Default font, you can set your own
+
+    label.setFont(font); 
     label.setCharacterSize(24);
-    label.setFillColor(sf::Color::White);
+    label.setFillColor(sf::Color::Black);
     label.setOrigin(size / 2.0f);
-    label.setPosition(position.x + (size.x * 0.15), position.y - (size.y * 0.1));
+    label.setPosition(position.x + (size.x * 0.1), position.y - (size.y * 0.1));
 
     // Center label text
 

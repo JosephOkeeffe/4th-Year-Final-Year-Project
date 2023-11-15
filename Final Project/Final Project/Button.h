@@ -5,7 +5,10 @@
 class Button
 {
 public:
-    Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& idleColor, const sf::Color& hoverColor, const sf::Font& font);
+    Button(sf::RenderWindow& window, const sf::Vector2f& position, 
+        const sf::Vector2f& size, const sf::Color& idleColor,
+        const sf::Color& hoverColor, const sf::Font& font,
+        const sf::Texture& texture);
 
     void setLabel(const std::string& text, const sf::Font& font, unsigned characterSize, const sf::Color& textColor);
     void setCallback(std::function<void()> callback);

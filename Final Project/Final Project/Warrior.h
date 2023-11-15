@@ -24,7 +24,11 @@ public:
 	void AnimateWarrior();
 	void ChangeAnimation();
 	void CheckAnimationState();
+
+	void SetPosition(sf::Vector2f pos);
+
 	sf::Sprite& GetSprite();
+	sf::Vector2f& GetPos();
 
 private:
 

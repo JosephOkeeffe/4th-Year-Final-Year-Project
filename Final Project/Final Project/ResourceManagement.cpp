@@ -32,3 +32,12 @@ int ResourceManagement::GetShops()
 {
 	return amountOfShops;
 }
+
+void ResourceManagement::ResetAndLoad(int t_coins, int shops)
+{
+	amountOfShops = 0;
+	AddShops(shops);
+	coins = 0;
+	AddCoins(t_coins);
+
+}
