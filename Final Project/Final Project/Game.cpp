@@ -7,7 +7,7 @@ Game::Game() :
     /*textures(),*/
     view(m_window, gameView, hudView),
     hud(m_window, m_font),
-    warrior(m_window),
+    warrior(m_window, gameView),
     archer(m_window)
     
 {
@@ -72,11 +72,19 @@ void Game::ProcessKeys(sf::Event t_event)
 }
 void Game::ProcessMouseDown(sf::Event t_event)
 {
-    if (sf::Mouse::Right == t_event.key.code)
+    if (sf::Mouse::Left == t_event.key.code)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
-        tiles[currentCell.x][currentCell.y].SetShop(Textures::GetInstance().GetTexture("shop"));
-    }
+        std::cout << "X: " << currentCell.x << "Y: " << currentCell.y << "\n";
+        tiles[currentCell.x][currentCell.y].SetShop();
+    } 
+  /*  if (sf::Mouse::Right == t_event.key.code)
+    {
+        sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
+        std::cout << "X: " << currentCell.x << " Y: " << currentCell.y << "\n";
+
+        tiles[currentCell.x][currentCell.y].SetShop();
+    }*/
 }
 void Game::ProcessMouseUp(sf::Event t_event)
 {
@@ -239,7 +247,7 @@ void Game::Update(sf::Time t_deltaTime)
     if (ResourceManagement::isPlacingShop)
     {
         //sf::Vector2i oldPos = Global::GetCurrentCell(m_window);
-        sf::Vector2f currentMousePos = Global::GetMousePos(m_window);
+        sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
         sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
 
         if (currentMousePos.x >= 0 && currentMousePos.x < Global::ROWS_COLUMNS * Global::CELL_SIZE &&

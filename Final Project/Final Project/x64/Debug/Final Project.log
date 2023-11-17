@@ -1,2 +1,226 @@
-﻿  ResourceManagement.cpp
-  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+﻿  Archer.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(7,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(68,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(68,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(68,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(68,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Button.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Button.cpp(19,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Button.cpp(19,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Characters.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(9,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(9,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(40,78): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(40,65): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(40,57): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(40,47): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  Game.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(174,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  HUD.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(40,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(40,22): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(44,85): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(44,51): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  Tile.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  View.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  Warrior.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(67,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(67,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(67,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(67,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(128): warning C4172: returning address of local variable or temporary: pos
+  Final Project.vcxproj -> C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe

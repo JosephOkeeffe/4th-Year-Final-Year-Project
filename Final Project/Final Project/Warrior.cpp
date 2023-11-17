@@ -1,7 +1,7 @@
 #include "Warrior.h"
 #include "Globals.h"
 
-Warrior::Warrior(sf::RenderWindow& t_window) : window(t_window)
+Warrior::Warrior(sf::RenderWindow& t_window, sf::View& view) : window(t_window), view(view)
 {
 	Init(Textures::GetInstance().GetTexture("warrior"),sprite, warriorRect);
 }
@@ -22,7 +22,7 @@ void Warrior::Update(sf::RenderWindow& window)
 
 void Warrior::MouseUp(sf::RenderWindow& window)
 {
-	SelectCharacter(sprite, window);
+	SelectCharacter(sprite, window, view);
 }
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
@@ -55,12 +55,11 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 		}
 		else
 		{
+			std::cout << "Sprite Pos X: " << sprite.getPosition().x;
+			std::cout << " Sprite Pos Y: " << sprite.getPosition().y << "\n";
 			isMoving = false;
 		}
 	}
-	
-
-	// Implement Arrive behaviour from oisins lab
 }
 
 void Warrior::AnimateWarrior()

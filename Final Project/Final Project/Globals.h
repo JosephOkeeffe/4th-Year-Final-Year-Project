@@ -17,6 +17,14 @@ public:
 		sf::Vector2f worldMousePosition = window.mapPixelToCoords(mousePos);
 		return worldMousePosition;
 	}
+
+    static sf::Vector2f GetWindowMousePos(sf::RenderWindow& window, sf::View& view)
+    {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        sf::Vector2f worldMousePosition = window.mapPixelToCoords(mousePos, view);
+        return worldMousePosition;
+    }
+
     static sf::Vector2i GetCurrentCell(sf::RenderWindow& window, sf::View& view)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);

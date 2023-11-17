@@ -10,7 +10,8 @@ public:
 	void Render(sf::RenderWindow& window);
 	void Update();
 
-	void SetShop(sf::Texture& texture);
+	void CheckType();
+	void SetShop();
 	void Hover(sf::Texture& texture);
 	void ResetTexture();
 

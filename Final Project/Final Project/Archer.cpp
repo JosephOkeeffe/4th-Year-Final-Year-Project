@@ -24,9 +24,9 @@ void Archer::Update(sf::RenderWindow& window)
 	//MoveArcher(window);
 }
 
-void Archer::MouseUp(sf::RenderWindow& window)
+void Archer::MouseUp(sf::RenderWindow& window, sf::View& view)
 {
-	SelectCharacter(sprite, window);
+	SelectCharacter(sprite, window, view);
 }
 
 void Archer::MoveArcher(sf::RenderWindow& window)
@@ -35,7 +35,7 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
 		isMoving = true;
-		targetPos = Global::GetMousePos(window);
+		//targetPos = Global::GetMousePos(window);
 	}
 
 	if (isMoving)

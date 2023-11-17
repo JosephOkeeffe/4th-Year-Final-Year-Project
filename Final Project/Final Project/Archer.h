@@ -17,7 +17,7 @@ public:
 	Archer(sf::RenderWindow& t_window);
 	void DrawArcher(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
-	void MouseUp(sf::RenderWindow& window);
+	void MouseUp(sf::RenderWindow& window, sf::View& view);
 
 	void MoveArcher(sf::RenderWindow& window);
 

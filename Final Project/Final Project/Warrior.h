@@ -14,7 +14,7 @@ public:
 
 	};
 
-	Warrior(sf::RenderWindow& t_window);
+	Warrior(sf::RenderWindow& t_window, sf::View& view);
 	void DrawWarrior(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
 	void MouseUp(sf::RenderWindow& window);
@@ -33,6 +33,7 @@ public:
 private:
 
 	sf::RenderWindow& window;
+	sf::View& view;
 
 	bool isDead = false;
 	sf::Sprite sprite;

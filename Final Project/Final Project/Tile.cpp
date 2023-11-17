@@ -20,7 +20,7 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setScale(2, 2);*/
 	//tile.setScale(100.f / 56.f, 100.f / 56.f);
 	tile.setPosition(position);
-
+	tileType = NONE;
 	//tile.setTexture(&Textures::GetInstance().GetTexture("shop"));
 }
 
@@ -34,17 +34,29 @@ void Tile::Update()
 {
 }
 
-void Tile::SetShop(sf::Texture& texture)
+void Tile::CheckType()
+{
+	if (tileType == NONE)
+	{
+		tile.setFillColor(sf::Color::White);
+		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+	}
+	else if (tileType == SHOP)
+	{
+		tile.setFillColor(sf::Color::White);
+		tile.setTexture(&Textures::GetInstance().GetTexture("shop"));
+	}
+}
+
+void Tile::SetShop()
 {
 	if (ResourceManagement::isPlacingShop)
 	{
 		tileType = SHOP;
-		tile.setFillColor(sf::Color::White);
-		tile.setTexture(&texture);
+		CheckType();
 		ResourceManagement::AddShops(1);
 		ResourceManagement::isPlacingShop = false;
 	}
-	//
 }
 
 void Tile::Hover(sf::Texture& texture)
@@ -58,8 +70,8 @@ void Tile::Hover(sf::Texture& texture)
 
 void Tile::ResetTexture()
 {
-	tile.setFillColor(sf::Color::White);
-	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+	tileType = NONE;
+	CheckType();
 }
 
 
