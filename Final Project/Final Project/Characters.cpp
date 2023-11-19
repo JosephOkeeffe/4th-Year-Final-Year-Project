@@ -44,7 +44,6 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 void Characters::SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window, sf::View& view) 
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
-	std::cout << "X: " << mousePos.x << " Y: " << mousePos.y << "\n";
     if (sprite.getGlobalBounds().contains(sf::Vector2f(mousePos)))
     {
         isSelected = !isSelected;

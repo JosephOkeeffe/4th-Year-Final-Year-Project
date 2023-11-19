@@ -25,7 +25,7 @@ void ResourceManagement::SpendCoins(int amount)
 
 void ResourceManagement::AddShops(int amount)
 {
-	amountOfShops++;
+	amountOfShops += amount;
 }
 
 int ResourceManagement::GetShops()

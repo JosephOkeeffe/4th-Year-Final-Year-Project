@@ -20,6 +20,9 @@ void Textures::SetupTextures()
     archerTexture.loadFromFile("./assets/images/mage.png");
     textureMap["archer"] = archerTexture;
 
+    editTexture.loadFromFile("./assets/images/edit.png");
+    textureMap["edit"] = editTexture;
+
     coinTexture.loadFromFile("./assets/images/coin.png");
     textureMap["coin"] = coinTexture;
     
@@ -28,6 +31,12 @@ void Textures::SetupTextures()
 
     tilesTexture.loadFromFile("./assets/images/tiles.png");
     textureMap["tiles"] = tilesTexture;
+
+    grass0Texture.loadFromFile("./assets/images/grass0.png");
+    textureMap["grass0"] = grass0Texture;
+
+    grass1Texture.loadFromFile("./assets/images/grass1.png");
+    textureMap["grass1"] = grass1Texture;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

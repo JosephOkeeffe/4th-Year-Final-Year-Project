@@ -75,16 +75,11 @@ void Game::ProcessMouseDown(sf::Event t_event)
     if (sf::Mouse::Left == t_event.key.code)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
-        std::cout << "X: " << currentCell.x << "Y: " << currentCell.y << "\n";
         tiles[currentCell.x][currentCell.y].SetShop();
     } 
-  /*  if (sf::Mouse::Right == t_event.key.code)
+    if (sf::Mouse::Right == t_event.key.code)
     {
-        sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
-        std::cout << "X: " << currentCell.x << " Y: " << currentCell.y << "\n";
-
-        tiles[currentCell.x][currentCell.y].SetShop();
-    }*/
+    }
 }
 void Game::ProcessMouseUp(sf::Event t_event)
 {
@@ -96,6 +91,7 @@ void Game::ProcessMouseUp(sf::Event t_event)
 void Game::Init()
 {
    // m_window.setMouseCursorGrabbed(true);
+    srand(time(nullptr));
     m_font.loadFromFile("./assets/fonts/Flinton.otf");
     tiles = new Tile * [Global::ROWS_COLUMNS];
 
@@ -113,7 +109,7 @@ void Game::Save()
     std::string xPos = std::to_string(warrior.GetSprite().getPosition().x);
     std::string yPos = std::to_string(warrior.GetSprite().getPosition().y);
     std::string coinsString = std::to_string(ResourceManagement::GetCoins());
-   // std::string shopsString = std::to_string(ResourceManagement::GetShops());
+    std::string shopsString = std::to_string(ResourceManagement::GetShops());
 
     // Open file to write
     std::ofstream file("saveFile.txt");
@@ -124,7 +120,16 @@ void Game::Save()
         file << "X: " << xPos << "\n";
         file << "Y: " << yPos << "\n";
         file << "Coins: " << coinsString << "\n";
-       // file << "Shops: " << shopsString << "\n";
+        file << "Shops: " << shopsString << "\n";
+
+        // Loop through map of tiles and save the tileType
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++) 
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
+            {
+                file << "Tile[" << row << "][" << col << "]: " << tiles[row][col].GetType() << "\n";
+            }
+        }
 
         // Loop through map of tiles and check what kind of tile they are
 
@@ -134,7 +139,7 @@ void Game::Save()
         std::cout << "X: " << xPos << "\n";
         std::cout << "Y: " << yPos << "\n";
         std::cout << "Coins: " << coinsString << "\n";
-        // std::cout << "Shops: " << shops << "\n";
+        std::cout << "Shops: " << shopsString << "\n";
     }
     else 
     {
@@ -142,12 +147,10 @@ void Game::Save()
     }
 }
 
-void Game::Load()
-{
+void Game::Load() {
     std::ifstream file("saveFile.txt");
 
-    if (file.is_open()) 
-    {
+    if (file.is_open()) {
         // Character Positions
         std::string xPos;
         std::getline(file, xPos);
@@ -165,13 +168,23 @@ void Game::Load()
         std::getline(file, coinsString);
         float coins = std::stof(coinsString.substr(coinsString.find(":") + 1));
 
-     /*   std::string shopsString;
+        std::string shopsString;
         std::getline(file, shopsString);
-        float shops = std::stof(shopsString.substr(shopsString.find(":") + 1));*/
+        float shops = std::stof(shopsString.substr(shopsString.find(":") + 1));
 
-      
+        // Tiles
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
+            {
+                std::string tileInfo;
+                std::getline(file, tileInfo);
+                int tileType = std::stoi(tileInfo.substr(tileInfo.find(":") + 1));
+                tiles[row][col].SetType(static_cast<TileType>(tileType));
+            }
+        }
 
-        ResourceManagement::ResetAndLoad(coins, 1);
+        ResourceManagement::ResetAndLoad(coins, shops);
 
         file.close();
 
@@ -179,13 +192,15 @@ void Game::Load()
         std::cout << "X: " << warriorLoadedPos.x << "\n";
         std::cout << "Y: " << warriorLoadedPos.y << "\n";
         std::cout << "Coins: " << coins << "\n";
-       // std::cout << "Shops: " << shops << "\n";
+        std::cout << "Shops: " << shops << "\n";
+        std::cout << "Tiles Loaded\n";
     }
-    else 
+    else
     {
         std::cerr << "Error opening the file!" << std::endl;
     }
 }
+
 
 void Game::InitTiles()
 {
@@ -206,6 +221,7 @@ void Game::ManageTimer()
     if (elapsedTime.asSeconds() >= 5.0f)
     {
         ResourceManagement::AddCoins(ResourceManagement::GetShops());
+        std::cout << "Current Shops: " << ResourceManagement::GetShops() << "\n";
         incomeTimer.restart();
     }
 }
@@ -259,7 +275,7 @@ void Game::Update(sf::Time t_deltaTime)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
-                if (tiles[row][col].tileType == TileType::NONE)
+                if (tiles[row][col].GetType() == TileType::NONE)
                 {
                     if (row != currentCellPos.x
                         || col != currentCellPos.y)

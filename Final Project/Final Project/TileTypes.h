@@ -3,5 +3,7 @@
 enum TileType
 {
 	NONE,
+	PATH,
+	OBSTACLE,
 	SHOP,
 };

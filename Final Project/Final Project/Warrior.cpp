@@ -55,8 +55,6 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 		}
 		else
 		{
-			std::cout << "Sprite Pos X: " << sprite.getPosition().x;
-			std::cout << " Sprite Pos Y: " << sprite.getPosition().y << "\n";
 			isMoving = false;
 		}
 	}

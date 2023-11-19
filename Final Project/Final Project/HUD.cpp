@@ -32,6 +32,20 @@ void HUD::Init()
 		});
 
 
+	Button editMapButton(window, sf::Vector2f(50,
+		bottomRectangle.getPosition().y + (bottomRectangle.getSize().y / 2)),
+		sf::Vector2f(50, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		font,
+		Textures::GetInstance().GetTexture("edit"));
+
+	editMapButton.setLabel("Edit", font, 30, sf::Color(0,0,0,150));
+	editMapButton.setCallback([]()
+		{
+			// Make pallette class for level editor
+		});
+
 
 	 
 	coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
@@ -45,6 +59,7 @@ void HUD::Init()
 	coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
 
 	buttons.push_back(shopButton);
+	buttons.push_back(editMapButton);
 }
 
 
