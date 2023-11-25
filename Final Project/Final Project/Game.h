@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include "Globals.h"
+#include "GameState.h"
+
+#include "MainMenu.h"
 #include "Tile.h"
 #include "View.h"
 #include "Textures.h"
@@ -12,6 +15,7 @@
 #include "HUD.h"
 #include "ResourceManagement.h"
 #include "TileTypes.h"
+
 
 class Game
 {
@@ -22,6 +26,8 @@ public:
     void run();
 
 private:
+
+
 
     void ProcessEvents();
     void ProcessKeys(sf::Event t_event);
@@ -39,6 +45,7 @@ private:
 
     void ManageTimer();
 
+
     sf::RenderWindow m_window;
     sf::Font m_font;
     bool m_exitGame;
@@ -46,6 +53,7 @@ private:
     sf::View gameView;
     sf::View hudView;
 
+    MainMenu mainMenu;
     HUD hud;
 
     Tile** tiles;

@@ -2,6 +2,7 @@
 #include "HUD.h"
 #include "Globals.h"
 #include "ResourceManagement.h"
+#include "GameState.h"
 
 
 HUD::HUD(sf::RenderWindow& window, sf::Font& font) : window(window), font(font)
@@ -44,6 +45,7 @@ void HUD::Init()
 	editMapButton.setCallback([]()
 		{
 			// Make pallette class for level editor
+			
 		});
 
 

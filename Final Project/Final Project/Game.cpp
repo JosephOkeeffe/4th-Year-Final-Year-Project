@@ -59,8 +59,22 @@ void Game::ProcessEvents()
             ProcessMouseUp(newEvent);
         }
 
-        hud.HandleEvents(newEvent);
-        view.handleInput(newEvent);
+        switch (State::GetCurrentState())
+        {
+        case MENU:
+            mainMenu.HandleEvents(newEvent, m_window);
+            break;
+        case GAME:
+            hud.HandleEvents(newEvent);
+            view.handleInput(newEvent);
+            break;
+        case PAUSED:
+            break;
+        default:
+            break;
+        }
+       
+       
     }
 }
 void Game::ProcessKeys(sf::Event t_event)
@@ -91,8 +105,10 @@ void Game::ProcessMouseUp(sf::Event t_event)
 void Game::Init()
 {
    // m_window.setMouseCursorGrabbed(true);
+   // State::currentState = GAME;
     srand(time(nullptr));
     m_font.loadFromFile("./assets/fonts/Flinton.otf");
+    mainMenu.Init(m_window, m_font);
     tiles = new Tile * [Global::ROWS_COLUMNS];
 
     for (int i = 0; i < Global::ROWS_COLUMNS; i++) 
@@ -147,10 +163,12 @@ void Game::Save()
     }
 }
 
-void Game::Load() {
+void Game::Load() 
+{
     std::ifstream file("saveFile.txt");
 
-    if (file.is_open()) {
+    if (file.is_open()) 
+    {
         // Character Positions
         std::string xPos;
         std::getline(file, xPos);
@@ -231,8 +249,14 @@ void Game::Render()
 {
     m_window.clear(sf::Color::Black);
 
-    // Game
-    view.SetGameView();
+    switch (State::GetCurrentState())
+    {
+    case MENU:
+        mainMenu.Render(m_window);
+        break;
+    case GAME:
+        // Game
+        view.SetGameView();
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
@@ -244,53 +268,73 @@ void Game::Render()
         warrior.DrawWarrior(m_window);
         archer.DrawArcher(m_window);
 
-    // HUD
-    view.SetHudView();
+        // HUD
+        view.SetHudView();
         hud.Render(m_window);
+        break;
+    case PAUSED:
+        break;
+    default:
+        break;
+    }
+
+   
+
+
 
     m_window.display();
 }
 
 void Game::Update(sf::Time t_deltaTime)
 {
-    if (m_exitGame) {
-        m_window.close();
-    }
-    view.MoveScreen();
+    if (m_exitGame){m_window.close();}
 
-    ManageTimer();
-    
-    if (ResourceManagement::isPlacingShop)
+    switch (State::GetCurrentState())
     {
-        //sf::Vector2i oldPos = Global::GetCurrentCell(m_window);
-        sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
-        sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
+    case MENU:
+        break;
+    case GAME:
+        view.MoveScreen();
+        ManageTimer();
 
-        if (currentMousePos.x >= 0 && currentMousePos.x < Global::ROWS_COLUMNS * Global::CELL_SIZE &&
-            currentMousePos.y >= 0 && currentMousePos.y < Global::ROWS_COLUMNS * Global::CELL_SIZE)
+        if (ResourceManagement::isPlacingShop)
         {
-            tiles[currentCellPos.x][currentCellPos.y].Hover(Textures::GetInstance().GetTexture("shop"));
-        }
-        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
-        {
-            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            //sf::Vector2i oldPos = Global::GetCurrentCell(m_window);
+            sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
+            sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
+
+            if (currentMousePos.x >= 0 && currentMousePos.x < Global::ROWS_COLUMNS * Global::CELL_SIZE &&
+                currentMousePos.y >= 0 && currentMousePos.y < Global::ROWS_COLUMNS * Global::CELL_SIZE)
             {
-                if (tiles[row][col].GetType() == TileType::NONE)
+                tiles[currentCellPos.x][currentCellPos.y].Hover(Textures::GetInstance().GetTexture("shop"));
+            }
+            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+            {
+                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
                 {
-                    if (row != currentCellPos.x
-                        || col != currentCellPos.y)
+                    if (tiles[row][col].GetType() == TileType::NONE)
                     {
-                        tiles[row][col].ResetTexture();
+                        if (row != currentCellPos.x
+                            || col != currentCellPos.y)
+                        {
+                            tiles[row][col].ResetTexture();
+                        }
                     }
                 }
             }
+
         }
-        
+        warrior.Update(m_window);
+        archer.Update(m_window);
+        warrior.CalculateAngle(warrior.GetSprite(), archer.GetSprite());
+        break;
+    case PAUSED:
+
+        break;
+    default:
+        break;
     }
-    
-    warrior.Update(m_window);
-    archer.Update(m_window);
-    warrior.CalculateAngle(warrior.GetSprite(), archer.GetSprite());
+
 
 }
 

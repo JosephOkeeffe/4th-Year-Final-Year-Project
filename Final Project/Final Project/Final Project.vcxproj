@@ -135,6 +135,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="ResourceManagement.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -149,6 +150,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Characters.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="View.h" />

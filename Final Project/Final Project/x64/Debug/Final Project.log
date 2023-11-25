@@ -1,4 +1,4 @@
-﻿  HUD.cpp
+﻿  Game.cpp
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
           with
@@ -18,8 +18,61 @@ C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YE
           [
               T=int
           ]
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(54,27): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(54,22): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(58,85): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(58,51): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameState.h(7,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(109,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(205,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(205,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  HUD.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameState.h(7,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(56,27): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(56,22): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(60,85): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.cpp(60,51): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  MainMenu.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameState.h(7,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+  main.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(43,6): warning C4091: 'static ': ignored on left of 'Global::TileType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(33,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(34,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameState.h(7,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+Game.obj : error LNK2001: unresolved external symbol "private: static enum GameState State::currentState" (?currentState@State@@0W4GameState@@A)
+MainMenu.obj : error LNK2001: unresolved external symbol "private: static enum GameState State::currentState" (?currentState@State@@0W4GameState@@A)
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe : fatal error LNK1120: 1 unresolved externals
