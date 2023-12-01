@@ -16,10 +16,13 @@
 #endif 
 
 #include "Game.h"
-
+GameState Game::currentState = MENU;
 int main()
 {
+    
     Game game;
+   
+
     game.run();
 
     return 1;

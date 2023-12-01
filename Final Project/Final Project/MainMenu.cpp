@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-#include "GameState.h"
+#include "Game.h"
 
 void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 {
@@ -19,7 +19,7 @@ void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 	playButton.setLabel("Edit", font, 30, sf::Color(0, 0, 0, 150));
 	playButton.setCallback([]()
 		{
-			State::SetCurrentState(GAME);
+			Game::currentState = GAME;
 		});
 	buttons.push_back(playButton);
 	//buttons.push_back(levelEditorButton);

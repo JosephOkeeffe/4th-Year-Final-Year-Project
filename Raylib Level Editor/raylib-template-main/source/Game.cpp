@@ -71,14 +71,14 @@ void Game::CheckTiles(int t_rows, int t_cols)
     if (tileIds[t_rows][t_cols] == 0)
     {
         sourceRect.x = 0;
-        sourceRect.y = 200;
+        sourceRect.y = 0;
         sourceRect.width = 200;
         sourceRect.height = 200;
 
     }
     if (tileIds[t_rows][t_cols] == 1)
     {
-        sourceRect.x = 200;
+        sourceRect.x = 0;
         sourceRect.y = 200;
         sourceRect.width = 200;
         sourceRect.height = 200;

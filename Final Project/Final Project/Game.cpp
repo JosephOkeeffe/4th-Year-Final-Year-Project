@@ -59,7 +59,7 @@ void Game::ProcessEvents()
             ProcessMouseUp(newEvent);
         }
 
-        switch (State::GetCurrentState())
+        switch (currentState)
         {
         case MENU:
             mainMenu.HandleEvents(newEvent, m_window);
@@ -249,7 +249,7 @@ void Game::Render()
 {
     m_window.clear(sf::Color::Black);
 
-    switch (State::GetCurrentState())
+    switch (currentState)
     {
     case MENU:
         mainMenu.Render(m_window);
@@ -289,7 +289,7 @@ void Game::Update(sf::Time t_deltaTime)
 {
     if (m_exitGame){m_window.close();}
 
-    switch (State::GetCurrentState())
+    switch (currentState)
     {
     case MENU:
         break;

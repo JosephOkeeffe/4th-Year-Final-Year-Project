@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include "Globals.h"
-#include "GameState.h"
 
 #include "MainMenu.h"
 #include "Tile.h"
@@ -16,6 +15,12 @@
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 
+static enum GameState
+{
+    MENU,
+    GAME,
+    PAUSED
+};
 
 class Game
 {
@@ -24,6 +29,8 @@ public:
     ~Game();
 
     void run();
+
+    static GameState currentState;
 
 private:
 
