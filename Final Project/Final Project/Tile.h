@@ -7,16 +7,21 @@ public:
 
 	Tile();
 	TileType tileType = NONE;
+	GrassType grassType = GRASS1;
 	void Init(sf::Vector2f& position);
 	void Render(sf::RenderWindow& window);
 	void Update();
 
-	void CheckType();
+	void CheckTileType();
+	void CheckGrassType();
 	void SetShop();
 	void Hover(sf::Texture& texture);
 	void ResetTexture();
-	void SetType(TileType type);
-	TileType GetType();
+
+	GrassType GetGrassType();
+	void SetGrassType(GrassType type);
+	void SetTileType(TileType type);
+	TileType GetTileType();
 	int defaultTile = 0;
 	sf::RectangleShape tile;
 	//sf::Sprite tile;

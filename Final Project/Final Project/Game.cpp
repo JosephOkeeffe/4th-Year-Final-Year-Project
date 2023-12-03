@@ -138,12 +138,20 @@ void Game::Save()
         file << "Coins: " << coinsString << "\n";
         file << "Shops: " << shopsString << "\n";
 
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                file << "GrassType[" << row << "][" << col << "]: " << tiles[row][col].GetGrassType() << "\n";
+            }
+        }
+
         // Loop through map of tiles and save the tileType
         for (int row = 0; row < Global::ROWS_COLUMNS; row++) 
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
             {
-                file << "Tile[" << row << "][" << col << "]: " << tiles[row][col].GetType() << "\n";
+                file << "TileType[" << row << "][" << col << "]: " << tiles[row][col].GetTileType() << "\n";
             }
         }
 
@@ -190,15 +198,27 @@ void Game::Load()
         std::getline(file, shopsString);
         float shops = std::stof(shopsString.substr(shopsString.find(":") + 1));
 
+        // Grass
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                std::string grassTypeInfo;
+                std::getline(file, grassTypeInfo);
+                int grassType = std::stoi(grassTypeInfo.substr(grassTypeInfo.find(":") + 1));
+                tiles[row][col].SetGrassType(static_cast<GrassType>(grassType));
+            }
+        }
+
         // Tiles
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
             {
-                std::string tileInfo;
-                std::getline(file, tileInfo);
-                int tileType = std::stoi(tileInfo.substr(tileInfo.find(":") + 1));
-                tiles[row][col].SetType(static_cast<TileType>(tileType));
+                std::string tileTypeInfo;
+                std::getline(file, tileTypeInfo);
+                int tileType = std::stoi(tileTypeInfo.substr(tileTypeInfo.find(":") + 1));
+                tiles[row][col].SetTileType(static_cast<TileType>(tileType));
             }
         }
 
@@ -211,6 +231,7 @@ void Game::Load()
         std::cout << "Y: " << warriorLoadedPos.y << "\n";
         std::cout << "Coins: " << coins << "\n";
         std::cout << "Shops: " << shops << "\n";
+        std::cout << "Grass Loaded\n";
         std::cout << "Tiles Loaded\n";
     }
     else
@@ -312,7 +333,7 @@ void Game::Update(sf::Time t_deltaTime)
             {
                 for (int col = 0; col < Global::ROWS_COLUMNS; col++)
                 {
-                    if (tiles[row][col].GetType() == TileType::NONE)
+                    if (tiles[row][col].GetTileType() == TileType::NONE)
                     {
                         if (row != currentCellPos.x
                             || col != currentCellPos.y)
