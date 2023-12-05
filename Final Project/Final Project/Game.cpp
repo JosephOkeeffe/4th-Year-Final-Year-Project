@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include <filesystem>
 
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
@@ -82,6 +83,9 @@ void Game::ProcessKeys(sf::Event t_event)
     if (sf::Keyboard::Escape == t_event.key.code){m_exitGame = true;}
     if (sf::Keyboard::Q == t_event.key.code) { Save(); }
     if (sf::Keyboard::W == t_event.key.code) { Load(); }
+    if (sf::Keyboard::P == t_event.key.code) { SaveJSON(); }
+    if (sf::Keyboard::O == t_event.key.code) { LoadJSON(); }
+    if (sf::Keyboard::I == t_event.key.code) { LoadGrassJSON(); }
    
 }
 void Game::ProcessMouseDown(sf::Event t_event)
@@ -104,8 +108,6 @@ void Game::ProcessMouseUp(sf::Event t_event)
 }
 void Game::Init()
 {
-   // m_window.setMouseCursorGrabbed(true);
-   // State::currentState = GAME;
     srand(time(nullptr));
     m_font.loadFromFile("./assets/fonts/Flinton.otf");
     mainMenu.Init(m_window, m_font);
@@ -171,6 +173,57 @@ void Game::Save()
     }
 }
 
+void Game::SaveJSON()
+{
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::string saveFilePath = (currentPath / "../../Saves/GameData.json").string();
+
+    nlohmann::json jsonData;
+
+    jsonData["X"] = warrior.GetSprite().getPosition().x;
+    jsonData["Y"] = warrior.GetSprite().getPosition().y;
+
+    jsonData["Coins"] = ResourceManagement::GetCoins();
+    jsonData["Shops"] = ResourceManagement::GetShops();
+
+    // Save grass types
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    {
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        {
+            jsonData["GrassType"][row][col] = tiles[row][col].GetGrassType();
+        }
+    }
+
+    // Save tile types
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    {
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        {
+            jsonData["TileType"][row][col] = tiles[row][col].GetTileType();
+        }
+    }
+
+    // Open file to write
+    std::ofstream file(saveFilePath);
+
+    if (file.is_open())
+    {
+        // Save JSON data to the file
+        file << std::setw(4) << jsonData << std::endl;
+
+        // Close the file
+        file.close();
+        std::cout << "Saved Data:\n" << jsonData.dump(4) << std::endl;
+    }
+    else
+    {
+        std::cerr << "Error opening the file!" << std::endl;
+    }
+    
+
+}
+
 void Game::Load() 
 {
     std::ifstream file("saveFile.txt");
@@ -223,7 +276,6 @@ void Game::Load()
         }
 
         ResourceManagement::ResetAndLoad(coins, shops);
-
         file.close();
 
         std::cout << "Loaded Data:\n";
@@ -239,6 +291,109 @@ void Game::Load()
         std::cerr << "Error opening the file!" << std::endl;
     }
 }
+
+void Game::LoadJSON()
+{
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::string loadFilePath = (currentPath / "../../Saves/GameData.json").string();
+    std::ifstream file(loadFilePath);
+
+    if (file.is_open())
+    {
+        nlohmann::json jsonData;
+        file >> jsonData;
+        file.close();
+
+        sf::Vector2f warriorLoadedPos;
+        warriorLoadedPos.x = jsonData["X"];
+        warriorLoadedPos.y = jsonData["Y"];
+        warrior.SetPosition(warriorLoadedPos);
+
+        float coins = jsonData["Coins"];
+        float shops = jsonData["Shops"];
+
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                int grassType = jsonData["GrassType"][row][col];
+                tiles[row][col].SetGrassType(static_cast<GrassType>(grassType));
+            }
+        }
+
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                int tileType = jsonData["TileType"][row][col];
+                tiles[row][col].SetTileType(static_cast<TileType>(tileType));
+            }
+        }
+        ResourceManagement::ResetAndLoad(coins, shops);
+
+        std::cout << "Loaded Data:\n";
+        std::cout << "X: " << warriorLoadedPos.x << "\n";
+        std::cout << "Y: " << warriorLoadedPos.y << "\n";
+        std::cout << "Coins: " << coins << "\n";
+        std::cout << "Shops: " << shops << "\n";
+        std::cout << "Grass Loaded\n";
+        std::cout << "Tiles Loaded\n";
+    }
+    else
+    {
+        std::cerr << "Error opening the file!" << std::endl;
+    }
+}
+
+void Game::LoadGrassJSON()
+{
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::string loadFilePath = (currentPath / "../../Saves/SaveGrassFiles.json").string();
+    std::ifstream file(loadFilePath);
+
+    if (file.is_open())
+    {
+        nlohmann::json jsonData;
+        file >> jsonData;
+        file.close();
+
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                int grassType = jsonData["GrassType"][row][col];
+                FixLoadedGrass(grassType, row, col);
+               // tiles[row][col].SetGrassType(static_cast<GrassType>(grassType));
+            }
+        }
+        std::cout << "Grass Loaded\n";
+    }
+    else
+    {
+        std::cerr << "Error opening the file!" << std::endl;
+    }
+}
+
+void Game::FixLoadedGrass(int type, int row, int col)
+{
+    if (type <= MOUNTAINS)
+    {
+        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        tiles[row][col].SetTileType(NONE);
+
+    }
+    else if (type >= BRIDGE1 && type <= PATH10)
+    {
+        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        tiles[row][col].SetTileType(PATH);
+    }
+    else if (type >= WATER1 && type <= WATER13)
+    {
+        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        tiles[row][col].SetTileType(OBSTACLE);
+    }
+}
+
 
 
 void Game::InitTiles()
@@ -265,7 +420,6 @@ void Game::ManageTimer()
     }
 }
 
-
 void Game::Render()
 {
     m_window.clear(sf::Color::Black);
@@ -285,10 +439,8 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-
         warrior.DrawWarrior(m_window);
         archer.DrawArcher(m_window);
-
         // HUD
         view.SetHudView();
         hud.Render(m_window);
@@ -298,11 +450,6 @@ void Game::Render()
     default:
         break;
     }
-
-   
-
-
-
     m_window.display();
 }
 
@@ -320,7 +467,6 @@ void Game::Update(sf::Time t_deltaTime)
 
         if (ResourceManagement::isPlacingShop)
         {
-            //sf::Vector2i oldPos = Global::GetCurrentCell(m_window);
             sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
             sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
 
@@ -333,17 +479,16 @@ void Game::Update(sf::Time t_deltaTime)
             {
                 for (int col = 0; col < Global::ROWS_COLUMNS; col++)
                 {
-                    if (tiles[row][col].GetTileType() == TileType::NONE)
+                    if (tiles[row][col].GetTileType() != TileType::SHOP)
                     {
                         if (row != currentCellPos.x
-                            || col != currentCellPos.y)
+                         || col != currentCellPos.y)
                         {
                             tiles[row][col].ResetTexture();
                         }
                     }
                 }
             }
-
         }
         warrior.Update(m_window);
         archer.Update(m_window);

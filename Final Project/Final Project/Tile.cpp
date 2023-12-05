@@ -14,13 +14,10 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));
 	tile.setPosition(position);
 	tileType = NONE;
-	//tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
 	tile.setPosition(position);
+	SetupGrassTiles();
 
-	
 	CheckTileType();
-
-	
 }
 
 void Tile::Render(sf::RenderWindow& window)
@@ -31,76 +28,83 @@ void Tile::Render(sf::RenderWindow& window)
 
 void Tile::Update()
 {
+	
 }
 
 void Tile::CheckTileType()
 {
-	if (GetTileType() == NONE)
+	switch (GetTileType())
 	{
+	case NONE:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-		tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
-
-		if (defaultTile <= 10)
-		{
-			grassType = GRASS1;
-		}
-		else if (defaultTile >= 11 && defaultTile <= 15)
-		{
-			grassType = GRASS2;
-		}
-		else if (defaultTile >= 16 && defaultTile <= 20)
-		{
-			grassType = GRASS3;
-		}
-		else if (defaultTile >= 21 && defaultTile <= 23)
-		{
-			grassType = GRASS4;
-		}
-		else if (defaultTile >= 24 && defaultTile <= 28)
-		{
-			grassType = GRASS5;
-		}
-		else if (defaultTile >= 29 && defaultTile <= 30)
-		{
-			grassType = MOUNTAINS;
-		}
-
+		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
 		CheckGrassType();
-	}
-	else if (GetTileType() == SHOP)
-	{
+		break;
+	case OBSTACLE:
+		tile.setFillColor(sf::Color::White);
+		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
+		//SetGrassType(static_cast<GrassType>(WATER1 + obstacleTile));
+		CheckGrassType();
+		break;
+	case PATH:
+		tile.setFillColor(sf::Color::White);
+		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
+		//SetGrassType(static_cast<GrassType>(BRIDGE1 + pathTile));
+		CheckGrassType();
+		break;
+	case SHOP:
 		tile.setFillColor(sf::Color::White);
 		tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
 		tile.setTexture(&Textures::GetInstance().GetTexture("shop"));
+		break;
+	default:
+		break;
 	}
 }
 
 void Tile::CheckGrassType()
 {
-	switch (grassType)
+	int size = 57;
+	int spriteSize = 56;
+	GrassType temp = GetGrassType();
+
+	// Calculate the base X position for each grass type
+	int baseX = 0;
+	if (GetGrassType() >= GRASS1 && GetGrassType() <= GRASS5)
 	{
-	case GRASS1:
-		tile.setTextureRect(sf::IntRect(0, 0, 56, 56));
-		break;
-	case GRASS2:
-		tile.setTextureRect(sf::IntRect(57, 0, 56, 56));
-		break;
-	case GRASS3:
-		tile.setTextureRect(sf::IntRect(171, 0, 56, 56));
-		break;
-	case GRASS4:
-		tile.setTextureRect(sf::IntRect(228, 0, 56, 56));
-		break;
-	case GRASS5:
-		tile.setTextureRect(sf::IntRect(285, 0, 56, 56));
-		break;
-	case MOUNTAINS:
-		tile.setTextureRect(sf::IntRect(114, 0, 56, 56));
-		break;
-	default:
-		break;
+		baseX = (GetGrassType() - GRASS1) * size;
 	}
+	else if (GetGrassType() == MOUNTAINS)
+	{
+		baseX = 2 * size;
+	}
+	else if (GetGrassType() >= BRIDGE1 && GetGrassType() <= PATH10)
+	{
+		baseX = (GetGrassType() - BRIDGE1) * size;
+	}
+	else if (GetGrassType() >= WATER1 && GetGrassType() <= WATER13)
+	{
+		baseX = (GetGrassType() - WATER1) * size;
+	}
+
+	int baseY = 0;
+	if (GetGrassType() >= GRASS1 && GetGrassType() <= MOUNTAINS)
+	{
+		baseY = size * 0;
+	}
+	else if (GetGrassType() >= BRIDGE1 && GetGrassType() <= PATH10)
+	{
+		baseY = size * 1;
+	}
+	else if (GetGrassType() >= WATER1 && GetGrassType() <= WATER13)
+	{
+		baseY = size * 2;
+	}
+	tile.setTextureRect(sf::IntRect(baseX, baseY, spriteSize, spriteSize));
+
 }
 
 void Tile::SetShop()
@@ -116,7 +120,7 @@ void Tile::SetShop()
 
 void Tile::Hover(sf::Texture& texture)
 {
-	if (GetTileType() == NONE)
+	if (GetTileType() != SHOP)
 	{
 		tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
 		tile.setFillColor(sf::Color(0,255,0,100));
@@ -126,8 +130,37 @@ void Tile::Hover(sf::Texture& texture)
 
 void Tile::ResetTexture()
 {
-	SetTileType(NONE);
+	SetTileType(GetTileType());
+	//CheckGrassType();
 	CheckTileType();
+}
+
+void Tile::SetupGrassTiles()
+{
+	if (defaultTile <= 10)
+	{
+		SetGrassType(GRASS1);
+	}
+	else if (defaultTile >= 11 && defaultTile <= 15)
+	{
+		SetGrassType(GRASS2);
+	}
+	else if (defaultTile >= 16 && defaultTile <= 20)
+	{
+		SetGrassType(GRASS3);
+	}
+	else if (defaultTile >= 21 && defaultTile <= 23)
+	{
+		SetGrassType(GRASS4);
+	}
+	else if (defaultTile >= 24 && defaultTile <= 28)
+	{
+		SetGrassType(GRASS5);
+	}
+	else if (defaultTile >= 29 && defaultTile <= 30)
+	{
+		SetGrassType(MOUNTAINS);
+	}
 }
 
 void Tile::SetTileType(TileType type)

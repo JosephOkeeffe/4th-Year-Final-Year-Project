@@ -29,7 +29,7 @@ void Textures::SetupTextures()
     shopTexture.loadFromFile("./assets/images/shop.png");
     textureMap["shop"] = shopTexture;
 
-    tilesTexture.loadFromFile("./assets/images/tiles2.png");
+    tilesTexture.loadFromFile("./assets/images/tiles.png");
     textureMap["tiles"] = tilesTexture;
 
     grass0Texture.loadFromFile("./assets/images/grass0.png");

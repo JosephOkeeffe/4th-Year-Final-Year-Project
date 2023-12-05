@@ -14,6 +14,7 @@
 #include "HUD.h"
 #include "ResourceManagement.h"
 #include "TileTypes.h"
+#include "json.hpp"
 
 static enum GameState
 {
@@ -44,9 +45,13 @@ private:
     void Render();
     void Init();
     void Save();
+    void SaveJSON();
     // text file
     // seperate by commas or spaces
     void Load();
+    void LoadJSON();
+    void LoadGrassJSON();
+    void FixLoadedGrass(int type, int row, int col);
 
     void InitTiles();
 
