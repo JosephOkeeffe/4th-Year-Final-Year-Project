@@ -11,7 +11,9 @@ public:
 	void Render(sf::RenderWindow& window);
 	void HandleEvents(sf::Event& event, sf::RenderWindow& window);
 
+	
 	 sf::RectangleShape menuBackground;
 	 std::vector<Button> buttons;
+
 };
 

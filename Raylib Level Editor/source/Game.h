@@ -9,7 +9,7 @@
 #define ZOOM_INCREMENT 0.1f
 
 #define GRASS_PALETTE_SIZE 6
-#define PATH_PALETTE_SIZE 14
+#define PATH_PALETTE_SIZE 18
 #define OBSTACLE_PALETTE_SIZE 13
 #define ENTIRE_PALETTE_HEIGHT 250
 
@@ -19,6 +19,7 @@ const int screenHeight = (TILE_SIZE * GRID_SIZE) / 3;
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h";
+#include <iostream>
 
 enum GrassType
 {
@@ -27,12 +28,16 @@ enum GrassType
     MOUNTAINS,
     GRASS3,
     GRASS4,
-    GRASS5,
+    GRASS5, // 5
 
     BRIDGE1, // 6
     BRIDGE2,
     BRIDGE3,
     BRIDGE4,
+    BRIDGE5,
+    BRIDGE6,
+    BRIDGE7,
+    BRIDGE8,
     PATH1,
     PATH2,
     PATH3,
@@ -42,9 +47,9 @@ enum GrassType
     PATH7,
     PATH8,
     PATH9,
-    PATH10,
+    PATH10, // 23
 
-    WATER1, // 20
+    WATER1, // 24
     WATER2,
     WATER3,
     WATER4,
@@ -88,7 +93,13 @@ public:
     void RenderMap();
     void RenderPalettes();
     void RenderDragRect();
-
+    void RenderSaveButton();
+    void RenderLoadButton();
+    //void SaveGameWorldAsPNG(const char* filename);
+    void RenderSaveMenu();
+    void RenderLoadMenu();
+    void CloseSaveAndLoadMenuAfterDelay(float delay);
+    float delayTimer = 0.0f;
     
      bool isDragging = false;
      Vector2 startDragPos;
@@ -110,6 +121,11 @@ public:
 
     Camera2D cam = { 0 };
 
+    bool saveMenuOpen = false;
+    bool loadMenuOpen = false;
+
+    int selectedSlot = 0;
+
 
     int randomNumber = 0;
     int tileIds[GRID_SIZE][GRID_SIZE]; // Array to store the texture ID of each tile
@@ -118,7 +134,9 @@ public:
     Rectangle obstaclePaletteRects[OBSTACLE_PALETTE_SIZE];
 
 private:
-    
+    std::string tileData1 = { "Tile_Data_1.json" };
+    std::string tileData2 = { "Tile_Data_2.json" };
+    std::string tileData3 = { "Tile_Data_3.json" };
 };
 
 #endif 

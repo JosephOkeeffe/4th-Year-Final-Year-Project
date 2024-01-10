@@ -15,6 +15,10 @@ public:
     void handleEvent(const sf::Event& event, sf::RenderWindow& window);
     void update();
     void render(sf::RenderWindow& window);
+    void centreLabel(sf::Vector2f position);
+
+    sf::Vector2f getButtonPos();
+    sf::RectangleShape getButtonSprite();
 
 private:
     sf::RectangleShape shape;

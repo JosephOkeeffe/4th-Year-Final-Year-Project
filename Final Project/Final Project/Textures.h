@@ -19,7 +19,6 @@ private:
     sf::Texture coinTexture;
 
     sf::Texture shopTexture;
-    sf::Texture editTexture;
     sf::Texture tilesTexture;
     sf::Texture grass0Texture;
     sf::Texture grass1Texture;

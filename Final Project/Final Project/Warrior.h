@@ -48,6 +48,5 @@ private:
 
 	// Moving
 	sf::Vector2f targetPos;
-	float moveSpeed = 2.0f;
 };
 

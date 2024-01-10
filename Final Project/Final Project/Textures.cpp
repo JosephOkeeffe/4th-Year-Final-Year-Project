@@ -20,9 +20,6 @@ void Textures::SetupTextures()
     archerTexture.loadFromFile("./assets/images/mage.png");
     textureMap["archer"] = archerTexture;
 
-    editTexture.loadFromFile("./assets/images/edit.png");
-    textureMap["edit"] = editTexture;
-
     coinTexture.loadFromFile("./assets/images/coin.png");
     textureMap["coin"] = coinTexture;
     

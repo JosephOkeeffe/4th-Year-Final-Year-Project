@@ -78,3 +78,21 @@ void Button::render(sf::RenderWindow& window)
     window.draw(shape);
     window.draw(label);
 }
+
+void Button::centreLabel(sf::Vector2f position)
+{
+    label.setOrigin(label.getLocalBounds().width / 2, label.getLocalBounds().height / 2);
+    label.setPosition(position);
+
+}
+
+sf::Vector2f Button::getButtonPos()
+{
+    return shape.getPosition();
+}
+
+sf::RectangleShape Button::getButtonSprite()
+{
+    return shape;
+
+}

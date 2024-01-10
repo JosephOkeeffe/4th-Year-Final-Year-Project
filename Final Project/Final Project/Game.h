@@ -6,6 +6,7 @@
 #include "Globals.h"
 
 #include "MainMenu.h"
+#include "PauseMenu.h"
 #include "Tile.h"
 #include "View.h"
 #include "Textures.h"
@@ -15,6 +16,14 @@
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
+
+#define Display_Text(x) std::cout << x << "\n";
+
+extern std::string savePath;
+extern std::string loadGameDataPath;
+extern std::string loadTilesDataPath;
+extern bool saveGame;
+extern bool loadSave;
 
 static enum GameState
 {
@@ -35,8 +44,6 @@ public:
 
 private:
 
-
-
     void ProcessEvents();
     void ProcessKeys(sf::Event t_event);
     void ProcessMouseDown(sf::Event t_event);
@@ -44,14 +51,12 @@ private:
     void Update(sf::Time t_deltaTime);
     void Render();
     void Init();
-    void Save();
+
     void SaveJSON();
-    // text file
-    // seperate by commas or spaces
-    void Load();
     void LoadJSON();
-    void LoadGrassJSON();
+    void LoadTilesJSON();
     void FixLoadedGrass(int type, int row, int col);
+    void ChangeThingsDependingOnTileType();
 
     void InitTiles();
 
@@ -66,6 +71,7 @@ private:
     sf::View hudView;
 
     MainMenu mainMenu;
+    PauseMenu pauseMenu;
     HUD hud;
 
     Tile** tiles;
@@ -76,6 +82,10 @@ private:
 
     sf::Clock incomeTimer;
     sf::Time elapsedTime;
+
+    bool loadGame = false;
+
+    
 };
 
 #endif

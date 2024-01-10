@@ -1,5 +1,4 @@
 #include "game.h"
-#include <iostream>
 #include <fstream>
 #include "json.hpp"
 #include <filesystem>
@@ -23,9 +22,36 @@ void Game::Init()
     {
         for (int cols = 0; cols < GRID_SIZE; cols++)
         {
+            // Makes the map look natural to start
             randomNumber = GetRandomValue(0, 30);
 
-            tileIds[rows][cols] = 0;
+            if (randomNumber <= 7)
+            {
+                tileIds[rows][cols] = 0;
+            }
+            else if (randomNumber >= 8 && randomNumber <= 14)
+            {
+                tileIds[rows][cols] = 1;
+            }
+            else if (randomNumber >= 15 && randomNumber <= 20)
+            {
+                tileIds[rows][cols] = 3;
+            }
+            else if (randomNumber >= 21 && randomNumber <= 24)
+            {
+                tileIds[rows][cols] = 4;
+            }
+            else if (randomNumber >= 25 && randomNumber <= 29)
+            {
+                tileIds[rows][cols] = 5;
+            }
+            else if (randomNumber == 30)
+            {
+                tileIds[rows][cols] = 2;
+            }
+            
+            // Makes the map look blank to start
+            /*tileIds[rows][cols] = 0;*/
 
         }
     }
@@ -57,14 +83,17 @@ void Game::Update()
 
     KeyPresses();
 
-    SelectPaletteTile();
+    if (!saveMenuOpen || !loadMenuOpen) 
+    {
+        SelectPaletteTile();
 
-    PlacingTiles();
+        PlacingTiles();
 
-    MoveCamera();
-    Zoom();
+        MoveCamera();
+        Zoom();
 
-    PlacingTiles();
+        PlacingTiles();
+    }
 }
 
 void Game::Draw()
@@ -72,17 +101,28 @@ void Game::Draw()
     BeginDrawing();
     ClearBackground(RAYWHITE);
     BeginMode2D(cam);
-
-
-    RenderMap();
-    RenderDragRect();
-
+        RenderMap();
+        RenderDragRect();
     EndMode2D();
-
 
     RenderPalettes();
     RenderText();
+    RenderSaveButton();
+    RenderLoadButton();
 
+    if (saveMenuOpen){RenderSaveMenu();}
+    if (loadMenuOpen){RenderLoadMenu();}
+
+    if (delayTimer > 0.0f)
+    {
+        delayTimer -= GetFrameTime();
+
+        if (delayTimer <= 0.0f)
+        {
+            saveMenuOpen = false; 
+            loadMenuOpen = false;
+        }
+    }
 
 
 
@@ -97,6 +137,11 @@ void Game::KeyPresses()
         SaveGame();
     }
 
+    if (IsKeyPressed(KEY_Q))
+    {
+        saveMenuOpen = !saveMenuOpen;
+    }
+
     if (IsKeyPressed(KEY_ENTER))
     {
         LoadGame();
@@ -106,6 +151,7 @@ void Game::KeyPresses()
 void Game::PlacingTiles()
 {
 
+    if (saveMenuOpen || loadMenuOpen) { return; }
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && !IsMouseOverPalette())
     {
@@ -137,7 +183,6 @@ void Game::PlacingTiles()
                 {
                     tileIds[i][j] = grassType;
 
-                    std::cout << "X: " << i << " Y: " << j << "\n";
                 }
             }
         }
@@ -153,8 +198,6 @@ void Game::PlacingTiles()
             int j = static_cast<int>(mouseWorldPos.y / TILE_SIZE);
 
             tileIds[i][j] = grassType;
-
-            std::cout << "X: " << i << " Y: " << j << "\n";
         }
     }
 }
@@ -183,7 +226,7 @@ void Game::SelectPaletteTile()
     {
         if (CheckCollisionPointRec(GetMousePosition(), obstaclePaletteRects[i]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            grassType = static_cast<GrassType>(i + 20);
+            grassType = static_cast<GrassType>(i + 24);
 
         }
     }
@@ -197,217 +240,33 @@ void Game::SelectPaletteTile()
         int j = mouseWorldPos.y / TILE_SIZE;
 
         grassType = static_cast<GrassType>(tileIds[i][j]);
-
-        std::cout << "X: " << i << " Y: " << j << "\n";
     }
 }
 
 void Game::CheckGrassTiles(int t_rows, int t_cols)
 {
     int size = TILE_SIZE + 1;
-    switch (tileIds[t_rows][t_cols])
+    int offset = 0;
+
+    if (tileIds[t_rows][t_cols] >= GRASS1 && tileIds[t_rows][t_cols] < BRIDGE1)
     {
-    case GRASS1:
-        sourceRect.x = size * 0;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case GRASS2:
-        sourceRect.x = size * 1;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case MOUNTAINS:
-        sourceRect.x = size * 2;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case GRASS3:
-        sourceRect.x = size * 3;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case GRASS4:
-        sourceRect.x = size * 4;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case GRASS5:
-        sourceRect.x = size * 5;
-        sourceRect.y = 0;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case BRIDGE1:
-        sourceRect.x = size * 0;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case BRIDGE2:
-        sourceRect.x = size * 1;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case BRIDGE3:
-        sourceRect.x = size * 2;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case BRIDGE4:
-        sourceRect.x = size * 3;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH1:
-        sourceRect.x = size * 4;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH2:
-        sourceRect.x = size * 5;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH3:
-        sourceRect.x = size * 6;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH4:
-        sourceRect.x = size * 7;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH5:
-        sourceRect.x = size * 8;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH6:
-        sourceRect.x = size * 9;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH7:
-        sourceRect.x = size * 10;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH8:
-        sourceRect.x = size * 11;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH9:
-        sourceRect.x = size * 12;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case PATH10:
-        sourceRect.x = size * 13;
-        sourceRect.y = size;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER1:
-        sourceRect.x = size * 0;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER2:
-        sourceRect.x = size * 1;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER3:
-        sourceRect.x = size * 2;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER4:
-        sourceRect.x = size * 3;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER5:
-        sourceRect.x = size * 4;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER6:
-        sourceRect.x = size * 5;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER7:
-        sourceRect.x = size * 6;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER8:
-        sourceRect.x = size * 7;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER9:
-        sourceRect.x = size * 8;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER10:
-        sourceRect.x = size * 9;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER11:
-        sourceRect.x = size * 10;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER12:
-        sourceRect.x = size * 11;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    case WATER13:
-        sourceRect.x = size * 12;
-        sourceRect.y = size * 2;
-        sourceRect.width = 56;
-        sourceRect.height = 56;
-        break;
-    default:
-        break;
+        offset = 0;
+        sourceRect.y = size * 0;
     }
+    else if (tileIds[t_rows][t_cols] >= BRIDGE1 && tileIds[t_rows][t_cols] < WATER1)
+    {
+        offset = 6;
+        sourceRect.y = size * 1;
+    }
+    else if (tileIds[t_rows][t_cols] >= WATER1 && tileIds[t_rows][t_cols] <= WATER13)
+    {
+        offset = 24;
+        sourceRect.y = size * 2;
+    }
+
+    sourceRect.x = size * (tileIds[t_rows][t_cols] - offset);
+    sourceRect.width = 56;
+    sourceRect.height = 56;
 
 }
 void Game::Zoom()
@@ -446,7 +305,19 @@ bool Game::IsMouseOverPalette()
 void Game::SaveGame()
 {
     std::filesystem::path currentPath = std::filesystem::current_path();
-    std::string saveFilePath = (currentPath / "../Saves/SaveGrassFiles.json").string();
+    std::string saveFilePath;
+    if (selectedSlot == 0)
+    {
+        saveFilePath = (currentPath / "../Saves/" / tileData1).string();
+    }
+    else if (selectedSlot == 1)
+    {
+        saveFilePath = (currentPath / "../Saves/" / tileData2).string();
+    }
+    else if (selectedSlot == 3)
+    {
+        saveFilePath = (currentPath / "../Saves/" / tileData3).string();
+    }
     nlohmann::json jsonData;
 
     for (int rows = 0; rows < GRID_SIZE; rows++)
@@ -466,7 +337,20 @@ void Game::SaveGame()
 void Game::LoadGame()
 {
     std::filesystem::path currentPath = std::filesystem::current_path();
-    std::string loadFilePath = (currentPath / "../Saves/SaveGrassFiles.json").string();
+    std::string loadFilePath;
+
+    if (selectedSlot == 0)
+    {
+        loadFilePath = (currentPath / "../Saves/" / tileData1).string();
+    }
+    else if (selectedSlot == 1)
+    {
+        loadFilePath = (currentPath / "../Saves/" / tileData2).string();
+    }
+    else if (selectedSlot == 3)
+    {
+        loadFilePath = (currentPath / "../Saves/" / tileData3).string();
+    }
 
     if (std::filesystem::exists(loadFilePath))
     {
@@ -575,7 +459,129 @@ void Game::RenderDragRect()
     }
 }
 
+void Game::RenderSaveButton()
+{
+    const int x = screenWidth * 0.8;
+    const int y = screenHeight * 0.01;
+    const int width = 250;
+    const int height = 50;
 
+    Rectangle saveRect = { x, y, width, height };
+    DrawRectangleRec(saveRect, LIGHTGRAY);
+    DrawRectangleLines(x, y, width, height, DARKGRAY);
+    DrawText("Save Map", x + 22, y + 5, 40, BLACK);
 
+    if (CheckCollisionPointRec(GetMousePosition(), saveRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        saveMenuOpen = !saveMenuOpen;
+        loadMenuOpen = false;
+    }
+}
+
+void Game::RenderLoadButton()
+{
+    const int x = screenWidth * 0.8;
+    const int y = screenHeight * 0.07;
+    const int width = 250;
+    const int height = 50;
+
+    Rectangle saveRect = { x, y, width, height };
+    DrawRectangleRec(saveRect, LIGHTGRAY);
+    DrawRectangleLines(x, y, width, height, DARKGRAY);
+    DrawText("Load Map", x + 22, y + 5, 40, BLACK);
+
+    if (CheckCollisionPointRec(GetMousePosition(), saveRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        loadMenuOpen = !loadMenuOpen;
+        saveMenuOpen = false;
+    }
+}
+
+//void Game::SaveGameWorldAsPNG(const char* filename)
+//{
+//    // Specify the desired path
+//    const char* savePath = "../Saves/";
+//
+//    // Concatenate the path and filename
+//    char fullPath[256];
+//    snprintf(fullPath, sizeof(fullPath), "%s%s", savePath, filename);
+//
+//    // Take a screenshot of the current render
+//    TakeScreenshot(fullPath);
+//
+//    // Print a message indicating successful save
+//    printf("Game world saved as %s\n", fullPath);
+//}
+
+void Game::RenderSaveMenu()
+{
+    const int width = 300;
+    const int height = 180;
+    const int menuX = (screenWidth / 2) - (width / 2);
+    const int menuY = (screenHeight / 2);
+    const int buttonHeight = 40;
+    const int buttonSpacing = 10;
+
+    DrawRectangle(menuX, menuY, width, height, GRAY);
+    DrawRectangleLines(menuX, menuY, width, height, DARKGRAY);
+    DrawText("Save Menu", menuX + 70, menuY + 5, 25, BLACK);
+
+    for (int i = 0; i < 3; i++)
+    {
+        Rectangle buttonRect = { 
+            menuX + buttonSpacing, 
+            menuY + 30 + i * (buttonHeight + buttonSpacing),
+            width - (buttonSpacing * 2),
+            buttonHeight };
+        DrawRectangleRec(buttonRect, LIGHTGRAY);
+        DrawRectangleLinesEx(buttonRect, 2, BLACK);
+        DrawText(TextFormat("Save %d", i + 1), buttonRect.x + 10, buttonRect.y + 10, 20, BLACK);
+
+        if (CheckCollisionPointRec(GetMousePosition(), buttonRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            selectedSlot = i;
+            SaveGame();
+            CloseSaveAndLoadMenuAfterDelay(0.5);
+        }
+    }
+}
+
+void Game::RenderLoadMenu()
+{
+    const int width = 300;
+    const int height = 180;
+    const int menuX = (screenWidth / 2) - (width / 2);
+    const int menuY = (screenHeight / 2);
+    const int buttonHeight = 40;
+    const int buttonSpacing = 10;
+
+    DrawRectangle(menuX, menuY, width, height, GRAY);
+    DrawRectangleLines(menuX, menuY, width, height, DARKGRAY);
+    DrawText("Load Menu", menuX + 70, menuY + 5, 25, BLACK);
+
+    for (int i = 0; i < 3; i++)
+    {
+        Rectangle buttonRect = {
+            menuX + buttonSpacing,
+            menuY + 30 + i * (buttonHeight + buttonSpacing),
+            width - (buttonSpacing * 2),
+            buttonHeight };
+        DrawRectangleRec(buttonRect, LIGHTGRAY);
+        DrawRectangleLinesEx(buttonRect, 2, BLACK);
+        DrawText(TextFormat("Load %d", i + 1), buttonRect.x + 10, buttonRect.y + 10, 20, BLACK);
+
+        if (CheckCollisionPointRec(GetMousePosition(), buttonRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            selectedSlot = i;
+            LoadGame();
+            CloseSaveAndLoadMenuAfterDelay(0.5);
+        }
+    }
+}
+
+void Game::CloseSaveAndLoadMenuAfterDelay(float delay)
+{
+    delayTimer = delay;
+}
 
 

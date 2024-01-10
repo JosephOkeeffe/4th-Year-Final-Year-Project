@@ -51,7 +51,7 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 
 		if (length > 5)
 		{
-			sprite.move(direction * moveSpeed);
+			sprite.move(direction * currentMoveSpeed);
 		}
 		else
 		{

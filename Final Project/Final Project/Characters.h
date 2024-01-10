@@ -29,6 +29,9 @@ public:
 	sf::CircleShape detectionCircle;
 	float detectionRadius = 100.0f;
 
+	sf::CircleShape tileDetectionCircle;
+	float tileDetectionRadius = 10;
+
 	Behaviour* behaviour;
 
 	sf::Vector2f m_velocity = { 0, 0 };
@@ -44,6 +47,8 @@ public:
 	bool isSelected = false;
 	bool isMoving = false;
 	sf::Clock selectionCooldown;
+	float defaultMoveSpeed = 2.0f;
+	float currentMoveSpeed = defaultMoveSpeed;
 
 };
 

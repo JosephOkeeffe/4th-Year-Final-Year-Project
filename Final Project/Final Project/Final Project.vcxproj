@@ -137,6 +137,7 @@
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="ResourceManagement.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="View.h" />

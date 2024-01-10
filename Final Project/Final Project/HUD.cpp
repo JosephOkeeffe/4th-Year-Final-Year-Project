@@ -32,24 +32,6 @@ void HUD::Init()
 			ResourceManagement::isPlacingShop = true;
 		});
 
-
-	Button editMapButton(window, sf::Vector2f(50,
-		bottomRectangle.getPosition().y + (bottomRectangle.getSize().y / 2)),
-		sf::Vector2f(50, 50),
-		sf::Color::White,
-		sf::Color::Magenta,
-		font,
-		Textures::GetInstance().GetTexture("edit"));
-
-	editMapButton.setLabel("Edit", font, 30, sf::Color(0,0,0,150));
-	editMapButton.setCallback([]()
-		{
-			// Make pallette class for level editor
-			
-		});
-
-
-	 
 	coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
 	coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
 	coinSprite.setPosition(Global::S_WIDTH * 0.95, Global::S_HEIGHT - bottomRectangle.getSize().y + 20);
@@ -61,7 +43,6 @@ void HUD::Init()
 	coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
 
 	buttons.push_back(shopButton);
-	buttons.push_back(editMapButton);
 }
 
 

@@ -12,15 +12,20 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 
 	detectionCircle.setRadius(detectionRadius);
 	detectionCircle.setOrigin(detectionRadius, detectionRadius);
-	detectionCircle.setPosition(sprite.getPosition()); // Set the position of the circle to the sprite's position
+	detectionCircle.setPosition(sprite.getPosition());
 	detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
+
+	tileDetectionCircle.setRadius(tileDetectionRadius);
+	tileDetectionCircle.setOrigin(tileDetectionRadius, tileDetectionRadius);
+	tileDetectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
 
 }
 
 void Characters::Render(sf::RenderWindow& window, sf::Sprite& sprite)
 {
 	window.draw(detectionCircle);
-	detectionCircle.setPosition(sprite.getPosition()); // Set the position of the circle to the sprite's position
+	detectionCircle.setPosition(sprite.getPosition());
+	tileDetectionCircle.setPosition(sprite.getPosition().x, sprite.getPosition().y + 30);
 
 	window.draw(sprite);
 }
