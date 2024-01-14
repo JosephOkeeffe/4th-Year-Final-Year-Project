@@ -15,7 +15,7 @@ public:
 	};
 
 	Warrior(sf::RenderWindow& t_window, sf::View& view);
-	void DrawWarrior(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
 	void MouseUp(sf::RenderWindow& window);
 

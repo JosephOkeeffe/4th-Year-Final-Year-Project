@@ -85,6 +85,12 @@ private:
 
     bool loadGame = false;
 
+    Warrior enemy1;
+    std::vector<Warrior> enemyWarriors;
+    //std::vector<Characters> enemies;
+    //std::vector<Characters> enemies;
+    
+
     
 };
 

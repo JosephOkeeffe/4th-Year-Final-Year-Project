@@ -6,7 +6,7 @@ Warrior::Warrior(sf::RenderWindow& t_window, sf::View& view) : window(t_window),
 	Init(Textures::GetInstance().GetTexture("warrior"),sprite, warriorRect);
 }
 
-void Warrior::DrawWarrior(sf::RenderWindow& window)
+void Warrior::Draw(sf::RenderWindow& window)
 {
 	Render(window, sprite);
 }

@@ -14,10 +14,10 @@ public:
 
 	};
 
-	Archer(sf::RenderWindow& t_window);
-	void DrawArcher(sf::RenderWindow& window);
+	Archer(sf::RenderWindow& t_window, sf::View& view);
+	void Draw(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
-	void MouseUp(sf::RenderWindow& window, sf::View& view);
+	void MouseUp(sf::RenderWindow& window);
 
 	void MoveArcher(sf::RenderWindow& window);
 
@@ -25,9 +25,11 @@ public:
 	void ChangeAnimation();
 	void CheckAnimationState();
 	sf::Sprite& GetSprite();	
+
 private:
 
 	sf::RenderWindow& window;
+	sf::View& view;
 
 	bool isDead = false;
 	sf::Sprite sprite;

@@ -1,14 +1,14 @@
 #include "Archer.h"
 #include "Globals.h"
 
-Archer::Archer(sf::RenderWindow& t_window) : window(t_window)
+Archer::Archer(sf::RenderWindow& t_window, sf::View& view) : window(t_window), view(view)
 {
 	Init(Textures::GetInstance().GetTexture("archer"), sprite, rect);
 	animationSpeed = 0.04;
 	sprite.setScale(1.5, 1.5);
 }
 
-void Archer::DrawArcher(sf::RenderWindow& window)
+void Archer::Draw(sf::RenderWindow& window)
 {
 	Render(window, sprite);
 }
@@ -19,12 +19,12 @@ void Archer::Update(sf::RenderWindow& window)
 	ChangeAnimation();
 	AnimateArcher();
 	//m_velocity = SetWanderBehaviour(sprite).linear;
-	m_velocity = SetSeekBehaviour(sf::Vector2f{ 500, 500 }, sprite).linear;
-	sprite.move(m_velocity);
-	//MoveArcher(window);
+	//m_velocity = SetSeekBehaviour(sf::Vector2f{ 500, 500 }, sprite).linear;
+	//sprite.move(m_velocity);
+	MoveArcher(window);
 }
 
-void Archer::MouseUp(sf::RenderWindow& window, sf::View& view)
+void Archer::MouseUp(sf::RenderWindow& window)
 {
 	SelectCharacter(sprite, window, view);
 }
@@ -35,7 +35,7 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
 		isMoving = true;
-		//targetPos = Global::GetMousePos(window);
+		targetPos = Global::GetMousePos(window);
 	}
 
 	if (isMoving)

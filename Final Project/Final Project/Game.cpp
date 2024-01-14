@@ -14,7 +14,8 @@ Game::Game() :
     view(m_window, gameView, hudView),
     hud(m_window, m_font),
     warrior(m_window, gameView),
-    archer(m_window)
+    archer(m_window, gameView),
+    enemy1(m_window, gameView)
     
 {
     Init();
@@ -58,7 +59,6 @@ void Game::ProcessEvents()
         if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseWheelScrolled == newEvent.type)
         {
             ProcessMouseDown(newEvent);
-            
         }
         if (sf::Event::MouseButtonReleased == newEvent.type)
         {
@@ -107,6 +107,7 @@ void Game::ProcessMouseUp(sf::Event t_event)
     if (sf::Mouse::Left == t_event.key.code)
     {
         warrior.MouseUp(m_window);
+        archer.MouseUp(m_window);
     }
 }
 void Game::Init()
@@ -124,6 +125,11 @@ void Game::Init()
     elapsedTime = incomeTimer.getElapsedTime();
     InitTiles();
     hud.Init();
+
+    warrior.SetPosition({ 200, 200 });
+    enemy1.SetPosition({ 400, 200 });
+
+    enemyWarriors.push_back(enemy1);
 }
 
 void Game::Render()
@@ -145,8 +151,12 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        warrior.DrawWarrior(m_window);
-        archer.DrawArcher(m_window);
+        warrior.Draw(m_window);
+        archer.Draw(m_window);
+        for (Warrior& enemy : enemyWarriors)
+        {
+            enemy.Draw(m_window);
+        }
         // HUD
         view.SetHudView();
         hud.Render(m_window);
@@ -159,8 +169,8 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        warrior.DrawWarrior(m_window);
-        archer.DrawArcher(m_window);
+        warrior.Draw(m_window);
+        archer.Draw(m_window);
         pauseMenu.Render(m_window);
 
         break;
@@ -223,7 +233,13 @@ void Game::Update(sf::Time t_deltaTime)
 
         warrior.Update(m_window);
         archer.Update(m_window);
-        warrior.CalculateAngle(warrior.GetSprite(), archer.GetSprite());
+
+        for (Warrior& enemy : enemyWarriors)
+        {
+            warrior.CalculateAngle(warrior.GetSprite(), enemy.GetSprite());
+            archer.CalculateAngle(archer.GetSprite(), enemy.GetSprite());
+        }
+       
         break;
     case PAUSED:
 
