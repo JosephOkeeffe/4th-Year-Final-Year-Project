@@ -14,10 +14,12 @@ Game::Game() :
     view(m_window, gameView, hudView),
     hud(m_window, m_font),
     warrior(m_window, gameView),
-    archer(m_window, gameView),
+    archer(),
     enemy1(m_window, gameView)
     
 {
+    GameObject::SetWindow(m_window);
+    GameObject::SetView(gameView);
     Init();
 }
 Game::~Game()
@@ -85,9 +87,7 @@ void Game::ProcessEvents()
 void Game::ProcessKeys(sf::Event t_event)
 {
     if (sf::Keyboard::Escape == t_event.key.code){m_exitGame = true;}
-    if (sf::Keyboard::Q == t_event.key.code) { SaveJSON(); }
-    if (sf::Keyboard::W == t_event.key.code) { LoadJSON(); }
-    if (sf::Keyboard::E == t_event.key.code) { LoadTilesJSON(); }
+    if (sf::Keyboard::Q == t_event.key.code) { CreateWarrior(); }
     if (sf::Keyboard::Enter == t_event.key.code) { currentState = PAUSED; }
 }
 void Game::ProcessMouseDown(sf::Event t_event)
@@ -106,8 +106,18 @@ void Game::ProcessMouseUp(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-        warrior.MouseUp(m_window);
+       /* warrior.MouseUp(m_window);
         archer.MouseUp(m_window);
+
+        for (Warrior& temp : playerWarrior)
+        {
+            temp.MouseUp(m_window);
+        }*/
+
+        for (GameObject* g : gameObjects)
+        {
+            g->MouseUp();
+        }
     }
 }
 void Game::Init()
@@ -130,6 +140,10 @@ void Game::Init()
     enemy1.SetPosition({ 400, 200 });
 
     enemyWarriors.push_back(enemy1);
+
+    gameObjects.push_back(&enemyWarriors[0]);
+    gameObjects.push_back(&warrior);
+    gameObjects.push_back(&archer);
 }
 
 void Game::Render()
@@ -151,11 +165,21 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        warrior.Draw(m_window);
-        archer.Draw(m_window);
-        for (Warrior& enemy : enemyWarriors)
+        //warrior.Draw(m_window);
+        //archer.Draw(m_window);
+      /*  for (Warrior& enemy : enemyWarriors)
         {
             enemy.Draw(m_window);
+        }
+
+        for (Warrior& temp : playerWarrior)
+        {
+            temp.Draw(m_window);
+        }*/
+
+        for (GameObject* g : gameObjects)
+        {
+            g->Draw();
         }
         // HUD
         view.SetHudView();
@@ -169,14 +193,17 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        warrior.Draw(m_window);
-        archer.Draw(m_window);
+        //warrior.Draw(m_window);
+        //archer.Draw(m_window);
         pauseMenu.Render(m_window);
 
         break;
     default:
         break;
     }
+
+   
+
     m_window.display();
 }
 
@@ -231,15 +258,23 @@ void Game::Update(sf::Time t_deltaTime)
 
         ChangeThingsDependingOnTileType();
 
-        warrior.Update(m_window);
-        archer.Update(m_window);
+        //warrior.Update();
+        //archer.Update();
 
-        for (Warrior& enemy : enemyWarriors)
+        /*for (Warrior& temp : playerWarrior)
+        {
+            temp.Update(m_window);
+        }*/
+
+        /*for (Warrior& enemy : enemyWarriors)
         {
             warrior.CalculateAngle(warrior.GetSprite(), enemy.GetSprite());
             archer.CalculateAngle(archer.GetSprite(), enemy.GetSprite());
+        }*/
+        for (GameObject* g : gameObjects)
+        {
+            g->Update();
         }
-       
         break;
     case PAUSED:
 
@@ -247,6 +282,8 @@ void Game::Update(sf::Time t_deltaTime)
     default:
         break;
     }
+
+    
 }
 
 void Game::SaveJSON()
@@ -421,6 +458,15 @@ void Game::ManageTimer()
         ResourceManagement::AddCoins(ResourceManagement::GetShops());
         incomeTimer.restart();
     }
+}
+
+void Game::CreateWarrior()
+{
+    Warrior warrior(m_window, gameView);
+    warrior.SetPosition({ 300, 300 });
+
+    playerWarrior.push_back(warrior);
+    gameObjects.push_back(&playerWarrior.back());
 }
 
 

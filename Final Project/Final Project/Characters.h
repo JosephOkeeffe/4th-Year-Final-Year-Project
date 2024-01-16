@@ -2,30 +2,38 @@
 #include <SFML/Graphics.hpp>
 #include "Behaviour.h"
 #include "Textures.h"
+#include "exampleParent.h"
 
-class Characters
+class Characters : public GameObject
 {
 public:
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
-	void Render(sf::RenderWindow& window, sf::Sprite& sprite);
+	//void Render(sf::RenderWindow& window, sf::Sprite& sprite);
+	void Draw() override;
+	//void Update() override;
+	void MouseUp() override;
+
+	void UpdateArcher();
+
+	void SelectCharacter();
 
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
-	void SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window, sf::View& view);
-	void CheckIfSelected(sf::Sprite& sprite);
-	void CalculateAngle(sf::Sprite& sprite, sf::Sprite& target);
+	void CheckIfSelected();
+	void CalculateAngle(sf::Sprite& target);
 	void FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite);
 
-	void LoadSpriteData(sf::Sprite& sprite, sf::Vector2f& pos);
+	void LoadSpriteData(sf::Vector2f& pos);
 
-	inline void SetBehaviour(Behaviour* newBehaviour)
-	{
-		behaviour = newBehaviour;
-	}
+	//inline void SetBehaviour(Behaviour* newBehaviour)
+	//{
+	//	behaviour = newBehaviour;
+	//}
 
-	SteeringOutput SetWanderBehaviour(sf::Sprite& sprite);
-	SteeringOutput SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite);
+	//SteeringOutput SetWanderBehaviour(sf::Sprite& sprite);
+	//SteeringOutput SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite);
 
+	bool isDead = false;
 	sf::CircleShape detectionCircle;
 	float detectionRadius = 100.0f;
 
@@ -37,7 +45,7 @@ public:
 	sf::Vector2f m_velocity = { 0, 0 };
 	sf::Vector2f direction;
 
-	int animationCount = 0; // 89 * 0, 89 * 1, 89 * 2, 89 * 3
+	int animationCount = 0;
 	int m_frameNo{ 0 };
 	float m_frameValue{ 0.0f }; 
 	float animationSpeed{ 0.2 };

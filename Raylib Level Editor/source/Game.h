@@ -13,8 +13,8 @@
 #define OBSTACLE_PALETTE_SIZE 13
 #define ENTIRE_PALETTE_HEIGHT 250
 
-const int screenWidth = (TILE_SIZE * GRID_SIZE) / 2;
-const int screenHeight = (TILE_SIZE * GRID_SIZE) / 3;
+const int screenWidth = (TILE_SIZE * GRID_SIZE) / 1.5;
+const int screenHeight = (TILE_SIZE * GRID_SIZE) / 2;
 
 #include "raylib.h"
 #include "rlgl.h"

@@ -16,6 +16,7 @@
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
+#include "exampleParent.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -62,6 +63,9 @@ private:
 
     void ManageTimer();
 
+    void CreateWarrior();
+    std::vector<Warrior> playerWarrior;
+
 
     sf::RenderWindow m_window;
     sf::Font m_font;
@@ -91,6 +95,8 @@ private:
     //std::vector<Characters> enemies;
     
 
+
+    std::vector<GameObject*> gameObjects;
     
 };
 

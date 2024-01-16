@@ -38,21 +38,18 @@ void Tile::CheckTileType()
 	case NONE:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
 		CheckGrassType();
 		break;
 	case OBSTACLE:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
-		//SetGrassType(static_cast<GrassType>(WATER1 + obstacleTile));
+
 		CheckGrassType();
 		break;
 	case PATH:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-		//tile.setTextureRect(sf::IntRect(0, 0, 200, 200));
-		//SetGrassType(static_cast<GrassType>(BRIDGE1 + pathTile));
+
 		CheckGrassType();
 		break;
 	case SHOP:
@@ -134,6 +131,10 @@ void Tile::ResetTexture()
 	//CheckGrassType();
 	CheckTileType();
 }
+
+// Storage building that can hold a set amount
+// Miner building that collects resources and can only be built on certain nodes
+// Fishing buildings 
 
 void Tile::SetupGrassTiles()
 {

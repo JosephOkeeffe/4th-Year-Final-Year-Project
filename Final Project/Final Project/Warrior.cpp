@@ -6,23 +6,24 @@ Warrior::Warrior(sf::RenderWindow& t_window, sf::View& view) : window(t_window),
 	Init(Textures::GetInstance().GetTexture("warrior"),sprite, warriorRect);
 }
 
-void Warrior::Draw(sf::RenderWindow& window)
-{
-	Render(window, sprite);
-}
-
-void Warrior::Update(sf::RenderWindow& window)
-{
-	CheckAnimationState();
-	ChangeAnimation();
-	AnimateWarrior();
-	
-	MoveWarrior(window);
-}
+//void Warrior::Draw(sf::RenderWindow& window)
+//{
+//	//Draw();
+//	//Render(window, sprite);
+//}
+//
+//void Warrior::Update(sf::RenderWindow& window)
+//{
+//	CheckAnimationState();
+//	ChangeAnimation();
+//	AnimateWarrior();
+//	
+//	MoveWarrior(window);
+//}
 
 void Warrior::MouseUp(sf::RenderWindow& window)
 {
-	SelectCharacter(sprite, window, view);
+	//SelectCharacter(sprite, window, view);
 }
 
 void Warrior::MoveWarrior(sf::RenderWindow& window)
@@ -37,7 +38,7 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 	if (isMoving)
 	{
 		isSelected = false;
-		CheckIfSelected(sprite);
+		CheckIfSelected();
 		direction = behaviour->GetDirectionFacing(targetPos, sprite.getPosition());
 		length = behaviour->VectorLength(direction);
 
@@ -112,7 +113,7 @@ void Warrior::CheckAnimationState()
 
 void Warrior::SetPosition(sf::Vector2f pos)
 {
-	LoadSpriteData(sprite, pos);
+	LoadSpriteData(pos);
 }
 
 sf::Sprite& Warrior::GetSprite()

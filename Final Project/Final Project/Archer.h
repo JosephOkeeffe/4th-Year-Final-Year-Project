@@ -14,9 +14,10 @@ public:
 
 	};
 
-	Archer(sf::RenderWindow& t_window, sf::View& view);
-	void Draw(sf::RenderWindow& window);
-	void Update(sf::RenderWindow& window);
+	Archer();
+	//void Draw(sf::RenderWindow& window);
+	//void Update(sf::RenderWindow& window);
+	void Update() override;
 	void MouseUp(sf::RenderWindow& window);
 
 	void MoveArcher(sf::RenderWindow& window);
@@ -27,12 +28,6 @@ public:
 	sf::Sprite& GetSprite();	
 
 private:
-
-	sf::RenderWindow& window;
-	sf::View& view;
-
-	bool isDead = false;
-	sf::Sprite sprite;
 
 	int currentAnimation = ANIMATION::IDLE;
 	int currentFrameX = 35;

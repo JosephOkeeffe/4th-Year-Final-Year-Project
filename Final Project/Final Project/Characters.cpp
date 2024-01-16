@@ -19,21 +19,40 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	tileDetectionCircle.setOrigin(tileDetectionRadius, tileDetectionRadius);
 	tileDetectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
 
+	SetTexture(texture);
+	SetTextureRect(textureSize);
 }
 
-void Characters::Render(sf::RenderWindow& window, sf::Sprite& sprite)
+void Characters::Draw()
 {
-	window.draw(detectionCircle);
-	detectionCircle.setPosition(sprite.getPosition());
-	tileDetectionCircle.setPosition(sprite.getPosition().x, sprite.getPosition().y + 30);
-
-	window.draw(sprite);
+	GetWindow()->draw(body);
+	GetWindow()->draw(detectionCircle);
 }
 
+void Characters::MouseUp()
+{
+	SelectCharacter();
+}
+
+void Characters::UpdateArcher()
+{
+	detectionCircle.setPosition(body.getPosition());
+	tileDetectionCircle.setPosition(body.getPosition().x, body.getPosition().y + 30);
+}
+
+void Characters::SelectCharacter()
+{
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
+	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+	{
+		isSelected = !isSelected;
+		CheckIfSelected();
+		selectionCooldown.restart();
+	}
+}
 
 void Characters::Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead)
 {
-
 	int playerAnimation = m_frameNo;
 	m_frameValue += animationSpeed;
 	m_frameNo = static_cast<int>(m_frameValue);
@@ -42,37 +61,37 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 
 	if (playerAnimation != m_frameNo)
 	{
-		sprite.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
+		body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
 	}
 }
 
-void Characters::SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window, sf::View& view) 
-{
-	sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
-    if (sprite.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-    {
-        isSelected = !isSelected;
-        CheckIfSelected(sprite);
-        selectionCooldown.restart();
-    }
-}
+//void Characters::SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window, sf::View& view) 
+//{
+//	sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
+//    if (sprite.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+//    {
+//        isSelected = !isSelected;
+//        CheckIfSelected(sprite);
+//        selectionCooldown.restart();
+//    }
+//}
 
-void Characters::CheckIfSelected(sf::Sprite& sprite)
+void Characters::CheckIfSelected()
 {
     if (isSelected)
     {
-        sprite.setColor(sf::Color::Red);
+		body.setColor(sf::Color::Red);
     }
     else
     {
-        sprite.setColor(sf::Color::White);
+		body.setColor(sf::Color::White);
     }
 }
 
-void Characters::CalculateAngle(sf::Sprite& sprite, sf::Sprite& target)
+void Characters::CalculateAngle(sf::Sprite& target)
 {
-	float dx = sprite.getPosition().x - target.getPosition().x;
-	float dy = sprite.getPosition().y - target.getPosition().y;
+	float dx = body.getPosition().x - target.getPosition().x;
+	float dy = body.getPosition().y - target.getPosition().y;
 	float angle = atan2(dy, dx) * 180 / Global::PI;
 
 	float distance = std::hypot(dx, dy);
@@ -101,22 +120,22 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 	}
 }
 
-void Characters::LoadSpriteData(sf::Sprite& sprite, sf::Vector2f& pos)
+void Characters::LoadSpriteData(sf::Vector2f& pos)
 {
-	sprite.setPosition(pos);
+	body.setPosition(pos);
 }
 
-SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
-{
-	SteeringOutput steeringOutput = behaviour->WanderBehaviour(sprite);
-	return steeringOutput;
-}
-
-SteeringOutput Characters::SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite)
-{
-	SteeringOutput steeringOutput = behaviour->SeekBehaviour(targetPos, sprite);
-	return steeringOutput;
-}
+//SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
+//{
+//	SteeringOutput steeringOutput = behaviour->WanderBehaviour(sprite);
+//	return steeringOutput;
+//}
+//
+//SteeringOutput Characters::SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite)
+//{
+//	SteeringOutput steeringOutput = behaviour->SeekBehaviour(targetPos, sprite);
+//	return steeringOutput;
+//}
 
 
 

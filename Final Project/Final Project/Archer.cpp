@@ -1,32 +1,30 @@
 #include "Archer.h"
 #include "Globals.h"
 
-Archer::Archer(sf::RenderWindow& t_window, sf::View& view) : window(t_window), view(view)
+Archer::Archer()
 {
-	Init(Textures::GetInstance().GetTexture("archer"), sprite, rect);
+	Init(Textures::GetInstance().GetTexture("archer"), body, rect);
 	animationSpeed = 0.04;
-	sprite.setScale(1.5, 1.5);
+	body.setScale(1.5, 1.5);
+
 }
 
-void Archer::Draw(sf::RenderWindow& window)
+void Archer::Update()
 {
-	Render(window, sprite);
-}
+	UpdateArcher();
 
-void Archer::Update(sf::RenderWindow& window)
-{
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateArcher();
 	//m_velocity = SetWanderBehaviour(sprite).linear;
 	//m_velocity = SetSeekBehaviour(sf::Vector2f{ 500, 500 }, sprite).linear;
 	//sprite.move(m_velocity);
-	MoveArcher(window);
+	MoveArcher(*GetWindow());
 }
 
 void Archer::MouseUp(sf::RenderWindow& window)
 {
-	SelectCharacter(sprite, window, view);
+	//SelectCharacter(sprite, window, view);
 }
 
 void Archer::MoveArcher(sf::RenderWindow& window)
@@ -41,8 +39,8 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 	if (isMoving)
 	{
 		isSelected = false;
-		CheckIfSelected(sprite);
-		direction = behaviour->GetDirectionFacing(targetPos, sprite.getPosition());
+		CheckIfSelected();
+		direction = behaviour->GetDirectionFacing(targetPos, body.getPosition());
 		length = behaviour->VectorLength(direction);
 
 		if (length != 0)
@@ -50,11 +48,11 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 			direction /= length;
 		}
 
-		FlipSprite(direction, sprite);
+		FlipSprite(direction, body);
 
 		if (length > 5)
 		{
-			sprite.move(direction * moveSpeed);
+			body.move(direction * moveSpeed);
 		}
 		else
 		{
@@ -65,7 +63,7 @@ void Archer::MoveArcher(sf::RenderWindow& window)
 
 void Archer::AnimateArcher()
 {
-	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, sprite, amountOfSprites, isDead);
+	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites, isDead);
 }
 
 void Archer::ChangeAnimation()
@@ -93,10 +91,13 @@ void Archer::CheckAnimationState()
 	if (currentAnimation == ANIMATION::IDLE)
 	{
 		currentFrameY = 0;
+		textureHeight = 50;
 	}
 	if (currentAnimation == ANIMATION::RUNNING)
 	{
 		currentFrameY = 2;
+		textureHeight = 52;
+
 	}
 	if (currentAnimation == ANIMATION::ATTACKING)
 	{
@@ -114,5 +115,5 @@ void Archer::CheckAnimationState()
 }
 	sf::Sprite& Archer::GetSprite()
 	{
-		return sprite;
+		return body;
 	}

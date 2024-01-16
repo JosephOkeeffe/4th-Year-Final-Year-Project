@@ -314,7 +314,7 @@ void Game::SaveGame()
     {
         saveFilePath = (currentPath / "../Saves/" / tileData2).string();
     }
-    else if (selectedSlot == 3)
+    else if (selectedSlot == 2)
     {
         saveFilePath = (currentPath / "../Saves/" / tileData3).string();
     }
@@ -347,7 +347,7 @@ void Game::LoadGame()
     {
         loadFilePath = (currentPath / "../Saves/" / tileData2).string();
     }
-    else if (selectedSlot == 3)
+    else if (selectedSlot == 2)
     {
         loadFilePath = (currentPath / "../Saves/" / tileData3).string();
     }
