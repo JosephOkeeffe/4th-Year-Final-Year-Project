@@ -18,13 +18,12 @@ public:
 	//void Draw(sf::RenderWindow& window);
 	//void Update(sf::RenderWindow& window);
 	void Update() override;
-	void MouseUp(sf::RenderWindow& window);
-
-	void MoveArcher(sf::RenderWindow& window);
+	void MoveArcher();
 
 	void AnimateArcher();
 	void ChangeAnimation();
 	void CheckAnimationState();
+
 	sf::Sprite& GetSprite();	
 
 private:
@@ -35,8 +34,6 @@ private:
 	int textureWidth = 35;
 	int textureHeight = 50;
 	int amountOfSprites = 2;
-	sf::IntRect rect{ 0,0, textureWidth, textureHeight };
-
 	// Moving
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;

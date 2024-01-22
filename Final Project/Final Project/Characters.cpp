@@ -34,7 +34,7 @@ void Characters::MouseUp()
 	SelectCharacter();
 }
 
-void Characters::UpdateArcher()
+void Characters::UpdateDetectionCircles()
 {
 	detectionCircle.setPosition(body.getPosition());
 	tileDetectionCircle.setPosition(body.getPosition().x, body.getPosition().y + 30);
@@ -120,10 +120,11 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 	}
 }
 
-void Characters::LoadSpriteData(sf::Vector2f& pos)
+void Characters::SetPosition(sf::Vector2f pos)
 {
 	body.setPosition(pos);
 }
+
 
 //SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
 //{

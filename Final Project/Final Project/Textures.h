@@ -18,11 +18,10 @@ private:
     sf::Texture archerTexture;
     sf::Texture coinTexture;
 
+    sf::Texture baseTexture;
     sf::Texture shopTexture;
     sf::Texture tilesTexture;
-    sf::Texture grass0Texture;
-    sf::Texture grass1Texture;
-    sf::Texture grass2Texture;
+
 
     std::map<std::string, sf::Texture> textureMap;
 };

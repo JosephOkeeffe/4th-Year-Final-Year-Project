@@ -12,11 +12,7 @@ Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
     view(m_window, gameView, hudView),
-    hud(m_window, m_font),
-    warrior(m_window, gameView),
-    archer(),
-    enemy1(m_window, gameView)
-    
+    hud(m_window, m_font)
 {
     GameObject::SetWindow(m_window);
     GameObject::SetView(gameView);
@@ -106,17 +102,9 @@ void Game::ProcessMouseUp(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-       /* warrior.MouseUp(m_window);
-        archer.MouseUp(m_window);
-
-        for (Warrior& temp : playerWarrior)
+        for (GameObject* object : gameObjects)
         {
-            temp.MouseUp(m_window);
-        }*/
-
-        for (GameObject* g : gameObjects)
-        {
-            g->MouseUp();
+            object->MouseUp();
         }
     }
 }
@@ -165,23 +153,11 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        //warrior.Draw(m_window);
-        //archer.Draw(m_window);
-      /*  for (Warrior& enemy : enemyWarriors)
-        {
-            enemy.Draw(m_window);
-        }
 
-        for (Warrior& temp : playerWarrior)
+        for (GameObject* object : gameObjects)
         {
-            temp.Draw(m_window);
-        }*/
-
-        for (GameObject* g : gameObjects)
-        {
-            g->Draw();
+            object->Draw();
         }
-        // HUD
         view.SetHudView();
         hud.Render(m_window);
         break;
@@ -193,8 +169,6 @@ void Game::Render()
                 tiles[row][col].Render(m_window);
             }
         }
-        //warrior.Draw(m_window);
-        //archer.Draw(m_window);
         pauseMenu.Render(m_window);
 
         break;
@@ -258,22 +232,9 @@ void Game::Update(sf::Time t_deltaTime)
 
         ChangeThingsDependingOnTileType();
 
-        //warrior.Update();
-        //archer.Update();
-
-        /*for (Warrior& temp : playerWarrior)
+        for (GameObject* object : gameObjects)
         {
-            temp.Update(m_window);
-        }*/
-
-        /*for (Warrior& enemy : enemyWarriors)
-        {
-            warrior.CalculateAngle(warrior.GetSprite(), enemy.GetSprite());
-            archer.CalculateAngle(archer.GetSprite(), enemy.GetSprite());
-        }*/
-        for (GameObject* g : gameObjects)
-        {
-            g->Update();
+            object->Update();
         }
         break;
     case PAUSED:
@@ -462,11 +423,18 @@ void Game::ManageTimer()
 
 void Game::CreateWarrior()
 {
-    Warrior warrior(m_window, gameView);
-    warrior.SetPosition({ 300, 300 });
+    Warrior* newWarrior = new Warrior;
+    newWarrior->SetPosition({ 500, 600 });
 
-    playerWarrior.push_back(warrior);
-    gameObjects.push_back(&playerWarrior.back());
+    gameObjects.push_back(newWarrior);
+}
+
+void Game::CreateArcher()
+{
+    Archer* newArcher = new Archer;
+    newArcher->SetPosition({ 350, 450 });
+
+    gameObjects.push_back(newArcher);
 }
 
 

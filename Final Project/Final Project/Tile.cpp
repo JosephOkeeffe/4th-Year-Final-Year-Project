@@ -23,7 +23,15 @@ void Tile::Init(sf::Vector2f& position)
 void Tile::Render(sf::RenderWindow& window)
 {
 	window.draw(tile);
-	
+
+	if (isDiscovered)
+	{
+		tile.setFillColor(sf::Color::White);
+	}
+	else
+	{
+		tile.setFillColor(sf::Color::Black);
+	}          
 }
 
 void Tile::Update()
@@ -43,13 +51,11 @@ void Tile::CheckTileType()
 	case OBSTACLE:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-
 		CheckGrassType();
 		break;
 	case PATH:
 		tile.setFillColor(sf::Color::White);
 		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-
 		CheckGrassType();
 		break;
 	case SHOP:

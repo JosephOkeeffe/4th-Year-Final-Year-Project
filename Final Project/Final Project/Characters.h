@@ -2,19 +2,17 @@
 #include <SFML/Graphics.hpp>
 #include "Behaviour.h"
 #include "Textures.h"
-#include "exampleParent.h"
+#include "GameObject.h"
 
 class Characters : public GameObject
 {
 public:
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
-	//void Render(sf::RenderWindow& window, sf::Sprite& sprite);
 	void Draw() override;
-	//void Update() override;
 	void MouseUp() override;
 
-	void UpdateArcher();
+	void UpdateDetectionCircles();
 
 	void SelectCharacter();
 
@@ -22,16 +20,7 @@ public:
 	void CheckIfSelected();
 	void CalculateAngle(sf::Sprite& target);
 	void FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite);
-
-	void LoadSpriteData(sf::Vector2f& pos);
-
-	//inline void SetBehaviour(Behaviour* newBehaviour)
-	//{
-	//	behaviour = newBehaviour;
-	//}
-
-	//SteeringOutput SetWanderBehaviour(sf::Sprite& sprite);
-	//SteeringOutput SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite);
+	void SetPosition(sf::Vector2f pos);
 
 	bool isDead = false;
 	sf::CircleShape detectionCircle;

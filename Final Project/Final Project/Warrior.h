@@ -14,29 +14,19 @@ public:
 
 	};
 
-	Warrior(sf::RenderWindow& t_window, sf::View& view);
-	//void Draw(sf::RenderWindow& window);
-	//void Update(sf::RenderWindow& window);
-	void MouseUp(sf::RenderWindow& window);
+	Warrior();
+	void Update() override;
 
-	void MoveWarrior(sf::RenderWindow& window);
+	void MoveWarrior();
 
 	void AnimateWarrior();
 	void ChangeAnimation();
 	void CheckAnimationState();
 
-	void SetPosition(sf::Vector2f pos);
-
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
 
 private:
-
-	sf::RenderWindow& window;
-	sf::View& view;
-
-	bool isDead = false;
-	sf::Sprite sprite;
 
 	int currentAnimation = ANIMATION::IDLE;
 	int currentFrameX = 32;
@@ -44,7 +34,7 @@ private:
 	int textureWidth = 32;
 	int textureHeight = 32;
 	int amountOfSprites = 10;
-	sf::IntRect warriorRect{ 0,0, textureWidth, textureHeight };
+	//sf::IntRect rect{ 0,0, textureWidth, textureHeight };
 
 	// Moving
 	sf::Vector2f targetPos;

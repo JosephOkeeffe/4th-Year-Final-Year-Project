@@ -6,6 +6,7 @@ enum TileType
 	OBSTACLE,
 	PATH,
 	SHOP,
+    BASE,
 };
 
 enum GrassType

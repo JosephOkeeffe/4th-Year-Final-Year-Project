@@ -84,7 +84,6 @@ public:
     void Zoom();
     void MoveCamera();
     bool IsMouseOverPalette();
-  
 
     void SaveGame();
     void LoadGame();

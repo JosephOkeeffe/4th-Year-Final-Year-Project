@@ -16,7 +16,7 @@
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
-#include "exampleParent.h"
+#include "GameObject.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -63,7 +63,9 @@ private:
 
     void ManageTimer();
 
+    void CreateWorker();
     void CreateWarrior();
+    void CreateArcher();
     std::vector<Warrior> playerWarrior;
 
 

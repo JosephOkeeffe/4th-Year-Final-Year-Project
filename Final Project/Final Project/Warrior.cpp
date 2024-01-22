@@ -1,45 +1,36 @@
 #include "Warrior.h"
 #include "Globals.h"
 
-Warrior::Warrior(sf::RenderWindow& t_window, sf::View& view) : window(t_window), view(view)
+Warrior::Warrior()
 {
-	Init(Textures::GetInstance().GetTexture("warrior"),sprite, warriorRect);
+	textureRect = { 0, 0, textureWidth, textureHeight };
+	Init(Textures::GetInstance().GetTexture("warrior"), body, textureRect);
 }
 
-//void Warrior::Draw(sf::RenderWindow& window)
-//{
-//	//Draw();
-//	//Render(window, sprite);
-//}
-//
-//void Warrior::Update(sf::RenderWindow& window)
-//{
-//	CheckAnimationState();
-//	ChangeAnimation();
-//	AnimateWarrior();
-//	
-//	MoveWarrior(window);
-//}
-
-void Warrior::MouseUp(sf::RenderWindow& window)
+void Warrior::Update()
 {
-	//SelectCharacter(sprite, window, view);
+	UpdateDetectionCircles();
+
+	CheckAnimationState();
+	ChangeAnimation();
+	AnimateWarrior();
+	MoveWarrior();
 }
 
-void Warrior::MoveWarrior(sf::RenderWindow& window)
+void Warrior::MoveWarrior()
 {
 	float length = 0;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
 		isMoving = true;
-		targetPos = Global::GetMousePos(window);
+		targetPos = Global::GetMousePos(*GetWindow());
 	}
 	
 	if (isMoving)
 	{
 		isSelected = false;
 		CheckIfSelected();
-		direction = behaviour->GetDirectionFacing(targetPos, sprite.getPosition());
+		direction = behaviour->GetDirectionFacing(targetPos, body.getPosition());
 		length = behaviour->VectorLength(direction);
 
 		if (length != 0)
@@ -47,12 +38,12 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 			direction /= length;
 		}
 
-		FlipSprite(direction, sprite);
+		FlipSprite(direction, body);
 
 
 		if (length > 5)
 		{
-			sprite.move(direction * currentMoveSpeed);
+			body.move(direction * currentMoveSpeed);
 		}
 		else
 		{
@@ -63,7 +54,7 @@ void Warrior::MoveWarrior(sf::RenderWindow& window)
 
 void Warrior::AnimateWarrior()
 {
-	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, sprite, amountOfSprites, isDead);
+	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites, isDead);
 }
 
 void Warrior::ChangeAnimation()
@@ -111,18 +102,13 @@ void Warrior::CheckAnimationState()
 	}
 }
 
-void Warrior::SetPosition(sf::Vector2f pos)
-{
-	LoadSpriteData(pos);
-}
-
 sf::Sprite& Warrior::GetSprite()
 {
-	return sprite;
+	return body;
 }
 
 sf::Vector2f& Warrior::GetPos()
 {
-	sf::Vector2f pos = sprite.getPosition();
+	sf::Vector2f pos = body.getPosition();
 	return pos;
 }

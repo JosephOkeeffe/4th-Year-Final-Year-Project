@@ -3,7 +3,8 @@
 
 Archer::Archer()
 {
-	Init(Textures::GetInstance().GetTexture("archer"), body, rect);
+	textureRect = { 0,0, textureWidth, textureHeight };
+	Init(Textures::GetInstance().GetTexture("archer"), body, textureRect);
 	animationSpeed = 0.04;
 	body.setScale(1.5, 1.5);
 
@@ -11,29 +12,21 @@ Archer::Archer()
 
 void Archer::Update()
 {
-	UpdateArcher();
+	UpdateDetectionCircles();
 
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateArcher();
-	//m_velocity = SetWanderBehaviour(sprite).linear;
-	//m_velocity = SetSeekBehaviour(sf::Vector2f{ 500, 500 }, sprite).linear;
-	//sprite.move(m_velocity);
-	MoveArcher(*GetWindow());
+	MoveArcher();
 }
 
-void Archer::MouseUp(sf::RenderWindow& window)
-{
-	//SelectCharacter(sprite, window, view);
-}
-
-void Archer::MoveArcher(sf::RenderWindow& window)
+void Archer::MoveArcher()
 {
 	float length = 0;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
 	{
 		isMoving = true;
-		targetPos = Global::GetMousePos(window);
+		targetPos = Global::GetMousePos(*GetWindow());
 	}
 
 	if (isMoving)
@@ -113,7 +106,8 @@ void Archer::CheckAnimationState()
 		isDead = false;
 	}
 }
-	sf::Sprite& Archer::GetSprite()
-	{
-		return body;
-	}
+
+sf::Sprite& Archer::GetSprite()
+{
+	return body;
+}

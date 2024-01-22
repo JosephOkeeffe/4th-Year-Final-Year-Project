@@ -26,14 +26,12 @@ void Textures::SetupTextures()
     shopTexture.loadFromFile("./assets/images/shop.png");
     textureMap["shop"] = shopTexture;
 
+    baseTexture.loadFromFile("./assets/images/base.png");
+    textureMap["base"] = baseTexture;
+
     tilesTexture.loadFromFile("./assets/images/tiles.png");
     textureMap["tiles"] = tilesTexture;
 
-    grass0Texture.loadFromFile("./assets/images/grass0.png");
-    textureMap["grass0"] = grass0Texture;
-
-    grass1Texture.loadFromFile("./assets/images/grass1.png");
-    textureMap["grass1"] = grass1Texture;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

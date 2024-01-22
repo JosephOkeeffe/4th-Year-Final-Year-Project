@@ -133,9 +133,10 @@
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
     <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="Buildings.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Characters.cpp" />
-    <ClCompile Include="exampleParent.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
@@ -151,9 +152,10 @@
   <ItemGroup>
     <ClInclude Include="Archer.h" />
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="Buildings.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Characters.h" />
-    <ClInclude Include="exampleParent.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MainMenu.h" />

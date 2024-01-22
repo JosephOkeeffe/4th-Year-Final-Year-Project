@@ -31,6 +31,8 @@ public:
 
 private:
 
+
+	bool isDiscovered = true;
 	TileType tileType = NONE;
 	GrassType grassType = GRASS1;
 
