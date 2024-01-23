@@ -82,9 +82,18 @@ void Game::ProcessEvents()
 }
 void Game::ProcessKeys(sf::Event t_event)
 {
-    if (sf::Keyboard::Escape == t_event.key.code){m_exitGame = true;}
-    if (sf::Keyboard::Q == t_event.key.code) { CreateWarrior(); }
-    if (sf::Keyboard::Enter == t_event.key.code) { currentState = PAUSED; }
+    if (sf::Keyboard::Escape == t_event.key.code)
+    {
+        m_exitGame = true;
+    }
+    if (sf::Keyboard::Q == t_event.key.code)
+    {
+        CreateShop({ 500, 500 });
+    }
+    if (sf::Keyboard::Enter == t_event.key.code) 
+    { 
+        currentState = PAUSED; 
+    }
 }
 void Game::ProcessMouseDown(sf::Event t_event)
 {
@@ -114,6 +123,7 @@ void Game::Init()
     m_font.loadFromFile("./assets/fonts/Flinton.otf");
     mainMenu.Init(m_window, m_font);
     pauseMenu.Init(m_window, m_font);
+
     tiles = new Tile * [Global::ROWS_COLUMNS];
 
     for (int i = 0; i < Global::ROWS_COLUMNS; i++) 
@@ -123,15 +133,11 @@ void Game::Init()
     elapsedTime = incomeTimer.getElapsedTime();
     InitTiles();
     hud.Init();
+    BuildingUI::Init();
 
-    warrior.SetPosition({ 200, 200 });
-    enemy1.SetPosition({ 400, 200 });
-
-    enemyWarriors.push_back(enemy1);
-
-    gameObjects.push_back(&enemyWarriors[0]);
-    gameObjects.push_back(&warrior);
-    gameObjects.push_back(&archer);
+    CreateBase({ 200, 200 });
+    CreateArcher({ 300, 300 });
+    CreateWarrior({ 350, 300 });
 }
 
 void Game::Render()
@@ -158,6 +164,8 @@ void Game::Render()
         {
             object->Draw();
         }
+
+        BuildingUI::Draw(m_window);
         view.SetHudView();
         hud.Render(m_window);
         break;
@@ -285,7 +293,7 @@ void Game::SaveJSON()
 
 void Game::LoadJSON()
 {
-    //loadTilesDataPath = (currentPath / "../../Saves/GameData.json").string();
+
     std::ifstream file(loadGameDataPath);
 
     if (file.is_open())
@@ -421,20 +429,44 @@ void Game::ManageTimer()
     }
 }
 
-void Game::CreateWarrior()
+void Game::CreateWarrior(sf::Vector2f pos)
 {
     Warrior* newWarrior = new Warrior;
-    newWarrior->SetPosition({ 500, 600 });
+    newWarrior->SetPosition(pos);
 
     gameObjects.push_back(newWarrior);
 }
 
-void Game::CreateArcher()
+void Game::CreateArcher(sf::Vector2f pos)
 {
     Archer* newArcher = new Archer;
-    newArcher->SetPosition({ 350, 450 });
+    newArcher->SetPosition(pos);
 
     gameObjects.push_back(newArcher);
+}
+
+void Game::CreateBase(sf::Vector2f pos)
+{
+    int x = pos.x / Global::CELL_SIZE;
+    int y = pos.y / Global::CELL_SIZE;
+
+    float newX = (tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
+    float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
+    sf::Vector2f newPos = { newX, newY };
+    Base* newBase = new Base(newPos);
+    gameObjects.push_back(newBase);
+}
+
+void Game::CreateShop(sf::Vector2f pos)
+{
+    int x = pos.x / Global::CELL_SIZE;
+    int y = pos.y / Global::CELL_SIZE;
+
+    float newX = (tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2);
+    float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
+    sf::Vector2f newPos = { newX, newY };
+    Shop* newShop = new Shop(newPos);
+    gameObjects.push_back(newShop);
 }
 
 

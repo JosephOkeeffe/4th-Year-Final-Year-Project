@@ -132,8 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Buildings.cpp" />
+    <ClCompile Include="BuildingUI.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManagement.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,8 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
+    <ClInclude Include="Base.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Buildings.h" />
+    <ClInclude Include="BuildingUI.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Characters.h" />
     <ClInclude Include="GameObject.h" />
@@ -162,6 +167,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManagement.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Globals.h" />

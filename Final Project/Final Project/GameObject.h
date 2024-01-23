@@ -2,6 +2,10 @@
 #define GAMEOBJ_H
 #include <SFML/Graphics.hpp>
 #include "Textures.h"
+#include "Globals.h"
+#include "BuildingUI.h"
+
+#define Display_Text(x) std::cout << x << "\n";
 
 class GameObject
 {

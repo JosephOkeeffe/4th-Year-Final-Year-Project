@@ -12,11 +12,14 @@
 #include "Textures.h"
 #include "Warrior.h"
 #include "Archer.h"
+#include "Base.h"
+#include "Shop.h"
 #include "HUD.h"
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
 #include "GameObject.h"
+#include "BuildingUI.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -63,10 +66,13 @@ private:
 
     void ManageTimer();
 
-    void CreateWorker();
-    void CreateWarrior();
-    void CreateArcher();
+    void CreateWorker(sf::Vector2f pos);
+    void CreateWarrior(sf::Vector2f pos);
+    void CreateArcher(sf::Vector2f pos);
     std::vector<Warrior> playerWarrior;
+
+    void CreateBase(sf::Vector2f pos);
+    void CreateShop(sf::Vector2f pos);
 
 
     sf::RenderWindow m_window;

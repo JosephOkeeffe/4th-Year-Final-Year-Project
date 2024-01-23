@@ -219,3 +219,5 @@ _Pvt_Extensions
 # Visual Studio cache files
 ipch/
 .vs/  # Ignore the .vs folder
+.pdb
+./pdb

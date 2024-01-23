@@ -7,7 +7,6 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	sprite.setTexture(texture);
 	sprite.setTextureRect(textureSize);
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
-	sprite.setPosition(150, 150);
 	sprite.setScale(2, 2);
 
 	detectionCircle.setRadius(detectionRadius);
@@ -25,8 +24,8 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 
 void Characters::Draw()
 {
-	GetWindow()->draw(body);
 	GetWindow()->draw(detectionCircle);
+	GetWindow()->draw(body);
 }
 
 void Characters::MouseUp()
@@ -64,17 +63,6 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 		body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
 	}
 }
-
-//void Characters::SelectCharacter(sf::Sprite& sprite, sf::RenderWindow& window, sf::View& view) 
-//{
-//	sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
-//    if (sprite.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-//    {
-//        isSelected = !isSelected;
-//        CheckIfSelected(sprite);
-//        selectionCooldown.restart();
-//    }
-//}
 
 void Characters::CheckIfSelected()
 {
