@@ -84,25 +84,14 @@ private:
 
     MainMenu mainMenu;
     PauseMenu pauseMenu;
-    HUD hud;
 
     Tile** tiles;
     View view{ m_window, gameView, hudView };
-
-    Warrior warrior;
-    Archer archer;
 
     sf::Clock incomeTimer;
     sf::Time elapsedTime;
 
     bool loadGame = false;
-
-    Warrior enemy1;
-    std::vector<Warrior> enemyWarriors;
-    //std::vector<Characters> enemies;
-    //std::vector<Characters> enemies;
-    
-
 
     std::vector<GameObject*> gameObjects;
     

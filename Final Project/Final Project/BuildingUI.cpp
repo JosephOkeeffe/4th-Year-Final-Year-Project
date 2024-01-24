@@ -1,7 +1,9 @@
 #include "BuildingUI.h"
 
 bool BuildingUI::isActive = false;
+bool BuildingUI::buildSelected = false;
 sf::RectangleShape BuildingUI::mainRectangle;
-sf::RectangleShape BuildingUI::smallRectangles[BuildingUI::numSmallRectangles];
+sf::RectangleShape BuildingUI::buildButton;
+sf::RectangleShape BuildingUI::trainButton;
 sf::Font BuildingUI::font;
-sf::Text BuildingUI::boxText[BuildingUI::numSmallRectangles];
+sf::Text BuildingUI::boxText[2];

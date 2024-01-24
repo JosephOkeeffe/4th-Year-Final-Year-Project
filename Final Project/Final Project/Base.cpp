@@ -1,4 +1,5 @@
 #include "Base.h"
+#include "HUD.h"
 
 Base::Base(sf::Vector2f pos)
 {
@@ -17,6 +18,7 @@ void Base::MouseUp()
 		SelectBuilding();
 		CheckIfSelected();
 	}
+	BuildingUI::BuildMenu(*GetWindow(), *GetView());
 }
 void Base::CheckIfSelected()
 {
@@ -28,6 +30,7 @@ void Base::CheckIfSelected()
 	}
 	else
 	{
+		HUD::isActive = false;
 		BuildingUI::Deactivate();
 		body.setColor(sf::Color::White);
 	}

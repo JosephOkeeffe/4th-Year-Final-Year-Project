@@ -20,15 +20,21 @@ public:
 	sf::Texture texture;
 	sf::IntRect textureRect;
 
-	virtual void Draw() { window->draw(body); }
-	virtual void Update() {}
+	sf::CircleShape detectionCircle;
+	float detectionRadius = 100.0f;
+
+	virtual void Draw() { window->draw(body); window->draw(detectionCircle); }
+	virtual void Update() { detectionCircle.setPosition(body.getPosition());}
 	virtual void MouseUp() {}
 
-	void SetTexture(std::string name) 
-	{ 
-		texture = Textures::GetInstance().GetTexture(name);
-		body.setTexture(texture);
+	void InitDetectionCircle()
+	{
+		detectionCircle.setRadius(detectionRadius);
+		detectionCircle.setOrigin(detectionRadius, detectionRadius);
+		detectionCircle.setPosition(body.getPosition());
+		detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
 	}
+
 	void SetTexture(sf::Texture tex)
 	{
 		texture = tex;

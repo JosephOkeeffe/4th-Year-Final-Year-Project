@@ -12,7 +12,6 @@ public:
 	void MouseUp() override;
 
 	void SelectBuilding();
-	//void CheckIfSelected();
 
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
 	void SetPosition(sf::Vector2f pos);

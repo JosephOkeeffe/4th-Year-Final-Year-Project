@@ -9,10 +9,10 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
 	sprite.setScale(2, 2);
 
-	detectionCircle.setRadius(detectionRadius);
+	/*detectionCircle.setRadius(detectionRadius);
 	detectionCircle.setOrigin(detectionRadius, detectionRadius);
 	detectionCircle.setPosition(sprite.getPosition());
-	detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
+	detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));*/
 
 	tileDetectionCircle.setRadius(tileDetectionRadius);
 	tileDetectionCircle.setOrigin(tileDetectionRadius, tileDetectionRadius);
@@ -20,6 +20,8 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 
 	SetTexture(texture);
 	SetTextureRect(textureSize);
+
+	InitDetectionCircle();
 }
 
 void Characters::Draw()

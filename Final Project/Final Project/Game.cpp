@@ -11,8 +11,7 @@ bool loadSave = false;
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
-    view(m_window, gameView, hudView),
-    hud(m_window, m_font)
+    view(m_window, gameView, hudView)
 {
     GameObject::SetWindow(m_window);
     GameObject::SetView(gameView);
@@ -69,7 +68,7 @@ void Game::ProcessEvents()
             mainMenu.HandleEvents(newEvent, m_window);
             break;
         case GAME:
-            hud.HandleEvents(newEvent);
+            HUD::HandleEvents(newEvent, m_window);
             view.handleInput(newEvent);
             break;
         case PAUSED:
@@ -132,7 +131,7 @@ void Game::Init()
     }
     elapsedTime = incomeTimer.getElapsedTime();
     InitTiles();
-    hud.Init();
+    HUD::Init(m_window, m_font);
     BuildingUI::Init();
 
     CreateBase({ 200, 200 });
@@ -167,7 +166,7 @@ void Game::Render()
 
         BuildingUI::Draw(m_window);
         view.SetHudView();
-        hud.Render(m_window);
+        HUD::Render(m_window);
         break;
     case PAUSED:
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
@@ -244,6 +243,7 @@ void Game::Update(sf::Time t_deltaTime)
         {
             object->Update();
         }
+
         break;
     case PAUSED:
 
@@ -261,8 +261,8 @@ void Game::SaveJSON()
 
     nlohmann::json jsonData;
 
-    jsonData["X"] = warrior.GetSprite().getPosition().x;
-    jsonData["Y"] = warrior.GetSprite().getPosition().y;
+    //jsonData["X"] = warrior.GetSprite().getPosition().x;
+    //jsonData["Y"] = warrior.GetSprite().getPosition().y;
 
     jsonData["Coins"] = ResourceManagement::GetCoins();
     jsonData["Shops"] = ResourceManagement::GetShops();
@@ -305,7 +305,7 @@ void Game::LoadJSON()
         sf::Vector2f warriorLoadedPos;
         warriorLoadedPos.x = jsonData["X"];
         warriorLoadedPos.y = jsonData["Y"];
-        warrior.SetPosition(warriorLoadedPos);
+       // warrior.SetPosition(warriorLoadedPos);
 
         float coins = jsonData["Coins"];
         float shops = jsonData["Shops"];
@@ -389,20 +389,20 @@ void Game::ChangeThingsDependingOnTileType()
 {
     sf::Vector2i tempPos;
 
-    tempPos.x = static_cast<int>(warrior.tileDetectionCircle.getPosition().x / Global::CELL_SIZE);
-    tempPos.y = static_cast<int>(warrior.tileDetectionCircle.getPosition().y / Global::CELL_SIZE);
+   // tempPos.x = static_cast<int>(warrior.tileDetectionCircle.getPosition().x / Global::CELL_SIZE);
+   // tempPos.y = static_cast<int>(warrior.tileDetectionCircle.getPosition().y / Global::CELL_SIZE);
 
     if (tiles[tempPos.x][tempPos.y].GetTileType() == NONE)
     {
-        warrior.currentMoveSpeed = warrior.defaultMoveSpeed;
+       // warrior.currentMoveSpeed = warrior.defaultMoveSpeed;
     }
     else if (tiles[tempPos.x][tempPos.y].GetTileType() == PATH)
     {
-        warrior.currentMoveSpeed = warrior.defaultMoveSpeed * 2;
+        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed * 2;
     }
     else if (tiles[tempPos.x][tempPos.y].GetTileType() == OBSTACLE)
     {
-        warrior.currentMoveSpeed = warrior.defaultMoveSpeed / 2;
+        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed / 2;
     }
 }
 

@@ -14,10 +14,12 @@ void Buildings::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& text
 
 	SetTexture(texture);
 	SetTextureRect(textureSize);
+	InitDetectionCircle();
 }
 
 void Buildings::Draw()
 {
+	GetWindow()->draw(detectionCircle);
 	GetWindow()->draw(body);
 
 	//if (isSelected)
@@ -43,6 +45,7 @@ void Buildings::Draw()
 
 void Buildings::Update()
 {
+	detectionCircle.setPosition(body.getPosition());
 }
 
 void Buildings::MouseUp()

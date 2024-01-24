@@ -23,8 +23,6 @@ public:
 	void SetPosition(sf::Vector2f pos);
 
 	bool isDead = false;
-	sf::CircleShape detectionCircle;
-	float detectionRadius = 100.0f;
 
 	sf::CircleShape tileDetectionCircle;
 	float tileDetectionRadius = 10;
