@@ -9,7 +9,7 @@ public:
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
 	void Draw() override;
 	void Update() override;
-	void MouseUp() override;
+	void MouseRelease() override;
 
 	void SelectBuilding();
 

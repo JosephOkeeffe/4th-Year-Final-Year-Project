@@ -32,6 +32,12 @@ void Textures::SetupTextures()
     tilesTexture.loadFromFile("./assets/images/tiles.png");
     textureMap["tiles"] = tilesTexture;
 
+    tilesTexture.loadFromFile("./assets/images/warrior-icon.png");
+    textureMap["warrior-icon"] = tilesTexture;
+
+    tilesTexture.loadFromFile("./assets/images/archer-icon.png");
+    textureMap["archer-icon"] = tilesTexture;
+
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

@@ -22,6 +22,9 @@ private:
     sf::Texture shopTexture;
     sf::Texture tilesTexture;
 
+    sf::Texture warriorButtonIconTexture;
+    sf::Texture archerButtonIconTexture;
+
 
     std::map<std::string, sf::Texture> textureMap;
 };

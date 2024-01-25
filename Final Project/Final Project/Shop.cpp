@@ -7,7 +7,7 @@ Shop::Shop(sf::Vector2f pos)
 	body.setPosition(pos);
 }
 
-void Shop::MouseUp()
+void Shop::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))

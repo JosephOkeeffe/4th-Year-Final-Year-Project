@@ -21,7 +21,7 @@ void Characters::Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& tex
 	SetTexture(texture);
 	SetTextureRect(textureSize);
 
-	InitDetectionCircle();
+	InitDetectionCircle(150);
 }
 
 void Characters::Draw()
@@ -30,7 +30,7 @@ void Characters::Draw()
 	GetWindow()->draw(body);
 }
 
-void Characters::MouseUp()
+void Characters::MouseRelease()
 {
 	SelectCharacter();
 }

@@ -89,8 +89,24 @@ public:
         }
     }
 
+    static void TrainMenu(sf::RenderWindow& window, sf::View& view)
+    {
+        trainSelected = true;
+
+        sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
+        if (isActive)
+        {
+            if (trainButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+            {
+                Display_Text("Tain");
+                HUD::isActive = true;
+            }
+        }
+    }
+
     static bool isActive;
     static bool buildSelected;
+    static bool trainSelected;
     static sf::Font font;
     static sf::Text boxText[2];
 

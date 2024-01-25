@@ -7,7 +7,7 @@ class Shop : public Buildings
 public:
 
 	Shop(sf::Vector2f pos);
-	void MouseUp() override;
+	void MouseRelease() override;
 	void CheckIfSelected();
 
 private:

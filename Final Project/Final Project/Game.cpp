@@ -112,7 +112,7 @@ void Game::ProcessMouseUp(sf::Event t_event)
     {
         for (GameObject* object : gameObjects)
         {
-            object->MouseUp();
+            object->MouseRelease();
         }
     }
 }
@@ -135,8 +135,10 @@ void Game::Init()
     BuildingUI::Init();
 
     CreateBase({ 200, 200 });
-    CreateArcher({ 300, 300 });
-    CreateWarrior({ 350, 300 });
+    CreateArcher({ 300, 400 });
+    CreateWarrior({ 350, 400 });
+    CreateWarrior({ 400, 400 });
+    // stay in same position but move to the leader
 }
 
 void Game::Render()
@@ -242,6 +244,7 @@ void Game::Update(sf::Time t_deltaTime)
         for (GameObject* object : gameObjects)
         {
             object->Update();
+            ClearFog(object->detectionCircle);
         }
 
         break;
@@ -455,6 +458,7 @@ void Game::CreateBase(sf::Vector2f pos)
     sf::Vector2f newPos = { newX, newY };
     Base* newBase = new Base(newPos);
     gameObjects.push_back(newBase);
+   
 }
 
 void Game::CreateShop(sf::Vector2f pos)
@@ -467,6 +471,21 @@ void Game::CreateShop(sf::Vector2f pos)
     sf::Vector2f newPos = { newX, newY };
     Shop* newShop = new Shop(newPos);
     gameObjects.push_back(newShop);
+}
+
+void Game::ClearFog(sf::CircleShape radius)
+{
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    {
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        {
+           
+            if (radius.getGlobalBounds().intersects(tiles[row][col].tile.getGlobalBounds()))
+            {
+                tiles[row][col].DiscoverTile();
+            }
+        }
+    }
 }
 
 

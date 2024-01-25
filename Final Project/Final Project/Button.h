@@ -16,6 +16,9 @@ public:
     void update();
     void render(sf::RenderWindow& window);
     void centreLabel(sf::Vector2f position);
+    void lowerLabelPosition();
+    void SetLabelPosInRelationToButton(float x, float y);
+    void SetLabelPos(float x, float y);
 
     sf::Vector2f getButtonPos();
     sf::RectangleShape getButtonSprite();

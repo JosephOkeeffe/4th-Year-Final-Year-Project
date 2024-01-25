@@ -25,12 +25,12 @@ public:
 
 	virtual void Draw() { window->draw(body); window->draw(detectionCircle); }
 	virtual void Update() { detectionCircle.setPosition(body.getPosition());}
-	virtual void MouseUp() {}
+	virtual void MouseRelease() {}
 
-	void InitDetectionCircle()
+	void InitDetectionCircle(int radius)
 	{
-		detectionCircle.setRadius(detectionRadius);
-		detectionCircle.setOrigin(detectionRadius, detectionRadius);
+		detectionCircle.setRadius(radius);
+		detectionCircle.setOrigin(radius, radius);
 		detectionCircle.setPosition(body.getPosition());
 		detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
 	}

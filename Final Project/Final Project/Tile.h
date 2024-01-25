@@ -17,6 +17,7 @@ public:
 	void Hover(sf::Texture& texture);
 	void ResetTexture();
 	void SetupGrassTiles();
+	void DiscoverTile();
 
 	GrassType GetGrassType();
 	void SetGrassType(GrassType type);
@@ -32,7 +33,7 @@ public:
 private:
 
 
-	bool isDiscovered = true;
+	bool isDiscovered = false;
 	TileType tileType = NONE;
 	GrassType grassType = GRASS1;
 

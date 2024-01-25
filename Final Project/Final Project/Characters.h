@@ -10,7 +10,7 @@ public:
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
 	void Draw() override;
-	void MouseUp() override;
+	void MouseRelease() override;
 
 	void UpdateDetectionCircles();
 

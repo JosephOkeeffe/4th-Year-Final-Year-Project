@@ -26,7 +26,7 @@ void Tile::Render(sf::RenderWindow& window)
 
 	if (isDiscovered)
 	{
-		tile.setFillColor(sf::Color::White);
+		//tile.setFillColor(sf::Color::White);
 	}
 	else
 	{
@@ -168,6 +168,12 @@ void Tile::SetupGrassTiles()
 	{
 		SetGrassType(MOUNTAINS);
 	}
+}
+
+void Tile::DiscoverTile()
+{
+	isDiscovered = true;
+	tile.setFillColor(sf::Color::White);
 }
 
 void Tile::SetTileType(TileType type)

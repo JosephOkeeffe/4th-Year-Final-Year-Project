@@ -74,6 +74,7 @@ private:
     void CreateBase(sf::Vector2f pos);
     void CreateShop(sf::Vector2f pos);
 
+    void ClearFog(sf::CircleShape radius);
 
     sf::RenderWindow m_window;
     sf::Font m_font;

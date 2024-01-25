@@ -86,6 +86,29 @@ void Button::centreLabel(sf::Vector2f position)
 
 }
 
+void Button::lowerLabelPosition()
+{
+    sf::Vector2f newPos;
+    newPos.x = shape.getPosition().x;
+    newPos.y = shape.getPosition().y + shape.getSize().y * 0.6;
+
+    label.setPosition(newPos);
+}
+
+void Button::SetLabelPosInRelationToButton(float x, float y)
+{
+    sf::Vector2f newPos;
+    newPos.x = shape.getPosition().x * x;
+    newPos.y = shape.getPosition().y * y;
+
+    label.setPosition(newPos);
+}
+
+void Button::SetLabelPos(float x, float y)
+{
+   // label.setPosition
+}
+
 sf::Vector2f Button::getButtonPos()
 {
     return shape.getPosition();

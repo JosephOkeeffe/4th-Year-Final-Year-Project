@@ -8,9 +8,10 @@ Base::Base(sf::Vector2f pos)
 	body.setPosition(pos);
 	BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80 });
 	BuildingUI::Deactivate();
+	detectionRadius = 0;
 }
 
-void Base::MouseUp()
+void Base::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
@@ -19,6 +20,7 @@ void Base::MouseUp()
 		CheckIfSelected();
 	}
 	BuildingUI::BuildMenu(*GetWindow(), *GetView());
+	BuildingUI::TrainMenu(*GetWindow(), *GetView());
 }
 void Base::CheckIfSelected()
 {
