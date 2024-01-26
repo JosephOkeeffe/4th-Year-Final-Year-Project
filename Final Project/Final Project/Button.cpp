@@ -54,7 +54,8 @@ void Button::handleEvent(const sf::Event& event, sf::RenderWindow& window)
     }
     else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) 
     {
-        if (isHovered) {
+        if (isHovered) 
+        {
             isPressed = true;
         }
     }

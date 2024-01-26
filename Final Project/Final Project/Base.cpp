@@ -17,10 +17,16 @@ void Base::MouseRelease()
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		SelectBuilding();
-		CheckIfSelected();
+		/*CheckIfSelected();*/
 	}
 	BuildingUI::BuildMenu(*GetWindow(), *GetView());
 	BuildingUI::TrainMenu(*GetWindow(), *GetView());
+	
+}
+void Base::Update()
+{
+	CheckIfSelected();
+	UpdateDetectionCircles();
 }
 void Base::CheckIfSelected()
 {
@@ -32,7 +38,7 @@ void Base::CheckIfSelected()
 	}
 	else
 	{
-		HUD::isActive = false;
+		HUD::currentState = HUD::NONE;
 		BuildingUI::Deactivate();
 		body.setColor(sf::Color::White);
 	}

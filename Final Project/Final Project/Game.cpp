@@ -39,6 +39,31 @@ void Game::run()
     }
 }
 
+void Game::Init()
+{
+    srand(time(nullptr));
+    m_font.loadFromFile("./assets/fonts/Flinton.otf");
+    mainMenu.Init(m_window, m_font);
+    pauseMenu.Init(m_window, m_font);
+
+    tiles = new Tile * [Global::ROWS_COLUMNS];
+
+    for (int i = 0; i < Global::ROWS_COLUMNS; i++)
+    {
+        tiles[i] = new Tile[Global::ROWS_COLUMNS];
+    }
+    elapsedTime = incomeTimer.getElapsedTime();
+    InitTiles();
+    HUD::Init(m_window, m_font);
+    BuildingUI::Init();
+
+    CreateBase(basePos);
+    CreateArcher({ 300, 400 });
+    CreateWarrior({ 350, 400 });
+    CreateWarrior({ 400, 400 });
+    // stay in same position but move to the leader
+}
+
 void Game::ProcessEvents()
 {
     sf::Event newEvent;
@@ -61,6 +86,16 @@ void Game::ProcessEvents()
         {
             ProcessMouseUp(newEvent);
         }
+        if (sf::Event::MouseMoved == newEvent.type)
+        {
+            if (isDragging)
+            {
+                endDragPos = Global::GetWindowMousePos(m_window, gameView);
+                dragRect.setPosition(std::min(startDragPos.x, endDragPos.x), std::min(startDragPos.y, endDragPos.y));
+                dragRect.setFillColor(sf::Color(0, 0, 200, 100));
+                dragRect.setSize(sf::Vector2f(std::abs(startDragPos.x - endDragPos.x), std::abs(startDragPos.y - endDragPos.y)));
+            }
+        }
 
         switch (currentState)
         {
@@ -69,6 +104,24 @@ void Game::ProcessEvents()
             break;
         case GAME:
             HUD::HandleEvents(newEvent, m_window);
+            if (HUD::currentUnitSelected == HUD::WARRIOR)
+            {
+                CreateWarrior({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (GameObject* object : gameObjects)
+                {
+                    object->isSelected = false;
+                }
+            }
+            else if (HUD::currentUnitSelected == HUD::ARCHER)
+            {
+                CreateArcher({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (GameObject* object : gameObjects)
+                {
+                    object->isSelected = false;
+                }
+            }
             view.handleInput(newEvent);
             break;
         case PAUSED:
@@ -87,7 +140,7 @@ void Game::ProcessKeys(sf::Event t_event)
     }
     if (sf::Keyboard::Q == t_event.key.code)
     {
-        CreateShop({ 500, 500 });
+        MakeFormation();
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
@@ -101,6 +154,8 @@ void Game::ProcessMouseDown(sf::Event t_event)
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
         std::cout << currentCell.x << ", " << currentCell.y << "\n";
         tiles[currentCell.x][currentCell.y].SetShop();
+        isDragging = true;
+        startDragPos = Global::GetWindowMousePos(m_window, gameView);
     } 
     if (sf::Mouse::Right == t_event.key.code)
     {
@@ -114,31 +169,19 @@ void Game::ProcessMouseUp(sf::Event t_event)
         {
             object->MouseRelease();
         }
+       
+        for (Characters* temp : units)
+        {
+            if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
+            {
+                temp->isSelected = true;
+            }
+        }
+        isDragging = false;
+        dragRect.setSize({ 0, 0 });
     }
-}
-void Game::Init()
-{
-    srand(time(nullptr));
-    m_font.loadFromFile("./assets/fonts/Flinton.otf");
-    mainMenu.Init(m_window, m_font);
-    pauseMenu.Init(m_window, m_font);
 
-    tiles = new Tile * [Global::ROWS_COLUMNS];
-
-    for (int i = 0; i < Global::ROWS_COLUMNS; i++) 
-    {
-        tiles[i] = new Tile[Global::ROWS_COLUMNS];
-    }
-    elapsedTime = incomeTimer.getElapsedTime();
-    InitTiles();
-    HUD::Init(m_window, m_font);
-    BuildingUI::Init();
-
-    CreateBase({ 200, 200 });
-    CreateArcher({ 300, 400 });
-    CreateWarrior({ 350, 400 });
-    CreateWarrior({ 400, 400 });
-    // stay in same position but move to the leader
+    
 }
 
 void Game::Render()
@@ -164,6 +207,11 @@ void Game::Render()
         for (GameObject* object : gameObjects)
         {
             object->Draw();
+        }
+
+        if (isDragging)
+        {
+            m_window.draw(dragRect);
         }
 
         BuildingUI::Draw(m_window);
@@ -437,6 +485,7 @@ void Game::CreateWarrior(sf::Vector2f pos)
     Warrior* newWarrior = new Warrior;
     newWarrior->SetPosition(pos);
 
+    units.push_back(newWarrior);
     gameObjects.push_back(newWarrior);
 }
 
@@ -445,8 +494,91 @@ void Game::CreateArcher(sf::Vector2f pos)
     Archer* newArcher = new Archer;
     newArcher->SetPosition(pos);
 
+    units.push_back(newArcher);
     gameObjects.push_back(newArcher);
 }
+
+void Game::MakeFormation()
+{
+    //Characters* leader = nullptr;
+    //for (Characters* temp : units)
+    //{
+    //    if (temp->isSelected)
+    //    {
+    //        leader = temp;
+    //        break;
+    //    }
+    //}
+
+    //if (leader)
+    //{
+    //    float xDistance = 0.0f;
+
+    //    float yDistance = 100.0f;
+
+    //    float moveSpeed = 5.0f;
+
+    //    float separationDistance = 50.0f;
+
+    //    for (Characters* temp : units)
+    //    {
+    //        if (temp->isSelected)
+    //        {
+    //            sf::Vector2f targetPosition = leader->body.getPosition() + sf::Vector2f(xDistance, yDistance);
+
+    //            sf::Vector2f direction = targetPosition - temp->body.getPosition();
+    //            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+    //            if (distance > 0.0f)
+    //            {
+    //                direction /= distance;
+    //            }
+
+    //            sf::Vector2f movement = direction * moveSpeed;
+
+    //            // Check if the character is too close to others
+    //            for (Characters* other : units)
+    //            {
+    //                if (other != temp && temp->isSelected && other->isSelected)
+    //                {
+    //                    sf::Vector2f separation = temp->body.getPosition() - other->body.getPosition();
+    //                    float separationDistanceSq = separation.x * separation.x + separation.y * separation.y;
+
+    //                    if (separationDistanceSq < separationDistance * separationDistance)
+    //                    {
+    //                        // Apply a separation force to avoid collisions
+    //                        movement += separation * (separationDistance - std::sqrt(separationDistanceSq)) / separationDistance;
+    //                    }
+    //                }
+    //            }
+
+    //            // Move each selected character
+    //            temp->body.move(movement);
+
+    //            // Only increment the y-axis distance for characters other than the leader
+    //            yDistance += (temp != leader) ? 100.0f : 0.0f;
+
+    //            // Check if the character has reached or passed the target position
+    //            if (distance <= moveSpeed)
+    //            {
+    //                // Snap the character to the target position
+    //                temp->body.setPosition(targetPosition);
+    //            }
+    //        }
+    //    }
+    //}
+
+    for (Characters* temp : units)
+    {
+        if (temp->isSelected)
+        {
+            temp[1].body.setPosition(temp[1].body.getPosition().x, temp[1].body.getPosition().y + 100);
+        }
+   }
+
+}
+
+
 
 void Game::CreateBase(sf::Vector2f pos)
 {

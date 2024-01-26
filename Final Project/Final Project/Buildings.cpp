@@ -18,16 +18,14 @@ void Buildings::Draw()
 	GetWindow()->draw(body);
 }
 
-
-
-void Buildings::Update()
-{
-	detectionCircle.setPosition(body.getPosition());
-}
-
 void Buildings::MouseRelease()
 {
 
+}
+
+void Buildings::UpdateDetectionCircles()
+{
+	detectionCircle.setPosition(body.getPosition());
 }
 
 void Buildings::SelectBuilding()

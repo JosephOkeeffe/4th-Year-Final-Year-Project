@@ -8,8 +8,11 @@ class Buildings : public GameObject
 public:
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
 	void Draw() override;
-	void Update() override;
+	
 	void MouseRelease() override;
+
+	void UpdateDetectionCircles();
+
 
 	void SelectBuilding();
 
@@ -21,7 +24,6 @@ public:
 
 private:
 
-	bool isSelected = false;
 	sf::RectangleShape mainRectangle;
 	const int numSmallRectangles = 4;
 

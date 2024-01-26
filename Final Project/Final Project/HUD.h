@@ -10,6 +10,20 @@ class HUD
 {
 public:
 
+	static enum HUDState
+	{
+		NONE,
+		TRAIN_HUD,
+		BUILD_HUD
+	};
+
+	static enum UNIT_IDS
+	{
+		NO_UNIT,
+		WARRIOR,
+		ARCHER
+	};
+
 	static void Init(sf::RenderWindow& window, sf::Font& font)
 	{
 		hudBackground.setFillColor(sf::Color::Red);
@@ -19,6 +33,7 @@ public:
 		hudBackground.setPosition(0, Global::S_HEIGHT - hudBackground.getSize().y);
 
 		InitBuildButtons(window,font);
+		InitUnitButtons(window,font);
 
 		coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
 		coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
@@ -29,33 +44,52 @@ public:
 		coinsText.setCharacterSize(24);
 		coinsText.setOrigin(coinsText.getCharacterSize() / 2, coinsText.getCharacterSize() / 2);
 		coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
-
-		
-
-
 	}
 	static void Render(sf::RenderWindow& window)
 	{
-		if (isActive)
+
+		if (currentState != NONE)
 		{
 			window.draw(hudBackground);
-
-			for (Button& button : buildingButtons)
-			{
-				button.update();
-				button.render(window);
-			}
 
 			coinsText.setString("x" + std::to_string(ResourceManagement::GetCoins()));
 			window.draw(coinSprite);
 			window.draw(coinsText);
 		}
+
+		if (currentState == BUILD_HUD)
+		{
+			for (Button& button : buildingButtons)
+			{
+				button.update();
+				button.render(window);
+			}
+		}
+		if (currentState == TRAIN_HUD)
+		{
+			for (Button& button : unitButtons)
+			{
+				button.update();
+				button.render(window);
+			}
+		}
 	}
 	static void HandleEvents(sf::Event& event, sf::RenderWindow& window)
 	{
-		for (Button& button : buildingButtons)
+		if (currentState == BUILD_HUD)
 		{
-			button.handleEvent(event, window);
+			for (Button& button : buildingButtons)
+			{
+				button.handleEvent(event, window);
+			}
+		}
+
+		if (currentState == TRAIN_HUD)
+		{
+			for (Button& button : unitButtons)
+			{
+				button.handleEvent(event, window);
+			}
 		}
 	}
 
@@ -90,7 +124,7 @@ public:
 	static void InitUnitButtons(sf::RenderWindow& window, sf::Font& font)
 	{
 		Button warriorButton(window,
-			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color::Magenta,
@@ -100,10 +134,25 @@ public:
 		warriorButton.setLabel("Warrior", font, 30, sf::Color::Black);
 		warriorButton.setCallback([]()
 			{
-				//ResourceManagement::isPlacingShop = true;
+				ChangeUnitSelected(WARRIOR);
+			});
+
+		Button archerButton(window,
+			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color::Magenta,
+			font,
+			Textures::GetInstance().GetTexture("archer-icon"));
+
+		archerButton.setLabel("Archer", font, 30, sf::Color::Black);
+		archerButton.setCallback([]()
+			{
+				ChangeUnitSelected(ARCHER);
 			});
 
 		unitButtons.push_back(warriorButton);
+		unitButtons.push_back(archerButton);
 
 		for (Button& button : unitButtons)
 		{
@@ -114,12 +163,20 @@ public:
 			button.centreLabel(newPos);
 		}
 	}
-		
+
+	static void ChangeUnitSelected(UNIT_IDS name)
+	{
+		currentUnitSelected = name;
+		currentState = NONE;
+	}
+	
+
 	static sf::RectangleShape hudBackground;
 	static std::vector<Button> buildingButtons;
 	static std::vector<Button> unitButtons;
 	static sf::Text coinsText;
 	static sf::Sprite coinSprite;
-	static bool isActive;
+	static HUDState currentState;
+	static UNIT_IDS currentUnitSelected;
 	
 };

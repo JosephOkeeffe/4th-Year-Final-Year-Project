@@ -71,6 +71,13 @@ private:
     void CreateArcher(sf::Vector2f pos);
     std::vector<Warrior> playerWarrior;
 
+    void MakeFormation();
+
+    bool isDragging = false;
+    sf::Vector2f startDragPos;
+    sf::Vector2f endDragPos;
+    sf::RectangleShape dragRect;
+
     void CreateBase(sf::Vector2f pos);
     void CreateShop(sf::Vector2f pos);
 
@@ -95,6 +102,9 @@ private:
     bool loadGame = false;
 
     std::vector<GameObject*> gameObjects;
+    std::vector<Characters*> units;
+
+    sf::Vector2f basePos = {200, 200};
     
 };
 

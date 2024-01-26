@@ -1,9 +1,11 @@
 #include "HUD.h"
 
 sf::RectangleShape HUD::hudBackground;
-std::vector<Button> HUD::buttons;
+std::vector<Button> HUD::buildingButtons;
+std::vector<Button> HUD::unitButtons;
 sf::Text HUD::coinsText;
 sf::Sprite HUD::coinSprite;
-bool HUD::isActive = false;
+HUD::HUDState HUD::currentState = HUD::NONE;
+HUD::UNIT_IDS HUD::currentUnitSelected = HUD::NO_UNIT;
 
 

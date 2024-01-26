@@ -39,6 +39,7 @@ void Characters::UpdateDetectionCircles()
 {
 	detectionCircle.setPosition(body.getPosition());
 	tileDetectionCircle.setPosition(body.getPosition().x, body.getPosition().y + 30);
+	CheckIfSelected();
 }
 
 void Characters::SelectCharacter()

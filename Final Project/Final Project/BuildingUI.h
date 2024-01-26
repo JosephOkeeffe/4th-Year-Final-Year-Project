@@ -71,12 +71,11 @@ public:
     static void Deactivate()
     {
         isActive = false;
-        buildSelected = false;
+        HUD::currentState = HUD::NONE;
     }
 
     static void BuildMenu(sf::RenderWindow& window, sf::View& view)
     {
-        buildSelected = true;
 
         sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
         if (isActive)
@@ -84,32 +83,27 @@ public:
             if (buildButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
                 Display_Text("Build");
-                HUD::isActive = true;
+                HUD::currentState = HUD::BUILD_HUD;
             }
         }
     }
 
     static void TrainMenu(sf::RenderWindow& window, sf::View& view)
     {
-        trainSelected = true;
-
         sf::Vector2f mousePos = Global::GetWindowMousePos(window, view);
         if (isActive)
         {
             if (trainButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
                 Display_Text("Tain");
-                HUD::isActive = true;
+                HUD::currentState = HUD::TRAIN_HUD;
             }
         }
     }
 
     static bool isActive;
-    static bool buildSelected;
-    static bool trainSelected;
     static sf::Font font;
     static sf::Text boxText[2];
-
 
 private:
 

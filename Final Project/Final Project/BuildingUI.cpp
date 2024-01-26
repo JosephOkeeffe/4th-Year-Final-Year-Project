@@ -1,8 +1,6 @@
 #include "BuildingUI.h"
 
 bool BuildingUI::isActive = false;
-bool BuildingUI::buildSelected = false;
-bool BuildingUI::trainSelected = false;
 sf::RectangleShape BuildingUI::mainRectangle;
 sf::RectangleShape BuildingUI::buildButton;
 sf::RectangleShape BuildingUI::trainButton;

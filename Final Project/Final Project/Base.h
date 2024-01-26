@@ -6,6 +6,7 @@ class Base : public Buildings
 public:
 	Base(sf::Vector2f pos);
 	void MouseRelease() override;
+	void Update() override;
 	void CheckIfSelected();
 private:
 

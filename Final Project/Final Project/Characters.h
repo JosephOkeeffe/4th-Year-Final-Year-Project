@@ -39,7 +39,6 @@ public:
 	int playerAnimation = 0;
 	bool isDeadAnimationPending = false;
 
-	bool isSelected = false;
 	bool isMoving = false;
 	sf::Clock selectionCooldown;
 	float defaultMoveSpeed = 2.0f;

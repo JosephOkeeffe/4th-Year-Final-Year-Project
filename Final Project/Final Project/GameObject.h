@@ -16,6 +16,7 @@ public:
 	static void SetWindow(sf::RenderWindow& _window) { window = &_window; }
 	static void SetView(sf::View& _gameView) { gameView = &_gameView; }
 
+	bool isSelected = false;
 	sf::Sprite body;
 	sf::Texture texture;
 	sf::IntRect textureRect;
@@ -32,7 +33,9 @@ public:
 		detectionCircle.setRadius(radius);
 		detectionCircle.setOrigin(radius, radius);
 		detectionCircle.setPosition(body.getPosition());
-		detectionCircle.setFillColor(sf::Color(255, 0, 0, 50));
+		detectionCircle.setFillColor(sf::Color::Transparent);
+		detectionCircle.setOutlineThickness(1);
+		detectionCircle.setOutlineColor(sf::Color(255, 0, 0, 255));
 	}
 
 	void SetTexture(sf::Texture tex)
