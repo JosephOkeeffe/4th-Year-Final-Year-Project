@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include <filesystem>
+#include "BuildingUI.h"
 
 std::string savePath = "";
 std::string loadGameDataPath = "";
@@ -76,15 +77,19 @@ void Game::ProcessEvents()
         }
         if (sf::Event::KeyPressed == newEvent.type)
         {
-            ProcessKeys(newEvent);
+            ProcessKeyPress(newEvent);
+        }
+        if (sf::Event::KeyReleased == newEvent.type)
+        {
+            ProcessKeyRelease(newEvent);
         }
         if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseWheelScrolled == newEvent.type)
         {
-            ProcessMouseDown(newEvent);
+            ProcessMousePress(newEvent);
         }
         if (sf::Event::MouseButtonReleased == newEvent.type)
         {
-            ProcessMouseUp(newEvent);
+            ProcessMouseRelease(newEvent);
         }
         if (sf::Event::MouseMoved == newEvent.type)
         {
@@ -132,7 +137,7 @@ void Game::ProcessEvents()
         }
     }
 }
-void Game::ProcessKeys(sf::Event t_event)
+void Game::ProcessKeyPress(sf::Event t_event)
 {
     if (sf::Keyboard::Escape == t_event.key.code)
     {
@@ -147,38 +152,64 @@ void Game::ProcessKeys(sf::Event t_event)
         currentState = PAUSED; 
     }
 }
-void Game::ProcessMouseDown(sf::Event t_event)
+void Game::ProcessKeyRelease(sf::Event t_event)
+{
+    if (sf::Keyboard::Q == t_event.key.code)
+    {
+        for (Characters* temp : units)
+        {
+            if (temp != units[0] && !temp->isMoving)
+            {
+                if (units[0]->body.getScale().x < 0)
+                {
+                    temp->FlipSprite();
+                }
+                else if (units[0]->body.getScale().x > 0)
+                {
+                    temp->FlipSprite();
+                }
+
+            }
+        }
+    }
+}
+void Game::ProcessMousePress(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
         std::cout << currentCell.x << ", " << currentCell.y << "\n";
         tiles[currentCell.x][currentCell.y].SetShop();
-        isDragging = true;
-        startDragPos = Global::GetWindowMousePos(m_window, gameView);
+        if (!BuildingUI::isActive)
+        {
+            isDragging = true;
+            startDragPos = Global::GetWindowMousePos(m_window, gameView);
+        }
     } 
     if (sf::Mouse::Right == t_event.key.code)
     {
     }
 }
-void Game::ProcessMouseUp(sf::Event t_event)
+void Game::ProcessMouseRelease(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-        for (GameObject* object : gameObjects)
-        {
-            object->MouseRelease();
-        }
-       
+       // if (!BuildingUI::isActive)
+        //{
+            for (GameObject* object : gameObjects)
+            {
+                object->MouseRelease();
+            }
+            SelectUnits();
+        //}
+    }
+    if (sf::Mouse::Right == t_event.key.code)
+    {
         for (Characters* temp : units)
         {
-            if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
-            {
-                temp->isSelected = true;
-            }
+            temp->isSelected = false;
+            selectedUnits.clear();
         }
-        isDragging = false;
-        dragRect.setSize({ 0, 0 });
     }
 
     
@@ -258,9 +289,9 @@ void Game::Update(sf::Time t_deltaTime)
         }
 
         view.MoveScreen();
-        ManageTimer();
+        ManageTimers();
 
-        if (ResourceManagement::isPlacingShop)
+        /*if (ResourceManagement::isPlacingShop)
         {
             sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
             sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
@@ -285,7 +316,9 @@ void Game::Update(sf::Time t_deltaTime)
                     }
                 }
             }
-        }
+        }*/
+
+        AlignFormationFacingDirection();
 
         ChangeThingsDependingOnTileType();
 
@@ -469,7 +502,7 @@ void Game::InitTiles()
     }
 }
 
-void Game::ManageTimer()
+void Game::ManageTimers()
 {
     elapsedTime = incomeTimer.getElapsedTime();
 
@@ -498,87 +531,103 @@ void Game::CreateArcher(sf::Vector2f pos)
     gameObjects.push_back(newArcher);
 }
 
+void Game::SelectUnits()
+{
+    for (Characters* temp : units)
+    {
+        if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
+        {
+            temp->SelectCharacter();
+            selectedUnits.push_back(temp);
+        }
+    }
+    isDragging = false;
+    dragRect.setSize({ 0, 0 });
+}
+
 void Game::MakeFormation()
 {
-    //Characters* leader = nullptr;
-    //for (Characters* temp : units)
-    //{
-    //    if (temp->isSelected)
-    //    {
-    //        leader = temp;
-    //        break;
-    //    }
-    //}
-
-    //if (leader)
-    //{
-    //    float xDistance = 0.0f;
-
-    //    float yDistance = 100.0f;
-
-    //    float moveSpeed = 5.0f;
-
-    //    float separationDistance = 50.0f;
-
-    //    for (Characters* temp : units)
-    //    {
-    //        if (temp->isSelected)
-    //        {
-    //            sf::Vector2f targetPosition = leader->body.getPosition() + sf::Vector2f(xDistance, yDistance);
-
-    //            sf::Vector2f direction = targetPosition - temp->body.getPosition();
-    //            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-    //            if (distance > 0.0f)
-    //            {
-    //                direction /= distance;
-    //            }
-
-    //            sf::Vector2f movement = direction * moveSpeed;
-
-    //            // Check if the character is too close to others
-    //            for (Characters* other : units)
-    //            {
-    //                if (other != temp && temp->isSelected && other->isSelected)
-    //                {
-    //                    sf::Vector2f separation = temp->body.getPosition() - other->body.getPosition();
-    //                    float separationDistanceSq = separation.x * separation.x + separation.y * separation.y;
-
-    //                    if (separationDistanceSq < separationDistance * separationDistance)
-    //                    {
-    //                        // Apply a separation force to avoid collisions
-    //                        movement += separation * (separationDistance - std::sqrt(separationDistanceSq)) / separationDistance;
-    //                    }
-    //                }
-    //            }
-
-    //            // Move each selected character
-    //            temp->body.move(movement);
-
-    //            // Only increment the y-axis distance for characters other than the leader
-    //            yDistance += (temp != leader) ? 100.0f : 0.0f;
-
-    //            // Check if the character has reached or passed the target position
-    //            if (distance <= moveSpeed)
-    //            {
-    //                // Snap the character to the target position
-    //                temp->body.setPosition(targetPosition);
-    //            }
-    //        }
-    //    }
-    //}
+    Characters* leader = nullptr;
 
     for (Characters* temp : units)
     {
         if (temp->isSelected)
         {
-            temp[1].body.setPosition(temp[1].body.getPosition().x, temp[1].body.getPosition().y + 100);
+            leader = temp;
+            break;
         }
-   }
+    }
+
+    if (leader != nullptr)
+    {
+        float xPosLeader = leader->body.getPosition().x;
+        float yPosLeader = leader->body.getPosition().y;
+
+        float xOffset = -50;
+        float yOffset = -50;
+
+        int i = -1;
+        for (Characters* temp : units) 
+        {
+            temp->isMoving = true;
+            temp->isFormationMoving = true;
+            if (temp->isSelected) 
+            {
+                if (temp != leader)
+                {
+                    ++i;
+
+                    if (i == 0)
+                    {
+                        yOffset = -50;
+
+                    }
+                    else if (i == 1)
+                    {
+                        yOffset = 0;
+                    }
+                    else if (i == 2)
+                    {
+                        yOffset = 50;
+                    }
+                    temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
+
+
+                    if (i == 2)
+                    {
+                        xOffset -= 50.0f;
+                        i = -1;
+                    }
+                }
+                else
+                {
+                    temp->targetPosition = { xPosLeader, yPosLeader};
+                }
+            }
+       
+        }
+    }
 
 }
 
-
+void Game::AlignFormationFacingDirection()
+{
+    for (Characters* temp : units)
+    {
+        if (temp != units[0] && temp->isFormationMoving && !temp->isMoving)
+        {
+            if (units[0]->body.getScale().x < 0)
+            {
+                temp->FlipSprite();
+            }
+            else if (units[0]->body.getScale().x > 0)
+            {
+                temp->FlipSprite();
+            }
+            temp->isFormationMoving = false;
+        }
+    }
+}
 
 void Game::CreateBase(sf::Vector2f pos)
 {

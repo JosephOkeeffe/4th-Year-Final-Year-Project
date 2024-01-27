@@ -17,7 +17,6 @@ public:
 	Warrior();
 	void Update() override;
 
-	void MoveWarrior();
 
 	void AnimateWarrior();
 	void ChangeAnimation();

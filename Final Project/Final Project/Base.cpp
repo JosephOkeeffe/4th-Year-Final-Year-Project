@@ -25,7 +25,10 @@ void Base::MouseRelease()
 }
 void Base::Update()
 {
-	CheckIfSelected();
+	if( HUD::currentState == HUD::NONE)
+	{
+		CheckIfSelected();
+	}
 	UpdateDetectionCircles();
 }
 void Base::CheckIfSelected()
@@ -33,7 +36,6 @@ void Base::CheckIfSelected()
 	if (GetSelected())
 	{
 		BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80  });
-		Display_Text("Base Selected");
 		body.setColor(sf::Color(128, 128, 128));
 	}
 	else

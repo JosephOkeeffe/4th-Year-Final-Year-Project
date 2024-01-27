@@ -49,9 +49,10 @@ public:
 private:
 
     void ProcessEvents();
-    void ProcessKeys(sf::Event t_event);
-    void ProcessMouseDown(sf::Event t_event);
-    void ProcessMouseUp(sf::Event t_event);
+    void ProcessKeyPress(sf::Event t_event);
+    void ProcessKeyRelease(sf::Event t_event);
+    void ProcessMousePress(sf::Event t_event);
+    void ProcessMouseRelease(sf::Event t_event);
     void Update(sf::Time t_deltaTime);
     void Render();
     void Init();
@@ -64,15 +65,15 @@ private:
 
     void InitTiles();
 
-    void ManageTimer();
+    void ManageTimers();
 
     void CreateWorker(sf::Vector2f pos);
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
     std::vector<Warrior> playerWarrior;
-
+    void SelectUnits();
     void MakeFormation();
-
+    void AlignFormationFacingDirection();
     bool isDragging = false;
     sf::Vector2f startDragPos;
     sf::Vector2f endDragPos;
@@ -96,15 +97,19 @@ private:
     Tile** tiles;
     View view{ m_window, gameView, hudView };
 
-    sf::Clock incomeTimer;
-    sf::Time elapsedTime;
+
 
     bool loadGame = false;
 
     std::vector<GameObject*> gameObjects;
     std::vector<Characters*> units;
+    std::vector<Characters*> selectedUnits;
 
     sf::Vector2f basePos = {200, 200};
+
+    // Timers
+    sf::Clock incomeTimer;
+    sf::Time elapsedTime;
     
 };
 

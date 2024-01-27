@@ -18,7 +18,6 @@ public:
 	//void Draw(sf::RenderWindow& window);
 	//void Update(sf::RenderWindow& window);
 	void Update() override;
-	void MoveArcher();
 
 	void AnimateArcher();
 	void ChangeAnimation();

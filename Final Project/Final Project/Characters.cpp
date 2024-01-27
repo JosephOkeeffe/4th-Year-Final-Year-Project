@@ -32,24 +32,61 @@ void Characters::Draw()
 
 void Characters::MouseRelease()
 {
-	SelectCharacter();
+	if (isSelected)
+	{
+		isMoving = true;
+		targetPosition = Global::GetMousePos(*GetWindow());
+	}
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
+	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+	{
+		SelectCharacter();
+	}
 }
 
 void Characters::UpdateDetectionCircles()
 {
 	detectionCircle.setPosition(body.getPosition());
 	tileDetectionCircle.setPosition(body.getPosition().x, body.getPosition().y + 30);
+	MoveCharacter();
 	CheckIfSelected();
 }
+void Characters::MoveCharacter()
+{
+	float length = 0;
+	
+
+	if (isMoving)
+	{
+		isSelected = false;
+		direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
+		length = behaviour->VectorLength(direction);
+
+		if (length != 0)
+		{
+			direction /= length;
+		}
+
+		FlipSpriteWithDirection(direction, body);
+
+		if (length > 5)
+		{
+			body.move(direction * currentMoveSpeed);
+		}
+		else
+		{
+			isMoving = false;
+		}
+	}
+}
+
+
 
 void Characters::SelectCharacter()
 {
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
-	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+	if (HUD::currentState == HUD::NONE)
 	{
 		isSelected = !isSelected;
-		CheckIfSelected();
-		selectionCooldown.restart();
 	}
 }
 
@@ -99,7 +136,7 @@ void Characters::CalculateAngle(sf::Sprite& target)
 	}
 }
 
-void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
+void Characters::FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite)
 {
 	if (direction.x < 0)
 	{
@@ -111,10 +148,19 @@ void Characters::FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite)
 	}
 }
 
+void Characters::FlipSprite()
+{
+	sf::Vector2f currentScale = body.getScale();
+
+	body.setScale(currentScale.x * -1, currentScale.y);
+}
+
 void Characters::SetPosition(sf::Vector2f pos)
 {
 	body.setPosition(pos);
 }
+
+
 
 
 //SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)

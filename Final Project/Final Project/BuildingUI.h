@@ -82,8 +82,9 @@ public:
         {
             if (buildButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
-                Display_Text("Build");
-                HUD::currentState = HUD::BUILD_HUD;
+               // Display_Text("Build");
+               // HUD::currentState = HUD::BUILD_HUD;
+               // isActive = false;
             }
         }
     }
@@ -97,6 +98,7 @@ public:
             {
                 Display_Text("Tain");
                 HUD::currentState = HUD::TRAIN_HUD;
+                isActive = false;
             }
         }
     }

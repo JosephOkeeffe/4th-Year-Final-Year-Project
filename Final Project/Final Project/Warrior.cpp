@@ -14,42 +14,6 @@ void Warrior::Update()
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateWarrior();
-	MoveWarrior();
-}
-
-void Warrior::MoveWarrior()
-{
-	float length = 0;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
-	{
-		isMoving = true;
-		targetPos = Global::GetMousePos(*GetWindow());
-	}
-	
-	if (isMoving)
-	{
-		isSelected = false;
-		CheckIfSelected();
-		direction = behaviour->GetDirectionFacing(targetPos, body.getPosition());
-		length = behaviour->VectorLength(direction);
-
-		if (length != 0)
-		{
-			direction /= length;
-		}
-
-		FlipSprite(direction, body);
-
-
-		if (length > 5)
-		{
-			body.move(direction * currentMoveSpeed);
-		}
-		else
-		{
-			isMoving = false;
-		}
-	}
 }
 
 void Warrior::AnimateWarrior()

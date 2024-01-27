@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Globals.h"
 #include "BuildingUI.h"
+#include "HUD.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 

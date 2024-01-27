@@ -19,18 +19,20 @@ public:
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
 	void CheckIfSelected();
 	void CalculateAngle(sf::Sprite& target);
-	void FlipSprite(sf::Vector2f& direction, sf::Sprite& sprite);
+	void FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite);
+	void FlipSprite();
 	void SetPosition(sf::Vector2f pos);
 
-	bool isDead = false;
+	sf::Vector2f direction;
+	sf::Vector2f targetPosition;
+	void MoveCharacter();
+
+	
 
 	sf::CircleShape tileDetectionCircle;
 	float tileDetectionRadius = 10;
 
 	Behaviour* behaviour;
-
-	sf::Vector2f m_velocity = { 0, 0 };
-	sf::Vector2f direction;
 
 	int animationCount = 0;
 	int m_frameNo{ 0 };
@@ -40,7 +42,9 @@ public:
 	bool isDeadAnimationPending = false;
 
 	bool isMoving = false;
-	sf::Clock selectionCooldown;
+	bool isFormationMoving = false;
+	bool isDead = false;
+
 	float defaultMoveSpeed = 2.0f;
 	float currentMoveSpeed = defaultMoveSpeed;
 

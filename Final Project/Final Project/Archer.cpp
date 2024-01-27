@@ -17,42 +17,8 @@ void Archer::Update()
 	CheckAnimationState();
 	ChangeAnimation();
 	AnimateArcher();
-	MoveArcher();
 }
 
-void Archer::MoveArcher()
-{
-	float length = 0;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isSelected)
-	{
-		isMoving = true;
-		targetPos = Global::GetMousePos(*GetWindow());
-	}
-
-	if (isMoving)
-	{
-		isSelected = false;
-		CheckIfSelected();
-		direction = behaviour->GetDirectionFacing(targetPos, body.getPosition());
-		length = behaviour->VectorLength(direction);
-
-		if (length != 0)
-		{
-			direction /= length;
-		}
-
-		FlipSprite(direction, body);
-
-		if (length > 5)
-		{
-			body.move(direction * moveSpeed);
-		}
-		else
-		{
-			isMoving = false;
-		}
-	}
-}
 
 void Archer::AnimateArcher()
 {
