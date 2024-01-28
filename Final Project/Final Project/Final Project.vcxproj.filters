@@ -93,7 +93,7 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Shop.cpp">
+    <ClCompile Include="Mine.cpp">
       <Filter>Source Files\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -143,9 +143,6 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -167,7 +164,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Shop.h">
+    <ClInclude Include="Mine.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="BuildingUI.h">

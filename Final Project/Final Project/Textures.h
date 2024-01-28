@@ -20,10 +20,13 @@ private:
 
     sf::Texture baseTexture;
     sf::Texture shopTexture;
+    sf::Texture mineTexture;
     sf::Texture tilesTexture;
 
     sf::Texture warriorButtonIconTexture;
     sf::Texture archerButtonIconTexture;
+    sf::Texture workerButtonIconTexture;
+    sf::Texture mineButtonIconTexture;
 
 
     std::map<std::string, sf::Texture> textureMap;

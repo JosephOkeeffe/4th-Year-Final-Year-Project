@@ -3,10 +3,9 @@
 enum TileType
 {
 	NONE,
+    PATH,
 	OBSTACLE,
-	PATH,
-	SHOP,
-    BASE,
+    RESOURCE
 };
 
 enum GrassType
@@ -50,4 +49,16 @@ enum GrassType
     WATER11, 
     WATER12, 
     WATER13, 
+
+    GOLD_ORE,
+    WASTE,
+    OIL_POOL
+};
+
+enum ResourceType
+{
+    NO_RESOURCE,
+    GOLD,
+    OIL,
+    TOXIC_WASTE
 };

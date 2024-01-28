@@ -13,7 +13,7 @@
 #include "Warrior.h"
 #include "Archer.h"
 #include "Base.h"
-#include "Shop.h"
+#include "Mine.h"
 #include "HUD.h"
 #include "ResourceManagement.h"
 #include "TileTypes.h"
@@ -70,7 +70,7 @@ private:
     void CreateWorker(sf::Vector2f pos);
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
-    std::vector<Warrior> playerWarrior;
+
     void SelectUnits();
     void MakeFormation();
     void AlignFormationFacingDirection();
@@ -80,7 +80,7 @@ private:
     sf::RectangleShape dragRect;
 
     void CreateBase(sf::Vector2f pos);
-    void CreateShop(sf::Vector2f pos);
+    void CreateMine(sf::Vector2f pos);
 
     void ClearFog(sf::CircleShape radius);
 
@@ -104,6 +104,7 @@ private:
     std::vector<GameObject*> gameObjects;
     std::vector<Characters*> units;
     std::vector<Characters*> selectedUnits;
+    std::vector<Buildings*> buildings;
 
     sf::Vector2f basePos = {200, 200};
 

@@ -1,7 +1,7 @@
 #include "game.h"
 #include <fstream>
 #include "json.hpp"
-#include <filesystem>
+
 
 // got some help from https://github.com/raylib-extras/examples-c/blob/main/mouse_zoom/mouse_zoom.c
 
@@ -71,7 +71,11 @@ void Game::Init()
     for (int i = 0; i < OBSTACLE_PALETTE_SIZE; i++)
     {
         obstaclePaletteRects[i] = { static_cast<float>(10 + i * (TILE_SIZE + 10)), 190, TILE_SIZE, TILE_SIZE };
+    }
 
+    for (int i = 0; i < RESOURCE_PALETTE_SIZE; i++)
+    {
+        resourcePaletteRects[i] = { static_cast<float>(10 + i * (TILE_SIZE + 10)), 250, TILE_SIZE, TILE_SIZE };
     }
 
 
@@ -218,7 +222,7 @@ void Game::SelectPaletteTile()
     {
         if (CheckCollisionPointRec(GetMousePosition(), pathPaletteRects[i]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            grassType = static_cast<GrassType>(i + 6);
+            grassType = static_cast<GrassType>(i + BRIDGE1);
         }
     }
 
@@ -226,7 +230,16 @@ void Game::SelectPaletteTile()
     {
         if (CheckCollisionPointRec(GetMousePosition(), obstaclePaletteRects[i]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            grassType = static_cast<GrassType>(i + 24);
+            grassType = static_cast<GrassType>(i + WATER1);
+
+        }
+    }
+
+    for (int i = 0; i < RESOURCE_PALETTE_SIZE; i++)
+    {
+        if (CheckCollisionPointRec(GetMousePosition(), resourcePaletteRects[i]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            grassType = static_cast<GrassType>(i + GOLD_ORE);
 
         }
     }
@@ -255,13 +268,18 @@ void Game::CheckGrassTiles(int t_rows, int t_cols)
     }
     else if (tileIds[t_rows][t_cols] >= BRIDGE1 && tileIds[t_rows][t_cols] < WATER1)
     {
-        offset = 6;
+        offset = BRIDGE1;
         sourceRect.y = size * 1;
     }
     else if (tileIds[t_rows][t_cols] >= WATER1 && tileIds[t_rows][t_cols] <= WATER13)
     {
-        offset = 24;
+        offset = WATER1;
         sourceRect.y = size * 2;
+    }
+    else if (tileIds[t_rows][t_cols] >= GOLD_ORE && tileIds[t_rows][t_cols] <= OIL)
+    {
+        offset = GOLD_ORE;
+        sourceRect.y = size * 3;
     }
 
     sourceRect.x = size * (tileIds[t_rows][t_cols] - offset);
@@ -298,7 +316,7 @@ void Game::MoveCamera()
 
 bool Game::IsMouseOverPalette()
 {
-    return (GetMouseY() >= 0 && GetMouseY() <= 250);
+    return (GetMouseY() >= 0 && GetMouseY() <= ENTIRE_PALETTE_HEIGHT);
 }
 
 
@@ -437,6 +455,17 @@ void Game::RenderPalettes()
 
         DrawTextureRec(spriteSheet, sourceRect, { obstaclePaletteRects[i].x,  obstaclePaletteRects[i].y }, WHITE);
         DrawRectangleLinesEx(obstaclePaletteRects[i], 2, BLACK);
+    }
+
+    for (int i = 0; i < RESOURCE_PALETTE_SIZE ; i++)
+    {
+        sourceRect.x = i * (TILE_SIZE + 1);
+        sourceRect.y = 171;
+        sourceRect.width = TILE_SIZE;
+        sourceRect.height = TILE_SIZE;
+
+        DrawTextureRec(spriteSheet, sourceRect, { resourcePaletteRects[i].x,  resourcePaletteRects[i].y }, WHITE);
+        DrawRectangleLinesEx(resourcePaletteRects[i], 2, BLACK);
     }
 }
 

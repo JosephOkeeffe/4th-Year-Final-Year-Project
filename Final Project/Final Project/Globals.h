@@ -47,11 +47,4 @@ public:
 
         return cellPosition;
     }
-
-   static enum TileType
-    {
-        NONE,
-        SHOP,
-    };
-
 };

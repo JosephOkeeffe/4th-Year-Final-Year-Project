@@ -65,13 +65,16 @@ public:
         boxText[1].setPosition(trainButton.getPosition().x - boxText[1].getLocalBounds().width / 2, trainButton.getPosition().y + 30);
         boxText[1].setString("Train");
 
-        isActive = true;
+        if (HUD::currentState == HUD::NONE)
+        {
+            isActive = true;
+        }
     }
 
     static void Deactivate()
     {
         isActive = false;
-        HUD::currentState = HUD::NONE;
+       // HUD::currentState = HUD::NONE;
     }
 
     static void BuildMenu(sf::RenderWindow& window, sf::View& view)
@@ -82,9 +85,8 @@ public:
         {
             if (buildButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
-               // Display_Text("Build");
-               // HUD::currentState = HUD::BUILD_HUD;
-               // isActive = false;
+               HUD::currentState = HUD::BUILD_HUD;
+               isActive = false;
             }
         }
     }

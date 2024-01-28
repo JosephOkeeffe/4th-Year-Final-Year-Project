@@ -16,6 +16,10 @@ Game::Game() :
 {
     GameObject::SetWindow(m_window);
     GameObject::SetView(gameView);
+    // I NEED TO PASS THE TILES INTO GAME OBJECT SOMEHOW
+    // CREATE MAP OF TILES AND SPRITES
+    // TO DO: Only allow mine to be placed on GOld ore
+    // Only allow one building to be placed on a tile
     Init();
 }
 Game::~Game()
@@ -109,24 +113,36 @@ void Game::ProcessEvents()
             break;
         case GAME:
             HUD::HandleEvents(newEvent, m_window);
+
             if (HUD::currentUnitSelected == HUD::WARRIOR)
             {
                 CreateWarrior({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
-                for (GameObject* object : gameObjects)
+                for (Buildings* object : buildings)
                 {
-                    object->isSelected = false;
+                    object->DeselectBuilding();
                 }
             }
             else if (HUD::currentUnitSelected == HUD::ARCHER)
             {
                 CreateArcher({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
-                for (GameObject* object : gameObjects)
+                for (Buildings* object : buildings)
                 {
-                    object->isSelected = false;
+                    object->DeselectBuilding();
                 }
             }
+
+            if (HUD::currentBuildingSelected == HUD::MINE)
+            {
+                CreateMine(Global::GetMousePos(m_window));
+                HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
+                for (Buildings* object : buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+
             view.handleInput(newEvent);
             break;
         case PAUSED:
@@ -147,6 +163,10 @@ void Game::ProcessKeyPress(sf::Event t_event)
     {
         MakeFormation();
     }
+    if (sf::Keyboard::W == t_event.key.code)
+    {
+        CreateMine({600,600});
+    }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
         currentState = PAUSED; 
@@ -158,7 +178,7 @@ void Game::ProcessKeyRelease(sf::Event t_event)
     {
         for (Characters* temp : units)
         {
-            if (temp != units[0] && !temp->isMoving)
+           /* if (temp != units[0] && !temp->isMoving)
             {
                 if (units[0]->body.getScale().x < 0)
                 {
@@ -169,7 +189,7 @@ void Game::ProcessKeyRelease(sf::Event t_event)
                     temp->FlipSprite();
                 }
 
-            }
+            }*/
         }
     }
 }
@@ -179,7 +199,7 @@ void Game::ProcessMousePress(sf::Event t_event)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
         std::cout << currentCell.x << ", " << currentCell.y << "\n";
-        tiles[currentCell.x][currentCell.y].SetShop();
+       // tiles[currentCell.x][currentCell.y].SetShop();
         if (!BuildingUI::isActive)
         {
             isDragging = true;
@@ -194,14 +214,18 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-       // if (!BuildingUI::isActive)
-        //{
-            for (GameObject* object : gameObjects)
-            {
-                object->MouseRelease();
-            }
-            SelectUnits();
-        //}
+        for (GameObject* object : gameObjects)
+        {
+            object->MouseRelease();
+        }
+        for (Buildings* temp : buildings)
+        {
+            //if(!temp->CheckIfPlaced())
+           // temp->isSelected = false;
+           // selectedUnits.clear();
+        }
+
+        SelectUnits();
     }
     if (sf::Mouse::Right == t_event.key.code)
     {
@@ -235,10 +259,18 @@ void Game::Render()
             }
         }
 
-        for (GameObject* object : gameObjects)
+        for (Buildings* object : buildings)
         {
             object->Draw();
         }
+        for (Characters* object : units)
+        {
+            object->Draw();
+        }
+       /* for (GameObject* object : gameObjects)
+        {
+            object->Draw();
+        }*/
 
         if (isDragging)
         {
@@ -290,33 +322,6 @@ void Game::Update(sf::Time t_deltaTime)
 
         view.MoveScreen();
         ManageTimers();
-
-        /*if (ResourceManagement::isPlacingShop)
-        {
-            sf::Vector2f currentMousePos = Global::GetWindowMousePos(m_window, gameView);
-            sf::Vector2i currentCellPos = Global::GetCurrentCell(m_window, gameView);
-
-            if (currentMousePos.x >= 0 && currentMousePos.x < Global::ROWS_COLUMNS * Global::CELL_SIZE &&
-                currentMousePos.y >= 0 && currentMousePos.y < Global::ROWS_COLUMNS * Global::CELL_SIZE)
-            {
-                tiles[currentCellPos.x][currentCellPos.y].Hover(Textures::GetInstance().GetTexture("shop"));
-            }
-            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
-            {
-                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
-                {
-                    if (row == currentCellPos.x && col == currentCellPos.y) 
-                    {
-                        continue;
-                    }
-
-                    if (tiles[row][col].GetTileType() != TileType::SHOP) 
-                    {
-                        tiles[row][col].ResetTexture();
-                    }
-                }
-            }
-        }*/
 
         AlignFormationFacingDirection();
 
@@ -449,7 +454,7 @@ void Game::LoadTilesJSON()
 
 void Game::FixLoadedGrass(int type, int row, int col)
 {
-    if (tiles[row][col].GetTileType() == SHOP) { return;}
+   // if (tiles[row][col].GetTileType() == SHOP) { return;}
    
     if (type <= MOUNTAINS)
     {
@@ -616,14 +621,11 @@ void Game::AlignFormationFacingDirection()
     {
         if (temp != units[0] && temp->isFormationMoving && !temp->isMoving)
         {
-            if (units[0]->body.getScale().x < 0)
+            if (temp->body.getScale().x != units[0]->body.getScale().x)
             {
                 temp->FlipSprite();
             }
-            else if (units[0]->body.getScale().x > 0)
-            {
-                temp->FlipSprite();
-            }
+           
             temp->isFormationMoving = false;
         }
     }
@@ -638,11 +640,13 @@ void Game::CreateBase(sf::Vector2f pos)
     float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
     sf::Vector2f newPos = { newX, newY };
     Base* newBase = new Base(newPos);
+    newBase->PlaceBuilding();
+    buildings.push_back(newBase);
     gameObjects.push_back(newBase);
    
 }
 
-void Game::CreateShop(sf::Vector2f pos)
+void Game::CreateMine(sf::Vector2f pos)
 {
     int x = pos.x / Global::CELL_SIZE;
     int y = pos.y / Global::CELL_SIZE;
@@ -650,8 +654,9 @@ void Game::CreateShop(sf::Vector2f pos)
     float newX = (tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2);
     float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
     sf::Vector2f newPos = { newX, newY };
-    Shop* newShop = new Shop(newPos);
-    gameObjects.push_back(newShop);
+    Mine* newMine = new Mine(newPos);
+    buildings.push_back(newMine);
+    gameObjects.push_back(newMine);
 }
 
 void Game::ClearFog(sf::CircleShape radius)

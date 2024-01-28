@@ -4,7 +4,6 @@
 #include "Textures.h"
 #include "Globals.h"
 #include "ResourceManagement.h"
-#include "GameState.h"
 
 class HUD
 {
@@ -22,6 +21,14 @@ public:
 		NO_UNIT,
 		WARRIOR,
 		ARCHER
+	};
+
+	static enum BUILDING_IDS
+	{
+		NO_BUILDING,
+		MINE,
+		WASTE_EXTRACTOR,
+		OIL_REFINERY
 	};
 
 	static void Init(sf::RenderWindow& window, sf::Font& font)
@@ -95,21 +102,21 @@ public:
 
 	static void InitBuildButtons(sf::RenderWindow& window, sf::Font& font)
 	{
-		Button shopButton(window,
+		Button mineButton(window,
 			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
 			sf::Vector2f(100, 100), // size
 			sf::Color::White, // color
 			sf::Color::Magenta, // click color
 			font, // font
-			Textures::GetInstance().GetTexture("shop")); // texture
+			Textures::GetInstance().GetTexture("mine-icon")); // texture
 
-		shopButton.setLabel("Shop", font, 30, sf::Color::Black);
-		shopButton.setCallback([]()
+		mineButton.setLabel("Mine", font, 30, sf::Color::Black);
+		mineButton.setCallback([]()
 			{
-				ResourceManagement::isPlacingShop = true;
+				ChangeBuildingSelected(MINE);
 			});
 
-		buildingButtons.push_back(shopButton);
+		buildingButtons.push_back(mineButton);
 
 		for (Button& button : buildingButtons)
 		{
@@ -169,6 +176,12 @@ public:
 		currentUnitSelected = name;
 		currentState = NONE;
 	}
+
+	static void ChangeBuildingSelected(BUILDING_IDS name)
+	{
+		currentBuildingSelected = name;
+		currentState = NONE;
+	}
 	
 
 	static sf::RectangleShape hudBackground;
@@ -178,5 +191,6 @@ public:
 	static sf::Sprite coinSprite;
 	static HUDState currentState;
 	static UNIT_IDS currentUnitSelected;
+	static BUILDING_IDS currentBuildingSelected;
 	
 };

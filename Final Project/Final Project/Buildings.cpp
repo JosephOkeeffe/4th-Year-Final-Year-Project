@@ -18,22 +18,58 @@ void Buildings::Draw()
 	GetWindow()->draw(body);
 }
 
-void Buildings::MouseRelease()
-{
-
-}
-
 void Buildings::UpdateDetectionCircles()
 {
-	detectionCircle.setPosition(body.getPosition());
+	if (!CheckIfPlaced())
+	{
+		MoveBuilding();
+		detectionCircle.setPosition(-1000,-1000);
+	}
+	else
+	{
+		detectionCircle.setPosition(body.getPosition());
+	}
 }
 
 void Buildings::SelectBuilding()
 {
-	isSelected = !isSelected;
+	isSelected = true;
 }
 
-bool Buildings::GetSelected()
+void Buildings::DeselectBuilding()
+{
+	isSelected = false;
+}
+
+void Buildings::PlaceBuilding()
+{
+	sf::Vector2i cellPos = Global::GetCurrentCell(*GetWindow(), *GetView());
+	// if(tile[cellPos.x][cellPos.y].resourceType == GOLD)
+	isPlaced = !isPlaced;
+}
+
+bool Buildings::CheckIfPlaced()
+{
+	return isPlaced;
+}
+
+void Buildings::SetPosition(sf::Vector2f pos)
+{
+	body.setPosition(pos);
+}
+
+void Buildings::MoveBuilding()
+{
+	sf::Vector2i newCellPos = Global::GetCurrentCell(*GetWindow(), *GetView());
+	sf::Vector2f newPos;
+	newPos.x = (newCellPos.x * Global::CELL_SIZE) + Global::CELL_SIZE / 2;
+	newPos.y = (newCellPos.y * Global::CELL_SIZE) + Global::CELL_SIZE * 0.4;
+	SetPosition(newPos);
+
+
+}
+
+bool Buildings::CheckIfSelected()
 {
 	return isSelected;
 }

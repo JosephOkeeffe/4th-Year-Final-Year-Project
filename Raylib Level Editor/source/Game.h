@@ -11,15 +11,17 @@
 #define GRASS_PALETTE_SIZE 6
 #define PATH_PALETTE_SIZE 18
 #define OBSTACLE_PALETTE_SIZE 13
-#define ENTIRE_PALETTE_HEIGHT 250
+#define RESOURCE_PALETTE_SIZE 3
+#define ENTIRE_PALETTE_HEIGHT 320
 
-const int screenWidth = (TILE_SIZE * GRID_SIZE) / 1.5;
-const int screenHeight = (TILE_SIZE * GRID_SIZE) / 2;
+const int screenWidth = (TILE_SIZE * GRID_SIZE) / 2;
+const int screenHeight = (TILE_SIZE * GRID_SIZE) / 3; // THESE CAN BREAK THE GAME IF CHANGED
 
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h";
 #include <iostream>
+#include <filesystem>
 
 enum GrassType
 {
@@ -61,7 +63,12 @@ enum GrassType
     WATER10,
     WATER11,
     WATER12,
-    WATER13,
+    WATER13, 
+
+    GOLD_ORE,
+    TOXIC_WASTE,
+    OIL,
+
 };
 
 class Game
@@ -111,7 +118,16 @@ public:
     GrassType grassType = GRASS1;
    // ObstacleType obstacleType;
 
-    Texture2D spriteSheet = LoadTexture("source/tiles.png"); // Load your sprite sheet
+
+
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::string tileFileString = (currentPath / "../tiles.png").string();
+
+    const char* tileFileCString = tileFileString.c_str();
+
+    Texture2D spriteSheet = LoadTexture(tileFileCString);
+
+
 
     Rectangle sourceRect;
 
@@ -125,12 +141,12 @@ public:
 
     int selectedSlot = 0;
 
-
     int randomNumber = 0;
     int tileIds[GRID_SIZE][GRID_SIZE]; // Array to store the texture ID of each tile
     Rectangle grassPaletteRects[GRASS_PALETTE_SIZE];
     Rectangle pathPaletteRects[PATH_PALETTE_SIZE];
     Rectangle obstaclePaletteRects[OBSTACLE_PALETTE_SIZE];
+    Rectangle resourcePaletteRects[RESOURCE_PALETTE_SIZE];
 
 private:
     std::string tileData1 = { "Tile_Data_1.json" };

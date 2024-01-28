@@ -7,7 +7,7 @@ public:
 	Base(sf::Vector2f pos);
 	void MouseRelease() override;
 	void Update() override;
-	void CheckIfSelected();
+	void DoIfSelected();
 private:
 
 	int textureWidth = 57;

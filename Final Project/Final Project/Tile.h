@@ -11,11 +11,11 @@ public:
 	void Render(sf::RenderWindow& window);
 	void Update();
 
-	void CheckTileType();
+	//void CheckTileType();
 	void CheckGrassType();
-	void SetShop();
-	void Hover(sf::Texture& texture);
-	void ResetTexture();
+	//void SetShop();
+	//void Hover(sf::Texture& texture);
+	//void ResetTexture();
 	void SetupGrassTiles();
 	void DiscoverTile();
 
@@ -32,10 +32,10 @@ public:
 
 private:
 
-
 	bool isDiscovered = false;
 	TileType tileType = NONE;
 	GrassType grassType = GRASS1;
+	ResourceType resourceType = NO_RESOURCE;
 
 };
 
