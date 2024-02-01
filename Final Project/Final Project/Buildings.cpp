@@ -65,8 +65,6 @@ void Buildings::MoveBuilding()
 	newPos.x = (newCellPos.x * Global::CELL_SIZE) + Global::CELL_SIZE / 2;
 	newPos.y = (newCellPos.y * Global::CELL_SIZE) + Global::CELL_SIZE * 0.4;
 	SetPosition(newPos);
-
-
 }
 
 bool Buildings::CheckIfSelected()

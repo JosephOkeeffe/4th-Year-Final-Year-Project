@@ -1,5 +1,5 @@
-﻿  Tile.cpp
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+﻿  Archer.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=float
@@ -8,7 +8,7 @@ C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YE
           [
               T=int
           ]
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=float
@@ -17,4 +17,1127 @@ C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YE
           [
               T=int
           ]
-  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(8,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(25,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(25,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(25,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(25,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Base.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Base.cpp(7,70): warning C4305: 'argument': truncation from 'double' to 'float'
+  BuildingUI.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Buildings.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.cpp(7,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.cpp(7,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.cpp(65,48): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.cpp(66,48): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Button.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Button.cpp(19,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Button.cpp(19,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Button.cpp(94,38): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Characters.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(9,85): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(9,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(103,76): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(103,63): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(103,55): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.cpp(103,45): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  Game.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(37,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(50,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(411,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(411,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(637,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(638,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(652,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(653,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  GameObject.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  HUD.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  MainMenu.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(37,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+  Mine.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Mine.cpp(6,70): warning C4305: 'argument': truncation from 'double' to 'float'
+  PauseMenu.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(37,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(13,136): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(18,136): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(23,81): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(43,81): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(63,81): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(86,79): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(126,79): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(147,79): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\PauseMenu.cpp(189,79): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Tile.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  View.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  Warrior.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(21,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(21,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(21,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(21,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(45,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(46,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(17,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(24,3): warning C4091: 'static ': ignored on left of 'HUD::UNIT_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(32,3): warning C4091: 'static ': ignored on left of 'HUD::BUILDING_IDS' when no variable is declared
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(48,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(52,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(106,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(125,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(134,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(148,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(168,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(41,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\GameObject.h(42,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(40,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(37,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+  Generating Code...
+C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(77): warning C4172: returning address of local variable or temporary: pos
+  Final Project.vcxproj -> C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe

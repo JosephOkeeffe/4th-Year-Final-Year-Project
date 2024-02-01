@@ -45,6 +45,8 @@ public:
     void run();
 
     static GameState currentState;
+    static std::vector<Buildings*> buildings;
+    static std::vector<Mine*> mines;
 
 private:
 
@@ -104,7 +106,7 @@ private:
     std::vector<GameObject*> gameObjects;
     std::vector<Characters*> units;
     std::vector<Characters*> selectedUnits;
-    std::vector<Buildings*> buildings;
+   
 
     sf::Vector2f basePos = {200, 200};
 

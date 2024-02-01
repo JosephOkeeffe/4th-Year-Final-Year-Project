@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include "BuildingUI.h"
 #include "HUD.h"
+#include "Tile.h"
+#include "Game.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -13,9 +15,16 @@ class GameObject
 private:
 	static sf::RenderWindow* window;
 	static sf::View* gameView;
+	
 public:
+
+	Game* game;
+	static Tile** tiles;
+
 	static void SetWindow(sf::RenderWindow& _window) { window = &_window; }
 	static void SetView(sf::View& _gameView) { gameView = &_gameView; }
+	static void SetTiles(Tile** _tiles) {tiles = _tiles;}
+
 
 	bool isSelected = false;
 	sf::Sprite body;

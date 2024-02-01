@@ -9,6 +9,9 @@ std::string loadTilesDataPath = "";
 bool saveGame = false;
 bool loadSave = false;
 
+//sf::View* GameObject::gameView = nullptr;
+std::vector<Buildings*> Game::buildings;
+
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
@@ -21,6 +24,7 @@ Game::Game() :
     // TO DO: Only allow mine to be placed on GOld ore
     // Only allow one building to be placed on a tile
     Init();
+    GameObject::SetTiles(tiles);
 }
 Game::~Game()
 {}
@@ -625,7 +629,6 @@ void Game::AlignFormationFacingDirection()
             {
                 temp->FlipSprite();
             }
-           
             temp->isFormationMoving = false;
         }
     }
@@ -641,6 +644,7 @@ void Game::CreateBase(sf::Vector2f pos)
     sf::Vector2f newPos = { newX, newY };
     Base* newBase = new Base(newPos);
     newBase->PlaceBuilding();
+    
     buildings.push_back(newBase);
     gameObjects.push_back(newBase);
    
@@ -655,6 +659,7 @@ void Game::CreateMine(sf::Vector2f pos)
     float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
     sf::Vector2f newPos = { newX, newY };
     Mine* newMine = new Mine(newPos);
+    mines.push_back(newMine);
     buildings.push_back(newMine);
     gameObjects.push_back(newMine);
 }

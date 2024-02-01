@@ -2,7 +2,7 @@
 
 Mine::Mine(sf::Vector2f pos)
 {
-	textureRect = { 0, 0, textureWidth, textureHeight };
+	textureRect = { currentFrameX, 0, textureWidth, textureHeight };
 	Init(Textures::GetInstance().GetTexture("mine"), body, textureRect, 1.8);
 	body.setPosition(pos);
 }
@@ -10,13 +10,19 @@ Mine::Mine(sf::Vector2f pos)
 void Mine::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
+	sf::Vector2i currentCell = Global::GetCurrentCell(*GetWindow(), *GetView());
+
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		DoIfSelected();
 		CheckIfSelected();
 
-		if (!CheckIfPlaced() && canBePlaced)
+		if (!CheckIfPlaced() && canBePlaced && tiles[currentCell.x][currentCell.y].GetTileType() == RESOURCE)
 		{
+			/*for (Buildings* temp : Game::buildings)
+			{
+
+			}*/
 			PlaceBuilding();
 		}
 	}
