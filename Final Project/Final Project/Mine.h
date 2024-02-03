@@ -5,11 +5,9 @@
 class Mine : public Buildings
 {
 public:
-	// 286, 261
-	// 56, 65
 	Mine(sf::Vector2f pos);
-	void MouseRelease() override;
 	void Update() override;
+	void MouseRelease() override;
 	void DoIfSelected();
 
 private:

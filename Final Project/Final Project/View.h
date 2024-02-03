@@ -8,7 +8,7 @@ public:
     //static GameView& GetInstance(sf::RenderWindow& window);
     View(sf::RenderWindow& t_window, sf::View& t_gameView, sf::View& t_hudView);
 
-    void zoom(float factor);
+    //void zoom(float factor);
 
     void move(sf::Vector2f offset);
 

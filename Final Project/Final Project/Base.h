@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Buildings.h"
-class Base : public Buildings
+#include "BuildingUI.h"
+class Base : public Buildings 
 {
 public:
 	Base(sf::Vector2f pos);
-	void MouseRelease() override;
 	void Update() override;
+	void MouseRelease() override;
 	void DoIfSelected();
 private:
 

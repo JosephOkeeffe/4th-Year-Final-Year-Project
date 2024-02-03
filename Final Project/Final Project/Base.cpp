@@ -13,7 +13,7 @@ Base::Base(sf::Vector2f pos)
 
 void Base::MouseRelease()
 {
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		if (CheckIfSelected())
@@ -26,8 +26,8 @@ void Base::MouseRelease()
 		}
 		DoIfSelected();
 	}
-	BuildingUI::BuildMenu(*GetWindow(), *GetView());
-	BuildingUI::TrainMenu(*GetWindow(), *GetView());
+	BuildingUI::BuildMenu(*GameManager::GetWindow(), *GameManager::GetView());
+	BuildingUI::TrainMenu(*GameManager::GetWindow(), *GameManager::GetView());
 }
 void Base::Update()
 {

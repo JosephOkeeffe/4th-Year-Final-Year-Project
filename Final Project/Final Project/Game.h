@@ -3,8 +3,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <fstream>
-#include "Globals.h"
+#include <filesystem>
+#include <iostream>
 
+#include "Globals.h"
+#include "BuildingUI.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
 #include "Tile.h"
@@ -18,7 +21,7 @@
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
-#include "GameObject.h"
+//#include "GameObject.h"
 #include "BuildingUI.h"
 
 #define Display_Text(x) std::cout << x << "\n";
@@ -45,8 +48,8 @@ public:
     void run();
 
     static GameState currentState;
-    static std::vector<Buildings*> buildings;
-    static std::vector<Mine*> mines;
+    //static std::vector<Buildings*> buildings;
+   // static std::vector<Mine*> mines;
 
 private:
 
@@ -103,9 +106,9 @@ private:
 
     bool loadGame = false;
 
-    std::vector<GameObject*> gameObjects;
-    std::vector<Characters*> units;
-    std::vector<Characters*> selectedUnits;
+  //  std::vector<GameObject*> gameObjects;
+   // std::vector<Characters*> units;
+   // std::vector<Characters*> selectedUnits;
    
 
     sf::Vector2f basePos = {200, 200};

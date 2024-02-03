@@ -9,20 +9,16 @@ Mine::Mine(sf::Vector2f pos)
 
 void Mine::MouseRelease()
 {
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GetWindow(), *GetView());
-	sf::Vector2i currentCell = Global::GetCurrentCell(*GetWindow(), *GetView());
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+	sf::Vector2i currentCell = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
 
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		DoIfSelected();
 		CheckIfSelected();
 
-		if (!CheckIfPlaced() && canBePlaced && tiles[currentCell.x][currentCell.y].GetTileType() == RESOURCE)
+		if (!CheckIfPlaced() && canBePlaced && GameManager::tiles[currentCell.x][currentCell.y].GetTileType() == RESOURCE)
 		{
-			/*for (Buildings* temp : Game::buildings)
-			{
-
-			}*/
 			PlaceBuilding();
 		}
 	}

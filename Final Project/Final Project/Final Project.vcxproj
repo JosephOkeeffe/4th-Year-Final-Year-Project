@@ -138,6 +138,7 @@
     <ClCompile Include="BuildingUI.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Characters.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="BuildingUI.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Characters.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenu.h" />

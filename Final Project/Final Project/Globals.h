@@ -1,9 +1,15 @@
 #pragma once
 #include <iostream>
 
+
+
 struct Global
 {
 public:
+
+    static sf::RenderWindow* window;
+    static sf::View* gameView;
+
 
     static const int S_WIDTH{ 1920U };
     static const int S_HEIGHT{ 1080U };
