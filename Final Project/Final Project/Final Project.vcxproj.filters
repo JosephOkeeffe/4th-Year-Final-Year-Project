@@ -90,7 +90,7 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Mine.cpp">
+    <ClCompile Include="GoldMine.cpp">
       <Filter>Source Files\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -103,6 +103,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,7 +164,7 @@
     <ClInclude Include="Base.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
-    <ClInclude Include="Mine.h">
+    <ClInclude Include="GoldMine.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="BuildingUI.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

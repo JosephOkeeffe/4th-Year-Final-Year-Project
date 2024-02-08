@@ -4,7 +4,10 @@
 
 #include "Globals.h"
 #include "Tile.h"
-#include "Buildings.h"
+//#include "Buildings.h"
+
+class Buildings;
+class Characters;
 
 class GameManager
 {
@@ -18,6 +21,15 @@ public:
 
 	static void InitTiles()
 	{
+        srand(time(nullptr));
+
+        tiles = new Tile * [Global::ROWS_COLUMNS];
+
+        for (int i = 0; i < Global::ROWS_COLUMNS; i++)
+        {
+            tiles[i] = new Tile[Global::ROWS_COLUMNS];
+        }
+
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
@@ -28,8 +40,11 @@ public:
         }
 	}
 
-    static std::vector<Buildings*> buildings;
     static Tile** tiles;
+
+    static std::vector<Buildings*> buildings;
+    static std::vector<Characters*> units;
+    static Buildings* buildingToPlace;
 
 private:
     static sf::RenderWindow* window;

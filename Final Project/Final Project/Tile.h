@@ -18,6 +18,7 @@ public:
 	//void ResetTexture();
 	void SetupGrassTiles();
 	void DiscoverTile();
+	bool GetDiscoveredStatus();
 
 	GrassType GetGrassType();
 	void SetGrassType(GrassType type);

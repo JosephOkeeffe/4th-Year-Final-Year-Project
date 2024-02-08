@@ -2,12 +2,20 @@
 #include <SFML/Graphics.hpp>
 #include "GameManager.h"
 #include "Textures.h"
+#include "Globals.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
 class Buildings
 {
 public:
+
+	enum BuildingType
+	{
+		HEADQUATERS,
+		GOLD_MINE,
+	};
+
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
 	virtual void Update();
 	virtual void MouseRelease();
@@ -15,13 +23,12 @@ public:
 
 	void InitDetectionCircle(int radius);
 	
-	void UpdateDetectionCircles();
+	void UpdateBuildings();
+	void UpdateDetectionCircle();
 
 	//void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
 	void SetPosition(sf::Vector2f pos);
 	void MoveBuilding();
-
-	void CheckForCollisions();
 
 	void SelectBuilding();
 	void DeselectBuilding();
@@ -29,6 +36,10 @@ public:
 
 	void PlaceBuilding();
 	bool CheckIfPlaced();
+	bool CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell);
+	void ChangeSelectedColour();
+
+	BuildingType buildingType;
 
 	sf::Sprite body;
 	sf::Texture texture;
@@ -36,12 +47,13 @@ public:
 	sf::CircleShape detectionCircle;
 	float detectionRadius = 100.0f;
 
-	bool canBePlaced = true;
+	
 	bool isSelected = false;
 	
 
 private:
 
+	bool canBePlaced = true;
 	bool isPlaced = false;
 	sf::RectangleShape mainRectangle;
 	const int numSmallRectangles = 4;

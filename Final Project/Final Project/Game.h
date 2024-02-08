@@ -10,19 +10,21 @@
 #include "BuildingUI.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
-#include "Tile.h"
+//#include "Tile.h"
 #include "View.h"
 #include "Textures.h"
+#include "Characters.h"
 #include "Warrior.h"
 #include "Archer.h"
+#include "Worker.h"
+
 #include "Base.h"
-#include "Mine.h"
+#include "GoldMine.h"
 #include "HUD.h"
 #include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
 //#include "GameObject.h"
-#include "BuildingUI.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -48,8 +50,6 @@ public:
     void run();
 
     static GameState currentState;
-    //static std::vector<Buildings*> buildings;
-   // static std::vector<Mine*> mines;
 
 private:
 
@@ -66,15 +66,15 @@ private:
     void LoadJSON();
     void LoadTilesJSON();
     void FixLoadedGrass(int type, int row, int col);
-    void ChangeThingsDependingOnTileType();
-
-    void InitTiles();
+   // void ChangeThingsDependingOnTileType();
 
     void ManageTimers();
 
     void CreateWorker(sf::Vector2f pos);
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
+
+    void CheckBuildingCollisions();
 
     void SelectUnits();
     void MakeFormation();
@@ -85,7 +85,7 @@ private:
     sf::RectangleShape dragRect;
 
     void CreateBase(sf::Vector2f pos);
-    void CreateMine(sf::Vector2f pos);
+    void CreateGoldMine(sf::Vector2f pos);
 
     void ClearFog(sf::CircleShape radius);
 
@@ -99,16 +99,13 @@ private:
     MainMenu mainMenu;
     PauseMenu pauseMenu;
 
-    Tile** tiles;
     View view{ m_window, gameView, hudView };
 
 
 
     bool loadGame = false;
 
-  //  std::vector<GameObject*> gameObjects;
-   // std::vector<Characters*> units;
-   // std::vector<Characters*> selectedUnits;
+   std::vector<Characters*> selectedUnits;
    
 
     sf::Vector2f basePos = {200, 200};

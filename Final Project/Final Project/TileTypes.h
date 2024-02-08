@@ -5,7 +5,8 @@ enum TileType
 	NONE,
     PATH,
 	OBSTACLE,
-    RESOURCE
+    RESOURCE,
+    TILE_USED_UP,
 };
 
 enum GrassType

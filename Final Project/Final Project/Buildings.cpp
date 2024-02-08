@@ -15,7 +15,7 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 
 void Buildings::Update()
 {
-	CheckForCollisions();
+	
 }
 
 void Buildings::MouseRelease()
@@ -38,7 +38,12 @@ void Buildings::InitDetectionCircle(int radius)
 	detectionCircle.setOutlineColor(sf::Color(255, 0, 0, 255));
 }
 
-void Buildings::UpdateDetectionCircles()
+void Buildings::UpdateBuildings()
+{
+	UpdateDetectionCircle();
+}
+
+void Buildings::UpdateDetectionCircle()
 {
 	if (!CheckIfPlaced())
 	{
@@ -68,8 +73,6 @@ bool Buildings::CheckIfSelected()
 
 void Buildings::PlaceBuilding()
 {
-	sf::Vector2i cellPos = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
-	// if(tile[cellPos.x][cellPos.y].resourceType == GOLD)
 	isPlaced = !isPlaced;
 }
 
@@ -87,21 +90,31 @@ bool Buildings::CheckIfPlaced()
 	return isPlaced;
 }
 
+bool Buildings::CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell)
+{
+	if (GameManager::tiles[cell.x][cell.y].GetTileType() == RESOURCE &&
+		GameManager::tiles[cell.x][cell.y].GetDiscoveredStatus())
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void Buildings::SetPosition(sf::Vector2f pos)
 {
 	body.setPosition(pos);
 }
 
-void Buildings::CheckForCollisions()
+void Buildings::ChangeSelectedColour()
 {
-	for (Buildings* building : GameManager::buildings)
+	if (CheckIfSelected() && CheckIfPlaced())
 	{
-		if (building == this) return;
-
-		if (building->body.getLocalBounds().intersects(this->body.getLocalBounds()))
-		{
-			Display_Text("CANT PLACE");
-		}
+		body.setColor(sf::Color(128, 128, 128));
+	}
+	else
+	{
+		body.setColor(sf::Color::White);
 	}
 }
 

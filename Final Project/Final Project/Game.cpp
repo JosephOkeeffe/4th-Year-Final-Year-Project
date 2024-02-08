@@ -1,6 +1,4 @@
-
 #include "Game.h"
-
 
 std::string savePath = "";
 std::string loadGameDataPath = "";
@@ -9,7 +7,6 @@ bool saveGame = false;
 bool loadSave = false;
 
 //sf::View* GameObject::gameView = nullptr;
-//std::vector<Buildings*> Game::buildings;
 
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
@@ -18,15 +15,14 @@ Game::Game() :
 {
     GameManager::SetWindow(m_window);
     GameManager::SetView(gameView);
-   // GameObject::SetWindow(m_window);
-  //  GameObject::SetView(gameView);
+    GameManager::InitTiles();
+
     // I NEED TO PASS THE TILES INTO GAME OBJECT SOMEHOW
     // CREATE MAP OF TILES AND SPRITES
     // TO DO: Only allow mine to be placed on GOld ore
     // Only allow one building to be placed on a tile
     Init();
-    GameManager::InitTiles();
-    //GameObject::SetTiles(tiles);
+
 }
 Game::~Game()
 {}
@@ -57,14 +53,8 @@ void Game::Init()
     mainMenu.Init(m_window, m_font);
     pauseMenu.Init(m_window, m_font);
 
-    tiles = new Tile * [Global::ROWS_COLUMNS];
-
-    for (int i = 0; i < Global::ROWS_COLUMNS; i++)
-    {
-        tiles[i] = new Tile[Global::ROWS_COLUMNS];
-    }
     elapsedTime = incomeTimer.getElapsedTime();
-    InitTiles();
+    // InitTiles();
     HUD::Init(m_window, m_font);
     BuildingUI::Init();
 
@@ -72,6 +62,7 @@ void Game::Init()
     CreateArcher({ 300, 400 });
     CreateWarrior({ 350, 400 });
     CreateWarrior({ 400, 400 });
+    CreateWorker({ 450, 400 });
     // stay in same position but move to the leader
 }
 
@@ -122,7 +113,7 @@ void Game::ProcessEvents()
 
             if (HUD::currentUnitSelected == HUD::WARRIOR)
             {
-                CreateWarrior({ basePos.x + 50, basePos.y + 150 });
+               CreateWarrior({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -141,7 +132,7 @@ void Game::ProcessEvents()
 
             if (HUD::currentBuildingSelected == HUD::MINE)
             {
-                CreateMine(Global::GetMousePos(m_window));
+                CreateGoldMine(Global::GetMousePos(m_window));
                 HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -171,7 +162,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::W == t_event.key.code)
     {
-        CreateMine({600,600});
+        CreateGoldMine({600,600});
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
@@ -205,25 +196,33 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-        for (Buildings* temp : GameManager::buildings)
+        for (Buildings* building : GameManager::buildings)
         {
-            //if(!temp->CheckIfPlaced())
-           // temp->isSelected = false;
-           // selectedUnits.clear();
+            building->MouseRelease();
         }
 
+        if (GameManager::buildingToPlace != nullptr)
+        {
+            GameManager::buildingToPlace->MouseRelease();
+            GameManager::buildingToPlace->DeselectBuilding();
+            GameManager::buildings.push_back(GameManager::buildingToPlace);
+            GameManager::buildingToPlace = nullptr;
+        }
+
+        for (Characters* character : GameManager::units)
+        {
+            character->MouseRelease();
+        }
         SelectUnits();
     }
     if (sf::Mouse::Right == t_event.key.code)
     {
-       /* for (Characters* temp : units)
+        for (Characters* temp : GameManager::units)
         {
-            temp->isSelected = false;
+            temp->DeselectCharacter();
             selectedUnits.clear();
-        }*/
+        }
     }
-
-    
 }
 
 void Game::Render()
@@ -242,7 +241,7 @@ void Game::Render()
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
-                tiles[row][col].Render(m_window);
+                GameManager::tiles[row][col].Render(m_window);
             }
         }
 
@@ -250,18 +249,19 @@ void Game::Render()
         {
             building->Draw();
         }
-       /* for (Characters* object : units)
+        for (Characters* object : GameManager::units)
         {
             object->Draw();
-        }*/
-       /* for (GameObject* object : gameObjects)
-        {
-            object->Draw();
-        }*/
+        }
 
         if (isDragging)
         {
             m_window.draw(dragRect);
+        }
+
+        if (GameManager::buildingToPlace != nullptr)
+        {
+           GameManager::buildingToPlace->Draw();
         }
 
         BuildingUI::Draw(m_window);
@@ -273,7 +273,7 @@ void Game::Render()
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
-                tiles[row][col].Render(m_window);
+                GameManager::tiles[row][col].Render(m_window);
             }
         }
         pauseMenu.Render(m_window);
@@ -307,17 +307,27 @@ void Game::Update(sf::Time t_deltaTime)
             SaveJSON();
         }
 
+        if (GameManager::buildingToPlace != nullptr)
+        {
+            GameManager::buildingToPlace->Update();
+        }
         view.MoveScreen();
         ManageTimers();
 
         AlignFormationFacingDirection();
 
-        ChangeThingsDependingOnTileType();
+        //ChangeThingsDependingOnTileType();
 
         for (Buildings* building : GameManager::buildings)
         {
             building->Update();
             ClearFog(building->detectionCircle);
+        }
+
+        for (Characters* character : GameManager::units)
+        {
+            character->Update();
+            ClearFog(character->detectionCircle);
         }
 
         break;
@@ -347,7 +357,7 @@ void Game::SaveJSON()
     {
         for (int col = 0; col < Global::ROWS_COLUMNS; col++)
         {
-            jsonData["TileType"][row][col] = tiles[row][col].GetTileType();
+            jsonData["TileType"][row][col] = GameManager::tiles[row][col].GetTileType();
         }
     }
 
@@ -391,7 +401,7 @@ void Game::LoadJSON()
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
                 int tileType = jsonData["TileType"][row][col];
-                tiles[row][col].SetTileType(static_cast<TileType>(tileType));
+                GameManager::tiles[row][col].SetTileType(static_cast<TileType>(tileType));
             }
         }
         ResourceManagement::ResetAndLoad(coins, shops);
@@ -445,52 +455,40 @@ void Game::FixLoadedGrass(int type, int row, int col)
    
     if (type <= MOUNTAINS)
     {
-        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
-        tiles[row][col].SetTileType(NONE);
+        GameManager::tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        GameManager::tiles[row][col].SetTileType(NONE);
 
     }
     else if (type >= BRIDGE1 && type <= PATH10)
     {
-        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
-        tiles[row][col].SetTileType(PATH);
+        GameManager::tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        GameManager::tiles[row][col].SetTileType(PATH);
     }
     else if (type >= WATER1 && type <= WATER13)
     {
-        tiles[row][col].SetGrassType(static_cast<GrassType>(type));
-        tiles[row][col].SetTileType(OBSTACLE);
+        GameManager::tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        GameManager::tiles[row][col].SetTileType(OBSTACLE);
     }
 }
 
-void Game::ChangeThingsDependingOnTileType()
-{
-    sf::Vector2i tempPos;
-
-   // tempPos.x = static_cast<int>(warrior.tileDetectionCircle.getPosition().x / Global::CELL_SIZE);
-   // tempPos.y = static_cast<int>(warrior.tileDetectionCircle.getPosition().y / Global::CELL_SIZE);
-
-    if (tiles[tempPos.x][tempPos.y].GetTileType() == NONE)
-    {
-       // warrior.currentMoveSpeed = warrior.defaultMoveSpeed;
-    }
-    else if (tiles[tempPos.x][tempPos.y].GetTileType() == PATH)
-    {
-        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed * 2;
-    }
-    else if (tiles[tempPos.x][tempPos.y].GetTileType() == OBSTACLE)
-    {
-        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed / 2;
-    }
-}
-
-//void Game::InitTiles()
+//void Game::ChangeThingsDependingOnTileType()
 //{
-//    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+//    sf::Vector2i tempPos;
+//
+//   // tempPos.x = static_cast<int>(warrior.tileDetectionCircle.getPosition().x / Global::CELL_SIZE);
+//   // tempPos.y = static_cast<int>(warrior.tileDetectionCircle.getPosition().y / Global::CELL_SIZE);
+//
+//    if (GameManager::tiles[tempPos.x][tempPos.y].GetTileType() == NONE)
 //    {
-//        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
-//        {
-//            sf::Vector2f temp = { static_cast<float>(row * Global::CELL_SIZE), static_cast<float>(col * Global::CELL_SIZE) };
-//            tiles[row][col].Init(temp);
-//        }
+//       // warrior.currentMoveSpeed = warrior.defaultMoveSpeed;
+//    }
+//    else if (GameManager::tiles[tempPos.x][tempPos.y].GetTileType() == PATH)
+//    {
+//        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed * 2;
+//    }
+//    else if (GameManager::tiles[tempPos.x][tempPos.y].GetTileType() == OBSTACLE)
+//    {
+//        //warrior.currentMoveSpeed = warrior.defaultMoveSpeed / 2;
 //    }
 //}
 
@@ -505,144 +503,169 @@ void Game::ManageTimers()
     }
 }
 
-//void Game::CreateWarrior(sf::Vector2f pos)
-//{
-//    Warrior* newWarrior = new Warrior;
-//    newWarrior->SetPosition(pos);
-//
-//    units.push_back(newWarrior);
-//    gameObjects.push_back(newWarrior);
-//}
+void Game::CreateWarrior(sf::Vector2f pos)
+{
+    Warrior* newWarrior = new Warrior;
+    newWarrior->SetPosition(pos);
 
-//void Game::CreateArcher(sf::Vector2f pos)
-//{
-//    Archer* newArcher = new Archer;
-//    newArcher->SetPosition(pos);
-//
-//    units.push_back(newArcher);
-//    gameObjects.push_back(newArcher);
-//}
+    GameManager::units.push_back(newWarrior);
+}
 
-//void Game::SelectUnits()
-//{
-//    for (Characters* temp : units)
-//    {
-//        if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
-//        {
-//            temp->SelectCharacter();
-//            selectedUnits.push_back(temp);
-//        }
-//    }
-//    isDragging = false;
-//    dragRect.setSize({ 0, 0 });
-//}
+void Game::CreateArcher(sf::Vector2f pos)
+{
+    Archer* newArcher = new Archer;
+    newArcher->SetPosition(pos);
 
-//void Game::MakeFormation()
-//{
-//    Characters* leader = nullptr;
-//
-//    for (Characters* temp : units)
-//    {
-//        if (temp->isSelected)
-//        {
-//            leader = temp;
-//            break;
-//        }
-//    }
-//
-//    if (leader != nullptr)
-//    {
-//        float xPosLeader = leader->body.getPosition().x;
-//        float yPosLeader = leader->body.getPosition().y;
-//
-//        float xOffset = -50;
-//        float yOffset = -50;
-//
-//        int i = -1;
-//        for (Characters* temp : units) 
-//        {
-//            temp->isMoving = true;
-//            temp->isFormationMoving = true;
-//            if (temp->isSelected) 
-//            {
-//                if (temp != leader)
-//                {
-//                    ++i;
-//
-//                    if (i == 0)
-//                    {
-//                        yOffset = -50;
-//
-//                    }
-//                    else if (i == 1)
-//                    {
-//                        yOffset = 0;
-//                    }
-//                    else if (i == 2)
-//                    {
-//                        yOffset = 50;
-//                    }
-//                    temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
-//
-//
-//                    if (i == 2)
-//                    {
-//                        xOffset -= 50.0f;
-//                        i = -1;
-//                    }
-//                }
-//                else
-//                {
-//                    temp->targetPosition = { xPosLeader, yPosLeader};
-//                }
-//            }
-//       
-//        }
-//    }
-//
-//}
+    GameManager::units.push_back(newArcher);
+}
 
-//void Game::AlignFormationFacingDirection()
-//{
-//    for (Characters* temp : units)
-//    {
-//        if (temp != units[0] && temp->isFormationMoving && !temp->isMoving)
-//        {
-//            if (temp->body.getScale().x != units[0]->body.getScale().x)
-//            {
-//                temp->FlipSprite();
-//            }
-//            temp->isFormationMoving = false;
-//        }
-//    }
-//}
+void Game::CreateWorker(sf::Vector2f pos)
+{
+    Worker* newWorker = new Worker;
+    newWorker->SetPosition(pos);
+
+    GameManager::units.push_back(newWorker);
+}
+
+void Game::CheckBuildingCollisions()
+{
+    if (GameManager::buildingToPlace != nullptr)
+    {
+        for (Buildings* temp : GameManager::buildings)
+        {
+        }
+    }
+
+    
+
+
+    sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+    sf::Vector2i currentCell = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
+}
+
+void Game::SelectUnits()
+{
+    for (Characters* temp : GameManager::units)
+    {
+        if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
+        {
+            temp->SelectCharacter();
+            selectedUnits.push_back(temp);
+        }
+    }
+    isDragging = false;
+    dragRect.setSize({ 0, 0 });
+}
+
+void Game::MakeFormation()
+{
+    Characters* leader = nullptr;
+
+    for (Characters* temp : GameManager::units)
+    {
+        if (temp->GetSelected())
+        {
+            leader = temp;
+            break;
+        }
+    }
+
+    if (leader != nullptr)
+    {
+        float xPosLeader = leader->body.getPosition().x;
+        float yPosLeader = leader->body.getPosition().y;
+
+        float xOffset = -50;
+        float yOffset = -50;
+
+        int i = -1;
+        for (Characters* temp : GameManager::units)
+        {
+            temp->SetCurrentState(temp->MOVING);
+            temp->isFormationMoving = true;
+            if (temp->GetSelected()) 
+            {
+                if (temp != leader)
+                {
+                    ++i;
+
+                    if (i == 0)
+                    {
+                        yOffset = -50;
+
+                    }
+                    else if (i == 1)
+                    {
+                        yOffset = 0;
+                    }
+                    else if (i == 2)
+                    {
+                        yOffset = 50;
+                    }
+                    temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
+
+
+                    if (i == 2)
+                    {
+                        xOffset -= 50.0f;
+                        i = -1;
+                    }
+                }
+                else
+                {
+                    temp->targetPosition = { xPosLeader, yPosLeader};
+                }
+            }
+       
+        }
+    }
+
+}
+
+// DOes not work
+void Game::AlignFormationFacingDirection()
+{
+    for (Characters* unit : GameManager::units)
+    {
+        if (unit != GameManager::units[0] && unit->isFormationMoving && unit->currentState!= unit->MOVING)
+        {
+            if (unit->direction != GameManager::units[0]->direction)
+            {
+                unit->FlipSprite();
+            }
+            unit->isFormationMoving = false;
+        }
+    }
+}
 
 void Game::CreateBase(sf::Vector2f pos)
 {
     int x = pos.x / Global::CELL_SIZE;
     int y = pos.y / Global::CELL_SIZE;
 
-    float newX = (tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
-    float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
+    float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
+    float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
     sf::Vector2f newPos = { newX, newY };
     Base* newBase = new Base(newPos);
     newBase->PlaceBuilding();
-    
+
     GameManager::buildings.push_back(newBase);
-   
+
 }
 
-void Game::CreateMine(sf::Vector2f pos)
+void Game::CreateGoldMine(sf::Vector2f pos)
 {
     int x = pos.x / Global::CELL_SIZE;
     int y = pos.y / Global::CELL_SIZE;
 
-    float newX = (tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2);
-    float newY = (tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
+    float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2);
+    float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
     sf::Vector2f newPos = { newX, newY };
-    Mine* newMine = new Mine(newPos);
+    GoldMine* newGoldMine = new GoldMine(newPos);
+   // newMine->PlaceBuilding();
+    GameManager::buildingToPlace = newGoldMine;
    // mines.push_back(newMine);
-    GameManager::buildings.push_back(newMine);
+    //GameManager::buildings.push_back(newMine);
 }
 
 void Game::ClearFog(sf::CircleShape radius)
@@ -652,9 +675,9 @@ void Game::ClearFog(sf::CircleShape radius)
         for (int col = 0; col < Global::ROWS_COLUMNS; col++)
         {
            
-            if (radius.getGlobalBounds().intersects(tiles[row][col].tile.getGlobalBounds()))
+            if (radius.getGlobalBounds().intersects(GameManager::tiles[row][col].tile.getGlobalBounds()))
             {
-                tiles[row][col].DiscoverTile();
+                GameManager::tiles[row][col].DiscoverTile();
             }
         }
     }

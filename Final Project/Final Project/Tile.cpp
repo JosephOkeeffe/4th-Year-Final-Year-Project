@@ -147,6 +147,11 @@ void Tile::DiscoverTile()
 	tile.setFillColor(sf::Color::White);
 }
 
+bool Tile::GetDiscoveredStatus()
+{
+	return isDiscovered;
+}
+
 void Tile::SetTileType(TileType type)
 {
 	tileType = type;

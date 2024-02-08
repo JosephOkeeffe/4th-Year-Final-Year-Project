@@ -27,6 +27,9 @@ void Textures::SetupTextures()
     archerTexture.loadFromFile("./assets/images/mage.png");
     textureMap["archer"] = archerTexture;
 
+    workerTexture.loadFromFile("./assets/images/worker.png");
+    textureMap["worker"] = workerTexture;
+
 
     // Buildings
     baseTexture.loadFromFile("./assets/images/base.png");

@@ -145,13 +145,14 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManagement.cpp" />
-    <ClCompile Include="Mine.cpp" />
+    <ClCompile Include="GoldMine.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
@@ -168,7 +169,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManagement.h" />
-    <ClInclude Include="Mine.h" />
+    <ClInclude Include="GoldMine.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Globals.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

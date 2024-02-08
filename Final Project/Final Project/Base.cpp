@@ -8,12 +8,14 @@ Base::Base(sf::Vector2f pos)
 	body.setPosition(pos);
 	BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80 });
 	BuildingUI::Deactivate();
-	detectionRadius = 0;
+	//detectionRadius = 0;
 }
 
 void Base::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+	sf::Vector2i currentCell = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
+
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		if (CheckIfSelected())
@@ -24,17 +26,17 @@ void Base::MouseRelease()
 		{
 			SelectBuilding();
 		}
-		DoIfSelected();
+		ChangeSelectedColour();
 	}
 	BuildingUI::BuildMenu(*GameManager::GetWindow(), *GameManager::GetView());
 	BuildingUI::TrainMenu(*GameManager::GetWindow(), *GameManager::GetView());
 }
 void Base::Update()
 {
-	DoIfSelected();
-	UpdateDetectionCircles();
+	ChangeSelectedColour();
+	UpdateDetectionCircle();
 }
-void Base::DoIfSelected()
+void Base::ChangeSelectedColour()
 {
 	if (CheckIfSelected())
 	{
