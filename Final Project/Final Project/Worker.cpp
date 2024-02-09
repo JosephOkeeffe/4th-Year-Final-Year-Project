@@ -1,43 +1,109 @@
 #include "Worker.h"
 #include "Globals.h"
+#include "Buildings.h"
 
 Worker::Worker()
 {
+	srand(time(nullptr));
+	int randomNuber = rand() % 5;
+
+	if (randomNuber == 0)
+	{
+		Init(Textures::GetInstance().GetTexture("worker"), body, textureRect);
+	}
+	else if (randomNuber == 1)
+	{
+		Init(Textures::GetInstance().GetTexture("worker1"), body, textureRect);
+	}
+
 	textureRect = { 0, 0, textureWidth, textureHeight };
-	Init(Textures::GetInstance().GetTexture("worker"), body, textureRect);
+
+	body.setScale(1, 1);
+	animationSpeed = 0.08;
+
 }
 
 void Worker::Update()
 {
 	UpdateCharacters();
 	CheckAnimationState();
-	ChangeAnimation();
-	//AnimateWorker();
+	AnimateWorker();
+
+	if (GetCurrentState(SEARCH_FOR_RESOURCE))
+	{
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+		{
+			SetCurrentState(GATHERING);
+			body.setPosition(workingPlace->body.getPosition());
+		}
+	}
+}
+
+void Worker::MouseRelease()
+{
+	if (isSelected)
+	{
+		currentState = MOVING;
+		targetPosition = Global::GetMousePos(*GameManager::GetWindow());
+
+		for (Buildings* object : GameManager::buildings)
+		{
+			if (object->GetBuildingType() == object->GOLD_MINE)
+			{
+
+				if (object->body.getGlobalBounds().contains(targetPosition))
+				{
+						Display_Text("MINE TIME");
+						SetCurrentState(SEARCH_FOR_RESOURCE);
+						workingPlace = object;
+				}
+	
+			}
+		}
+	}
+
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+	{
+		SelectCharacter();
+	}
 }
 
 void Worker::AnimateWorker()
-{
-	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites);
+{ 
+	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 }
 
 void Worker::CheckAnimationState()
 {
-	if (animationState == IDLE_ANIM)
+	if (GetCurrentState(IDLE) && !GetSelected())
 	{
 		currentFrameY = 0;
+		amountOfSprites = 6;
 	}
-	if (animationState == RUNNING_ANIM)
+	else if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
 	{
-		currentFrameY = 2;
+		currentFrameY = 206;
+		amountOfSprites = 7;
 	}
-	if (animationState == ATTACKING_ANIM)
+	else if (GetCurrentState(GATHERING))
 	{
-		currentFrameY = 3;
+		currentFrameY = 276;
+		amountOfSprites = 7;
 	}
-	if (animationState == DEAD_ANIM)
+	else if (GetCurrentState(RETURN_TO_BASE))
 	{
-		SetCurrentState(DEAD);
-		currentFrameY = 4;
+		currentFrameY = 68;
+		amountOfSprites = 7;
+	}
+	else if (GetCurrentState(UNLOADING) || GetSelected())
+	{
+		currentFrameY = 138;
+		amountOfSprites = 2;
+	}
+	else if (GetCurrentState(DEAD))
+	{
+
 	}
 }
 

@@ -69,7 +69,7 @@
     <ClCompile Include="Buildings.cpp">
       <Filter>Source Files\Buildings</Filter>
     </ClCompile>
-    <ClCompile Include="Base.cpp">
+    <ClCompile Include="Headquarters.cpp">
       <Filter>Source Files\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="Characters.cpp">
@@ -161,7 +161,7 @@
     <ClInclude Include="Buildings.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
-    <ClInclude Include="Base.h">
+    <ClInclude Include="Headquarters.h">
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="GoldMine.h">
@@ -180,7 +180,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Worker.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Characters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

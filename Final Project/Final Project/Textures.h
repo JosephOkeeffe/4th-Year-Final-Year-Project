@@ -17,6 +17,11 @@ private:
     sf::Texture warriorTexture;
     sf::Texture archerTexture;
     sf::Texture workerTexture;
+    sf::Texture worker2Texture;
+    sf::Texture worker3Texture;
+    sf::Texture worker4Texture;
+    sf::Texture worker5Texture;
+    sf::Texture fogTexture;
     sf::Texture coinTexture;
 
     sf::Texture baseTexture;

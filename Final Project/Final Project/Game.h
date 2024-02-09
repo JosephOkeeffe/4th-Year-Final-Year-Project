@@ -18,7 +18,7 @@
 #include "Archer.h"
 #include "Worker.h"
 
-#include "Base.h"
+#include "Headquarters.h"
 #include "GoldMine.h"
 #include "HUD.h"
 #include "ResourceManagement.h"
@@ -84,7 +84,7 @@ private:
     sf::Vector2f endDragPos;
     sf::RectangleShape dragRect;
 
-    void CreateBase(sf::Vector2f pos);
+    void CreateHeadquarters(sf::Vector2f pos);
     void CreateGoldMine(sf::Vector2f pos);
 
     void ClearFog(sf::CircleShape radius);

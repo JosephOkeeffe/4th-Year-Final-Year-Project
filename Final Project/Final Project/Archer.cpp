@@ -14,7 +14,6 @@ void Archer::Update()
 {
 	UpdateCharacters();
 	CheckAnimationState();
-	ChangeAnimation();
 	AnimateArcher();
 }
 
@@ -25,25 +24,24 @@ void Archer::AnimateArcher()
 
 void Archer::CheckAnimationState()
 {
-	if (animationState == IDLE_ANIM)
+	switch (currentState)
 	{
+	case Characters::IDLE:
 		currentFrameY = 0;
 		textureHeight = 50;
-	}
-	if (animationState == RUNNING_ANIM)
-	{
+		break;
+	case Characters::MOVING:
 		currentFrameY = 2;
 		textureHeight = 52;
-
-	}
-	if (animationState == ATTACKING_ANIM)
-	{
+		break;
+	case Characters::ATTACKING:
 		currentFrameY = 3;
-	}
-	if (animationState == DEAD_ANIM)
-	{
-		SetCurrentState(DEAD);
+		break;
+	case Characters::DEAD:
 		currentFrameY = 4;
+		break;
+	default:
+		break;
 	}
 }
 

@@ -118,4 +118,14 @@ void Buildings::ChangeSelectedColour()
 	}
 }
 
+void Buildings::SetBuildingType(BuildingType type)
+{
+	buildingType = type;
+}
+
+Buildings::BuildingType Buildings::GetBuildingType()
+{
+	return buildingType;
+}
+
 

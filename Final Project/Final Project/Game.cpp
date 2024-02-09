@@ -58,7 +58,7 @@ void Game::Init()
     HUD::Init(m_window, m_font);
     BuildingUI::Init();
 
-    CreateBase(basePos);
+    CreateHeadquarters(basePos);
     CreateArcher({ 300, 400 });
     CreateWarrior({ 350, 400 });
     CreateWarrior({ 400, 400 });
@@ -638,7 +638,7 @@ void Game::AlignFormationFacingDirection()
     }
 }
 
-void Game::CreateBase(sf::Vector2f pos)
+void Game::CreateHeadquarters(sf::Vector2f pos)
 {
     int x = pos.x / Global::CELL_SIZE;
     int y = pos.y / Global::CELL_SIZE;
@@ -646,7 +646,7 @@ void Game::CreateBase(sf::Vector2f pos)
     float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
     float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
     sf::Vector2f newPos = { newX, newY };
-    Base* newBase = new Base(newPos);
+    Headquarters* newBase = new Headquarters(newPos);
     newBase->PlaceBuilding();
 
     GameManager::buildings.push_back(newBase);

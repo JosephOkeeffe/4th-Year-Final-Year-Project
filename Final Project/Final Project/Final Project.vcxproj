@@ -132,7 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
-    <ClCompile Include="Base.cpp" />
+    <ClCompile Include="Headquarters.cpp" />
     <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Buildings.cpp" />
     <ClCompile Include="BuildingUI.cpp" />
@@ -156,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
-    <ClInclude Include="Base.h" />
+    <ClInclude Include="Headquarters.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Buildings.h" />
     <ClInclude Include="BuildingUI.h" />

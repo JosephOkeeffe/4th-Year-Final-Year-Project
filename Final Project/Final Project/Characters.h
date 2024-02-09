@@ -13,18 +13,13 @@ public:
 	{
 		IDLE,
 		MOVING,
-		FORMATION_MOVING,
 		ATTACKING,
 		DEAD,
-	};
-
-	enum AnimationState
-	{
-		IDLE_ANIM,
-		RUNNING_ANIM,
-		ATTACKING_ANIM,
-		DEAD_ANIM,
-
+		// Worker ENUMS
+		SEARCH_FOR_RESOURCE,
+		GATHERING,
+		RETURN_TO_BASE,
+		UNLOADING,
 	};
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
@@ -37,7 +32,6 @@ public:
 	void UpdateDetectionCircle();
 	void UpdateCharacters();
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
-	void ChangeAnimation();
 	
 	void SetPosition(sf::Vector2f pos);
 	void MoveCharacter();
@@ -48,10 +42,9 @@ public:
 	void CalculateAngle(sf::Sprite& target);
 	void FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite);
 	void FlipSprite();
-	bool CheckCurrentState(State stateToCheck);
+	bool GetCurrentState(State stateToCheck);
 	void SetCurrentState(State stateToChange);
 	
-	AnimationState animationState = IDLE_ANIM;
 	State currentState = IDLE;
 
 	Behaviour* behaviour;
@@ -66,9 +59,7 @@ public:
 	sf::CircleShape tileDetectionCircle;
 	
 	bool isSelected = false;
-	//bool isMoving = false;
 	bool isFormationMoving = false;
-	//bool isDead = false;
 
 	float detectionRadius = 100.0f;
 	float tileDetectionRadius = 10;

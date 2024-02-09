@@ -27,7 +27,8 @@ void Tile::Render(sf::RenderWindow& window)
 
 	if (!isDiscovered)
 	{
-		tile.setFillColor(sf::Color::Black);
+		tile.setTexture(&Textures::GetInstance().GetTexture("fog"));
+		//tile.setTextureRect(sf::IntRect(0, 0, 56, 56));
 	}          
 }
 
@@ -95,9 +96,11 @@ void Tile::CheckGrassType()
 	}
 	else if (GetGrassType() >= GOLD_ORE && GetGrassType() <= OIL_POOL)
 	{
-		baseX = (GetGrassType() - GOLD_ORE) * size;
-		baseY = size * 3;
-		tileType = RESOURCE;
+	
+			baseX = (GetGrassType() - GOLD_ORE) * size;
+			baseY = size * 3;
+			tileType = RESOURCE;
+		
 	}
 
 	tile.setTextureRect(sf::IntRect(baseX, baseY, spriteSize, spriteSize));
@@ -145,6 +148,8 @@ void Tile::DiscoverTile()
 {
 	isDiscovered = true;
 	tile.setFillColor(sf::Color::White);
+	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
+	//CheckGrassType();
 }
 
 bool Tile::GetDiscoveredStatus()

@@ -39,6 +39,9 @@ public:
 	bool CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell);
 	void ChangeSelectedColour();
 
+	void SetBuildingType(BuildingType type);
+	BuildingType GetBuildingType();
+
 	BuildingType buildingType;
 
 	sf::Sprite body;

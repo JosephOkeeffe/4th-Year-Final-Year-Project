@@ -5,7 +5,7 @@ GoldMine::GoldMine(sf::Vector2f pos)
 	textureRect = { currentFrameX, 0, textureWidth, textureHeight };
 	Init(Textures::GetInstance().GetTexture("mine"), body, textureRect, 1.8);
 	body.setPosition(pos);
-	buildingType = GOLD_MINE;
+	SetBuildingType(GOLD_MINE);
 }
 
 void GoldMine::MouseRelease()
@@ -15,15 +15,15 @@ void GoldMine::MouseRelease()
 
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
-		if (CheckIfSelected())
-		{
-			DeselectBuilding();
-		}
-		else
-		{
-			SelectBuilding();
-		}
-		ChangeSelectedColour();
+		//if (CheckIfSelected())
+		//{
+		//	DeselectBuilding();
+		//}
+		//else
+		//{
+		//	SelectBuilding();
+		//}
+		//ChangeSelectedColour();
 		
 		if (!CheckIfPlaced())
 		{

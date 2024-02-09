@@ -30,10 +30,24 @@ void Textures::SetupTextures()
     workerTexture.loadFromFile("./assets/images/worker.png");
     textureMap["worker"] = workerTexture;
 
+    worker2Texture.loadFromFile("./assets/images/worker2.png");
+    textureMap["worker2"] = worker2Texture;
+
+    worker3Texture.loadFromFile("./assets/images/worker3.png");
+    textureMap["worker3"] = worker3Texture;
+
+    worker4Texture.loadFromFile("./assets/images/worker4.png");
+    textureMap["worker4"] = worker4Texture;
+
+    worker5Texture.loadFromFile("./assets/images/worker5.png");
+    textureMap["worker5"] = worker5Texture;
+
+    fogTexture.loadFromFile("./assets/images/fog.png");
+    textureMap["fog"] = fogTexture;
 
     // Buildings
     baseTexture.loadFromFile("./assets/images/base.png");
-    textureMap["base"] = baseTexture;
+    textureMap["hq"] = baseTexture;
 
     mineTexture.loadFromFile("./assets/images/mine.png");
     textureMap["mine"] = mineTexture;

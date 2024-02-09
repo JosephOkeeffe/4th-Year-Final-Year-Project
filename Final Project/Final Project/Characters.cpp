@@ -70,7 +70,7 @@ void Characters::MoveCharacter()
 {
 	float length = 0;
 	
-	if (CheckCurrentState(MOVING))
+	if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
 	{
 		DeselectCharacter();
 
@@ -122,28 +122,6 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 	}
 }
 
-void Characters::ChangeAnimation()
-{
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) || currentState != MOVING)
-	{
-		animationState = IDLE_ANIM;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) || CheckCurrentState(MOVING) || isFormationMoving)
-	{
-		animationState = RUNNING_ANIM;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-	{
-		animationState = ATTACKING_ANIM;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-	{
-		animationState = DEAD_ANIM;
-	}
-
-}
-
 bool Characters::GetSelected()
 {
 	return isSelected;
@@ -153,7 +131,7 @@ void Characters::ChangeSelectedColour()
 {
 	if (GetSelected())
 	{
-		body.setColor(sf::Color::Red);
+		body.setColor(sf::Color(200, 50, 50));
 	}
 	else
 	{
@@ -199,7 +177,7 @@ void Characters::FlipSprite()
 	body.setScale(currentScale.x * -1, currentScale.y);
 }
 
-bool Characters::CheckCurrentState(State stateToCheck)
+bool Characters::GetCurrentState(State stateToCheck)
 {
 	return currentState == stateToCheck;
 }

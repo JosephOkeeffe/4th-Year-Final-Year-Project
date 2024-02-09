@@ -11,7 +11,6 @@ void Warrior::Update()
 {
 	UpdateCharacters();
 	CheckAnimationState();
-	ChangeAnimation();
 	AnimateWarrior();
 }
 
@@ -22,23 +21,30 @@ void Warrior::AnimateWarrior()
 
 void Warrior::CheckAnimationState()
 {
-	if (animationState == IDLE_ANIM)
+
+
+
+	switch (currentState)
 	{
+	case Characters::IDLE:
 		currentFrameY = 0;
-	}
-	if (animationState == RUNNING_ANIM)
-	{
+		break;
+	case Characters::MOVING:
 		currentFrameY = 2;
-	}
-	if (animationState == ATTACKING_ANIM)
-	{
+		break;
+	case Characters::ATTACKING:
 		currentFrameY = 3;
-	}
-	if (animationState == DEAD_ANIM)
-	{
-		SetCurrentState(DEAD);
+		break;
+	case Characters::DEAD:
 		currentFrameY = 4;
+		break;
+	default:
+		break;
 	}
+
+
+
+
 }
 
 sf::Sprite& Warrior::GetSprite()
