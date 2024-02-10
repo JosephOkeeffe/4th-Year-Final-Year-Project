@@ -109,9 +109,11 @@ public:
     static sf::Font font;
     static sf::Text boxText[2];
 
+    static sf::RectangleShape mainRectangle;
+
+
 private:
 
-    static sf::RectangleShape mainRectangle;
     static sf::RectangleShape buildButton;
     static sf::RectangleShape trainButton;
 };

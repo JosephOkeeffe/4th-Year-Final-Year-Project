@@ -29,6 +29,14 @@ void Headquarters::MouseRelease()
 		}
 		ChangeSelectedColour();
 	}
+	/*else
+	{
+		if (!BuildingUI::mainRectangle.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+		{
+			DeselectBuilding();
+
+		}
+	}*/
 	BuildingUI::BuildMenu(*GameManager::GetWindow(), *GameManager::GetView());
 	BuildingUI::TrainMenu(*GameManager::GetWindow(), *GameManager::GetView());
 }

@@ -3,7 +3,6 @@
 #include "Button.h"
 #include "Textures.h"
 #include "Globals.h"
-#include "ResourceManagement.h"
 
 class HUD
 {
@@ -16,14 +15,15 @@ public:
 		BUILD_HUD
 	};
 
-	static enum UNIT_IDS
+	static enum UnitButtonType
 	{
 		NO_UNIT,
 		WARRIOR,
-		ARCHER
+		ARCHER,
+		WORKER
 	};
 
-	static enum BUILDING_IDS
+	static enum BuildingButtonType
 	{
 		NO_BUILDING,
 		MINE,
@@ -59,7 +59,7 @@ public:
 		{
 			window.draw(hudBackground);
 
-			coinsText.setString("x" + std::to_string(ResourceManagement::GetCoins()));
+			//coinsText.setString("x" + std::to_string(ResourceManagement::GetCoins()));
 			window.draw(coinSprite);
 			window.draw(coinsText);
 		}
@@ -130,6 +130,8 @@ public:
 
 	static void InitUnitButtons(sf::RenderWindow& window, sf::Font& font)
 	{
+
+		// WARRIOR
 		Button warriorButton(window,
 			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
@@ -144,6 +146,7 @@ public:
 				ChangeUnitSelected(WARRIOR);
 			});
 
+		// ARCHER
 		Button archerButton(window,
 			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
@@ -158,8 +161,25 @@ public:
 				ChangeUnitSelected(ARCHER);
 			});
 
+
+		// WORKER
+		Button workerButton(window,
+			sf::Vector2f(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color::Magenta,
+			font,
+			Textures::GetInstance().GetTexture("worker-icon"));
+
+		workerButton.setLabel("Worker", font, 30, sf::Color::Black);
+		workerButton.setCallback([]()
+			{
+				ChangeUnitSelected(WORKER);
+			});
+
 		unitButtons.push_back(warriorButton);
 		unitButtons.push_back(archerButton);
+		unitButtons.push_back(workerButton);
 
 		for (Button& button : unitButtons)
 		{
@@ -171,13 +191,13 @@ public:
 		}
 	}
 
-	static void ChangeUnitSelected(UNIT_IDS name)
+	static void ChangeUnitSelected(UnitButtonType name)
 	{
 		currentUnitSelected = name;
 		currentState = NONE;
 	}
 
-	static void ChangeBuildingSelected(BUILDING_IDS name)
+	static void ChangeBuildingSelected(BuildingButtonType name)
 	{
 		currentBuildingSelected = name;
 		currentState = NONE;
@@ -190,7 +210,7 @@ public:
 	static sf::Text coinsText;
 	static sf::Sprite coinSprite;
 	static HUDState currentState;
-	static UNIT_IDS currentUnitSelected;
-	static BUILDING_IDS currentBuildingSelected;
+	static UnitButtonType currentUnitSelected;
+	static BuildingButtonType currentBuildingSelected;
 	
 };

@@ -1,6 +1,8 @@
 #pragma once
-#include "Characters.h"
 #include <SFML/Graphics.hpp>
+#include "Characters.h"
+#include "GoldMine.h"
+#include "Headquarters.h"
 class Worker : public Characters
 {
 public:
@@ -9,6 +11,7 @@ public:
 	void MouseRelease() override;
 	void AnimateWorker();
 	void CheckAnimationState();
+	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
@@ -38,6 +41,6 @@ private:
 	float moveSpeed = 2.0f;
 
 
-	Buildings* workingPlace;
+	GoldMine* workingPlace = nullptr;
 };
 

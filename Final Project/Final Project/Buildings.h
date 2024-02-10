@@ -19,7 +19,7 @@ public:
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
 	virtual void Update();
 	virtual void MouseRelease();
-	void Draw();
+	virtual void Draw();
 
 	void InitDetectionCircle(int radius);
 	
@@ -35,7 +35,7 @@ public:
 	bool CheckIfSelected();
 
 	void PlaceBuilding();
-	bool CheckIfPlaced();
+	bool GetPlacedStatus();
 	bool CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell);
 	void ChangeSelectedColour();
 
@@ -48,9 +48,23 @@ public:
 	sf::Texture texture;
 	sf::IntRect textureRect;
 	sf::CircleShape detectionCircle;
+
+
+
+	sf::RectangleShape background;
+	sf::RectangleShape resource;
+
+	sf::Text resourceText;
+	float amount = 0;
 	float detectionRadius = 100.0f;
 
-	
+	sf::Vector2f barSize{ 100, 10 };
+	float maxWidth = barSize.x + 1;
+	float fillSpeed = 20;
+	float currentWidth = 0;
+	sf::Clock clock;
+	sf::Time deltaTime;
+
 	bool isSelected = false;
 	
 

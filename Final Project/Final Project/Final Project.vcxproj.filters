@@ -54,9 +54,6 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManagement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
@@ -106,7 +103,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Worker.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SteeringOutput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Archer.h">

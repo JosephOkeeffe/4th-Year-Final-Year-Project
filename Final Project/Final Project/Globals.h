@@ -7,15 +7,16 @@ struct Global
 {
 public:
 
-    static sf::RenderWindow* window;
-    static sf::View* gameView;
+    //static sf::RenderWindow* window;
+   // static sf::View* gameView;
 
+    
+   
+   /* static const int S_WIDTH{ 1920U };
+    static const int S_HEIGHT{ 1080U };*/
 
-    static const int S_WIDTH{ 1920U };
-    static const int S_HEIGHT{ 1080U };
-
-    //static const int S_WIDTH{ 1080U };
-    //static const int S_HEIGHT{ 720U };
+    static const int S_WIDTH{ 1080U };
+    static const int S_HEIGHT{ 720U };
 
     static const int ROWS_COLUMNS{ 50 };
     static const int CELL_SIZE{ 100 };
@@ -28,6 +29,13 @@ public:
     inline static const std::string tileData1 = { "Tile_Data_1.json" };
     inline static const std::string tileData2 = { "Tile_Data_2.json" };
     inline static const std::string tileData3 = { "Tile_Data_3.json" };
+
+    static sf::Font font;
+
+    static void LoadFont()
+    {
+       font.loadFromFile("./assets/fonts/Flinton.otf");
+    }
 
 	static sf::Vector2f GetMousePos(sf::RenderWindow& window)
 	{

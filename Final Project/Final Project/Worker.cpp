@@ -7,19 +7,31 @@ Worker::Worker()
 	srand(time(nullptr));
 	int randomNuber = rand() % 5;
 
-	if (randomNuber == 0)
-	{
-		Init(Textures::GetInstance().GetTexture("worker"), body, textureRect);
-	}
-	else if (randomNuber == 1)
-	{
-		Init(Textures::GetInstance().GetTexture("worker1"), body, textureRect);
-	}
-
 	textureRect = { 0, 0, textureWidth, textureHeight };
-
-	body.setScale(1, 1);
 	animationSpeed = 0.08;
+
+	switch (randomNuber)
+	{
+	case 0:
+		Init(Textures::GetInstance().GetTexture("worker"), body, textureRect);
+		break;
+	case 1:
+		Init(Textures::GetInstance().GetTexture("worker2"), body, textureRect);
+		break;
+	case 2:
+		Init(Textures::GetInstance().GetTexture("worker3"), body, textureRect);
+		break;
+	case 3:
+		Init(Textures::GetInstance().GetTexture("worker4"), body, textureRect);
+		break;
+	case 4:
+		Init(Textures::GetInstance().GetTexture("worker5"), body, textureRect);
+		break;
+	default:
+		break;
+	}
+	body.setScale(1, 1);
+
 
 }
 
@@ -29,33 +41,109 @@ void Worker::Update()
 	CheckAnimationState();
 	AnimateWorker();
 
-	if (GetCurrentState(SEARCH_FOR_RESOURCE))
+	if (GetSelected())
 	{
-		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+		currentState = IDLE;
+
+		if (workingPlace != nullptr)
 		{
-			SetCurrentState(GATHERING);
-			body.setPosition(workingPlace->body.getPosition());
+			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			{
+				body.setPosition(workingPlace->body.getPosition().x, workingPlace->body.getPosition().y + 130);
+			}
+			workingPlace->isBeingUsed = false;
+			workingPlace->currentWidth = 0;
+			workingPlace = nullptr;
+		}
+
+	}
+
+	if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
+	{
+		if (workingPlace != nullptr)
+		{
+			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			{
+				SetCurrentState(GATHERING);
+				body.setPosition(workingPlace->body.getPosition());
+				workingPlace->isBeingUsed = true;
+			}
 		}
 	}
+
+	if (GetCurrentState(SEARCH_FOR_RESOURCE))
+	{
+		if (!workingPlace->isBeingUsed)
+		{
+			MoveSpriteToTarget(workingPlace->body.getPosition());
+		}
+	}
+	if (GetCurrentState(GATHERING))
+	{
+		if (workingPlace->isFull)
+		{
+			SetCurrentState(UNLOADING);
+		}
+		else
+		{
+			workingPlace->GenerateGold();
+		}
+	}
+	if (GetCurrentState(UNLOADING))
+	{
+		if (workingPlace->isEmpty)
+		{
+			SetCurrentState(RETURN_TO_BASE);
+		}
+		else
+		{
+			workingPlace->DepositGold();
+		}
+	}
+	if (GetCurrentState(RETURN_TO_BASE))
+	{
+		workingPlace->isBeingUsed = false;
+		MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
+
+		if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+		{
+			SetCurrentState(SEARCH_FOR_RESOURCE);
+		}
+
+	}
+	//if (GetCurrentState(INVENTORY_FULL))
+	//{
+	//	if (!workingPlace->isFull)
+	//	{
+	//		body.setPosition(workingPlace->body.getPosition().x, workingPlace->body.getPosition().y + 60);
+	//		workingPlace->isBeingUsed = false;
+	//		DeselectCharacter();
+	//	}
+	//}
+	/*else
+	{
+		if (workingPlace != nullptr)
+		{
+			workingPlace->isBeingUsed = false;
+		}
+	}*/
 }
 
 void Worker::MouseRelease()
 {
 	if (isSelected)
 	{
-		currentState = MOVING;
-		targetPosition = Global::GetMousePos(*GameManager::GetWindow());
+		SetCurrentState(MOVING);
+		targetPosition = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 
 		for (Buildings* object : GameManager::buildings)
 		{
 			if (object->GetBuildingType() == object->GOLD_MINE)
 			{
-
 				if (object->body.getGlobalBounds().contains(targetPosition))
 				{
-						Display_Text("MINE TIME");
-						SetCurrentState(SEARCH_FOR_RESOURCE);
-						workingPlace = object;
+					Display_Text("MINE TIME");
+					workingPlace = static_cast<GoldMine*>(object);
 				}
 	
 			}
@@ -66,6 +154,25 @@ void Worker::MouseRelease()
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		SelectCharacter();
+	}
+}
+
+void Worker::MoveSpriteToTarget(sf::Vector2f targetPosition)
+{
+	sf::Vector2f direction = targetPosition - body.getPosition();
+	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+	if (distance > 1.0f)
+	{
+		direction /= distance;
+
+		sf::Vector2f temp = direction * currentMoveSpeed;
+		body.move(temp);
+		FlipSpriteWithDirection(direction, body);
+	}
+	else
+	{
+		body.setPosition(targetPosition);
 	}
 }
 
@@ -96,7 +203,7 @@ void Worker::CheckAnimationState()
 		currentFrameY = 68;
 		amountOfSprites = 7;
 	}
-	else if (GetCurrentState(UNLOADING) || GetSelected())
+	else if (GetCurrentState(UNLOADING) || GetSelected() || GetCurrentState(INVENTORY_FULL))
 	{
 		currentFrameY = 138;
 		amountOfSprites = 2;

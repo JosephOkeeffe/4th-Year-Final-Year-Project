@@ -24,8 +24,14 @@ void GoldMine::MouseRelease()
 		//	SelectBuilding();
 		//}
 		//ChangeSelectedColour();
+
+		/*if (isFull)
+		{
+			currentWidth = 0;
+			isFull = false;
+		}*/
 		
-		if (!CheckIfPlaced())
+		if (!GetPlacedStatus())
 		{
 			if (CheckIfCanBePlaced(mousePos, currentCell))
 			{
@@ -35,6 +41,78 @@ void GoldMine::MouseRelease()
 		}
 	}
 }
+
+void GoldMine::Draw()
+{
+	GameManager::GetWindow()->draw(detectionCircle);
+	GameManager::GetWindow()->draw(body);
+
+	if (GetPlacedStatus() && isBeingUsed)
+	{
+		GameManager::GetWindow()->draw(resourceText);
+		GameManager::GetWindow()->draw(background);
+		GameManager::GetWindow()->draw(resource);
+	}
+}
+
+void GoldMine::Update()
+{
+	UpdateBuildings();
+	deltaTime = clock.restart();
+}
+
+void GoldMine::GenerateGold()
+{
+	background.setPosition(body.getPosition().x, body.getPosition().y - 65);
+	resource.setPosition(background.getPosition());
+	resource.setFillColor(sf::Color::Yellow);
+
+
+	if (currentWidth < maxWidth)
+	{
+		resourceText.setPosition(background.getPosition().x + background.getSize().x * 0.6, background.getPosition().y - 15);
+		resourceText.setString(std::to_string(static_cast<int>(currentWidth)));
+
+		float increaseAmount = fillSpeed * deltaTime.asSeconds();
+		currentWidth = std::min(currentWidth + increaseAmount, maxWidth);
+		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
+		isEmpty = false;
+	}
+
+	if (currentWidth >= maxWidth)
+	{
+		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
+
+		isFull = true;
+
+	}
+}
+
+void GoldMine::DepositGold()
+{
+	background.setPosition(body.getPosition().x, body.getPosition().y - 65);
+	resource.setPosition(background.getPosition());
+	resource.setFillColor(sf::Color::Red);
+
+	if (currentWidth > 0)
+	{
+		resourceText.setPosition(background.getPosition().x + background.getSize().x * 0.6, background.getPosition().y - 15);
+		resourceText.setString(std::to_string(static_cast<int>(currentWidth)));
+
+		float decreaseAmount = fillSpeed * deltaTime.asSeconds(); 
+		currentWidth = std::max(currentWidth - decreaseAmount, 0.f);
+		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
+		isFull = false;
+	}
+
+	if (currentWidth <= 0)
+	{
+		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
+
+		isEmpty = true;
+	}
+}
+
 
 //bool GoldMine::CheckIfCanBePlaced()
 //{
@@ -52,9 +130,3 @@ void GoldMine::MouseRelease()
 //	return false;
 //}
 
-void GoldMine::Update()
-{
-	UpdateBuildings();
-
-
-}

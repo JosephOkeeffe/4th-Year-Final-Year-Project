@@ -8,6 +8,8 @@
 
 class Buildings;
 class Characters;
+class Headquarters;
+class GoldMine;
 
 class GameManager
 {
@@ -42,6 +44,7 @@ public:
 
     static Tile** tiles;
 
+    static Headquarters* headquarters;
     static std::vector<Buildings*> buildings;
     static std::vector<Characters*> units;
     static Buildings* buildingToPlace;

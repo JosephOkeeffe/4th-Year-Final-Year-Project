@@ -11,6 +11,21 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	body.setTexture(_texture);
 
 	InitDetectionCircle(400);
+
+	background.setSize(barSize);
+	background.setFillColor(sf::Color::Black);
+	background.setOrigin(background.getSize().x / 2, background.getSize().y / 2);
+
+	resource.setSize({ 0, barSize.y });
+	resource.setFillColor(sf::Color::Yellow);
+	resource.setOrigin(background.getOrigin());
+
+	resourceText.setFont(Global::font);
+	resourceText.setCharacterSize(30);
+	resourceText.setFillColor(sf::Color::Black);
+	resourceText.setOutlineThickness(1);
+	resourceText.setOutlineColor(sf::Color::White);
+	resourceText.setOrigin(resourceText.getGlobalBounds().width / 2, resourceText.getGlobalBounds().height / 2);
 }
 
 void Buildings::Update()
@@ -41,13 +56,17 @@ void Buildings::InitDetectionCircle(int radius)
 void Buildings::UpdateBuildings()
 {
 	UpdateDetectionCircle();
+
+	if (!GetPlacedStatus())
+	{ 
+		MoveBuilding();
+	}
 }
 
 void Buildings::UpdateDetectionCircle()
 {
-	if (!CheckIfPlaced())
+	if (!GetPlacedStatus())
 	{
-		MoveBuilding();
 		detectionCircle.setPosition(-1000,-1000);
 	}
 	else
@@ -85,7 +104,7 @@ void Buildings::MoveBuilding()
 	SetPosition(newPos);
 }
 
-bool Buildings::CheckIfPlaced()
+bool Buildings::GetPlacedStatus()
 {
 	return isPlaced;
 }
@@ -108,7 +127,7 @@ void Buildings::SetPosition(sf::Vector2f pos)
 
 void Buildings::ChangeSelectedColour()
 {
-	if (CheckIfSelected() && CheckIfPlaced())
+	if (CheckIfSelected() && GetPlacedStatus())
 	{
 		body.setColor(sf::Color(128, 128, 128));
 	}

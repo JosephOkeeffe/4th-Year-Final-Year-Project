@@ -144,7 +144,6 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ResourceManagement.cpp" />
     <ClCompile Include="GoldMine.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -168,7 +167,6 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="GoldMine.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="View.h" />

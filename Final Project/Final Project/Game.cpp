@@ -3,24 +3,20 @@
 std::string savePath = "";
 std::string loadGameDataPath = "";
 std::string loadTilesDataPath = "";
+sf::Font Global::font;
 bool saveGame = false;
 bool loadSave = false;
-
-//sf::View* GameObject::gameView = nullptr;
 
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
     m_exitGame{ false },
     view(m_window, gameView, hudView)
 {
+    Global::LoadFont();
     GameManager::SetWindow(m_window);
     GameManager::SetView(gameView);
     GameManager::InitTiles();
 
-    // I NEED TO PASS THE TILES INTO GAME OBJECT SOMEHOW
-    // CREATE MAP OF TILES AND SPRITES
-    // TO DO: Only allow mine to be placed on GOld ore
-    // Only allow one building to be placed on a tile
     Init();
 
 }
@@ -49,13 +45,13 @@ void Game::run()
 void Game::Init()
 {
     srand(time(nullptr));
-    m_font.loadFromFile("./assets/fonts/Flinton.otf");
-    mainMenu.Init(m_window, m_font);
-    pauseMenu.Init(m_window, m_font);
+    Global::font.loadFromFile("./assets/fonts/Flinton.otf");
+    mainMenu.Init(m_window, Global::font);
+    pauseMenu.Init(m_window, Global::font);
 
     elapsedTime = incomeTimer.getElapsedTime();
     // InitTiles();
-    HUD::Init(m_window, m_font);
+    HUD::Init(m_window, Global::font);
     BuildingUI::Init();
 
     CreateHeadquarters(basePos);
@@ -129,6 +125,15 @@ void Game::ProcessEvents()
                     object->DeselectBuilding();
                 }
             }
+            else if (HUD::currentUnitSelected == HUD::WORKER)
+            {
+                CreateWorker({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
 
             if (HUD::currentBuildingSelected == HUD::MINE)
             {
@@ -196,9 +201,17 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
+        // SOmehow add a way where if unit is selected you cant select enemy
         for (Buildings* building : GameManager::buildings)
         {
-            building->MouseRelease();
+            if (selectedUnits.size() == 0)
+            {
+                building->MouseRelease();
+            }
+            else
+            {
+                Display_Text("Selected Unit");
+            }
         }
 
         if (GameManager::buildingToPlace != nullptr)
@@ -212,15 +225,26 @@ void Game::ProcessMouseRelease(sf::Event t_event)
         for (Characters* character : GameManager::units)
         {
             character->MouseRelease();
+            selectedUnits.clear();
         }
         SelectUnits();
     }
     if (sf::Mouse::Right == t_event.key.code)
     {
+        for (Buildings* building : GameManager::buildings)
+        {
+            building->DeselectBuilding();
+        }
         for (Characters* temp : GameManager::units)
         {
             temp->DeselectCharacter();
             selectedUnits.clear();
+        }
+
+        if (GameManager::buildingToPlace != nullptr)
+        {
+         
+            GameManager::buildingToPlace = nullptr;
         }
     }
 }
@@ -237,36 +261,36 @@ void Game::Render()
     case GAME:
         // Game
         view.SetGameView();
-        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
-        {
-            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
             {
-                GameManager::tiles[row][col].Render(m_window);
+                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+                {
+                    GameManager::tiles[row][col].Render(m_window);
+                }
             }
-        }
 
-        for (Buildings* building : GameManager::buildings)
-        {
-            building->Draw();
-        }
-        for (Characters* object : GameManager::units)
-        {
-            object->Draw();
-        }
+            for (Buildings* building : GameManager::buildings)
+            {
+                building->Draw();
+            }
+            for (Characters* unit : GameManager::units)
+            {
+                unit->Draw();
+            }
 
-        if (isDragging)
-        {
-            m_window.draw(dragRect);
-        }
+            if (isDragging)
+            {
+                m_window.draw(dragRect);
+            }
 
-        if (GameManager::buildingToPlace != nullptr)
-        {
-           GameManager::buildingToPlace->Draw();
-        }
+            if (GameManager::buildingToPlace != nullptr)
+            {
+               GameManager::buildingToPlace->Draw();
+            }
 
-        BuildingUI::Draw(m_window);
+            BuildingUI::Draw(m_window);
         view.SetHudView();
-        HUD::Render(m_window);
+            HUD::Render(m_window);
         break;
     case PAUSED:
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
@@ -350,8 +374,8 @@ void Game::SaveJSON()
     //jsonData["X"] = warrior.GetSprite().getPosition().x;
     //jsonData["Y"] = warrior.GetSprite().getPosition().y;
 
-    jsonData["Coins"] = ResourceManagement::GetCoins();
-    jsonData["Shops"] = ResourceManagement::GetShops();
+    //jsonData["Coins"] = ResourceManagement::GetCoins();
+    //jsonData["Shops"] = ResourceManagement::GetShops();
 
     for (int row = 0; row < Global::ROWS_COLUMNS; row++)
     {
@@ -404,7 +428,7 @@ void Game::LoadJSON()
                 GameManager::tiles[row][col].SetTileType(static_cast<TileType>(tileType));
             }
         }
-        ResourceManagement::ResetAndLoad(coins, shops);
+       //ResourceManagement::ResetAndLoad(coins, shops);
 
         std::cout << "Loaded Game Data:\n";
         std::cout << "X: " << warriorLoadedPos.x << "\n";
@@ -498,7 +522,6 @@ void Game::ManageTimers()
 
     if (elapsedTime.asSeconds() >= 5.0f)
     {
-        ResourceManagement::AddCoins(ResourceManagement::GetShops());
         incomeTimer.restart();
     }
 }
@@ -646,10 +669,11 @@ void Game::CreateHeadquarters(sf::Vector2f pos)
     float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
     float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;
     sf::Vector2f newPos = { newX, newY };
-    Headquarters* newBase = new Headquarters(newPos);
-    newBase->PlaceBuilding();
+    Headquarters* newHQ = new Headquarters(newPos);
+    newHQ->PlaceBuilding();
 
-    GameManager::buildings.push_back(newBase);
+    GameManager::headquarters = newHQ;
+    GameManager::buildings.push_back(newHQ);
 
 }
 

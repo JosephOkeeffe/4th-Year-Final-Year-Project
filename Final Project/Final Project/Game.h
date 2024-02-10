@@ -21,7 +21,6 @@
 #include "Headquarters.h"
 #include "GoldMine.h"
 #include "HUD.h"
-#include "ResourceManagement.h"
 #include "TileTypes.h"
 #include "json.hpp"
 //#include "GameObject.h"
@@ -90,7 +89,6 @@ private:
     void ClearFog(sf::CircleShape radius);
 
     sf::RenderWindow m_window;
-    sf::Font m_font;
     bool m_exitGame;
 
     sf::View gameView;

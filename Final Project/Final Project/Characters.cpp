@@ -22,13 +22,14 @@ void Characters::Update()
 
 void Characters::MouseRelease()
 {
+	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 	if (isSelected)
 	{
 		currentState = MOVING;
-		targetPosition = Global::GetMousePos(*GameManager::GetWindow());
+		targetPosition = mousePos;
 	}
 
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+	
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
 		SelectCharacter();
@@ -70,7 +71,7 @@ void Characters::MoveCharacter()
 {
 	float length = 0;
 	
-	if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
+	if (GetCurrentState(MOVING))
 	{
 		DeselectCharacter();
 
