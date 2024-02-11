@@ -143,7 +143,57 @@ void Game::KeyPresses()
 
     if (IsKeyPressed(KEY_Q))
     {
-        saveMenuOpen = !saveMenuOpen;
+        std::filesystem::path currentPath = std::filesystem::current_path();
+        std::string saveFilePath;
+
+        saveFilePath = (currentPath / "../Saves/" / defaultData).string();
+
+        nlohmann::json jsonData;
+
+        for (int rows = 0; rows < GRID_SIZE; rows++)
+        {
+            for (int cols = 0; cols < GRID_SIZE; cols++)
+            {
+                int x = tileIds[rows][cols];
+                jsonData["GrassType"][rows][cols] = tileIds[rows][cols];
+            }
+        }
+
+        std::ofstream outFile(saveFilePath);
+        outFile << std::setw(4) << jsonData;
+        outFile.close();
+        
+    }
+
+    if (IsKeyPressed(KEY_W))
+    {
+        std::filesystem::path currentPath = std::filesystem::current_path();
+        std::string loadFilePath;
+
+
+        loadFilePath = (currentPath / "../Saves/" / defaultData).string();
+
+        if (std::filesystem::exists(loadFilePath))
+        {
+            std::ifstream inFile(loadFilePath);
+            nlohmann::json jsonData;
+            inFile >> jsonData;
+            inFile.close();
+
+            for (int rows = 0; rows < GRID_SIZE; rows++)
+            {
+                for (int cols = 0; cols < GRID_SIZE; cols++)
+                {
+                    tileIds[rows][cols] = jsonData["GrassType"][rows][cols];
+                }
+            }
+        }
+        else
+        {
+            std::cout << "Can't load file \n";
+        }
+
+        
     }
 
     if (IsKeyPressed(KEY_ENTER))

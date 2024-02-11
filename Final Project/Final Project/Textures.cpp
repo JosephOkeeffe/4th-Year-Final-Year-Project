@@ -52,6 +52,9 @@ void Textures::SetupTextures()
     mineTexture.loadFromFile("./assets/images/mine.png");
     textureMap["mine"] = mineTexture;
 
+    oilExtractorTexture.loadFromFile("./assets/images/oil2.png");
+    textureMap["oil"] = oilExtractorTexture;
+
     // UI
     coinTexture.loadFromFile("./assets/images/coin.png");
     textureMap["coin"] = coinTexture;
@@ -69,6 +72,9 @@ void Textures::SetupTextures()
 
     mineButtonIconTexture.loadFromFile("./assets/images/mine-icon.png");
     textureMap["mine-icon"] = mineButtonIconTexture;
+
+    oilButtonIconTexture.loadFromFile("./assets/images/oil-icon.png");
+    textureMap["oil-icon"] = oilButtonIconTexture;
     
 }
 

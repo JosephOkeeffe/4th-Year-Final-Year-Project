@@ -5,7 +5,7 @@ GoldMine::GoldMine(sf::Vector2f pos)
 	textureRect = { currentFrameX, 0, textureWidth, textureHeight };
 	Init(Textures::GetInstance().GetTexture("mine"), body, textureRect, 1.8);
 	body.setPosition(pos);
-	SetBuildingType(GOLD_MINE);
+	SetBuildingType(GOLD_MINE_BUILDING);
 }
 
 void GoldMine::MouseRelease()
@@ -15,25 +15,9 @@ void GoldMine::MouseRelease()
 
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
-		//if (CheckIfSelected())
-		//{
-		//	DeselectBuilding();
-		//}
-		//else
-		//{
-		//	SelectBuilding();
-		//}
-		//ChangeSelectedColour();
-
-		/*if (isFull)
-		{
-			currentWidth = 0;
-			isFull = false;
-		}*/
-		
 		if (!GetPlacedStatus())
 		{
-			if (CheckIfCanBePlaced(mousePos, currentCell))
+			if (CheckIfCanBePlaced(currentCell))
 			{
 				PlaceBuilding();
 				GameManager::tiles[currentCell.x][currentCell.y].SetTileType(TILE_USED_UP);
@@ -108,7 +92,7 @@ void GoldMine::DepositGold()
 	if (currentWidth <= 0)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
-
+ 
 		isEmpty = true;
 	}
 }

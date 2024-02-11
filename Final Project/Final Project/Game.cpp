@@ -50,7 +50,6 @@ void Game::Init()
     pauseMenu.Init(m_window, Global::font);
 
     elapsedTime = incomeTimer.getElapsedTime();
-    // InitTiles();
     HUD::Init(m_window, Global::font);
     BuildingUI::Init();
 
@@ -59,7 +58,6 @@ void Game::Init()
     CreateWarrior({ 350, 400 });
     CreateWarrior({ 400, 400 });
     CreateWorker({ 450, 400 });
-    // stay in same position but move to the leader
 }
 
 void Game::ProcessEvents()
@@ -137,7 +135,17 @@ void Game::ProcessEvents()
 
             if (HUD::currentBuildingSelected == HUD::MINE)
             {
-                CreateGoldMine(Global::GetMousePos(m_window));
+                CreateGoldMine();
+                HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+
+            if (HUD::currentBuildingSelected == HUD::OIL_REFINERY)
+            {
+                CreateOilExtractor();
                 HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -167,7 +175,6 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::W == t_event.key.code)
     {
-        CreateGoldMine({600,600});
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
@@ -403,7 +410,6 @@ void Game::SaveJSON()
 
 void Game::LoadJSON()
 {
-
     std::ifstream file(loadGameDataPath);
 
     if (file.is_open())
@@ -428,13 +434,11 @@ void Game::LoadJSON()
                 GameManager::tiles[row][col].SetTileType(static_cast<TileType>(tileType));
             }
         }
-       //ResourceManagement::ResetAndLoad(coins, shops);
 
         std::cout << "Loaded Game Data:\n";
         std::cout << "X: " << warriorLoadedPos.x << "\n";
         std::cout << "Y: " << warriorLoadedPos.y << "\n";
         std::cout << "Coins: " << coins << "\n";
-        std::cout << "Shops: " << shops << "\n";
     }
     else
     {
@@ -493,6 +497,11 @@ void Game::FixLoadedGrass(int type, int row, int col)
         GameManager::tiles[row][col].SetGrassType(static_cast<GrassType>(type));
         GameManager::tiles[row][col].SetTileType(OBSTACLE);
     }
+    else if (type >= GOLD_ORE_NODE && type <= OIL_POOL_NODE)
+    {
+        GameManager::tiles[row][col].SetGrassType(static_cast<GrassType>(type));
+        GameManager::tiles[row][col].SetTileType(RESOURCE);
+    }
 }
 
 //void Game::ChangeThingsDependingOnTileType()
@@ -548,22 +557,6 @@ void Game::CreateWorker(sf::Vector2f pos)
     newWorker->SetPosition(pos);
 
     GameManager::units.push_back(newWorker);
-}
-
-void Game::CheckBuildingCollisions()
-{
-    if (GameManager::buildingToPlace != nullptr)
-    {
-        for (Buildings* temp : GameManager::buildings)
-        {
-        }
-    }
-
-    
-
-
-    sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-    sf::Vector2i currentCell = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
 }
 
 void Game::SelectUnits()
@@ -671,25 +664,20 @@ void Game::CreateHeadquarters(sf::Vector2f pos)
     sf::Vector2f newPos = { newX, newY };
     Headquarters* newHQ = new Headquarters(newPos);
     newHQ->PlaceBuilding();
-
     GameManager::headquarters = newHQ;
     GameManager::buildings.push_back(newHQ);
-
 }
 
-void Game::CreateGoldMine(sf::Vector2f pos)
+void Game::CreateGoldMine()
 {
-    int x = pos.x / Global::CELL_SIZE;
-    int y = pos.y / Global::CELL_SIZE;
-
-    float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2);
-    float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2);
-    sf::Vector2f newPos = { newX, newY };
-    GoldMine* newGoldMine = new GoldMine(newPos);
-   // newMine->PlaceBuilding();
+    GoldMine* newGoldMine = new GoldMine({1,1});
     GameManager::buildingToPlace = newGoldMine;
-   // mines.push_back(newMine);
-    //GameManager::buildings.push_back(newMine);
+}
+
+void Game::CreateOilExtractor()
+{
+    OilExtractor* newOilExtractor = new OilExtractor({ 1,1 });
+    GameManager::buildingToPlace = newOilExtractor;
 }
 
 void Game::ClearFog(sf::CircleShape radius)

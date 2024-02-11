@@ -100,7 +100,7 @@ void Buildings::MoveBuilding()
 	sf::Vector2i newCellPos = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
 	sf::Vector2f newPos;
 	newPos.x = (newCellPos.x * Global::CELL_SIZE) + Global::CELL_SIZE / 2;
-	newPos.y = (newCellPos.y * Global::CELL_SIZE) + Global::CELL_SIZE * 0.4;
+	newPos.y = (newCellPos.y * Global::CELL_SIZE) + Global::CELL_SIZE * 0.3;
 	SetPosition(newPos);
 }
 
@@ -109,15 +109,50 @@ bool Buildings::GetPlacedStatus()
 	return isPlaced;
 }
 
-bool Buildings::CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell)
+bool Buildings::CheckIfCanBePlaced(sf::Vector2i cell)
 {
-	if (GameManager::tiles[cell.x][cell.y].GetTileType() == RESOURCE &&
-		GameManager::tiles[cell.x][cell.y].GetDiscoveredStatus())
+	if (!GameManager::tiles[cell.x][cell.y].GetDiscoveredStatus()) return false;
+
+	canBePlaced = false;
+
+	if (buildingType == GOLD_MINE_BUILDING)
 	{
-		return true;
+		if (GameManager::tiles[cell.x][cell.y].GetResourceType() == GOLD_RESOURCE)
+		{
+			canBePlaced = true;
+		}
 	}
 
-	return false;
+	if (buildingType == URANIUM_EXTRACTOR_BUILDING)
+	{
+		if (GameManager::tiles[cell.x][cell.y].GetResourceType() == URANIUM_RESOURCE)
+		{
+			canBePlaced = true;
+		}
+	}
+
+	if (buildingType == OIL_EXTRACTOR_BUILDING)
+	{
+		if (GameManager::tiles[cell.x][cell.y].GetResourceType() == OIL_RESOURCE)
+		{
+			canBePlaced = true;
+		}
+	}
+	return canBePlaced;
+}
+
+void Buildings::Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites)
+{
+	int playerAnimation = m_frameNo;
+	m_frameValue += animationSpeed;
+	m_frameNo = static_cast<int>(m_frameValue);
+
+	m_frameNo = m_frameNo % amountOfSprites;
+
+	if (playerAnimation != m_frameNo)
+	{
+		body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
+	}
 }
 
 void Buildings::SetPosition(sf::Vector2f pos)

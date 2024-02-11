@@ -12,8 +12,10 @@ public:
 
 	enum BuildingType
 	{
-		HEADQUATERS,
-		GOLD_MINE,
+		HEADQUATERS_BUILDING,
+		GOLD_MINE_BUILDING,
+		URANIUM_EXTRACTOR_BUILDING,
+		OIL_EXTRACTOR_BUILDING,
 	};
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
@@ -26,7 +28,7 @@ public:
 	void UpdateBuildings();
 	void UpdateDetectionCircle();
 
-	//void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites, bool isDead);
+	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
 	void SetPosition(sf::Vector2f pos);
 	void MoveBuilding();
 
@@ -36,7 +38,7 @@ public:
 
 	void PlaceBuilding();
 	bool GetPlacedStatus();
-	bool CheckIfCanBePlaced(sf::Vector2f mousePos, sf::Vector2i cell);
+	bool CheckIfCanBePlaced(sf::Vector2i cell);
 	void ChangeSelectedColour();
 
 	void SetBuildingType(BuildingType type);
@@ -67,6 +69,11 @@ public:
 
 	bool isSelected = false;
 	
+	int animationCount = 0;
+	int m_frameNo{ 0 };
+	float m_frameValue{ 0.0f };
+	float animationSpeed{ 0.2 };
+	int playerAnimation = 0;
 
 private:
 

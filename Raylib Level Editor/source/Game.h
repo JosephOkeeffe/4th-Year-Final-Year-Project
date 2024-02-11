@@ -149,6 +149,7 @@ public:
     Rectangle resourcePaletteRects[RESOURCE_PALETTE_SIZE];
 
 private:
+    std::string defaultData = { "DefaultSave.json" };
     std::string tileData1 = { "Tile_Data_1.json" };
     std::string tileData2 = { "Tile_Data_2.json" };
     std::string tileData3 = { "Tile_Data_3.json" };

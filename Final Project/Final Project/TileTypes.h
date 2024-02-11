@@ -51,15 +51,16 @@ enum GrassType
     WATER12, 
     WATER13, 
 
-    GOLD_ORE,
-    WASTE,
-    OIL_POOL
+    GOLD_ORE_NODE,
+    NUCLEAR_WASTE_NODE,
+    OIL_POOL_NODE
 };
 
 enum ResourceType
 {
     NO_RESOURCE,
-    GOLD,
-    OIL,
-    TOXIC_WASTE
+    GOLD_RESOURCE,
+    URANIUM_RESOURCE,
+    OIL_RESOURCE,
+
 };

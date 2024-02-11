@@ -19,6 +19,10 @@ void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 	playButton.setLabel("Start new game", font, 30, sf::Color(0, 0, 0, 150));
 	playButton.setCallback([]()
 		{
+			std::filesystem::path currentPath = std::filesystem::current_path();
+			//loadGameDataPath = (currentPath / "../../Saves/" / Global::gameData1).string();
+			loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
+			loadSave = true;
 			Game::currentState = GAME;
 		});
 	

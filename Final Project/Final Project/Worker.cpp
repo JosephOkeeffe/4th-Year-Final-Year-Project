@@ -138,7 +138,7 @@ void Worker::MouseRelease()
 
 		for (Buildings* object : GameManager::buildings)
 		{
-			if (object->GetBuildingType() == object->GOLD_MINE)
+			if (object->GetBuildingType() == object->GOLD_MINE_BUILDING)
 			{
 				if (object->body.getGlobalBounds().contains(targetPosition))
 				{

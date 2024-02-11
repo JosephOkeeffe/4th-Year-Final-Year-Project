@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Globals.h"
 #include "Textures.h"
-#include "ResourceManagement.h"
 
 Tile::Tile()
 {
@@ -14,7 +13,7 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));
 	tileType = NONE;
 	tile.setPosition(position);
-	SetupGrassTiles();
+	//SetupGrassTiles();
 
 	tile.setFillColor(sf::Color::White);
 	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
@@ -36,30 +35,6 @@ void Tile::Update()
 {
 	
 }
-
-//void Tile::CheckTileType()
-//{
-//	switch (GetTileType())
-//	{
-//	case NONE:
-//		tile.setFillColor(sf::Color::White);
-//		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-//		CheckGrassType();
-//		break;
-//	case OBSTACLE:
-//		tile.setFillColor(sf::Color::White);
-//		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-//		CheckGrassType();
-//		break;
-//	case PATH:
-//		tile.setFillColor(sf::Color::White);
-//		tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
-//		CheckGrassType();
-//		break;
-//	default:
-//		break;
-//	}
-//}
 
 void Tile::CheckGrassType()
 {
@@ -94,13 +69,26 @@ void Tile::CheckGrassType()
 		baseY = size * 2;
 		tileType = OBSTACLE;
 	}
-	else if (GetGrassType() >= GOLD_ORE && GetGrassType() <= OIL_POOL)
+	else if (GetGrassType() >= GOLD_ORE_NODE && GetGrassType() <= OIL_POOL_NODE)
 	{
-	
-			baseX = (GetGrassType() - GOLD_ORE) * size;
-			baseY = size * 3;
-			tileType = RESOURCE;
-		
+
+		baseX = (GetGrassType() - GOLD_ORE_NODE) * size;
+		baseY = size * 3;
+		tileType = RESOURCE;
+
+		if (GetGrassType() == GOLD_ORE_NODE)
+		{
+			resourceType = GOLD_RESOURCE;
+		}
+		else if (GetGrassType() == NUCLEAR_WASTE_NODE)
+		{
+			resourceType = URANIUM_RESOURCE;
+		}
+		else if (GetGrassType() == OIL_POOL_NODE)
+		{
+			resourceType = OIL_RESOURCE;
+		}
+
 	}
 
 	tile.setTextureRect(sf::IntRect(baseX, baseY, spriteSize, spriteSize));
@@ -108,8 +96,6 @@ void Tile::CheckGrassType()
 }
 
 // Storage building that can hold a set amount
-// Miner building that collects resources and can only be built on certain nodes
-
 
 // MAKE DEFAULT MAP SO THIS CAN GO SOON
 void Tile::SetupGrassTiles()
@@ -140,7 +126,7 @@ void Tile::SetupGrassTiles()
 	}
 	else
 	{
-		SetGrassType(GOLD_ORE);
+		SetGrassType(GOLD_ORE_NODE);
 	}
 }
 
@@ -177,6 +163,11 @@ void Tile::SetGrassType(GrassType type)
 GrassType Tile::GetGrassType()
 {
 	return grassType;
+}
+
+ResourceType Tile::GetResourceType()
+{
+	return resourceType;
 }
 
 

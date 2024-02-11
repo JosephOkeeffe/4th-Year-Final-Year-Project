@@ -20,6 +20,7 @@
 
 #include "Headquarters.h"
 #include "GoldMine.h"
+#include "OilExtractor.h"
 #include "HUD.h"
 #include "TileTypes.h"
 #include "json.hpp"
@@ -73,8 +74,6 @@ private:
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
 
-    void CheckBuildingCollisions();
-
     void SelectUnits();
     void MakeFormation();
     void AlignFormationFacingDirection();
@@ -84,7 +83,8 @@ private:
     sf::RectangleShape dragRect;
 
     void CreateHeadquarters(sf::Vector2f pos);
-    void CreateGoldMine(sf::Vector2f pos);
+    void CreateGoldMine();
+    void CreateOilExtractor();
 
     void ClearFog(sf::CircleShape radius);
 

@@ -102,6 +102,7 @@ public:
 
 	static void InitBuildButtons(sf::RenderWindow& window, sf::Font& font)
 	{
+		// Gold Mine
 		Button mineButton(window,
 			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
 			sf::Vector2f(100, 100), // size
@@ -116,7 +117,23 @@ public:
 				ChangeBuildingSelected(MINE);
 			});
 
+		// Oil Extractor
+		Button oilButton(window,
+			sf::Vector2f(280, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
+			sf::Vector2f(100, 100), // size
+			sf::Color::White, // color
+			sf::Color::Magenta, // click color
+			font, // font
+			Textures::GetInstance().GetTexture("oil-icon")); // texture
+
+		oilButton.setLabel("Oil Refinery", font, 30, sf::Color::Black);
+		oilButton.setCallback([]()
+			{
+				ChangeBuildingSelected(OIL_REFINERY);
+			});
+
 		buildingButtons.push_back(mineButton);
+		buildingButtons.push_back(oilButton);
 
 		for (Button& button : buildingButtons)
 		{

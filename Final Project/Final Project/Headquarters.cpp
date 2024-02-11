@@ -8,7 +8,7 @@ Headquarters::Headquarters(sf::Vector2f pos)
 	body.setPosition(pos);
 	BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80 });
 	BuildingUI::Deactivate();
-	SetBuildingType(HEADQUATERS);
+	SetBuildingType(HEADQUATERS_BUILDING);
 	//detectionRadius = 0;
 }
 

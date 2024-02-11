@@ -26,6 +26,7 @@ public:
     inline static const std::string gameData2 = { "Game_Data_2.json" };
     inline static const std::string gameData3 = { "Game_Data_3.json" };
     
+    inline static const std::string defaultTiles = { "DefaultSave.json" };
     inline static const std::string tileData1 = { "Tile_Data_1.json" };
     inline static const std::string tileData2 = { "Tile_Data_2.json" };
     inline static const std::string tileData3 = { "Tile_Data_3.json" };
