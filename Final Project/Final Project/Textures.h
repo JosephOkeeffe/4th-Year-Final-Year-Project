@@ -20,7 +20,7 @@ private:
     sf::Texture worker2Texture;
     sf::Texture worker3Texture;
     sf::Texture worker4Texture;
-    sf::Texture worker5Texture;
+    sf::Texture oilManTexture;
     sf::Texture fogTexture;
     sf::Texture coinTexture;
 
@@ -33,8 +33,13 @@ private:
     sf::Texture warriorButtonIconTexture;
     sf::Texture archerButtonIconTexture;
     sf::Texture workerButtonIconTexture;
-    sf::Texture mineButtonIconTexture;
-    sf::Texture oilButtonIconTexture;
+    sf::Texture oilManButtonIconTexture;
+    sf::Texture hazmatManButtonIconTexture;
+
+
+    sf::Texture goldMineButtonIconTexture;
+    sf::Texture oilExtractorButtonIconTexture;
+    sf::Texture uraniumExtractorButtonIconTexture;
 
 
     std::map<std::string, sf::Texture> textureMap;

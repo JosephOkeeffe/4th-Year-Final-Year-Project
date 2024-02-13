@@ -17,18 +17,6 @@ public:
 	sf::Vector2f& GetPos();
 
 private:
-
-	/*enum WorkerState
-	{
-		IDLE_STATE,
-		SEARCH_FOR_RESOURCE,
-		GATHERING,
-		RETURN_TO_BASE,
-		UNLOADING,
-	};*/
-
-	//WorkerState workerState =   IDLE_STATE;
-
 	// 543
 	// 348
 	int currentFrameX = 60;

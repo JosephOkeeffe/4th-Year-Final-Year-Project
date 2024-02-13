@@ -132,6 +132,26 @@ void Game::ProcessEvents()
                     object->DeselectBuilding();
                 }
             }
+            else if (HUD::currentUnitSelected == HUD::OIL_MAN)
+            {
+                CreateOilMan({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+            else if (HUD::currentUnitSelected == HUD::HAZMAT_MAN)
+            {
+                CreateHazmatMan({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+
+            // Buildings
 
             if (HUD::currentBuildingSelected == HUD::MINE)
             {
@@ -146,6 +166,16 @@ void Game::ProcessEvents()
             if (HUD::currentBuildingSelected == HUD::OIL_REFINERY)
             {
                 CreateOilExtractor();
+                HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+
+            if (HUD::currentBuildingSelected == HUD::URANIUM_EXTRACTOR)
+            {
+                CreateUraniumExtractor();
                 HUD::ChangeBuildingSelected(HUD::NO_BUILDING);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -559,6 +589,18 @@ void Game::CreateWorker(sf::Vector2f pos)
     GameManager::units.push_back(newWorker);
 }
 
+void Game::CreateOilMan(sf::Vector2f pos)
+{
+    OilMan* newOilMan = new OilMan;
+    newOilMan->SetPosition(pos);
+
+    GameManager::units.push_back(newOilMan);
+}
+
+void Game::CreateHazmatMan(sf::Vector2f pos)
+{
+}
+
 void Game::SelectUnits()
 {
     for (Characters* temp : GameManager::units)
@@ -678,6 +720,12 @@ void Game::CreateOilExtractor()
 {
     OilExtractor* newOilExtractor = new OilExtractor({ 1,1 });
     GameManager::buildingToPlace = newOilExtractor;
+}
+
+void Game::CreateUraniumExtractor()
+{
+    //UraniumExtractor* newUraniumExtractor = new UraniumExtractor({ 1,1 });
+    //GameManager::buildingToPlace = newUraniumExtractor;
 }
 
 void Game::ClearFog(sf::CircleShape radius)

@@ -39,8 +39,8 @@ void Textures::SetupTextures()
     worker4Texture.loadFromFile("./assets/images/worker4.png");
     textureMap["worker4"] = worker4Texture;
 
-    worker5Texture.loadFromFile("./assets/images/worker5.png");
-    textureMap["worker5"] = worker5Texture;
+    oilManTexture.loadFromFile("./assets/images/oil-man.png");
+    textureMap["oil-man"] = oilManTexture;
 
     fogTexture.loadFromFile("./assets/images/fog.png");
     textureMap["fog"] = fogTexture;
@@ -61,6 +61,7 @@ void Textures::SetupTextures()
 
 
     // UI - Icons
+    // Units
     warriorButtonIconTexture.loadFromFile("./assets/images/warrior-icon.png");
     textureMap["warrior-icon"] = warriorButtonIconTexture;
 
@@ -70,11 +71,22 @@ void Textures::SetupTextures()
     workerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");
     textureMap["worker-icon"] = workerButtonIconTexture;
 
-    mineButtonIconTexture.loadFromFile("./assets/images/mine-icon.png");
-    textureMap["mine-icon"] = mineButtonIconTexture;
+    oilManButtonIconTexture.loadFromFile("./assets/images/oil-man-icon.png");
+    textureMap["oil-man-icon"] = oilManButtonIconTexture;
 
-    oilButtonIconTexture.loadFromFile("./assets/images/oil-icon.png");
-    textureMap["oil-icon"] = oilButtonIconTexture;
+    hazmatManButtonIconTexture.loadFromFile("./assets/images/hazmat-man-icon.png");
+    textureMap["hazmat-man-icon"] = hazmatManButtonIconTexture;
+
+    // Buildings
+
+    goldMineButtonIconTexture.loadFromFile("./assets/images/mine-icon.png");
+    textureMap["mine-icon"] = goldMineButtonIconTexture;
+
+    oilExtractorButtonIconTexture.loadFromFile("./assets/images/oil-icon.png");
+    textureMap["oil-icon"] = oilExtractorButtonIconTexture;
+
+    uraniumExtractorButtonIconTexture.loadFromFile("./assets/images/uranium-extractor-icon.png");
+    textureMap["uranium-icon"] = uraniumExtractorButtonIconTexture;
     
 }
 

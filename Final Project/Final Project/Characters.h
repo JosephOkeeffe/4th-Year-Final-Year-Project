@@ -65,7 +65,7 @@ public:
 	float detectionRadius = 100.0f;
 	float tileDetectionRadius = 10;
 
-	float defaultMoveSpeed = 2.0f;
+	float defaultMoveSpeed = 1.0f;
 	float currentMoveSpeed = defaultMoveSpeed;
 
 	// Animation

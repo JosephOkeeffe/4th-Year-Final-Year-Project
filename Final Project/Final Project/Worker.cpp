@@ -5,7 +5,7 @@
 Worker::Worker()
 {
 	srand(time(nullptr));
-	int randomNuber = rand() % 5;
+	int randomNuber = rand() % 4;
 
 	textureRect = { 0, 0, textureWidth, textureHeight };
 	animationSpeed = 0.08;
@@ -24,8 +24,6 @@ Worker::Worker()
 	case 3:
 		Init(Textures::GetInstance().GetTexture("worker4"), body, textureRect);
 		break;
-	case 4:
-		Init(Textures::GetInstance().GetTexture("worker5"), body, textureRect);
 		break;
 	default:
 		break;
@@ -36,7 +34,7 @@ Worker::Worker()
 }
 
 void Worker::Update()
-{
+{ 
 	UpdateCharacters();
 	CheckAnimationState();
 	AnimateWorker();

@@ -20,15 +20,17 @@ public:
 		NO_UNIT,
 		WARRIOR,
 		ARCHER,
-		WORKER
+		WORKER,
+		OIL_MAN,
+		HAZMAT_MAN
 	};
 
 	static enum BuildingButtonType
 	{
 		NO_BUILDING,
 		MINE,
-		WASTE_EXTRACTOR,
-		OIL_REFINERY
+		OIL_REFINERY,
+		URANIUM_EXTRACTOR,
 	};
 
 	static void Init(sf::RenderWindow& window, sf::Font& font)
@@ -153,7 +155,7 @@ public:
 			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
-			sf::Color::Magenta,
+			sf::Color(210, 210, 210),
 			font,
 			Textures::GetInstance().GetTexture("warrior-icon"));
 
@@ -179,7 +181,7 @@ public:
 			});
 
 
-		// WORKER
+		// MINER
 		Button workerButton(window,
 			sf::Vector2f(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
@@ -194,9 +196,41 @@ public:
 				ChangeUnitSelected(WORKER);
 			});
 
+		// OIL MAN
+		Button oilManButton(window,
+			sf::Vector2f(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color::Magenta,
+			font,
+			Textures::GetInstance().GetTexture("oil-man-icon"));
+
+		oilManButton.setLabel("Oil Man", font, 30, sf::Color::Black);
+		oilManButton.setCallback([]()
+			{
+				ChangeUnitSelected(OIL_MAN);
+			});
+
+		// HAZMAT MAN
+		Button hazmatManButton(window,
+			sf::Vector2f(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color::Magenta,
+			font,
+			Textures::GetInstance().GetTexture("hazmat-man-icon"));
+
+		hazmatManButton.setLabel("Hazmat Man", font, 30, sf::Color::Black);
+		hazmatManButton.setCallback([]()
+			{
+				ChangeUnitSelected(HAZMAT_MAN);
+			});
+
 		unitButtons.push_back(warriorButton);
 		unitButtons.push_back(archerButton);
 		unitButtons.push_back(workerButton);
+		unitButtons.push_back(oilManButton);
+		unitButtons.push_back(hazmatManButton);
 
 		for (Button& button : unitButtons)
 		{

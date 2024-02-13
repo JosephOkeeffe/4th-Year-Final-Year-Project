@@ -17,6 +17,7 @@
 #include "Warrior.h"
 #include "Archer.h"
 #include "Worker.h"
+#include "OilMan.h"
 
 #include "Headquarters.h"
 #include "GoldMine.h"
@@ -70,9 +71,18 @@ private:
 
     void ManageTimers();
 
-    void CreateWorker(sf::Vector2f pos);
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
+    void CreateWorker(sf::Vector2f pos);
+    void CreateOilMan(sf::Vector2f pos);
+    void CreateHazmatMan(sf::Vector2f pos);
+
+
+    void CreateHeadquarters(sf::Vector2f pos);
+    void CreateGoldMine();
+    void CreateOilExtractor();
+    void CreateUraniumExtractor();
+
 
     void SelectUnits();
     void MakeFormation();
@@ -82,9 +92,6 @@ private:
     sf::Vector2f endDragPos;
     sf::RectangleShape dragRect;
 
-    void CreateHeadquarters(sf::Vector2f pos);
-    void CreateGoldMine();
-    void CreateOilExtractor();
 
     void ClearFog(sf::CircleShape radius);
 
