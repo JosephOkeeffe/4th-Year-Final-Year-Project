@@ -111,6 +111,12 @@
     <ClCompile Include="OilMan.cpp">
       <Filter>Source Files\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="UraniumExtractor.cpp">
+      <Filter>Source Files\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HazmatMan.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -186,6 +192,12 @@
       <Filter>Header Files\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="OilMan.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="UraniumExtractor.h">
+      <Filter>Header Files\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HazmatMan.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
   </ItemGroup>

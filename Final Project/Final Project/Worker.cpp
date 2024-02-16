@@ -10,6 +10,8 @@ Worker::Worker()
 	textureRect = { 0, 0, textureWidth, textureHeight };
 	animationSpeed = 0.08;
 
+	characterType = MINER;
+
 	switch (randomNuber)
 	{
 	case 0:

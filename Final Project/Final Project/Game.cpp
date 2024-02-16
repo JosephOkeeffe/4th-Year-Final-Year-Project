@@ -253,10 +253,14 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 
         if (GameManager::buildingToPlace != nullptr)
         {
+            // NEed to fix this cant push back if istn vALID
             GameManager::buildingToPlace->MouseRelease();
             GameManager::buildingToPlace->DeselectBuilding();
-            GameManager::buildings.push_back(GameManager::buildingToPlace);
-            GameManager::buildingToPlace = nullptr;
+            if (GameManager::buildingToPlace->CheckIfCanBePlaced(Global::GetCurrentCell(m_window, gameView)))
+            {
+                GameManager::buildings.push_back(GameManager::buildingToPlace);
+                    GameManager::buildingToPlace = nullptr;
+            }
         }
 
         for (Characters* character : GameManager::units)
@@ -266,7 +270,7 @@ void Game::ProcessMouseRelease(sf::Event t_event)
         }
         SelectUnits();
     }
-    if (sf::Mouse::Right == t_event.key.code)
+    if (sf::Mouse::Right == t_event.key.code)      
     {
         for (Buildings* building : GameManager::buildings)
         {
@@ -599,6 +603,10 @@ void Game::CreateOilMan(sf::Vector2f pos)
 
 void Game::CreateHazmatMan(sf::Vector2f pos)
 {
+    HazmatMan* newHazmatMan = new HazmatMan;
+    newHazmatMan->SetPosition(pos);
+
+    GameManager::units.push_back(newHazmatMan);
 }
 
 void Game::SelectUnits()
@@ -724,8 +732,8 @@ void Game::CreateOilExtractor()
 
 void Game::CreateUraniumExtractor()
 {
-    //UraniumExtractor* newUraniumExtractor = new UraniumExtractor({ 1,1 });
-    //GameManager::buildingToPlace = newUraniumExtractor;
+    UraniumExtractor* newUraniumExtractor = new UraniumExtractor({ 1,1 });
+    GameManager::buildingToPlace = newUraniumExtractor;
 }
 
 void Game::ClearFog(sf::CircleShape radius)

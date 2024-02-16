@@ -161,6 +161,7 @@ void Characters::CalculateAngle(sf::Sprite& target)
 
 void Characters::FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite)
 {
+
 	if (direction.x < 0)
 	{
 		sprite.setScale(-std::abs(sprite.getScale().x), sprite.getScale().y);

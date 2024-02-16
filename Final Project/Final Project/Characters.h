@@ -9,6 +9,15 @@ class Characters
 {
 public:
 
+	enum CharacterType
+	{
+		WARRIOR,
+		ARCHER,
+		MINER,
+		OIL_MAN,
+		HAZMAT_MAN
+	};
+
 	enum State
 	{
 		IDLE,
@@ -47,6 +56,7 @@ public:
 	void SetCurrentState(State stateToChange);
 	
 	State currentState = IDLE;
+	CharacterType characterType;
 
 	Behaviour* behaviour;
 

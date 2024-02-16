@@ -128,14 +128,30 @@ public:
 			font, // font
 			Textures::GetInstance().GetTexture("oil-icon")); // texture
 
-		oilButton.setLabel("Oil Refinery", font, 30, sf::Color::Black);
+		oilButton.setLabel("Oil Extractor", font, 30, sf::Color::Black);
 		oilButton.setCallback([]()
 			{
 				ChangeBuildingSelected(OIL_REFINERY);
 			});
 
+		// Uranium Extractor
+		Button reactorButton(window,
+			sf::Vector2f(410, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
+			sf::Vector2f(100, 100), // size
+			sf::Color::White, // color
+			sf::Color::Magenta, // click color
+			font, // font
+			Textures::GetInstance().GetTexture("reactor-icon")); // texture
+
+		reactorButton.setLabel("Reactor", font, 30, sf::Color::Black);
+		reactorButton.setCallback([]()
+			{
+				ChangeBuildingSelected(URANIUM_EXTRACTOR);
+			});
+
 		buildingButtons.push_back(mineButton);
 		buildingButtons.push_back(oilButton);
+		buildingButtons.push_back(reactorButton);
 
 		for (Button& button : buildingButtons)
 		{

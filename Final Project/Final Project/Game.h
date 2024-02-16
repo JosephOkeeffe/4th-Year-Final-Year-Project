@@ -18,10 +18,12 @@
 #include "Archer.h"
 #include "Worker.h"
 #include "OilMan.h"
+#include "HazmatMan.h"
 
 #include "Headquarters.h"
 #include "GoldMine.h"
 #include "OilExtractor.h"
+#include "UraniumExtractor.h"
 #include "HUD.h"
 #include "TileTypes.h"
 #include "json.hpp"

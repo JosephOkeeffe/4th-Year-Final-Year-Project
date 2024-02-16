@@ -14,6 +14,7 @@ public:
 private:
     Textures();
 
+    // Units
     sf::Texture warriorTexture;
     sf::Texture archerTexture;
     sf::Texture workerTexture;
@@ -21,26 +22,31 @@ private:
     sf::Texture worker3Texture;
     sf::Texture worker4Texture;
     sf::Texture oilManTexture;
-    sf::Texture fogTexture;
-    sf::Texture coinTexture;
+    sf::Texture hazmatManTexture;
 
+    // Buildings
     sf::Texture baseTexture;
-    sf::Texture shopTexture;
     sf::Texture mineTexture;
     sf::Texture oilExtractorTexture;
+    sf::Texture uraniumExtractorTexture;
     sf::Texture tilesTexture;
 
+    // Buttons
     sf::Texture warriorButtonIconTexture;
     sf::Texture archerButtonIconTexture;
     sf::Texture workerButtonIconTexture;
     sf::Texture oilManButtonIconTexture;
     sf::Texture hazmatManButtonIconTexture;
 
-
     sf::Texture goldMineButtonIconTexture;
     sf::Texture oilExtractorButtonIconTexture;
     sf::Texture uraniumExtractorButtonIconTexture;
 
+    // Other
+    sf::Texture fogTexture;
+    sf::Texture coinTexture;
+
 
     std::map<std::string, sf::Texture> textureMap;
+
 };
