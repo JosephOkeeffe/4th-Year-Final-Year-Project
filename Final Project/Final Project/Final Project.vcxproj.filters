@@ -176,9 +176,6 @@
     <ClInclude Include="BuildingUI.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

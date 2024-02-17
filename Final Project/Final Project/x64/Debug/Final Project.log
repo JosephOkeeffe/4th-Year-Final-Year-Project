@@ -1,1 +1,281 @@
-﻿  Final Project.vcxproj -> C:\Users\labuser\Desktop\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe
+﻿  Archer.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(60,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(61,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameManager.h(27,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(16,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(26,3): warning C4091: 'static ': ignored on left of 'HUD::UnitButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(34,3): warning C4091: 'static ': ignored on left of 'HUD::BuildingButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(109,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(124,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(139,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(160,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(171,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(186,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(202,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(217,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(232,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(255,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(85,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(8,19): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(22,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(22,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(22,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Archer.cpp(22,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Game.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(60,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(61,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(16,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(26,3): warning C4091: 'static ': ignored on left of 'HUD::UnitButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(34,3): warning C4091: 'static ': ignored on left of 'HUD::BuildingButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(109,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(124,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(139,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(160,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(171,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(186,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(202,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(217,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(232,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(255,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,103): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(19,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,102): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(23,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameManager.h(27,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(85,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.h(75,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(45,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(47,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(716,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(717,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Warrior.cpp
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(60,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Globals.h(61,47): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\GameManager.h(27,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(16,3): warning C4091: 'static ': ignored on left of 'HUD::HUDState' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(26,3): warning C4091: 'static ': ignored on left of 'HUD::UnitButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(34,3): warning C4091: 'static ': ignored on left of 'HUD::BuildingButtonType' when no variable is declared
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(50,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,86): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(54,52): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(109,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(124,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(139,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(160,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(171,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(186,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(202,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(217,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(232,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HUD.h(255,56): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(85,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(20,70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(20,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(20,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(20,10): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Warrior.cpp(59): warning C4172: returning address of local variable or temporary: pos
+  Final Project.vcxproj -> C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\x64\Debug\Final Project.exe

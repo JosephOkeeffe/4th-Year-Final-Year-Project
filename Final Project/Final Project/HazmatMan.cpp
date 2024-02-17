@@ -6,7 +6,7 @@ HazmatMan::HazmatMan()
 {
 
 	textureRect = { 0, 0, textureWidth, textureHeight };
-	animationSpeed = 0.08;
+	animationSpeed = 0.1 ;
 
 	Init(Textures::GetInstance().GetTexture("hazmat-man"), body, textureRect);
 
@@ -147,8 +147,7 @@ void HazmatMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 		sf::Vector2f temp = direction * currentMoveSpeed;
 		body.move(temp);
 		
-		sf::Vector2f newFlip = { direction.x * -1, direction.y * -1 };
-		FlipSpriteWithDirection(newFlip, body);
+		FlipSpriteWithDirection(direction, body);
 	}
 	else
 	{
@@ -184,7 +183,7 @@ void HazmatMan::CheckAnimationState()
 	else if (GetCurrentState(GATHERING))
 	{
 		// 222 / 5 = 44
-		currentFrameX = 0;
+		currentFrameX = 44;
 		currentFrameY = 47;
 		textureWidth = 44;
 		textureHeight = 51;   
@@ -192,7 +191,10 @@ void HazmatMan::CheckAnimationState()
 	}
 	else if (GetCurrentState(RETURN_TO_BASE))
 	{
-		currentFrameY = 147 ;
+		currentFrameX = 44;
+		currentFrameY = 147;
+		textureWidth = 44;
+		textureHeight = 43;
 		amountOfSprites = 7;    
 	} 
 	else if (GetCurrentState(UNLOADING) || GetSelected() || GetCurrentState(INVENTORY_FULL))

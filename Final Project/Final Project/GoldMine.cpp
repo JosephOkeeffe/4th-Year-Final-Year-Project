@@ -31,7 +31,7 @@ void GoldMine::Draw()
 	GameManager::GetWindow()->draw(detectionCircle);
 	GameManager::GetWindow()->draw(body);
 
-	if (GetPlacedStatus() && isBeingUsed)
+	if (GetPlacedStatus() && status != EMPTY)
 	{
 		GameManager::GetWindow()->draw(resourceText);
 		GameManager::GetWindow()->draw(background);
@@ -43,6 +43,50 @@ void GoldMine::Update()
 {
 	UpdateBuildings();
 	deltaTime = clock.restart();
+
+	switch (status)
+	{
+	case GoldMine::EMPTY:
+		assignedMiners.clear();
+		currentWidth = 0;
+		break;
+	case GoldMine::GENERATE_GOLD:
+		GenerateGold();
+		break;
+	case GoldMine::DEPOSIT_GOLD:
+		DepositGold();
+		break;
+	default:
+		break;
+	}
+
+	for (Characters* temp : GameManager::units)
+	{
+		if (temp->characterType == temp->MINER)
+		{
+			if (temp->body.getGlobalBounds().intersects(body.getGlobalBounds()))
+			{
+				if ((temp->GetCurrentState(temp->SEARCH_FOR_RESOURCE) || temp->GetCurrentState(temp->MOVING)))
+				{
+					static_cast<Worker*>(temp)->workingPlace = this;
+					assignedMiners.push_back(static_cast<Worker*>(temp));
+					temp->SetCurrentState(temp->GATHERING);
+
+					if (status != DEPOSIT_GOLD)
+					{
+						status = GENERATE_GOLD;
+					}
+				}
+			}
+
+			if (assignedMiners.size() > 1 && temp->GetSelected())
+			{
+				assignedMiners.erase(std::remove(assignedMiners.begin(), assignedMiners.end(), static_cast<Worker*>(temp)), assignedMiners.end());
+			}
+		}
+	}
+
+	AlignMinersPosition();
 }
 
 void GoldMine::GenerateGold()
@@ -51,23 +95,21 @@ void GoldMine::GenerateGold()
 	resource.setPosition(background.getPosition());
 	resource.setFillColor(sf::Color::Yellow);
 
-
 	if (currentWidth < maxWidth)
 	{
 		resourceText.setPosition(background.getPosition().x + background.getSize().x * 0.6, background.getPosition().y - 15);
 		resourceText.setString(std::to_string(static_cast<int>(currentWidth)));
 
-		float increaseAmount = fillSpeed * deltaTime.asSeconds();
+		float increaseAmount = fillSpeed * deltaTime.asSeconds() * assignedMiners.size();
 		currentWidth = std::min(currentWidth + increaseAmount, maxWidth);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isEmpty = false;
 	}
 
 	if (currentWidth >= maxWidth)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
 
-		isFull = true;
+		status = DEPOSIT_GOLD;
 
 	}
 }
@@ -83,34 +125,69 @@ void GoldMine::DepositGold()
 		resourceText.setPosition(background.getPosition().x + background.getSize().x * 0.6, background.getPosition().y - 15);
 		resourceText.setString(std::to_string(static_cast<int>(currentWidth)));
 
-		float decreaseAmount = fillSpeed * deltaTime.asSeconds(); 
+		float decreaseAmount = fillSpeed * deltaTime.asSeconds() * assignedMiners.size();
 		currentWidth = std::max(currentWidth - decreaseAmount, 0.f);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isFull = false;
+
 	}
 
 	if (currentWidth <= 0)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
  
-		isEmpty = true;
+		//isEmpty = true;
+		status = EMPTY;
 	}
 }
 
+void GoldMine::AlignMinersPosition()
+{
+	for (int i = 0; i < assignedMiners.size(); i++)
+	{
+		float offsetX = 0.0f;
+		float offsetY = 0.0f;
+		sf::Vector2f minerPosition;
 
-//bool GoldMine::CheckIfCanBePlaced()
-//{
-//	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-//	sf::Vector2i currentCell = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
-//
-//	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-//	{
-//		if (!CheckIfPlaced() && GameManager::tiles[currentCell.x][currentCell.y].GetTileType() == RESOURCE)
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return false;
-//}
+		assignedMiners[i]->body.setScale(0.8, 0.8);
+		assignedMiners[i]->isWorking = true;
+
+
+		if (assignedMiners.size() > 0)
+		{
+			if (i % 3 == 0)
+			{
+				offsetX = textureWidth * 0.5f;
+				minerPosition.x = body.getPosition().x - offsetX;
+			}
+			else if (i % 3 == 1)
+			{
+				minerPosition.x = body.getPosition().x;
+			}
+			else if (i % 3 == 2)
+			{
+				offsetX = textureWidth * 0.5f;
+				minerPosition.x = body.getPosition().x + offsetX;
+
+			}
+
+			if (i / 3 == 0)
+			{
+				offsetY = textureHeight * 0.5f;
+				minerPosition.y = body.getPosition().y - offsetY;
+			}
+			else if (i / 3 == 1)
+			{
+				minerPosition.y = body.getPosition().y - offsetY;
+			}
+			else if (i / 3 == 2)
+			{
+				offsetY = textureHeight * 0.5f;
+				minerPosition.y = body.getPosition().y + offsetY;
+			}
+		}
+
+		assignedMiners[i]->SetPosition(minerPosition);
+	}
+}
+
 

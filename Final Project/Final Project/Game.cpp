@@ -259,7 +259,7 @@ void Game::ProcessMouseRelease(sf::Event t_event)
             if (GameManager::buildingToPlace->CheckIfCanBePlaced(Global::GetCurrentCell(m_window, gameView)))
             {
                 GameManager::buildings.push_back(GameManager::buildingToPlace);
-                    GameManager::buildingToPlace = nullptr;
+                GameManager::buildingToPlace = nullptr;
             }
         }
 
@@ -268,6 +268,7 @@ void Game::ProcessMouseRelease(sf::Event t_event)
             character->MouseRelease();
             selectedUnits.clear();
         }
+
         SelectUnits();
     }
     if (sf::Mouse::Right == t_event.key.code)      
@@ -629,10 +630,13 @@ void Game::MakeFormation()
 
     for (Characters* temp : GameManager::units)
     {
-        if (temp->GetSelected())
+        if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
         {
-            leader = temp;
-            break;
+            if (temp->GetSelected())
+            {
+                leader = temp;
+                break;
+            }
         }
     }
 
@@ -647,39 +651,42 @@ void Game::MakeFormation()
         int i = -1;
         for (Characters* temp : GameManager::units)
         {
-            temp->SetCurrentState(temp->MOVING);
-            temp->isFormationMoving = true;
-            if (temp->GetSelected()) 
+            if(temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
             {
-                if (temp != leader)
+                temp->SetCurrentState(temp->MOVING);
+                temp->isFormationMoving = true;
+                if (temp->GetSelected())
                 {
-                    ++i;
-
-                    if (i == 0)
+                    if (temp != leader)
                     {
-                        yOffset = -50;
+                        ++i;
 
-                    }
-                    else if (i == 1)
-                    {
-                        yOffset = 0;
-                    }
-                    else if (i == 2)
-                    {
-                        yOffset = 50;
-                    }
-                    temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
+                        if (i == 0)
+                        {
+                            yOffset = -50;
+
+                        }
+                        else if (i == 1)
+                        {
+                            yOffset = 0;
+                        }
+                        else if (i == 2)
+                        {
+                            yOffset = 50;
+                        }
+                        temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
 
 
-                    if (i == 2)
-                    {
-                        xOffset -= 50.0f;
-                        i = -1;
+                        if (i == 2)
+                        {
+                            xOffset -= 50.0f;
+                            i = -1;
+                        }
                     }
-                }
-                else
-                {
-                    temp->targetPosition = { xPosLeader, yPosLeader};
+                    else
+                    {
+                        temp->targetPosition = { xPosLeader, yPosLeader };
+                    }
                 }
             }
        

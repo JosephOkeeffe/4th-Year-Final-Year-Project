@@ -7,7 +7,7 @@ Archer::Archer()
 	Init(Textures::GetInstance().GetTexture("archer"), body, textureRect);
 	animationSpeed = 0.04;
 	body.setScale(1.5, 1.5);
-
+	characterType = ARCHER;
 }
 
 void Archer::Update()

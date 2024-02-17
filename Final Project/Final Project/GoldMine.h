@@ -1,10 +1,22 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Buildings.h"
+#include "Worker.h"
+
+class Worker;
 
 class GoldMine : public Buildings
 {
 public:
+
+
+	enum GoldMineStatus
+	{
+		EMPTY,
+		GENERATE_GOLD,
+		DEPOSIT_GOLD,		
+	};
+
 	GoldMine(sf::Vector2f pos);
 	void Update() override;
 	void MouseRelease() override;
@@ -12,7 +24,12 @@ public:
 	void GenerateGold();
 	void DepositGold();
 
-	bool isBeingUsed = false;
+	void AlignMinersPosition();
+
+	GoldMineStatus status;
+
+	std::vector<Worker*> assignedMiners;
+
 	bool isEmpty = false;
 	bool isFull = false;
 private:
@@ -22,5 +39,6 @@ private:
 	int currentFrameX = 115;
 	int currentFrameY = 0;
 
+	
 
 };

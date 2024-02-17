@@ -10,6 +10,7 @@ class Buildings;
 class Characters;
 class Headquarters;
 class GoldMine;
+class Worker;
 
 class GameManager
 {

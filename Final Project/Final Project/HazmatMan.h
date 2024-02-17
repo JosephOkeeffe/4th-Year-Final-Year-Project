@@ -19,6 +19,7 @@ public:
 private:
 
 
+	// Idle starting off
 	int currentFrameX = 24;
 	int currentFrameY = 100;
 	int textureWidth = 23;

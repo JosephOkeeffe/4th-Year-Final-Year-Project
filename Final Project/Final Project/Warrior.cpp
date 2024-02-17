@@ -5,6 +5,7 @@ Warrior::Warrior()
 {
 	textureRect = { 0, 0, textureWidth, textureHeight };
 	Init(Textures::GetInstance().GetTexture("warrior"), body, textureRect);
+	characterType = WARRIOR;
 }
 
 void Warrior::Update()

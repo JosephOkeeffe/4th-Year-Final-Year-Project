@@ -41,76 +41,117 @@ void Worker::Update()
 	CheckAnimationState();
 	AnimateWorker();
 
-	if (GetSelected())
+	if (workingPlace != nullptr)
 	{
-		currentState = IDLE;
-
-		if (workingPlace != nullptr)
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
 		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(workingPlace->body.getPosition().x, workingPlace->body.getPosition().y + 130);
-			}
-			workingPlace->isBeingUsed = false;
-			workingPlace->currentWidth = 0;
-			workingPlace = nullptr;
-		}
-
-	}
-
-	if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
-	{
-		if (workingPlace != nullptr)
-		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			if (workingPlace->status == workingPlace->GENERATE_GOLD)
 			{
 				SetCurrentState(GATHERING);
-				body.setPosition(workingPlace->body.getPosition());
-				workingPlace->isBeingUsed = true;
+			}
+			else if (workingPlace->status == workingPlace->DEPOSIT_GOLD)
+			{
+				SetCurrentState(UNLOADING);
+			}
+			else if (workingPlace->status == workingPlace->EMPTY && GetCurrentState(UNLOADING))
+			{
+				body.setScale(1, 1);
+				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
+	}
+
+	if (GetCurrentState(RETURN_TO_BASE))
+	{
+		MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
+		isWorking = false;
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
 	{
-		if (!workingPlace->isBeingUsed)
-		{
-			MoveSpriteToTarget(workingPlace->body.getPosition());
-		}
+		MoveSpriteToTarget(workingPlace->body.getPosition());
 	}
-	if (GetCurrentState(GATHERING))
-	{
-		if (workingPlace->isFull)
-		{
-			SetCurrentState(UNLOADING);
-		}
-		else
-		{
-			workingPlace->GenerateGold();
-		}
-	}
-	if (GetCurrentState(UNLOADING))
-	{
-		if (workingPlace->isEmpty)
-		{
-			SetCurrentState(RETURN_TO_BASE);
-		}
-		else
-		{
-			workingPlace->DepositGold();
-		}
-	}
-	if (GetCurrentState(RETURN_TO_BASE))
-	{
-		workingPlace->isBeingUsed = false;
-		MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
 
-		if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
-		{
-			SetCurrentState(SEARCH_FOR_RESOURCE);
-		}
-
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	{
+		SetCurrentState(SEARCH_FOR_RESOURCE);
 	}
+
+
+	if (GetSelected())
+	{
+		SetCurrentState(IDLE);
+	}
+
+	if (GetCurrentState(IDLE))
+	{
+		body.setScale(1, 1);
+
+		if (workingPlace != nullptr)
+		{
+			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			{
+				body.setPosition(workingPlace->body.getPosition().x, body.getPosition().y + 130);
+			}
+			//workingPlace->status = workingPlace->EMPTY;
+			isWorking = false;
+			workingPlace = nullptr;
+		}
+	}
+
+	//if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
+	//{
+	//	if (workingPlace != nullptr)
+	//	{
+	//		/*if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+	//		{
+	//			SetCurrentState(GATHERING);
+	//			body.setPosition(workingPlace->body.getPosition());
+	//			workingPlace->isBeingUsed = true;
+	//		}*/
+	//	}
+	//}
+
+	//if (GetCurrentState(SEARCH_FOR_RESOURCE))
+	//{
+	//	//if (!workingPlace->isBeingUsed)
+	//	//{
+	//		MoveSpriteToTarget(workingPlace->body.getPosition());
+	//	//}
+	//}
+	//if (GetCurrentState(GATHERING))
+	//{
+	//	//if (workingPlace->isFull)
+	//	//{
+	//		SetCurrentState(UNLOADING);
+	//	//}
+	//	//else
+	//	//{
+	//		//workingPlace->GenerateGold();
+	//	//}
+	//}
+	//if (GetCurrentState(UNLOADING))
+	//{
+	//	if (workingPlace->isEmpty)
+	//	{
+	//		SetCurrentState(RETURN_TO_BASE);
+	//	}
+	//	else
+	//	{
+	//		//workingPlace->DepositGold();
+	//	}
+	//}
+	//if (GetCurrentState(RETURN_TO_BASE))
+	//{
+	//	//workingPlace->isBeingUsed = false;
+	//	MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
+
+	//	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	//	{
+	//		SetCurrentState(SEARCH_FOR_RESOURCE);
+	//	}
+
+	//}
 	//if (GetCurrentState(INVENTORY_FULL))
 	//{
 	//	if (!workingPlace->isFull)
