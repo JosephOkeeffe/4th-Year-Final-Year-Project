@@ -28,23 +28,67 @@ void UraniumExtractor::MouseRelease()
 	}
 }
 
-void UraniumExtractor::Draw()
-{
-	GameManager::GetWindow()->draw(detectionCircle);
-	GameManager::GetWindow()->draw(body);
-
-	if (GetPlacedStatus() && isBeingUsed)
-	{
-		GameManager::GetWindow()->draw(resourceText);
-		GameManager::GetWindow()->draw(background);
-		GameManager::GetWindow()->draw(resource);
-	}
-}
+//void UraniumExtractor::Draw()
+//{
+//	GameManager::GetWindow()->draw(detectionCircle);
+//	GameManager::GetWindow()->draw(body);
+//
+//	if (GetPlacedStatus() && status != EMPTY)
+//	{
+//		GameManager::GetWindow()->draw(resourceText);
+//		GameManager::GetWindow()->draw(background);
+//		GameManager::GetWindow()->draw(resource);
+//	}
+//}
 
 void UraniumExtractor::Update()
 {
 	UpdateBuildings();
 	deltaTime = clock.restart();
+
+	switch (status)
+	{
+	case EMPTY:
+		assignedWorkers.clear();
+		currentWidth = 0;
+		break;
+	case GENERATING:
+		GenerateUranium();
+		break;
+	case DEPOSITING:
+		DepositUranium();
+		break;
+	default:
+		break;
+	}
+
+	for (Characters* temp : GameManager::units)
+	{
+		if (temp->characterType == temp->HAZMAT_MAN)
+		{
+			if (temp->body.getGlobalBounds().intersects(body.getGlobalBounds()))
+			{
+				if ((temp->GetCurrentState(temp->SEARCH_FOR_RESOURCE) || temp->GetCurrentState(temp->MOVING)))
+				{
+					static_cast<HazmatMan*>(temp)->workingPlace = this;
+					assignedWorkers.push_back(static_cast<HazmatMan*>(temp));
+					temp->SetCurrentState(temp->GATHERING);
+
+					if (status != DEPOSITING)
+					{
+						status = GENERATING;
+					}
+				}
+			}
+
+			if (assignedWorkers.size() > 1 && temp->GetSelected())
+			{
+				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<HazmatMan*>(temp)), assignedWorkers.end());
+			}
+		}
+	}
+
+	AlignWorkersPosition(assignedWorkers, 56, 66);
 }
 
 void UraniumExtractor::GenerateUranium()
@@ -62,14 +106,12 @@ void UraniumExtractor::GenerateUranium()
 		float increaseAmount = fillSpeed * deltaTime.asSeconds();
 		currentWidth = std::min(currentWidth + increaseAmount, maxWidth);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isEmpty = false;
 	}
 
 	if (currentWidth >= maxWidth)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
-
-		isFull = true;
+		status = DEPOSITING;
 
 	}
 }
@@ -88,14 +130,12 @@ void UraniumExtractor::DepositUranium()
 		float decreaseAmount = fillSpeed * deltaTime.asSeconds();
 		currentWidth = std::max(currentWidth - decreaseAmount, 0.f);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isFull = false;
 	}
 
 	if (currentWidth <= 0)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
-
-		isEmpty = true;
+		status = EMPTY;
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "Textures.h"
 #include "Globals.h"
+#include "GameManager.h"
 
 class HUD
 {
@@ -20,7 +21,7 @@ public:
 		NO_UNIT,
 		WARRIOR,
 		ARCHER,
-		WORKER,
+		MINER,
 		OIL_MAN,
 		HAZMAT_MAN
 	};
@@ -33,7 +34,7 @@ public:
 		URANIUM_EXTRACTOR,
 	};
 
-	static void Init(sf::RenderWindow& window, sf::Font& font)
+	static void Init()
 	{
 		hudBackground.setFillColor(sf::Color::Red);
 		hudBackground.setSize(sf::Vector2f(Global::S_WIDTH, 150));
@@ -41,15 +42,15 @@ public:
 		hudBackground.setOutlineColor(sf::Color(255, 255, 255, 100));
 		hudBackground.setPosition(0, Global::S_HEIGHT - hudBackground.getSize().y);
 
-		InitBuildButtons(window,font);
-		InitUnitButtons(window,font);
+		InitBuildButtons();
+		InitUnitButtons();
 
 		coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
 		coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
 		coinSprite.setPosition(Global::S_WIDTH * 0.95, Global::S_HEIGHT - hudBackground.getSize().y + 20);
 		coinSprite.setScale(0.1, 0.1);
 
-		coinsText.setFont(font);
+		coinsText.setFont(Global::font);
 		coinsText.setCharacterSize(24);
 		coinsText.setOrigin(coinsText.getCharacterSize() / 2, coinsText.getCharacterSize() / 2);
 		coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
@@ -83,13 +84,13 @@ public:
 			}
 		}
 	}
-	static void HandleEvents(sf::Event& event, sf::RenderWindow& window)
+	static void HandleEvents(sf::Event& event)
 	{
 		if (currentState == BUILD_HUD)
 		{
 			for (Button& button : buildingButtons)
 			{
-				button.handleEvent(event, window);
+				button.handleEvent(event);
 			}
 		}
 
@@ -97,53 +98,50 @@ public:
 		{
 			for (Button& button : unitButtons)
 			{
-				button.handleEvent(event, window);
+				button.handleEvent(event);
 			}
 		}
 	}
 
-	static void InitBuildButtons(sf::RenderWindow& window, sf::Font& font)
+	static void InitBuildButtons()
 	{
 		// Gold Mine
-		Button mineButton(window,
-			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
+		Button mineButton(sf::Vector2f(150, 
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
 			sf::Vector2f(100, 100), // size
 			sf::Color::White, // color
 			sf::Color::Magenta, // click color
-			font, // font
 			Textures::GetInstance().GetTexture("mine-icon")); // texture
 
-		mineButton.setLabel("Mine", font, 30, sf::Color::Black);
+		mineButton.setLabel("Mine", 30, sf::Color::Black);
 		mineButton.setCallback([]()
 			{
 				ChangeBuildingSelected(MINE);
 			});
 
 		// Oil Extractor
-		Button oilButton(window,
-			sf::Vector2f(280, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
+		Button oilButton(sf::Vector2f(280, 
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
 			sf::Vector2f(100, 100), // size
 			sf::Color::White, // color
 			sf::Color::Magenta, // click color
-			font, // font
 			Textures::GetInstance().GetTexture("oil-icon")); // texture
 
-		oilButton.setLabel("Oil Extractor", font, 30, sf::Color::Black);
+		oilButton.setLabel("Oil Extractor", 30, sf::Color::Black);
 		oilButton.setCallback([]()
 			{
 				ChangeBuildingSelected(OIL_REFINERY);
 			});
 
 		// Uranium Extractor
-		Button reactorButton(window,
-			sf::Vector2f(410, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
+		Button reactorButton(sf::Vector2f(410,
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
 			sf::Vector2f(100, 100), // size
 			sf::Color::White, // color
 			sf::Color::Magenta, // click color
-			font, // font
 			Textures::GetInstance().GetTexture("reactor-icon")); // texture
 
-		reactorButton.setLabel("Reactor", font, 30, sf::Color::Black);
+		reactorButton.setLabel("Reactor", 30, sf::Color::Black);
 		reactorButton.setCallback([]()
 			{
 				ChangeBuildingSelected(URANIUM_EXTRACTOR);
@@ -163,34 +161,32 @@ public:
 		}
 	}
 
-	static void InitUnitButtons(sf::RenderWindow& window, sf::Font& font)
+	static void InitUnitButtons()
 	{
 
 		// WARRIOR
-		Button warriorButton(window,
+		Button warriorButton(
 			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
-			font,
 			Textures::GetInstance().GetTexture("warrior-icon"));
 
-		warriorButton.setLabel("Warrior", font, 30, sf::Color::Black);
+		warriorButton.setLabel("Warrior", 30, sf::Color::Black);
 		warriorButton.setCallback([]()
 			{
 				ChangeUnitSelected(WARRIOR);
 			});
 
 		// ARCHER
-		Button archerButton(window,
+		Button archerButton(
 			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color::Magenta,
-			font,
 			Textures::GetInstance().GetTexture("archer-icon"));
 
-		archerButton.setLabel("Archer", font, 30, sf::Color::Black);
+		archerButton.setLabel("Archer",  30, sf::Color::Black);
 		archerButton.setCallback([]()
 			{
 				ChangeUnitSelected(ARCHER);
@@ -198,45 +194,42 @@ public:
 
 
 		// MINER
-		Button workerButton(window,
+		Button workerButton(
 			sf::Vector2f(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color::Magenta,
-			font,
-			Textures::GetInstance().GetTexture("worker-icon"));
+			Textures::GetInstance().GetTexture("miner-icon"));
 
-		workerButton.setLabel("Worker", font, 30, sf::Color::Black);
+		workerButton.setLabel("Miner",  30, sf::Color::Black);
 		workerButton.setCallback([]()
 			{
-				ChangeUnitSelected(WORKER);
+				ChangeUnitSelected(MINER);
 			});
 
 		// OIL MAN
-		Button oilManButton(window,
+		Button oilManButton(
 			sf::Vector2f(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color::Magenta,
-			font,
 			Textures::GetInstance().GetTexture("oil-man-icon"));
 
-		oilManButton.setLabel("Oil Man", font, 30, sf::Color::Black);
+		oilManButton.setLabel("Oil Man", 30, sf::Color::Black);
 		oilManButton.setCallback([]()
 			{
 				ChangeUnitSelected(OIL_MAN);
 			});
 
 		// HAZMAT MAN
-		Button hazmatManButton(window,
+		Button hazmatManButton(
 			sf::Vector2f(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color::Magenta,
-			font,
 			Textures::GetInstance().GetTexture("hazmat-man-icon"));
 
-		hazmatManButton.setLabel("Hazmat Man", font, 30, sf::Color::Black);
+		hazmatManButton.setLabel("Hazmat Man", 30, sf::Color::Black);
 		hazmatManButton.setCallback([]()
 			{
 				ChangeUnitSelected(HAZMAT_MAN);
@@ -270,7 +263,6 @@ public:
 		currentState = NONE;
 	}
 	
-
 	static sf::RectangleShape hudBackground;
 	static std::vector<Button> buildingButtons;
 	static std::vector<Button> unitButtons;

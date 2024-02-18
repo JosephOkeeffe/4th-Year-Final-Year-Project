@@ -7,9 +7,9 @@ class PauseMenu
 {
 public:
 
-	void Init(sf::RenderWindow& window, sf::Font& font);
+	void Init();
 	void Render(sf::RenderWindow& window);
-	void HandleEvents(sf::Event& event, sf::RenderWindow& window);
+	void HandleEvents(sf::Event& event);
 	void SetupSave();
 	void SetupLoad();
 	bool saveMenu = false;

@@ -62,4 +62,10 @@ public:
 
         return cellPosition;
     }
+
+    static sf::Vector2i GetLocalMousePos(sf::RenderWindow& window)
+    {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        return mousePos;
+    }
 };

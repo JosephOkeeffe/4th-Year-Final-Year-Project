@@ -155,7 +155,7 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Warrior.cpp" />
-    <ClCompile Include="Worker.cpp" />
+    <ClCompile Include="Miner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
@@ -183,7 +183,7 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Warrior.h" />
-    <ClInclude Include="Worker.h" />
+    <ClInclude Include="Miner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

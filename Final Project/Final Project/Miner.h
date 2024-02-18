@@ -2,27 +2,29 @@
 #include <SFML/Graphics.hpp>
 #include "Characters.h"
 #include "GoldMine.h"
-
-
 #include "Headquarters.h"
+#include "Globals.h"
+
+
 
 class GoldMine;
 
-class Worker : public Characters
+class Miner : public Characters
 {
 public:
-	Worker();
-	void Update() override;
+	Miner();
 	void MouseRelease() override;
+	void Update() override;
+	void RemoveFromWorkPlace();
+	void UpdateWorkingStates();
+	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 	void AnimateWorker();
 	void CheckAnimationState();
-	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
 	GoldMine* workingPlace = nullptr;
 
-	bool isWorking = false;
 
 private:
 	// 543
@@ -35,6 +37,8 @@ private:
 	// Moving
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
+
+	float defaulScale = 1;
 
 
 };

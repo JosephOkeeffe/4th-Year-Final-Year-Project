@@ -16,7 +16,7 @@
 #include "Characters.h"
 #include "Warrior.h"
 #include "Archer.h"
-#include "Worker.h"
+#include "Miner.h"
 #include "OilMan.h"
 #include "HazmatMan.h"
 
@@ -75,7 +75,7 @@ private:
 
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
-    void CreateWorker(sf::Vector2f pos);
+    void CreateMiner(sf::Vector2f pos);
     void CreateOilMan(sf::Vector2f pos);
     void CreateHazmatMan(sf::Vector2f pos);
 

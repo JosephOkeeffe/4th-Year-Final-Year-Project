@@ -22,7 +22,7 @@ private:
     sf::View& gameView;
     sf::View& hudView;
     float zoomFactor = 1;
-    float minX = 600.0f;
+    float minX = 500.0f;
     float minY = 300.0f;
     float maxX = 5000.0f;
     float maxY = 5000.0f;

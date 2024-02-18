@@ -1,6 +1,8 @@
 #include "Button.h"
 #include "Globals.h"
-Button::Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& idleColour, const sf::Color& hoverColour, const sf::Font& font, const sf::Texture& texture)
+#include "GameManager.h"
+
+Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& idleColour, const sf::Color& hoverColour, const sf::Texture& texture)
     : onClick(nullptr), isHovered(false), isPressed(false), idleColour(idleColour), hoverColour(hoverColour)
 {
     shape.setSize(size);
@@ -12,7 +14,7 @@ Button::Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf:
     shape.setOutlineColor(sf::Color::Black);
 
 
-    label.setFont(font); 
+    label.setFont(Global::font);
     label.setCharacterSize(24);
     label.setFillColor(sf::Color::Black);
     label.setOrigin(size / 2.0f);
@@ -22,10 +24,10 @@ Button::Button(sf::RenderWindow& window, const sf::Vector2f& position, const sf:
 
 }
 
-void Button::setLabel(const std::string& text, const sf::Font& font, unsigned characterSize, const sf::Color& textColor) 
+void Button::setLabel(const std::string& text, unsigned characterSize, const sf::Color& textColor) 
 {
     label.setString(text);
-    label.setFont(font);
+    label.setFont(Global::font);
     label.setCharacterSize(characterSize);
     label.setFillColor(textColor);
 }
@@ -35,11 +37,11 @@ void Button::setCallback(std::function<void()> callback)
     onClick = callback;
 }
 
-void Button::handleEvent(const sf::Event& event, sf::RenderWindow& window)
+void Button::handleEvent(const sf::Event& event)
 {
     if (event.type == sf::Event::MouseMoved) 
     {
-        sf::Vector2i mousePos = static_cast<sf::Vector2i>(Global::GetMousePos(window));
+        sf::Vector2i mousePos = static_cast<sf::Vector2i>(Global::GetLocalMousePos(*GameManager::GetWindow()));
 
         if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) 
         {

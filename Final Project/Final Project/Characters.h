@@ -24,7 +24,7 @@ public:
 		MOVING,
 		ATTACKING,
 		DEAD,
-		// Worker ENUMS
+
 		SEARCH_FOR_RESOURCE,
 		GATHERING,
 		INVENTORY_FULL,
@@ -71,6 +71,7 @@ public:
 	
 	bool isSelected = false;
 	bool isFormationMoving = false;
+	bool isWorking = false;
 
 	float detectionRadius = 100.0f;
 	float tileDetectionRadius = 10;

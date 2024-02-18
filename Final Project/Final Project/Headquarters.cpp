@@ -19,7 +19,7 @@ void Headquarters::MouseRelease()
 
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 	{
-		if (CheckIfSelected())
+		if (GetSelectedStatus())
 		{
 			DeselectBuilding();
 		}
@@ -47,7 +47,7 @@ void Headquarters::Update()
 }
 void Headquarters::ChangeSelectedColour()
 {
-	if (CheckIfSelected())
+	if (GetSelectedStatus())
 	{
 		BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80  });
 		body.setColor(sf::Color(128, 128, 128));

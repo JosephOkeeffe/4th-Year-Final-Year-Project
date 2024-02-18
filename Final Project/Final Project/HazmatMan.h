@@ -3,18 +3,24 @@
 #include "Characters.h"
 #include "UraniumExtractor.h"
 #include "Headquarters.h"
+
+class UraniumExtractor;
+
 class HazmatMan : public Characters
 {
 public:
 	HazmatMan();
-	void Update() override;
 	void MouseRelease() override;
+	void Update() override;
+	void RemoveFromWorkPlace();
+	void UpdateWorkingStates();
+	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 	void AnimateWorker();
 	void CheckAnimationState();
-	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
+	UraniumExtractor* workingPlace = nullptr;
 
 private:
 
@@ -29,7 +35,7 @@ private:
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
 	  
+	float defaultScale = 1.8;
 
-	UraniumExtractor* workingPlace = nullptr;
 };
 

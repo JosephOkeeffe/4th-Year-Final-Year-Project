@@ -28,19 +28,6 @@ void OilExtractor::MouseRelease()
 	}
 }
 
-void OilExtractor::Draw()
-{
-	GameManager::GetWindow()->draw(detectionCircle);
-	GameManager::GetWindow()->draw(body);
-
-	if (GetPlacedStatus() && isBeingUsed)
-	{
-		GameManager::GetWindow()->draw(resourceText);
-		GameManager::GetWindow()->draw(background);
-		GameManager::GetWindow()->draw(resource);
-	}
-}
-
 void OilExtractor::Update()
 {
 	UpdateBuildings();
@@ -50,6 +37,50 @@ void OilExtractor::Update()
 	{
 		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 	}
+
+	switch (status)
+	{
+	case EMPTY:
+		assignedWorkers.clear();
+		currentWidth = 0;
+		break;
+	case GENERATING:
+		GenerateOil();
+		break;
+	case DEPOSITING:
+		DepositOil();
+		break;
+	default:
+		break;
+	}
+
+	for (Characters* temp : GameManager::units)
+	{
+		if (temp->characterType == temp->OIL_MAN)
+		{
+			if (temp->body.getGlobalBounds().intersects(body.getGlobalBounds()))
+			{
+				if ((temp->GetCurrentState(temp->SEARCH_FOR_RESOURCE) || temp->GetCurrentState(temp->MOVING)))
+				{
+					static_cast<OilMan*>(temp)->workingPlace = this;
+					assignedWorkers.push_back(static_cast<OilMan*>(temp));
+					temp->SetCurrentState(temp->GATHERING);
+
+					if (status != DEPOSITING)
+					{
+						status = GENERATING;
+					}
+				}
+			}
+
+			if (assignedWorkers.size() > 1 && temp->GetSelected())
+			{
+				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<OilMan*>(temp)), assignedWorkers.end());
+			}
+		}
+	}
+
+	AlignWorkersPosition(assignedWorkers, textureWidth, textureHeight);
 }
 
 void OilExtractor::GenerateOil()
@@ -67,15 +98,12 @@ void OilExtractor::GenerateOil()
 		float increaseAmount = fillSpeed * deltaTime.asSeconds();
 		currentWidth = std::min(currentWidth + increaseAmount, maxWidth);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isEmpty = false;
 	}
 
 	if (currentWidth >= maxWidth)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
-
-		isFull = true;
-
+		status = DEPOSITING;
 	}
 }
 
@@ -93,14 +121,12 @@ void OilExtractor::DepositOil()
 		float decreaseAmount = fillSpeed * deltaTime.asSeconds();
 		currentWidth = std::max(currentWidth - decreaseAmount, 0.f);
 		resource.setSize(sf::Vector2f(currentWidth, barSize.y));
-		isFull = false;
 	}
 
 	if (currentWidth <= 0)
 	{
 		resourceText.setPosition(background.getPosition().x, background.getPosition().y - 50);
-
-		isEmpty = true;
+		status = EMPTY;
 	}
 }
 

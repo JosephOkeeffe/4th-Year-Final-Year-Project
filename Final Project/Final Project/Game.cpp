@@ -46,18 +46,18 @@ void Game::Init()
 {
     srand(time(nullptr));
     Global::font.loadFromFile("./assets/fonts/Flinton.otf");
-    mainMenu.Init(m_window, Global::font);
-    pauseMenu.Init(m_window, Global::font);
+    mainMenu.Init();
+    pauseMenu.Init();
 
     elapsedTime = incomeTimer.getElapsedTime();
-    HUD::Init(m_window, Global::font);
+    HUD::Init();
     BuildingUI::Init();
 
     CreateHeadquarters(basePos);
     CreateArcher({ 300, 400 });
     CreateWarrior({ 350, 400 });
     CreateWarrior({ 400, 400 });
-    CreateWorker({ 450, 400 });
+    CreateMiner({ 450, 400 });
 }
 
 void Game::ProcessEvents()
@@ -100,20 +100,20 @@ void Game::ProcessEvents()
         switch (currentState)
         {
         case MENU:
-            mainMenu.HandleEvents(newEvent, m_window);
+            mainMenu.HandleEvents(newEvent);
             break;
         case GAME:
-            HUD::HandleEvents(newEvent, m_window);
+            HUD::HandleEvents(newEvent);
 
             if (HUD::currentUnitSelected == HUD::WARRIOR)
             {
-               CreateWarrior({ basePos.x + 50, basePos.y + 150 });
+                CreateWarrior({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
                 for (Buildings* object : GameManager::buildings)
                 {
                     object->DeselectBuilding();
                 }
-            }
+            }         
             else if (HUD::currentUnitSelected == HUD::ARCHER)
             {
                 CreateArcher({ basePos.x + 50, basePos.y + 150 });
@@ -123,9 +123,9 @@ void Game::ProcessEvents()
                     object->DeselectBuilding();
                 }
             }
-            else if (HUD::currentUnitSelected == HUD::WORKER)
+            else if (HUD::currentUnitSelected == HUD::MINER)
             {
-                CreateWorker({ basePos.x + 50, basePos.y + 150 });
+                CreateMiner({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -186,7 +186,7 @@ void Game::ProcessEvents()
             view.handleInput(newEvent);
             break;
         case PAUSED:
-            pauseMenu.HandleEvents(newEvent, m_window);
+            pauseMenu.HandleEvents(newEvent);
             break;
         default:
             break;
@@ -586,9 +586,9 @@ void Game::CreateArcher(sf::Vector2f pos)
     GameManager::units.push_back(newArcher);
 }
 
-void Game::CreateWorker(sf::Vector2f pos)
+void Game::CreateMiner(sf::Vector2f pos)
 {
-    Worker* newWorker = new Worker;
+    Miner* newWorker = new Miner;
     newWorker->SetPosition(pos);
 
     GameManager::units.push_back(newWorker);
@@ -637,7 +637,7 @@ void Game::MakeFormation()
                 leader = temp;
                 break;
             }
-        }
+        } 
     }
 
     if (leader != nullptr)

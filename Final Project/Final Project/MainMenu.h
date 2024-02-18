@@ -2,14 +2,16 @@
 #include <SFML/Graphics.hpp>
 #include "Button.h"
 #include "Textures.h"
+#include "Globals.h"
+#include "GameManager.h"
 
 class MainMenu
 {
 public:
 
-	void Init(sf::RenderWindow& window, sf::Font& font);
+	void Init();
 	void Render(sf::RenderWindow& window);
-	void HandleEvents(sf::Event& event, sf::RenderWindow& window);
+	void HandleEvents(sf::Event& event);
 
 	
 	 sf::RectangleShape menuBackground;

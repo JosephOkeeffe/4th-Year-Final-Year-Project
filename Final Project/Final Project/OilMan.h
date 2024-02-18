@@ -3,20 +3,26 @@
 #include "Characters.h"
 #include "OilExtractor.h"
 #include "Headquarters.h"
+#include "Globals.h"
+
+class OilExtractor;
 
 class OilMan : public Characters
 {
 public:
 	OilMan();
-	void Update() override;
 	void MouseRelease() override;
+	void Update() override;
+	void RemoveFromWorkPlace();
+	void UpdateWorkingStates();
+	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 	void AnimateWorker();
 	void CheckAnimationState();
-	void CheckCurretnState();
-	void MoveSpriteToTarget(sf::Vector2f targetPosition);
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
+	OilExtractor* workingPlace = nullptr;
+
 
 private:
 
@@ -31,6 +37,7 @@ private:
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
 
-	OilExtractor* workingPlace = nullptr;
+	float defaulScale = 1;
+
 };
 

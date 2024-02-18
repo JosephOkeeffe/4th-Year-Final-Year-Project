@@ -1,17 +1,39 @@
-#include "HazmatMan.h"
-#include "Globals.h"
-#include "Buildings.h"
+#include "Miner.h"
 
-HazmatMan::HazmatMan()
+Miner::Miner()
 {
+	srand(time(nullptr));
+	int randomNuber = rand() % 4;
+
 	textureRect = { 0, 0, textureWidth, textureHeight };
-	animationSpeed = 0.1 ;
-	Init(Textures::GetInstance().GetTexture("hazmat-man"), body, textureRect);
-	body.setScale(defaultScale, defaultScale);
-	characterType = HAZMAT_MAN;
+	animationSpeed = 0.08;
+
+	characterType = MINER;
+
+	switch (randomNuber)
+	{
+	case 0:
+		Init(Textures::GetInstance().GetTexture("miner"), body, textureRect);
+		break;
+	case 1:
+		Init(Textures::GetInstance().GetTexture("miner2"), body, textureRect);
+		break;
+	case 2:
+		Init(Textures::GetInstance().GetTexture("miner3"), body, textureRect);
+		break;
+	case 3:
+		Init(Textures::GetInstance().GetTexture("miner4"), body, textureRect);
+		break;
+		break;
+	default:
+		break;
+	}
+	body.setScale(defaulScale, defaulScale);
+
+
 }
 
-void HazmatMan::MouseRelease()
+void Miner::MouseRelease()
 {
 	if (isSelected)
 	{
@@ -20,12 +42,12 @@ void HazmatMan::MouseRelease()
 
 		for (Buildings* object : GameManager::buildings)
 		{
-			if (object->GetBuildingType() == object->URANIUM_EXTRACTOR_BUILDING)
+			if (object->GetBuildingType() == object->GOLD_MINE_BUILDING)
 			{
 				if (object->body.getGlobalBounds().contains(targetPosition))
 				{
-					Display_Text("WHO'S RANIUM?");
-					workingPlace = static_cast<UraniumExtractor*>(object);
+					Display_Text("MINE TIME");
+					workingPlace = static_cast<GoldMine*>(object);
 				}
 
 			}
@@ -39,17 +61,17 @@ void HazmatMan::MouseRelease()
 	}
 }
 
-void HazmatMan::Update()
-{
+
+void Miner::Update()
+{ 
 	UpdateCharacters();
 	CheckAnimationState();
 	AnimateWorker();
 	RemoveFromWorkPlace();
 	UpdateWorkingStates();
-	
 }
 
-void HazmatMan::RemoveFromWorkPlace()
+void Miner::RemoveFromWorkPlace()
 {
 	if (GetSelected())
 	{
@@ -57,15 +79,17 @@ void HazmatMan::RemoveFromWorkPlace()
 	}
 }
 
-void HazmatMan::UpdateWorkingStates()
+void Miner::UpdateWorkingStates()
 {
+	// If there is a current work place
 	if (workingPlace != nullptr)
 	{
+		// check if the miner is working and is colliding with the building
 		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
 		{
 			if (workingPlace->status == workingPlace->GENERATING)
 			{
-				body.setScale(1.4, 1.4);
+				body.setScale(0.8, 0.8);
 				SetCurrentState(GATHERING);
 			}
 			else if (workingPlace->status == workingPlace->DEPOSITING)
@@ -74,7 +98,7 @@ void HazmatMan::UpdateWorkingStates()
 			}
 			else if (workingPlace->status == workingPlace->EMPTY && GetCurrentState(UNLOADING))
 			{
-				body.setScale(defaultScale, defaultScale);
+				body.setScale(defaulScale, defaulScale);
 				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
@@ -82,7 +106,7 @@ void HazmatMan::UpdateWorkingStates()
 
 	if (GetCurrentState(IDLE))
 	{
-		body.setScale(defaultScale, defaultScale);
+		body.setScale(defaulScale, defaulScale);
 
 		if (workingPlace != nullptr)
 		{
@@ -112,7 +136,8 @@ void HazmatMan::UpdateWorkingStates()
 	}
 }
 
-void HazmatMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
+
+void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
 	sf::Vector2f direction = targetPosition - body.getPosition();
 	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
@@ -123,7 +148,6 @@ void HazmatMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 
 		sf::Vector2f temp = direction * currentMoveSpeed;
 		body.move(temp);
-		
 		FlipSpriteWithDirection(direction, body);
 	}
 	else
@@ -132,55 +156,37 @@ void HazmatMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 	}
 }
 
-void HazmatMan::AnimateWorker()
-{
+void Miner::AnimateWorker()
+{ 
 	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 }
 
-void HazmatMan::CheckAnimationState()
+void Miner::CheckAnimationState()
 {
 	if (GetCurrentState(IDLE) && !GetSelected())
 	{
-		// 267 / 10 = 24
-		currentFrameX = 28;
-		currentFrameY = 100;
-		textureWidth = 28;
-		textureHeight = 44;
-		amountOfSprites = 16;
+		currentFrameY = 0;
+		amountOfSprites = 6;
 	}
 	else if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
 	{
-		currentFrameX = 28;    
-		currentFrameY = 0;
-		textureWidth = 28 ; 
-		textureHeight = 45; 
-		amountOfSprites = 12;
-
-	} 
+		currentFrameY = 206;
+		amountOfSprites = 7;
+	}
 	else if (GetCurrentState(GATHERING))
 	{
-		// 222 / 5 = 44
-		currentFrameX = 44;
-		currentFrameY = 47;
-		textureWidth = 44;
-		textureHeight = 51;   
-		amountOfSprites = 5;
+		currentFrameY = 276;
+		amountOfSprites = 7;
 	}
 	else if (GetCurrentState(RETURN_TO_BASE))
 	{
-		currentFrameX = 44;
-		currentFrameY = 147;
-		textureWidth = 44;
-		textureHeight = 43;
-		amountOfSprites = 7;    
-	} 
+		currentFrameY = 68;
+		amountOfSprites = 7;
+	}
 	else if (GetCurrentState(UNLOADING) || GetSelected() || GetCurrentState(INVENTORY_FULL))
 	{
-		currentFrameX = 36;
-		currentFrameY = 193;
-		textureWidth = 36;
-		textureHeight = 43;
-		amountOfSprites = 4;
+		currentFrameY = 138;
+		amountOfSprites = 2;
 	}
 	else if (GetCurrentState(DEAD))
 	{
@@ -188,14 +194,13 @@ void HazmatMan::CheckAnimationState()
 	}
 }
 
-sf::Sprite& HazmatMan::GetSprite()
+sf::Sprite& Miner::GetSprite()
 {
 	return body;
 }
 
-sf::Vector2f& HazmatMan::GetPos()
+sf::Vector2f& Miner::GetPos()
 {
 	sf::Vector2f pos = body.getPosition();
 	return pos;
 }
-

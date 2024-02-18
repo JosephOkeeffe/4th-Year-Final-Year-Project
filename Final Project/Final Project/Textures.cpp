@@ -31,17 +31,17 @@ void Textures::SetupTextures()
         archerTexture.loadFromFile("./assets/images/mage.png");
         textureMap["archer"] = archerTexture;
 
-        workerTexture.loadFromFile("./assets/images/worker.png");
-        textureMap["worker"] = workerTexture;
+        minerTexture.loadFromFile("./assets/images/worker.png");
+        textureMap["miner"] = minerTexture;
 
-        worker2Texture.loadFromFile("./assets/images/worker2.png");
-        textureMap["worker2"] = worker2Texture;
+        miner2Texture.loadFromFile("./assets/images/worker2.png");
+        textureMap["miner2"] = miner2Texture;
 
-        worker3Texture.loadFromFile("./assets/images/worker3.png");
-        textureMap["worker3"] = worker3Texture;
+        miner3Texture.loadFromFile("./assets/images/worker3.png");
+        textureMap["miner3"] = miner3Texture;
 
-        worker4Texture.loadFromFile("./assets/images/worker4.png");
-        textureMap["worker4"] = worker4Texture;
+        miner4Texture.loadFromFile("./assets/images/worker4.png");
+        textureMap["miner4"] = miner4Texture;
 
         oilManTexture.loadFromFile("./assets/images/oil-man.png");
         textureMap["oil-man"] = oilManTexture;
@@ -77,8 +77,8 @@ void Textures::SetupTextures()
             archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
             textureMap["archer-icon"] = archerButtonIconTexture;
 
-            workerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");
-            textureMap["worker-icon"] = workerButtonIconTexture;
+            minerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");
+            textureMap["miner-icon"] = minerButtonIconTexture;
 
             oilManButtonIconTexture.loadFromFile("./assets/images/oil-man-icon.png");
             textureMap["oil-man-icon"] = oilManButtonIconTexture;

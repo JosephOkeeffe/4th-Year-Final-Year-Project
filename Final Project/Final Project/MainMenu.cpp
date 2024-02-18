@@ -1,22 +1,21 @@
 #include "MainMenu.h"
 #include "Game.h"
 
-void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
+void MainMenu::Init()
 {
 	menuBackground.setPosition(200, 200);
 	menuBackground.setOrigin(200, 200);
 	menuBackground.setSize(sf::Vector2f(Global::S_WIDTH, Global::S_HEIGHT));
 	menuBackground.setFillColor(sf::Color::Red);
 
-	Button playButton(window, 
+	Button playButton(
 		sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		font,
 		Textures::GetInstance().GetTexture("edit"));
 
-	playButton.setLabel("Start new game", font, 30, sf::Color(0, 0, 0, 150));
+	playButton.setLabel("Start new game", 30, sf::Color(0, 0, 0, 150));
 	playButton.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -30,15 +29,14 @@ void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 	playButton.centreLabel({ playButton.getButtonPos().x, playButton.getButtonPos().y - 5 });
 	buttons.push_back(playButton);
 
-	Button load1Button(window,
+	Button load1Button(
 		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.6),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		font,
 		Textures::GetInstance().GetTexture("edit"));
 
-	load1Button.setLabel("Load save 1", font, 30, sf::Color(0, 0, 0, 150));
+	load1Button.setLabel("Load save 1", 30, sf::Color(0, 0, 0, 150));
 	load1Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -51,15 +49,14 @@ void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 	load1Button.centreLabel({ load1Button.getButtonPos().x, load1Button.getButtonPos().y - 5 });
 	buttons.push_back(load1Button);
 
-	Button load2Button(window,
+	Button load2Button(
 		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.7),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		font,
 		Textures::GetInstance().GetTexture("edit"));
 
-	load2Button.setLabel("Load save 2", font, 30, sf::Color(0, 0, 0, 150));
+	load2Button.setLabel("Load save 2", 30, sf::Color(0, 0, 0, 150));
 	load2Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -72,15 +69,14 @@ void MainMenu::Init(sf::RenderWindow& window, sf::Font& font)
 	load2Button.centreLabel({ load2Button.getButtonPos().x, load2Button.getButtonPos().y - 5 });
 	buttons.push_back(load2Button);
 
-	Button load3Button(window,
+	Button load3Button(
 		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.8),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		font,
 		Textures::GetInstance().GetTexture("edit"));
 
-	load3Button.setLabel("Load save 3", font, 30, sf::Color(0, 0, 0, 150));
+	load3Button.setLabel("Load save 3",30, sf::Color(0, 0, 0, 150));
 	load3Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -107,11 +103,11 @@ void MainMenu::Render(sf::RenderWindow& window)
 	}
 }
 
-void MainMenu::HandleEvents(sf::Event& event, sf::RenderWindow& window)
+void MainMenu::HandleEvents(sf::Event& event)
 {
 	for (Button& button : buttons)
 	{
-		button.handleEvent(event, window);
+		button.handleEvent(event);
 	}
 }
 

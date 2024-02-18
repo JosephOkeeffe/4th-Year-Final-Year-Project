@@ -28,19 +28,20 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	resourceText.setOrigin(resourceText.getGlobalBounds().width / 2, resourceText.getGlobalBounds().height / 2);
 }
 
-void Buildings::Update()
-{
-	
-}
-
-void Buildings::MouseRelease()
-{
-}
+//void Buildings::Update(){}
+//void Buildings::MouseRelease(){}
 
 void Buildings::Draw()
 {
 	GameManager::GetWindow()->draw(detectionCircle);
 	GameManager::GetWindow()->draw(body);
+
+	if (GetPlacedStatus() && status != EMPTY)
+	{
+		GameManager::GetWindow()->draw(resourceText);
+		GameManager::GetWindow()->draw(background);
+		GameManager::GetWindow()->draw(resource);
+	}
 }
 
 void Buildings::InitDetectionCircle(int radius)
@@ -85,7 +86,7 @@ void Buildings::DeselectBuilding()
 	isSelected = false;
 }
 
-bool Buildings::CheckIfSelected()
+bool Buildings::GetSelectedStatus()
 {
 	return isSelected;
 }
@@ -162,7 +163,7 @@ void Buildings::SetPosition(sf::Vector2f pos)
 
 void Buildings::ChangeSelectedColour()
 {
-	if (CheckIfSelected() && GetPlacedStatus())
+	if (GetSelectedStatus() && GetPlacedStatus())
 	{
 		body.setColor(sf::Color(128, 128, 128));
 	}
@@ -182,4 +183,51 @@ Buildings::BuildingType Buildings::GetBuildingType()
 	return buildingType;
 }
 
+void Buildings::AlignWorkersPosition(std::vector<Characters*> t_assignedWorkers, int texWidth, int texHeight)
+{
+	for (int i = 0; i < t_assignedWorkers.size(); i++)
+	{
+		float offsetX = 0.0f;
+		float offsetY = 0.0f;
+		sf::Vector2f workerPos;
 
+		t_assignedWorkers[i]->isWorking = true;
+
+
+		if (t_assignedWorkers.size() > 0)
+		{
+			if (i % 3 == 0)
+			{
+				offsetX = texWidth * 0.5f;
+				workerPos.x = body.getPosition().x - offsetX;
+			}
+			else if (i % 3 == 1)
+			{
+				workerPos.x = body.getPosition().x;
+			}
+			else if (i % 3 == 2)
+			{
+				offsetX = texWidth * 0.5f;
+				workerPos.x = body.getPosition().x + offsetX;
+
+			}
+
+			if (i / 3 == 0)
+			{
+				offsetY = texHeight * 0.5f;
+				workerPos.y = body.getPosition().y - offsetY;
+			}
+			else if (i / 3 == 1)
+			{
+				workerPos.y = body.getPosition().y - offsetY;
+			}
+			else if (i / 3 == 2)
+			{
+				offsetY = texHeight * 0.5f;
+				workerPos.y = body.getPosition().y + offsetY;
+			}
+		}
+
+		t_assignedWorkers[i]->SetPosition(workerPos);
+	}
+}

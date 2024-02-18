@@ -17,10 +17,10 @@ private:
     // Units
     sf::Texture warriorTexture;
     sf::Texture archerTexture;
-    sf::Texture workerTexture;
-    sf::Texture worker2Texture;
-    sf::Texture worker3Texture;
-    sf::Texture worker4Texture;
+    sf::Texture minerTexture;
+    sf::Texture miner2Texture;
+    sf::Texture miner3Texture;
+    sf::Texture miner4Texture;
     sf::Texture oilManTexture;
     sf::Texture hazmatManTexture;
 
@@ -34,7 +34,7 @@ private:
     // Buttons
     sf::Texture warriorButtonIconTexture;
     sf::Texture archerButtonIconTexture;
-    sf::Texture workerButtonIconTexture;
+    sf::Texture minerButtonIconTexture;
     sf::Texture oilManButtonIconTexture;
     sf::Texture hazmatManButtonIconTexture;
 

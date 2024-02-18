@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Buildings.h"
+#include "OilMan.h"
+
+class OilMan;
 
 class OilExtractor : public Buildings
 {
@@ -8,13 +11,9 @@ public:
 	OilExtractor(sf::Vector2f pos);
 	void Update() override;
 	void MouseRelease() override;
-	void Draw() override;
 	void GenerateOil();
 	void DepositOil();
 
-	bool isBeingUsed = false;
-	bool isEmpty = false;
-	bool isFull = false;
 private:
 	int currentFrameX = 56;
 	int currentFrameY = 66;

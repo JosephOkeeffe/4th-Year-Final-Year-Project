@@ -1,6 +1,4 @@
 #include "OilMan.h"
-#include "Globals.h"
-#include "Buildings.h"
 
 OilMan::OilMan()
 {
@@ -8,20 +6,9 @@ OilMan::OilMan()
 
 	textureRect = { 0, 0, textureWidth, textureHeight };
 	animationSpeed = 0.08;
-
 	Init(Textures::GetInstance().GetTexture("oil-man"), body, textureRect);
-
-	body.setScale(1, 1);
-}
-
-void OilMan::Update()
-{
-	UpdateCharacters();
-	CheckAnimationState();
-	AnimateWorker();
-	CheckCurretnState();
-
-	
+	body.setScale(defaulScale, defaulScale);
+	characterType = OIL_MAN;
 }
 
 void OilMan::MouseRelease()
@@ -51,6 +38,79 @@ void OilMan::MouseRelease()
 		SelectCharacter();
 	}
 }
+
+void OilMan::Update()
+{
+	UpdateCharacters();
+	CheckAnimationState();
+	AnimateWorker();
+	RemoveFromWorkPlace();
+	UpdateWorkingStates();
+}
+
+void OilMan::RemoveFromWorkPlace()
+{
+	if (GetSelected())
+	{
+		SetCurrentState(IDLE);
+	}
+}
+
+void OilMan::UpdateWorkingStates()
+{
+	if (workingPlace != nullptr)
+	{
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
+		{
+			if (workingPlace->status == workingPlace->GENERATING)
+			{
+				body.setScale(0.8, 0.8);
+				SetCurrentState(GATHERING);
+			}
+			else if (workingPlace->status == workingPlace->DEPOSITING)
+			{
+				SetCurrentState(UNLOADING);
+			}
+			else if (workingPlace->status == workingPlace->EMPTY && GetCurrentState(UNLOADING))
+			{
+				body.setScale(defaulScale, defaulScale);
+				SetCurrentState(RETURN_TO_BASE);
+			}
+		}
+	}
+
+	if (GetCurrentState(IDLE))
+	{
+		body.setScale(1, 1);
+
+		if (workingPlace != nullptr)
+		{
+			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			{
+				body.setPosition(workingPlace->body.getPosition().x, body.getPosition().y + 130);
+			}
+			isWorking = false;
+		}
+		workingPlace = nullptr;
+	}
+
+	if (GetCurrentState(SEARCH_FOR_RESOURCE))
+	{
+		MoveSpriteToTarget(workingPlace->body.getPosition());
+	}
+
+	if (GetCurrentState(RETURN_TO_BASE))
+	{
+		MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
+		isWorking = false;
+	}
+
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	{
+		SetCurrentState(SEARCH_FOR_RESOURCE);
+	}
+}
+
 
 void OilMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
@@ -107,96 +167,6 @@ void OilMan::CheckAnimationState()
 	{
 
 	}
-}
-
-void OilMan::CheckCurretnState()
-{
-	if (GetSelected())
-	{
-		currentState = IDLE;
-
-		if (workingPlace != nullptr)
-		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(workingPlace->body.getPosition().x, workingPlace->body.getPosition().y + 130);
-			}
-			workingPlace->isBeingUsed = false;
-			workingPlace->currentWidth = 0;
-			workingPlace = nullptr;
-		}
-
-	}
-
-	if (GetCurrentState(MOVING) || GetCurrentState(SEARCH_FOR_RESOURCE))
-	{
-		if (workingPlace != nullptr)
-		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				SetCurrentState(GATHERING);
-				body.setPosition(workingPlace->body.getPosition());
-				workingPlace->isBeingUsed = true;
-			}
-		}
-	}
-
-	if (GetCurrentState(SEARCH_FOR_RESOURCE))
-	{
-		if (!workingPlace->isBeingUsed)
-		{
-			MoveSpriteToTarget(workingPlace->body.getPosition());
-		}
-	}
-	if (GetCurrentState(GATHERING))
-	{
-		if (workingPlace->isFull)
-		{
-			SetCurrentState(UNLOADING);
-		}
-		else
-		{
-			workingPlace->GenerateOil();
-		}
-	}
-	if (GetCurrentState(UNLOADING))
-	{
-		if (workingPlace->isEmpty)
-		{
-			SetCurrentState(RETURN_TO_BASE);
-		}
-		else
-		{
-			workingPlace->DepositOil();
-		}
-	}
-	if (GetCurrentState(RETURN_TO_BASE))
-	{
-		workingPlace->isBeingUsed = false;
-		MoveSpriteToTarget(GameManager::headquarters->body.getPosition());
-
-		if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
-		{
-			SetCurrentState(SEARCH_FOR_RESOURCE);
-		}
-
-	}
-	//if (GetCurrentState(INVENTORY_FULL))
-	//{
-	//	if (!workingPlace->isFull)
-	//	{
-	//		body.setPosition(workingPlace->body.getPosition().x, workingPlace->body.getPosition().y + 60);
-	//		workingPlace->isBeingUsed = false;
-	//		DeselectCharacter();
-	//	}
-	//}
-	/*else
-	{
-		if (workingPlace != nullptr)
-		{
-			workingPlace->isBeingUsed = false;
-		}
-	}*/
 }
 
 sf::Sprite& OilMan::GetSprite()

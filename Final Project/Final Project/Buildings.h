@@ -4,6 +4,8 @@
 #include "Textures.h"
 #include "Globals.h"
 
+#include "Characters.h"
+
 #define Display_Text(x) std::cout << x << "\n";
 
 class Buildings
@@ -18,9 +20,16 @@ public:
 		OIL_EXTRACTOR_BUILDING,
 	};
 
+	enum BuildingStatus
+	{
+		EMPTY,
+		GENERATING,
+		DEPOSITING,
+	};
+
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
-	virtual void Update();
-	virtual void MouseRelease();
+	virtual void Update() = 0;
+	virtual void MouseRelease() = 0;
 	virtual void Draw();
 
 	void InitDetectionCircle(int radius);
@@ -34,24 +43,27 @@ public:
 
 	void SelectBuilding();
 	void DeselectBuilding();
-	bool CheckIfSelected();
+	bool GetSelectedStatus();
 
 	void PlaceBuilding();
 	bool GetPlacedStatus();
 	bool CheckIfCanBePlaced(sf::Vector2i cell);
 	void ChangeSelectedColour();
 
+	void AlignWorkersPosition(std::vector<Characters*> temp, int texWidth, int texHeight);
+
+	std::vector<Characters*> assignedWorkers;
+
 	void SetBuildingType(BuildingType type);
 	BuildingType GetBuildingType();
 
 	BuildingType buildingType;
+	BuildingStatus status;
 
 	sf::Sprite body;
 	sf::Texture texture;
 	sf::IntRect textureRect;
 	sf::CircleShape detectionCircle;
-
-
 
 	sf::RectangleShape background;
 	sf::RectangleShape resource;

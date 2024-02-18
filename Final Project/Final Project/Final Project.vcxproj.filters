@@ -102,7 +102,7 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Worker.cpp">
+    <ClCompile Include="Miner.cpp">
       <Filter>Source Files\Characters</Filter>
     </ClCompile>
     <ClCompile Include="OilExtractor.cpp">
@@ -182,7 +182,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Worker.h">
+    <ClInclude Include="Miner.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
     <ClInclude Include="OilExtractor.h">
