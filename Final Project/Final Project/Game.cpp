@@ -361,6 +361,7 @@ void Game::Update(sf::Time t_deltaTime)
     switch (currentState)
     {
     case MENU:
+        mainMenu.Update();
         break;
     case GAME:
 

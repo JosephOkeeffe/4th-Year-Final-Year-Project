@@ -45,6 +45,12 @@ private:
     // Other
     sf::Texture fogTexture;
     sf::Texture coinTexture;
+    // Main Menu
+    sf::Texture menuBackgroundTexture;
+    sf::Texture menuMountainFarTexture;
+    sf::Texture menuMountainCloseTexture;
+    sf::Texture menuTreesFarTexture;
+    sf::Texture menuTreesCloseTexture;
 
 
     std::map<std::string, sf::Texture> textureMap;

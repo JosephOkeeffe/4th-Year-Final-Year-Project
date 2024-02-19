@@ -171,6 +171,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OilExtractor.h" />
     <ClInclude Include="OilMan.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GoldMine.h" />

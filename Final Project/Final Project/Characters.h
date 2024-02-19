@@ -4,6 +4,10 @@
 #include "Textures.h"
 #include "GameManager.h"
 #include "HUD.h"
+#include "Particles.h"
+
+class Particles;
+class ParticleSystem;
 
 class Characters
 {
@@ -54,6 +58,7 @@ public:
 	void FlipSprite();
 	bool GetCurrentState(State stateToCheck);
 	void SetCurrentState(State stateToChange);
+
 	
 	State currentState = IDLE;
 	CharacterType characterType;
@@ -87,5 +92,8 @@ public:
 	int playerAnimation = 0;
 
 private:
+
+	ParticleSystem particleSystem;
+
 };
 

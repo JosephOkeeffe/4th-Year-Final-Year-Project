@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include "Particles.h"
+
 
 class Button
 {
@@ -22,6 +24,8 @@ public:
 
     sf::Vector2f getButtonPos();
     sf::RectangleShape getButtonSprite();
+
+    ParticleSystem particleSystem;
 
 private:
     sf::RectangleShape shape;

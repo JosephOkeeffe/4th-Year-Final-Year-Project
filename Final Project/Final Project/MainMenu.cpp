@@ -3,10 +3,42 @@
 
 void MainMenu::Init()
 {
-	menuBackground.setPosition(200, 200);
-	menuBackground.setOrigin(200, 200);
-	menuBackground.setSize(sf::Vector2f(Global::S_WIDTH, Global::S_HEIGHT));
-	menuBackground.setFillColor(sf::Color::Red);
+
+	menuBackground.setTexture(Textures::GetInstance().GetTexture("menu-bg"));
+	menuBackground.setOrigin(menuBackground.getLocalBounds().width / 2, menuBackground.getLocalBounds().height / 2);
+	menuBackground.setPosition(Global::S_WIDTH / 2, Global::S_HEIGHT / 2);
+	menuBackground.setScale(sf::Vector2f(Global::S_WIDTH / menuBackground.getGlobalBounds().width, Global::S_HEIGHT / menuBackground.getGlobalBounds().height));
+
+	for (int i = 0; i < 2; ++i)
+	{
+		menuMountainsFar[i].setTexture(Textures::GetInstance().GetTexture("menu-mountain-far"));
+		menuMountainsFar[i].setOrigin(menuMountainsFar[i].getLocalBounds().width / 2, menuMountainsFar[i].getLocalBounds().height / 2);
+		menuMountainsFar[i].setPosition(Global::S_WIDTH * 0.3, Global::S_HEIGHT / 2);
+		menuMountainsFar[i].setScale(sf::Vector2f(Global::S_WIDTH / menuMountainsFar[i].getGlobalBounds().width, Global::S_HEIGHT / menuMountainsFar[i].getGlobalBounds().height));
+
+		menuMountainsClose[i].setTexture(Textures::GetInstance().GetTexture("menu-mountain-close"));
+		menuMountainsClose[i].setOrigin(menuMountainsClose[i].getLocalBounds().width / 2, menuMountainsClose[i].getLocalBounds().height / 2);
+		menuMountainsClose[i].setPosition(Global::S_WIDTH / 2 , Global::S_HEIGHT / 2);
+		menuMountainsClose[i].setScale(sf::Vector2f(Global::S_WIDTH / menuMountainsClose[i].getGlobalBounds().width, Global::S_HEIGHT / menuMountainsClose[i].getGlobalBounds().height));
+
+		menuTreesFar[i].setTexture(Textures::GetInstance().GetTexture("menu-trees-far"));
+		menuTreesFar[i].setOrigin(menuTreesFar[i].getLocalBounds().width / 2, menuTreesFar[i].getLocalBounds().height / 2);
+		menuTreesFar[i].setPosition(Global::S_WIDTH * 0.5 , Global::S_HEIGHT * 0.4);
+		menuTreesFar[i].setScale(5, 6);
+
+		menuTreesClose[i].setTexture(Textures::GetInstance().GetTexture("menu-trees-close"));
+		menuTreesClose[i].setOrigin(menuTreesClose[i].getLocalBounds().width / 2, menuTreesClose[i].getLocalBounds().height / 2);
+		menuTreesClose[i].setPosition(Global::S_WIDTH * 0.6, Global::S_HEIGHT * 0.6);
+		menuTreesClose[i].setScale(3, 4);
+	}
+
+	menuMountainsFar[1].setPosition((menuMountainsFar[0].getPosition().x * 2) + menuMountainsFar[0].getGlobalBounds().width / 2, Global::S_HEIGHT / 2);
+	menuMountainsClose[1].setPosition((menuMountainsClose[0].getPosition().x * 2) + menuMountainsClose[0].getGlobalBounds().width / 2, Global::S_HEIGHT / 2);
+	menuTreesFar[1].setPosition((menuTreesFar[0].getPosition().x * 2) + menuTreesFar[0].getGlobalBounds().width / 2, Global::S_HEIGHT * 0.4);
+	menuTreesClose[1].setPosition((menuTreesClose[0].getPosition().x * 2) + menuTreesClose[0].getGlobalBounds().width / 2, Global::S_HEIGHT * 0.6);
+
+	menuTreesClose[1].setColor(sf::Color::Magenta);
+
 
 	Button playButton(
 		sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2),
@@ -24,7 +56,7 @@ void MainMenu::Init()
 			loadSave = true;
 			Game::currentState = GAME;
 		});
-	
+
 
 	playButton.centreLabel({ playButton.getButtonPos().x, playButton.getButtonPos().y - 5 });
 	buttons.push_back(playButton);
@@ -76,7 +108,7 @@ void MainMenu::Init()
 		sf::Color::Magenta,
 		Textures::GetInstance().GetTexture("edit"));
 
-	load3Button.setLabel("Load save 3",30, sf::Color(0, 0, 0, 150));
+	load3Button.setLabel("Load save 3", 30, sf::Color(0, 0, 0, 150));
 	load3Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -88,13 +120,32 @@ void MainMenu::Init()
 
 	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });
 	buttons.push_back(load3Button);
-	
-	
+
+
 }
 
 void MainMenu::Render(sf::RenderWindow& window)
 {
 	window.draw(menuBackground);
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuMountainsFar[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuMountainsClose[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuTreesFar[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuTreesClose[i]);
+	}
 
 	for (Button& button : buttons)
 	{
@@ -102,6 +153,36 @@ void MainMenu::Render(sf::RenderWindow& window)
 		button.render(window);
 	}
 }
+
+void MainMenu::Update()
+{
+	float farSpeed = 0.1f;
+	float closeSpeed = 0.5f;
+
+	for (int i = 0; i < 2; ++i) 
+	{
+		menuMountainsFar[i].move(-farSpeed, 0);
+		menuMountainsClose[i].move(-farSpeed, 0);
+		menuTreesFar[i].move(-0.3, 0);
+		menuTreesClose[i].move(-0.5, 0);
+
+		ResetSpritePosition(menuMountainsFar[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuMountainsClose[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuTreesFar[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuTreesClose[i], Global::S_WIDTH * i);
+	}
+}
+
+void MainMenu::ResetSpritePosition(sf::Sprite& sprite, float offsetX)
+{
+	int x = sprite.getPosition().x + sprite.getLocalBounds().width;
+
+	if (sprite.getPosition().x + sprite.getLocalBounds().width < 0) 
+	{
+		sprite.setPosition(Global::S_WIDTH + sprite.getGlobalBounds().width / 2, sprite.getPosition().y);
+	}
+}
+
 
 void MainMenu::HandleEvents(sf::Event& event)
 {

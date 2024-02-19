@@ -97,6 +97,23 @@ void Textures::SetupTextures()
             uraniumExtractorButtonIconTexture.loadFromFile("./assets/images/reactor-icon.png");
             textureMap["reactor-icon"] = uraniumExtractorButtonIconTexture;
     
+
+
+    // Main Menu
+       menuBackgroundTexture.loadFromFile("./assets/images/parallax-bg.png");
+       textureMap["menu-bg"] = menuBackgroundTexture;
+
+       menuMountainFarTexture.loadFromFile("./assets/images/parallax-mountain-far.png");
+       textureMap["menu-mountain-far"] = menuMountainFarTexture;
+
+       menuMountainCloseTexture.loadFromFile("./assets/images/parallax-mountain-close.png");
+       textureMap["menu-mountain-close"] = menuMountainCloseTexture;
+
+       menuTreesFarTexture.loadFromFile("./assets/images/parallax-trees-far.png");
+       textureMap["menu-trees-far"] = menuTreesFarTexture;
+
+       menuTreesCloseTexture.loadFromFile("./assets/images/parallax-trees-close.png");
+       textureMap["menu-trees-close"] = menuTreesCloseTexture;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

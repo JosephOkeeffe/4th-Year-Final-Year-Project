@@ -47,10 +47,18 @@ void Button::handleEvent(const sf::Event& event)
         {
             isHovered = true;
             shape.setFillColor(hoverColour);
+
+            sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+            sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
+            float randomSize = static_cast<float>(rand() % 3 + 2);
+
+            particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
+            particleSystem.update();
         }
         else 
         {
             isHovered = false;
+            particleSystem.clearParticles();
             shape.setFillColor(idleColour);
         }
     }
@@ -69,6 +77,11 @@ void Button::handleEvent(const sf::Event& event)
         }
         isPressed = false;
     }
+
+    if (isHovered)
+    {
+
+    }
 }
 
 void Button::update() 
@@ -78,6 +91,7 @@ void Button::update()
 
 void Button::render(sf::RenderWindow& window) 
 {
+    particleSystem.draw(window);
     window.draw(shape);
     window.draw(label);
 }

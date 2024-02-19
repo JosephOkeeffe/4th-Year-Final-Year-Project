@@ -38,6 +38,7 @@ void Characters::MouseRelease()
 
 void Characters::Draw()
 {
+	particleSystem.draw(*GameManager::GetWindow());
 	GameManager::GetWindow()->draw(detectionCircle);
 	GameManager::GetWindow()->draw(body);
 }
@@ -66,6 +67,21 @@ void Characters::UpdateCharacters()
 	MoveCharacter();
 	ChangeSelectedColour();
 	UpdateDetectionCircle();
+
+	if (GetSelected())
+	{
+		sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+
+		// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
+		// ADD A PARTICLE FOR WORKING
+		particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 7);
+		particleSystem.addSpriteParticle(tileDetectionCircle.getPosition(), randomVelocity, Textures::GetInstance().GetTexture("archer-icon"), 0.5, 7);
+		particleSystem.update();
+	}
+	else
+	{
+		particleSystem.clearParticles();
+	}
 }
 void Characters::MoveCharacter()
 {
