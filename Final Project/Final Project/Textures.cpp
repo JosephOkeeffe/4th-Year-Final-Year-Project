@@ -68,6 +68,14 @@ void Textures::SetupTextures()
         coinTexture.loadFromFile("./assets/images/coin.png");
         textureMap["coin"] = coinTexture;
 
+        rotateTexture.loadFromFile("./assets/images/rotate.png");
+        textureMap["rotate"] = rotateTexture;
+
+        scaleTexture.loadFromFile("./assets/images/scale.png");
+        textureMap["scale"] = scaleTexture;
+
+
+
 
     // UI - Icons
         // Units

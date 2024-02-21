@@ -130,7 +130,7 @@ void Miner::UpdateWorkingStates()
 		isWorking = false;
 	}
 
-	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr)
 	{
 		SetCurrentState(SEARCH_FOR_RESOURCE);
 	}

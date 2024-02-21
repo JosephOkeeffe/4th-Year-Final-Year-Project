@@ -91,7 +91,7 @@ public:
         : Particle(pos, vel, sf::Color::White, particleScale, particleType), sprite(tex)
     {
         sprite.setPosition(pos);
-        sprite.setScale(particleScale, particleScale);
+        sprite.setScale(particleScale, particleScale); 
     }
 
     void update() override

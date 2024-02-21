@@ -50,6 +50,8 @@ public:
 	bool CheckIfCanBePlaced(sf::Vector2i cell);
 	void ChangeSelectedColour();
 
+
+
 	void AlignWorkersPosition(std::vector<Characters*> temp, int texWidth, int texHeight);
 
 	std::vector<Characters*> assignedWorkers;

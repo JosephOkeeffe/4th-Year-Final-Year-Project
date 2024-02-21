@@ -275,7 +275,10 @@ void Game::ProcessMouseRelease(sf::Event t_event)
     {
         for (Buildings* building : GameManager::buildings)
         {
-            building->DeselectBuilding();
+            if (building->buildingType != building->HEADQUATERS_BUILDING)
+            {
+                building->DeselectBuilding();
+            }
         }
         for (Characters* temp : GameManager::units)
         {

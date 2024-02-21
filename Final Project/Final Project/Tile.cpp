@@ -3,6 +3,9 @@
 #include "Globals.h"
 #include "Textures.h"
 
+bool Tile::isShaderInitialized = false;
+sf::Texture Tile::shaderTexture;
+
 Tile::Tile()
 {
 	defaultTile = rand() % 32;
@@ -13,22 +16,31 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));
 	tileType = NONE;
 	tile.setPosition(position);
-	//SetupGrassTiles();
 
 	tile.setFillColor(sf::Color::White);
 	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
 	CheckGrassType();
+	shader.InitShader("FogShader.frag");
+
+	if (!isShaderInitialized) 
+	{
+		shader.InitShader("FogShader.frag");
+		isShaderInitialized = true;
+	}
 }
 
 void Tile::Render(sf::RenderWindow& window)
 {
-	window.draw(tile);
-
 	if (!isDiscovered)
 	{
 		tile.setTexture(&Textures::GetInstance().GetTexture("fog"));
-		//tile.setTextureRect(sf::IntRect(0, 0, 56, 56));
+		shader.Update();
+		window.draw(tile, &shader.GetShader());
 	}          
+	else
+	{
+		window.draw(tile);
+	}
 }
 
 void Tile::Update()

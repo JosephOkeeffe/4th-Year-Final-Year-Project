@@ -26,6 +26,11 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	resourceText.setOutlineThickness(1);
 	resourceText.setOutlineColor(sf::Color::White);
 	resourceText.setOrigin(resourceText.getGlobalBounds().width / 2, resourceText.getGlobalBounds().height / 2);
+
+
+
+	// Initialize original size
+	 sf::Vector2f(sprite.getLocalBounds().width * scale, sprite.getLocalBounds().height * scale);
 }
 
 //void Buildings::Update(){}
@@ -42,6 +47,8 @@ void Buildings::Draw()
 		GameManager::GetWindow()->draw(background);
 		GameManager::GetWindow()->draw(resource);
 	}
+
+
 }
 
 void Buildings::InitDetectionCircle(int radius)

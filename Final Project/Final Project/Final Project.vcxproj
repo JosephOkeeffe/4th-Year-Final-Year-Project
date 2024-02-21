@@ -148,6 +148,7 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GoldMine.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="UraniumExtractor.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GoldMine.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="UraniumExtractor.h" />
     <ClInclude Include="View.h" />
@@ -185,6 +187,13 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Warrior.h" />
     <ClInclude Include="Miner.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FogShader.frag" />
+    <None Include="SelectedShader.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

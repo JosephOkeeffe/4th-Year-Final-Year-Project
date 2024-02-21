@@ -14,15 +14,20 @@ public:
 	void Update();
 	void HandleEvents(sf::Event& event);
 
-	
-	 sf::Sprite menuBackground;
-	 sf::Sprite menuMountainsFar[2];
-	 sf::Sprite menuMountainsClose[2];
-	 sf::Sprite menuTreesFar[2];
-	 sf::Sprite menuTreesClose[2];
-	 std::vector<Button> buttons;
+	void SetupButtons();
 
-	 void ResetSpritePosition(sf::Sprite& sprite, float offsetX);
+	sf::Text titleText;
+	sf::Sprite menuBackground;
+	sf::Sprite menuMountainsFar[2];
+	sf::Sprite menuMountainsClose[2];
+	sf::Sprite menuTreesFar[2];
+	sf::Sprite menuTreesClose[2];
+	std::vector<Button> buttons;
+	std::vector<sf::Text> individualLetterTexts;
+
+	float originalYPositions[22];
+
+	void ResetSpritePosition(sf::Sprite& sprite, float offsetX);
 
 };
 

@@ -45,6 +45,8 @@ private:
     // Other
     sf::Texture fogTexture;
     sf::Texture coinTexture;
+    sf::Texture rotateTexture;
+    sf::Texture scaleTexture;
     // Main Menu
     sf::Texture menuBackgroundTexture;
     sf::Texture menuMountainFarTexture;

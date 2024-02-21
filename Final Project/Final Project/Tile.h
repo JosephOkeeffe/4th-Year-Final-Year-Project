@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TileTypes.h"
+#include "Shader.h"
 class Tile
 {
 public:
@@ -34,6 +35,10 @@ private:
 	TileType tileType = NONE;
 	GrassType grassType = GRASS1;
 	ResourceType resourceType = NO_RESOURCE;
+	Shader shader;
+
+	static bool isShaderInitialized;
+	static sf::Texture shaderTexture;
 
 };
 

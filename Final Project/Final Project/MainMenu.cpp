@@ -37,9 +37,146 @@ void MainMenu::Init()
 	menuTreesFar[1].setPosition((menuTreesFar[0].getPosition().x * 2) + menuTreesFar[0].getGlobalBounds().width / 2, Global::S_HEIGHT * 0.4);
 	menuTreesClose[1].setPosition((menuTreesClose[0].getPosition().x * 2) + menuTreesClose[0].getGlobalBounds().width / 2, Global::S_HEIGHT * 0.6);
 
-	menuTreesClose[1].setColor(sf::Color::Magenta);
+	titleText.setFont(Global::font);
+	titleText.setCharacterSize(50);
+	titleText.setString("The Upper Cliff Valley");
+	titleText.setOrigin(titleText.getLocalBounds().width / 2.0f, titleText.getLocalBounds().height / 2.0f);
+	titleText.setPosition((Global::S_WIDTH * 0.5), Global::S_HEIGHT * 0.3);
+	titleText.setFillColor(sf::Color::Black);
+
+	for (int i = 0; i < titleText.getString().getSize(); ++i)
+	{
+		sf::Text letterText;
+		letterText.setFont(Global::font);
+		letterText.setCharacterSize(50);
+		letterText.setString(std::string(1, titleText.getString()[i]));
+		letterText.setOrigin(letterText.getLocalBounds().width / 2.0f, letterText.getLocalBounds().height / 2.0f);
+
+		float xPos = titleText.getPosition().x - titleText.getOrigin().x + letterText.getLocalBounds().width / 2.0f + titleText.findCharacterPos(i).x;
+		float yPos = titleText.getPosition().y;
+		originalYPositions[i] = yPos;
+		letterText.setPosition(xPos - Global::S_WIDTH * 0.33, yPos);
+
+		letterText.setFillColor(sf::Color::Black);
+
+		individualLetterTexts.push_back(letterText);
+	}
 
 
+	SetupButtons();
+
+
+}
+
+void MainMenu::Render(sf::RenderWindow& window)
+{
+	window.draw(menuBackground);
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuMountainsFar[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuMountainsClose[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuTreesFar[i]);
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		window.draw(menuTreesClose[i]);
+	}
+
+	for (Button& button : buttons)
+	{
+		button.update();
+		button.render(window);
+	}
+
+	for (const sf::Text& letterText : individualLetterTexts)
+	{
+		window.draw(letterText);
+	}
+}
+
+void MainMenu::Update()
+{
+	float farSpeed = 0.1f;
+	float closeSpeed = 0.5f;
+
+	for (int i = 0; i < 2; ++i) 
+	{
+		menuMountainsFar[i].move(-farSpeed, 0);
+		menuMountainsClose[i].move(-farSpeed, 0);
+		menuTreesFar[i].move(-0.3, 0);
+		menuTreesClose[i].move(-0.5, 0);
+
+		ResetSpritePosition(menuMountainsFar[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuMountainsClose[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuTreesFar[i], Global::S_WIDTH * i);
+		ResetSpritePosition(menuTreesClose[i], Global::S_WIDTH * i);
+	}
+}
+
+void MainMenu::ResetSpritePosition(sf::Sprite& sprite, float offsetX)
+{
+	int x = sprite.getPosition().x + sprite.getLocalBounds().width;
+
+	if (sprite.getPosition().x + sprite.getLocalBounds().width < 0) 
+	{
+		sprite.setPosition(Global::S_WIDTH + sprite.getGlobalBounds().width / 2, sprite.getPosition().y);
+	}
+}
+
+
+void MainMenu::HandleEvents(sf::Event& event)
+{
+	sf::Vector2f mousePosition = Global::GetMousePos(*GameManager::GetWindow());
+
+	for (Button& button : buttons)
+	{
+		button.handleEvent(event);
+	}
+
+	for (int i = 0; i < individualLetterTexts.size(); ++i)
+	{
+		if (individualLetterTexts[i].getGlobalBounds().contains(mousePosition))
+		{
+			for (int j = 0; j <= i; ++j)
+			{
+				individualLetterTexts[j].setRotation(-1 * i);
+				individualLetterTexts[j].setFillColor(sf::Color::Red);
+			}
+
+			// Adjust background color outside the loop
+			sf::Color backgroundColor = sf::Color(255, 255 - i * 6, 255 - i * 6);
+			menuBackground.setColor(backgroundColor);
+
+			// Adjust colors of other elements outside the loop
+			menuMountainsFar[0].setColor(backgroundColor);
+			menuMountainsFar[1].setColor(backgroundColor);
+			menuMountainsClose[0].setColor(backgroundColor);
+			menuMountainsClose[1].setColor(backgroundColor);
+			menuTreesFar[0].setColor(backgroundColor);
+			menuTreesFar[1].setColor(backgroundColor);
+			menuTreesClose[0].setColor(backgroundColor);
+			menuTreesClose[1].setColor(backgroundColor);
+		}
+		else
+		{
+			individualLetterTexts[i].setRotation(0.0f);
+			individualLetterTexts[i].setPosition(individualLetterTexts[i].getPosition().x, originalYPositions[i]);
+			individualLetterTexts[i].setFillColor(sf::Color::Black);
+		}
+	}
+}
+
+void MainMenu::SetupButtons()
+{
 	Button playButton(
 		sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2),
 		sf::Vector2f(200, 50),
@@ -120,76 +257,6 @@ void MainMenu::Init()
 
 	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });
 	buttons.push_back(load3Button);
-
-
-}
-
-void MainMenu::Render(sf::RenderWindow& window)
-{
-	window.draw(menuBackground);
-	for (int i = 0; i < 2; ++i)
-	{
-		window.draw(menuMountainsFar[i]);
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		window.draw(menuMountainsClose[i]);
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		window.draw(menuTreesFar[i]);
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		window.draw(menuTreesClose[i]);
-	}
-
-	for (Button& button : buttons)
-	{
-		button.update();
-		button.render(window);
-	}
-}
-
-void MainMenu::Update()
-{
-	float farSpeed = 0.1f;
-	float closeSpeed = 0.5f;
-
-	for (int i = 0; i < 2; ++i) 
-	{
-		menuMountainsFar[i].move(-farSpeed, 0);
-		menuMountainsClose[i].move(-farSpeed, 0);
-		menuTreesFar[i].move(-0.3, 0);
-		menuTreesClose[i].move(-0.5, 0);
-
-		ResetSpritePosition(menuMountainsFar[i], Global::S_WIDTH * i);
-		ResetSpritePosition(menuMountainsClose[i], Global::S_WIDTH * i);
-		ResetSpritePosition(menuTreesFar[i], Global::S_WIDTH * i);
-		ResetSpritePosition(menuTreesClose[i], Global::S_WIDTH * i);
-	}
-}
-
-void MainMenu::ResetSpritePosition(sf::Sprite& sprite, float offsetX)
-{
-	int x = sprite.getPosition().x + sprite.getLocalBounds().width;
-
-	if (sprite.getPosition().x + sprite.getLocalBounds().width < 0) 
-	{
-		sprite.setPosition(Global::S_WIDTH + sprite.getGlobalBounds().width / 2, sprite.getPosition().y);
-	}
-}
-
-
-void MainMenu::HandleEvents(sf::Event& event)
-{
-	for (Button& button : buttons)
-	{
-		button.handleEvent(event);
-	}
 }
 
 

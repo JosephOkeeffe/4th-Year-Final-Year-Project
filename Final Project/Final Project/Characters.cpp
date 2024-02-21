@@ -75,7 +75,7 @@ void Characters::UpdateCharacters()
 		// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
 		// ADD A PARTICLE FOR WORKING
 		particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 7);
-		particleSystem.addSpriteParticle(tileDetectionCircle.getPosition(), randomVelocity, Textures::GetInstance().GetTexture("archer-icon"), 0.5, 7);
+		//particleSystem.addSpriteParticle(tileDetectionCircle.getPosition(), randomVelocity, Textures::GetInstance().GetTexture("archer-icon"), 0.5, 7);
 		particleSystem.update();
 	}
 	else
