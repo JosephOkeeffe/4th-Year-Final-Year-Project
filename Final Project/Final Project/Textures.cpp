@@ -49,6 +49,9 @@ void Textures::SetupTextures()
         hazmatManTexture.loadFromFile("./assets/images/hazmat-man.png");
         textureMap["hazmat-man"] = hazmatManTexture;
 
+        enemyTexture.loadFromFile("./assets/images/enemy2.png");
+        textureMap["enemy"] = enemyTexture;
+
 
 
     // Buildings

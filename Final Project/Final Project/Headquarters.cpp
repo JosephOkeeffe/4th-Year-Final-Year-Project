@@ -38,10 +38,18 @@ Headquarters::Headquarters(sf::Vector2f pos)
 	scaleHandle.setPosition(body.getPosition() + resizeHandleOffset);
 
 	shader.InitShader("SelectedShader.frag");
+
+
+
 }
 
 void Headquarters::MouseRelease()
 {
+
+	int tempX = 200 / Global::CELL_SIZE;
+	int tempY = 200 / Global::CELL_SIZE;
+	GameManager::tiles[tempX][tempY].SetTileType(TILE_USED_UP);
+
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
@@ -62,6 +70,8 @@ void Headquarters::MouseRelease()
 }
 void Headquarters::Update()
 {
+
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());

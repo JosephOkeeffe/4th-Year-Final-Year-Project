@@ -19,6 +19,7 @@
 #include "Miner.h"
 #include "OilMan.h"
 #include "HazmatMan.h"
+#include "Enemy.h"
 
 #include "Headquarters.h"
 #include "GoldMine.h"
@@ -78,6 +79,8 @@ private:
     void CreateMiner(sf::Vector2f pos);
     void CreateOilMan(sf::Vector2f pos);
     void CreateHazmatMan(sf::Vector2f pos);
+
+    void CreateEnemy(sf::Vector2f pos);
 
 
     void CreateHeadquarters(sf::Vector2f pos);

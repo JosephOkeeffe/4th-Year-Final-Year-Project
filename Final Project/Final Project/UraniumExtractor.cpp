@@ -81,14 +81,21 @@ void UraniumExtractor::Update()
 				}
 			}
 
-			if (assignedWorkers.size() > 1 && temp->GetSelected())
+			if (assignedWorkers.size() > 0 && temp->GetSelected())
 			{
 				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<HazmatMan*>(temp)), assignedWorkers.end());
 			}
 		}
 	}
 
-	AlignWorkersPosition(assignedWorkers, 56, 66);
+	if (assignedWorkers.size() == 0)
+	{
+		status = EMPTY;
+	}
+	else
+	{
+		AlignWorkersPosition(assignedWorkers, textureWidth, textureHeight);
+	}
 }
 
 void UraniumExtractor::GenerateUranium()

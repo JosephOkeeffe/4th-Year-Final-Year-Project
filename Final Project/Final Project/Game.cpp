@@ -215,7 +215,7 @@ void Game::ProcessKeyRelease(sf::Event t_event)
 {
     if (sf::Keyboard::Q == t_event.key.code)
     {
-      
+        CreateEnemy({ 100,100 });
     }
 }
 void Game::ProcessMousePress(sf::Event t_event)
@@ -322,6 +322,10 @@ void Game::Render()
             {
                 unit->Draw();
             }
+            for (Enemy* enemy : GameManager::enemies)
+            {
+                enemy->Draw();
+            }
 
             if (isDragging)
             {
@@ -338,13 +342,13 @@ void Game::Render()
             HUD::Render(m_window);
         break;
     case PAUSED:
-        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+     /*   for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
                 GameManager::tiles[row][col].Render(m_window);
             }
-        }
+        }*/
         pauseMenu.Render(m_window);
 
         break;
@@ -398,6 +402,11 @@ void Game::Update(sf::Time t_deltaTime)
         {
             character->Update();
             ClearFog(character->detectionCircle);
+        }
+
+        for (Enemy* enemy : GameManager::enemies)
+        {
+            enemy->Update();
         }
 
         break;
@@ -518,7 +527,6 @@ void Game::LoadTilesJSON()
 
 void Game::FixLoadedGrass(int type, int row, int col)
 {
-   // if (tiles[row][col].GetTileType() == SHOP) { return;}
    
     if (type <= MOUNTAINS)
     {
@@ -612,6 +620,14 @@ void Game::CreateHazmatMan(sf::Vector2f pos)
     newHazmatMan->SetPosition(pos);
 
     GameManager::units.push_back(newHazmatMan);
+}
+
+void Game::CreateEnemy(sf::Vector2f pos)
+{
+    Enemy* newEnemy = new Enemy;
+    newEnemy->SetPosition(pos);
+
+    GameManager::enemies.push_back(newEnemy);
 }
 
 void Game::SelectUnits()
@@ -727,6 +743,7 @@ void Game::CreateHeadquarters(sf::Vector2f pos)
     newHQ->PlaceBuilding();
     GameManager::headquarters = newHQ;
     GameManager::buildings.push_back(newHQ);
+   
 }
 
 void Game::CreateGoldMine()

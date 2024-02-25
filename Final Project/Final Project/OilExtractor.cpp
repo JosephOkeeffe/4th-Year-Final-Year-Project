@@ -73,14 +73,21 @@ void OilExtractor::Update()
 				}
 			}
 
-			if (assignedWorkers.size() > 1 && temp->GetSelected())
+			if (assignedWorkers.size() > 0 && temp->GetSelected())
 			{
 				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<OilMan*>(temp)), assignedWorkers.end());
 			}
 		}
 	}
 
-	AlignWorkersPosition(assignedWorkers, textureWidth, textureHeight);
+	if (assignedWorkers.size() == 0)
+	{
+		status = EMPTY;
+	}
+	else
+	{
+		AlignWorkersPosition(assignedWorkers, textureWidth, textureHeight);
+	}
 }
 
 void OilExtractor::GenerateOil()

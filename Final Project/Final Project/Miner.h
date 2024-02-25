@@ -35,7 +35,6 @@ private:
 	int textureHeight = 66;
 	int amountOfSprites = 8;
 	// Moving
-	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
 
 	float defaulScale = 1;

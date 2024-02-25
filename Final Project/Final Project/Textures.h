@@ -24,6 +24,10 @@ private:
     sf::Texture oilManTexture;
     sf::Texture hazmatManTexture;
 
+    // Enemy
+    sf::Texture enemyTexture;
+
+
     // Buildings
     sf::Texture baseTexture;
     sf::Texture mineTexture;

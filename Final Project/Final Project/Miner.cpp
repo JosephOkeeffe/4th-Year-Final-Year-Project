@@ -35,11 +35,10 @@ Miner::Miner()
 
 void Miner::MouseRelease()
 {
+	Characters::MouseRelease();
+
 	if (isSelected)
 	{
-		SetCurrentState(MOVING);
-		targetPosition = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-
 		for (Buildings* object : GameManager::buildings)
 		{
 			if (object->GetBuildingType() == object->GOLD_MINE_BUILDING)
@@ -52,12 +51,6 @@ void Miner::MouseRelease()
 
 			}
 		}
-	}
-
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-	{
-		SelectCharacter();
 	}
 }
 
@@ -81,10 +74,23 @@ void Miner::RemoveFromWorkPlace()
 
 void Miner::UpdateWorkingStates()
 {
-	// If there is a current work place
+	if (GetCurrentState(IDLE))
+	{
+		body.setScale(defaulScale, defaulScale);
+
+		if (workingPlace != nullptr)
+		{
+			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+			{
+				body.setPosition(body.getPosition().x, body.getPosition().y + 130);
+			}
+			isWorking = false;
+		}
+		workingPlace = nullptr;
+	}
+
 	if (workingPlace != nullptr)
 	{
-		// check if the miner is working and is colliding with the building
 		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
 		{
 			if (workingPlace->status == workingPlace->GENERATING)
@@ -102,21 +108,6 @@ void Miner::UpdateWorkingStates()
 				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
-	}
-
-	if (GetCurrentState(IDLE))
-	{
-		body.setScale(defaulScale, defaulScale);
-
-		if (workingPlace != nullptr)
-		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(workingPlace->body.getPosition().x, body.getPosition().y + 130);
-			}
-			isWorking = false;
-		}
-		workingPlace = nullptr;
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
@@ -139,22 +130,53 @@ void Miner::UpdateWorkingStates()
 
 void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
-	sf::Vector2f direction = targetPosition - body.getPosition();
-	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+    if (path.empty())
+    {
+        // If the path is empty, generate a new path using A*
+        int startX = body.getPosition().x / Global::CELL_SIZE;
+        int startY = body.getPosition().y / Global::CELL_SIZE;
 
-	if (distance > 1.0f)
-	{
-		direction /= distance;
+        int endX = targetPosition.x / Global::CELL_SIZE;
+        int endY = targetPosition.y / Global::CELL_SIZE;
 
-		sf::Vector2f temp = direction * currentMoveSpeed;
-		body.move(temp);
-		FlipSpriteWithDirection(direction, body);
-	}
-	else
-	{
-		body.setPosition(targetPosition);
-	}
+        Tile* startTile = &GameManager::tiles[startX][startY];
+        Tile* goalTile = &GameManager::tiles[endX][endY];
+
+        path = GameManager::FindPath(startTile, goalTile, true);
+    }
+
+    if (!path.empty())
+    {
+        // Move along the path
+        Tile* nextTile = path.front();
+
+        sf::Vector2f direction = nextTile->tile.getPosition() - body.getPosition();
+        float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+        if (distance > 1.0f)
+        {
+            direction /= distance;
+
+            sf::Vector2f temp = direction * currentMoveSpeed;
+            body.move(temp);
+            FlipSpriteWithDirection(direction, body);
+        }
+        else
+        {
+            // Move to the next tile in the path
+            body.setPosition(nextTile->tile.getPosition());
+            path.erase(path.begin());
+
+            if (!path.empty())
+            {
+                // Set the new target position for the next tile in the path
+                targetPosition = path.front()->tile.getPosition();
+                //FlipSpriteWithDirection(behaviour->GetDirectionFacing(targetPosition, body.getPosition()), body);
+            }
+        }
+    }
 }
+
 
 void Miner::AnimateWorker()
 { 

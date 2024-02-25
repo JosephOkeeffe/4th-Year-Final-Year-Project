@@ -23,11 +23,23 @@ void Characters::Update()
 void Characters::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+	sf::Vector2i cellPos = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
 	if (isSelected)
 	{
-		currentState = MOVING;
-		targetPosition = mousePos;
+		SetCurrentState(MOVING);
+		//targetPosition = mousePos;
+		goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
+
+		if (characterType == ARCHER && characterType == WARRIOR)
+		{
+			path = GameManager::FindPath(startTile, goalTile, false);
+		}
+		else
+		{
+			path = GameManager::FindPath(startTile, goalTile, true);
+		}
 	}
+
 
 	
 	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
@@ -70,6 +82,7 @@ void Characters::UpdateCharacters()
 
 	if (GetSelected())
 	{
+
 		sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 
 		// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
@@ -77,6 +90,11 @@ void Characters::UpdateCharacters()
 		particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 7);
 		//particleSystem.addSpriteParticle(tileDetectionCircle.getPosition(), randomVelocity, Textures::GetInstance().GetTexture("archer-icon"), 0.5, 7);
 		particleSystem.update();
+
+		int x = body.getPosition().x / Global::CELL_SIZE;
+		int y = body.getPosition().y / Global::CELL_SIZE;
+
+		startTile = &GameManager::tiles[x][y];
 	}
 	else
 	{
@@ -86,10 +104,15 @@ void Characters::UpdateCharacters()
 void Characters::MoveCharacter()
 {
 	float length = 0;
-	
-	if (GetCurrentState(MOVING))
+
+	if (GetCurrentState(MOVING) && !path.empty())
 	{
 		DeselectCharacter();
+
+		// Set the target position to the next tile in the path
+		targetPosition = path.front()->tile.getPosition();
+		targetPosition.x += 50;
+		targetPosition.y += 50;
 
 		direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
 		length = behaviour->VectorLength(direction);
@@ -107,10 +130,22 @@ void Characters::MoveCharacter()
 		}
 		else
 		{
-			currentState = IDLE;
+			path.erase(path.begin());
+
+			if (!path.empty())
+			{
+				targetPosition = path.front()->tile.getPosition();
+				targetPosition.x += 50;
+				targetPosition.y += 50;
+			}
+			else
+			{
+				currentState = IDLE; 
+			}
 		}
 	}
 }
+
 
 void Characters::SelectCharacter()
 {
@@ -136,6 +171,23 @@ void Characters::Animate(float startX, float startY, float spriteWidth, float sp
 	if (playerAnimation != m_frameNo)
 	{
 		body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
+	}
+}
+
+void Characters::ChangeSpeedDependingOnTiles()
+{
+	sf::Vector2i tempPos;
+
+	tempPos.x = static_cast<int>(tileDetectionCircle.getPosition().x / Global::CELL_SIZE);
+	tempPos.y = static_cast<int>(tileDetectionCircle.getPosition().y / Global::CELL_SIZE);
+
+	if (GameManager::tiles[tempPos.x][tempPos.y].GetTileType() == NONE)
+	{
+		currentMoveSpeed = defaultMoveSpeed;
+	}
+	else if (GameManager::tiles[tempPos.x][tempPos.y].GetTileType() == PATH)
+	{
+		currentMoveSpeed = defaultMoveSpeed * 1.5;
 	}
 }
 

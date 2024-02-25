@@ -5,7 +5,6 @@ class Archer : public Characters
 {
 public:
 
-
 	Archer();
 	void Update() override;
 	void AnimateArcher();
@@ -25,3 +24,4 @@ private:
 	float moveSpeed = 2.0f;
 };
 
+ 

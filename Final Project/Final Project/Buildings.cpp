@@ -33,7 +33,9 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	 sf::Vector2f(sprite.getLocalBounds().width * scale, sprite.getLocalBounds().height * scale);
 }
 
-//void Buildings::Update(){}
+//void Buildings::Update()
+//{
+//}
 //void Buildings::MouseRelease(){}
 
 void Buildings::Draw()

@@ -22,9 +22,6 @@ void Warrior::AnimateWarrior()
 
 void Warrior::CheckAnimationState()
 {
-
-
-
 	switch (currentState)
 	{
 	case Characters::IDLE:
@@ -42,10 +39,6 @@ void Warrior::CheckAnimationState()
 	default:
 		break;
 	}
-
-
-
-
 }
 
 sf::Sprite& Warrior::GetSprite()

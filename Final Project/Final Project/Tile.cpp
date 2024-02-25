@@ -6,11 +6,6 @@
 bool Tile::isShaderInitialized = false;
 sf::Texture Tile::shaderTexture;
 
-Tile::Tile()
-{
-	defaultTile = rand() % 32;
-}
-
 void Tile::Init(sf::Vector2f& position)
 {
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));
@@ -43,13 +38,13 @@ void Tile::Render(sf::RenderWindow& window)
 	}
 }
 
-void Tile::Update()
-{
-	
-}
-
 void Tile::CheckGrassType()
 {
+
+	if (cell.x == 2 && cell.y == 2)
+	{
+		return;
+	}
 	int size = 57;
 	int spriteSize = 56;
 	GrassType temp = GetGrassType();
@@ -107,41 +102,6 @@ void Tile::CheckGrassType()
 
 }
 
-// Storage building that can hold a set amount
-
-// MAKE DEFAULT MAP SO THIS CAN GO SOON
-void Tile::SetupGrassTiles()
-{
-	if (defaultTile <= 10)
-	{
-		SetGrassType(GRASS1);
-	}
-	else if (defaultTile >= 11 && defaultTile <= 15)
-	{
-		SetGrassType(GRASS2);
-	}
-	else if (defaultTile >= 16 && defaultTile <= 20)
-	{
-		SetGrassType(GRASS3);
-	}
-	else if (defaultTile >= 21 && defaultTile <= 23)
-	{
-		SetGrassType(GRASS4);
-	}
-	else if (defaultTile >= 24 && defaultTile <= 28)
-	{
-		SetGrassType(GRASS5);
-	}
-	else if (defaultTile >= 29 && defaultTile <= 30)
-	{
-		SetGrassType(MOUNTAINS);
-	}
-	else
-	{
-		SetGrassType(GOLD_ORE_NODE);
-	}
-}
-
 void Tile::DiscoverTile()
 {
 	isDiscovered = true;
@@ -158,7 +118,6 @@ bool Tile::GetDiscoveredStatus()
 void Tile::SetTileType(TileType type)
 {
 	tileType = type;
-	//CheckTileType();
 }
 
 TileType Tile::GetTileType()

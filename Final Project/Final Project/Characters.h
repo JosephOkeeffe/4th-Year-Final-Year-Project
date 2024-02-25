@@ -46,6 +46,8 @@ public:
 	void UpdateDetectionCircle();
 	void UpdateCharacters();
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
+
+	void ChangeSpeedDependingOnTiles();
 	
 	void SetPosition(sf::Vector2f pos);
 	void MoveCharacter();
@@ -90,6 +92,10 @@ public:
 	float m_frameValue{ 0.0f }; 
 	float animationSpeed{ 0.2 };
 	int playerAnimation = 0;
+
+	Tile* startTile;
+	Tile* goalTile;
+	std::vector<Tile*> path;
 
 private:
 
