@@ -36,6 +36,7 @@ private:
     bool isPressed;
     sf::Color idleColour;
     sf::Color hoverColour;
+    sf::Vector2i mousePos;
  
 };
 

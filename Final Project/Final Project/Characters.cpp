@@ -30,7 +30,7 @@ void Characters::MouseRelease()
 		//targetPosition = mousePos;
 		goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
 
-		if (characterType == ARCHER && characterType == WARRIOR)
+		if (characterType == ARCHER || characterType == WARRIOR)
 		{
 			path = GameManager::FindPath(startTile, goalTile, false);
 		}

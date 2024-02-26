@@ -41,19 +41,12 @@ void Button::handleEvent(const sf::Event& event)
 {
     if (event.type == sf::Event::MouseMoved) 
     {
-        sf::Vector2i mousePos = static_cast<sf::Vector2i>(Global::GetLocalMousePos(*GameManager::GetWindow()));
+        mousePos = static_cast<sf::Vector2i>(Global::GetLocalMousePos(*GameManager::GetWindow()));
 
         if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) 
         {
             isHovered = true;
             shape.setFillColor(hoverColour);
-
-            sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
-            sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
-            float randomSize = static_cast<float>(rand() % 3 + 2);
-
-            particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
-            particleSystem.update();
         }
         else 
         {
@@ -94,6 +87,18 @@ void Button::render(sf::RenderWindow& window)
     particleSystem.draw(window);
     window.draw(shape);
     window.draw(label);
+
+    if (isHovered)
+    {
+        sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+        sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
+        float randomSize = static_cast<float>(rand() % 5 + 2);
+
+        // add particles that go up
+        particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
+
+        particleSystem.update();
+    }
 }
 
 void Button::centreLabel(sf::Vector2f position)
