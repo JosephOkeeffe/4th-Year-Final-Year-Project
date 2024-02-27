@@ -90,7 +90,10 @@ void Button::render(sf::RenderWindow& window)
 
     if (isHovered)
     {
-        sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+        sf::Vector2f randomVelocity(
+            (rand() % 5 - 2) * 2.0f != 0.0f ? (rand() % 5 - 2) * 2.0f : 1.0f,
+            (rand() % 5 - 2) * 2.0f != 0.0f ? (rand() % 5 - 2) * 2.0f : 1.0f
+        );
         sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
         float randomSize = static_cast<float>(rand() % 5 + 2);
 

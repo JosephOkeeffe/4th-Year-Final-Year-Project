@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <cstdlib>
+#include "Globals.h"
 
 class Particle
 {
@@ -22,7 +23,6 @@ public:
 
         if (type == 1)
         {
-            // Shrink over time
             size -= 0.1f;
             if (size < 0)
             {
@@ -32,8 +32,13 @@ public:
         else if (type == 2)
         {
             // Change color over time
-            color.g += 1;
-            color.b += 2;
+            color.r += 0.1;
+            color.g += 0.1;
+            color.b += 0.1;
+            if (color.a > 1)
+            {
+                color.a -= 2;
+            }
         }
         else if (type == 3)
         {
@@ -49,7 +54,6 @@ public:
         }
         else if (type == 4)
         {
-            // Rotate
             position = sf::Vector2f(
                 position.x + std::cos(size) * 2.0f,
                 position.y + std::sin(size) * 2.0f);
@@ -68,8 +72,8 @@ public:
         }
         else if (type == 7)
         {
-            size -= 0.1f;
-            color.a -= 5;
+            size -= 0.001f;
+            color.a -= 100;
         }
     }
 
@@ -77,6 +81,7 @@ public:
     {
         sf::CircleShape particleShape(size);
         particleShape.setPosition(position);
+        particleShape.setOrigin(particleShape.getRadius() / 2, particleShape.getRadius() / 2);
         particleShape.setFillColor(color);
         window.draw(particleShape);
     }
@@ -86,11 +91,15 @@ class SpriteParticle : public Particle
 {
 public:
     sf::Sprite sprite;
+    sf::Vector2f initialPosition;
+    int maxDistance;
 
-    SpriteParticle(const sf::Vector2f& pos, const sf::Vector2f& vel, const sf::Texture& tex, float particleScale, int particleType)
-        : Particle(pos, vel, sf::Color::White, particleScale, particleType), sprite(tex)
+    SpriteParticle(const sf::Vector2f& pos, const sf::Vector2f& vel, const sf::Color& col, const sf::Texture& tex, int distance, float particleScale, int particleType)
+        : Particle(pos, vel, col, particleScale, particleType), sprite(tex), maxDistance(distance)
     {
+        initialPosition = pos;
         sprite.setPosition(pos);
+        sprite.setColor(col);
         sprite.setScale(particleScale, particleScale); 
     }
 
@@ -98,10 +107,17 @@ public:
     {
         Particle::update();
         sprite.setPosition(position);
+
+        if (Global::distance(sprite.getPosition(), initialPosition) > maxDistance)
+        {
+            size = 0;
+            color.a = 0;
+        }
     }
 
-    void draw(sf::RenderWindow& window) const override
+    void draw(sf::RenderWindow& window)
     {
+        sprite.setColor(color);
         window.draw(sprite);
     }
 };
@@ -116,12 +132,40 @@ public:
         particles.emplace_back(Particle(position, velocity, color, size, type));
     }
 
-    void addSpriteParticle(const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::Texture& texture, float size, int type)
+    void addSpriteParticle(const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::Color& col, const sf::Texture& texture, int distance,float size, int type)
     {
-        spriteParticles.emplace_back(SpriteParticle(position, velocity, texture, size, type));
+        spriteParticles.emplace_back(SpriteParticle(position, velocity, col, texture, distance, size, type));
     }
 
     void update()
+    {
+        RemoveParticles();
+
+        for (Particle& particle : particles)
+        {
+            particle.update();
+        }
+
+        for (SpriteParticle& spriteParticle : spriteParticles)
+        {
+            spriteParticle.update();
+        }
+    }
+
+    void draw(sf::RenderWindow& window)
+    {
+        for (const auto& particle : particles)
+        {
+            particle.draw(window);
+        }
+
+        for (auto& spriteParticle : spriteParticles)
+        {
+            spriteParticle.draw(window);
+        }
+    }
+
+    void RemoveParticles()
     {
         particles.erase(
             std::remove_if(particles.begin(), particles.end(),
@@ -136,29 +180,6 @@ public:
                     return particle.size <= 0 || particle.color.a <= 0;
                 }),
             spriteParticles.end());
-
-        for (auto& particle : particles)
-        {
-            particle.update();
-        }
-
-        for (auto& spriteParticle : spriteParticles)
-        {
-            spriteParticle.update();
-        }
-    }
-
-    void draw(sf::RenderWindow& window)
-    {
-        for (const auto& particle : particles)
-        {
-            particle.draw(window);
-        }
-
-        for (const auto& spriteParticle : spriteParticles)
-        {
-            spriteParticle.draw(window);
-        }
     }
 
     void clearParticles()
@@ -166,6 +187,8 @@ public:
         particles.clear();
         spriteParticles.clear();
     }
+
+ 
 
 private:
     std::vector<Particle> particles;

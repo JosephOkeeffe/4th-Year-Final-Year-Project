@@ -39,6 +39,7 @@ private:
 
 	float defaulScale = 1;
 
+	sf::Clock particleTimer;
 
 };
 

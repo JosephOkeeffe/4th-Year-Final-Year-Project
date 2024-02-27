@@ -4,6 +4,8 @@
 
 void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& textureSize)
 {
+	srand(time(nullptr));
+
 	sprite.setTexture(texture);
 	sprite.setTextureRect(textureSize);
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
@@ -80,25 +82,30 @@ void Characters::UpdateCharacters()
 	ChangeSelectedColour();
 	UpdateDetectionCircle();
 
-	if (GetSelected())
+	if(!isWorking )
 	{
+		if (GetSelected())
+		{
 
-		sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 
-		// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
-		// ADD A PARTICLE FOR WORKING
-		particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 7);
-		//particleSystem.addSpriteParticle(tileDetectionCircle.getPosition(), randomVelocity, Textures::GetInstance().GetTexture("archer-icon"), 0.5, 7);
-		particleSystem.update();
+			// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
+			// ADD A PARTICLE FOR WORKING
+			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
+			particleSystem.update();
 
-		int x = body.getPosition().x / Global::CELL_SIZE;
-		int y = body.getPosition().y / Global::CELL_SIZE;
+			int x = body.getPosition().x / Global::CELL_SIZE;
+			int y = body.getPosition().y / Global::CELL_SIZE;
 
-		startTile = &GameManager::tiles[x][y];
-	}
-	else
-	{
-		particleSystem.clearParticles();
+			startTile = &GameManager::tiles[x][y];
+		}
+		else
+		{
+			if (!GetCurrentState(MOVING))
+			{
+				particleSystem.clearParticles();
+			}
+		}
 	}
 }
 void Characters::MoveCharacter()
@@ -108,6 +115,8 @@ void Characters::MoveCharacter()
 	if (GetCurrentState(MOVING) && !path.empty())
 	{
 		DeselectCharacter();
+		particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
+		particleSystem.update();
 
 		// Set the target position to the next tile in the path
 		targetPosition = path.front()->tile.getPosition();
@@ -135,6 +144,7 @@ void Characters::MoveCharacter()
 			if (!path.empty())
 			{
 				targetPosition = path.front()->tile.getPosition();
+				//particleSystem.update();
 				targetPosition.x += 50;
 				targetPosition.y += 50;
 			}

@@ -85,7 +85,10 @@ void Textures::SetupTextures()
             warriorButtonIconTexture.loadFromFile("./assets/images/warrior-icon.png");
             textureMap["warrior-icon"] = warriorButtonIconTexture;
 
-            archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
+            //archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
+            //textureMap["archer-icon"] = archerButtonIconTexture;
+
+            archerButtonIconTexture.loadFromFile("./assets/images/gold-particle.png");
             textureMap["archer-icon"] = archerButtonIconTexture;
 
             minerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");

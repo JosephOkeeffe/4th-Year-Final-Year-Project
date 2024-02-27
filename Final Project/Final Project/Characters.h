@@ -62,6 +62,8 @@ public:
 	void SetCurrentState(State stateToChange);
 
 	
+
+	
 	State currentState = IDLE;
 	CharacterType characterType;
 
@@ -96,10 +98,10 @@ public:
 	Tile* startTile;
 	Tile* goalTile;
 	std::vector<Tile*> path;
+	ParticleSystem particleSystem;
 
 private:
 
-	ParticleSystem particleSystem;
 
 };
 

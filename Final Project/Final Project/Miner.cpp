@@ -24,7 +24,6 @@ Miner::Miner()
 	case 3:
 		Init(Textures::GetInstance().GetTexture("miner4"), body, textureRect);
 		break;
-		break;
 	default:
 		break;
 	}
@@ -108,6 +107,19 @@ void Miner::UpdateWorkingStates()
 				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
+	}
+
+	if (GetCurrentState(GATHERING))
+	{
+		sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-22.5, 22.5, body, 95);
+
+		if (particleTimer.getElapsedTime().asMilliseconds() >= 50)
+		{
+			particleTimer.restart();
+			particleSystem.addSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("archer-icon"), 100, 0.1, 7);
+		}
+
+		particleSystem.update();
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
