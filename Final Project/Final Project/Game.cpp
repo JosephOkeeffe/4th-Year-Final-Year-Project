@@ -213,10 +213,10 @@ void Game::ProcessKeyPress(sf::Event t_event)
 }
 void Game::ProcessKeyRelease(sf::Event t_event)
 {
-    if (sf::Keyboard::Q == t_event.key.code)
+   /* if (sf::Keyboard::Q == t_event.key.code)
     {
         CreateEnemy({ 100,100 });
-    }
+    }*/
 }
 void Game::ProcessMousePress(sf::Event t_event)
 {
@@ -683,6 +683,7 @@ void Game::MakeFormation()
 
                         if (i == 0)
                         {
+                           // temp->targetPosition = { leader->targetPosition };
                             yOffset = -50;
 
                         }

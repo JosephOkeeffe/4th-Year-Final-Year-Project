@@ -72,8 +72,8 @@ public:
         }
         else if (type == 7)
         {
-            size -= 0.001f;
-            color.a -= 100;
+           // size -= 0.001f;
+           color.a -= 3;
         }
     }
 

@@ -51,6 +51,7 @@ private:
     sf::Texture coinTexture;
     sf::Texture rotateTexture;
     sf::Texture scaleTexture;
+    sf::Texture goldParticleTexture;
     // Main Menu
     sf::Texture menuBackgroundTexture;
     sf::Texture menuMountainFarTexture;

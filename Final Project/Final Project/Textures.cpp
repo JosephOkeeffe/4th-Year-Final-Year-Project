@@ -23,6 +23,9 @@ void Textures::SetupTextures()
     fogTexture.loadFromFile("./assets/images/fog.png");
     textureMap["fog"] = fogTexture;
 
+    goldParticleTexture.loadFromFile("./assets/images/gold-particle.png");
+    textureMap["gold-icon"] = goldParticleTexture;
+
 
     // Characters
         warriorTexture.loadFromFile("./assets/images/warrior.png");
@@ -51,7 +54,6 @@ void Textures::SetupTextures()
 
         enemyTexture.loadFromFile("./assets/images/enemy2.png");
         textureMap["enemy"] = enemyTexture;
-
 
 
     // Buildings
@@ -85,10 +87,7 @@ void Textures::SetupTextures()
             warriorButtonIconTexture.loadFromFile("./assets/images/warrior-icon.png");
             textureMap["warrior-icon"] = warriorButtonIconTexture;
 
-            //archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
-            //textureMap["archer-icon"] = archerButtonIconTexture;
-
-            archerButtonIconTexture.loadFromFile("./assets/images/gold-particle.png");
+            archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
             textureMap["archer-icon"] = archerButtonIconTexture;
 
             minerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");

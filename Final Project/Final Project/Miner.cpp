@@ -109,14 +109,18 @@ void Miner::UpdateWorkingStates()
 		}
 	}
 
+	// ENEMY MOVEMENT
+	// ENEMY PLAY COLLISION / FIGHTING
+	// INVENTORY
+	// RADAR / SHOWS ENEMY AS A DOT
 	if (GetCurrentState(GATHERING))
 	{
 		sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-22.5, 22.5, body, 95);
 
-		if (particleTimer.getElapsedTime().asMilliseconds() >= 50)
+		if (particleTimer.getElapsedTime().asMilliseconds() >= 100)
 		{
 			particleTimer.restart();
-			particleSystem.addSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("archer-icon"), 100, 0.1, 7);
+			particleSystem.addSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
 
 		particleSystem.update();
