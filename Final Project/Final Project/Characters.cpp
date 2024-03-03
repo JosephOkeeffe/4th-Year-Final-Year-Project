@@ -29,7 +29,6 @@ void Characters::MouseRelease()
 	if (isSelected)
 	{
 		SetCurrentState(MOVING);
-		//targetPosition = mousePos;
 		goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
 
 		if (characterType == ARCHER || characterType == WARRIOR)
@@ -89,8 +88,6 @@ void Characters::UpdateCharacters()
 
 			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 
-			// ADD A TRAIL CLASS, SO WHEN PEOPLE WALK LEAVE A TRAIL
-			// ADD A PARTICLE FOR WORKING
 			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
 			particleSystem.update();
 
@@ -118,10 +115,9 @@ void Characters::MoveCharacter()
 		particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
 		particleSystem.update();
 
-		// Set the target position to the next tile in the path
 		targetPosition = path.front()->tile.getPosition();
-		targetPosition.x += 50;
-		targetPosition.y += 50;
+		targetPosition.x += pathFindingXOffset;
+		targetPosition.y += pathFindingYOffset;
 
 		direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
 		length = behaviour->VectorLength(direction);
@@ -145,8 +141,8 @@ void Characters::MoveCharacter()
 			{
 				targetPosition = path.front()->tile.getPosition();
 				//particleSystem.update();
-				targetPosition.x += 50;
-				targetPosition.y += 50;
+				//targetPosition.x += 50;
+				//targetPosition.y += 50;
 			}
 			else
 			{

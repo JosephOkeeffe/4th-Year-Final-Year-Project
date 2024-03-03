@@ -77,6 +77,8 @@ public:
 	sf::Vector2f direction = { 0, 1 };
 	sf::Vector2f targetPosition;
 	sf::CircleShape tileDetectionCircle;
+
+	bool isPartOfFormation = false;
 	
 	bool isSelected = false;
 	bool isFormationMoving = false;
@@ -99,6 +101,10 @@ public:
 	Tile* goalTile;
 	std::vector<Tile*> path;
 	ParticleSystem particleSystem;
+
+	int pathFindingXOffset = 50;
+	int pathFindingYOffset = 40;
+
 
 private:
 

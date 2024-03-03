@@ -63,6 +63,15 @@ public:
         return cellPosition;
     }
 
+    static sf::Vector2i ConvertPositionToCell(sf::Vector2f pos)
+    {
+        sf::Vector2i cellPosition;
+        cellPosition.x = pos.x / Global::CELL_SIZE;
+        cellPosition.y = pos.y / Global::CELL_SIZE;
+
+        return cellPosition;
+    }
+
     static sf::Vector2i GetLocalMousePos(sf::RenderWindow& window)
     {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);

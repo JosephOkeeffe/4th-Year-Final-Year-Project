@@ -647,17 +647,21 @@ void Game::SelectUnits()
 void Game::MakeFormation()
 {
     Characters* leader = nullptr;
+    sf::Vector2i leaderTilePos;
 
-    for (Characters* temp : GameManager::units)
+    int count = 1;
+
+    for (Characters* temp : selectedUnits)
     {
         if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
         {
             if (temp->GetSelected())
             {
                 leader = temp;
+                leaderTilePos = Global::ConvertPositionToCell(leader->body.getPosition());
                 break;
             }
-        } 
+        }
     }
 
     if (leader != nullptr)
@@ -665,55 +669,70 @@ void Game::MakeFormation()
         float xPosLeader = leader->body.getPosition().x;
         float yPosLeader = leader->body.getPosition().y;
 
-        float xOffset = -50;
-        float yOffset = -50;
+        //float xOffset = -50;
+        //float yOffset = -50;
 
-        int i = -1;
-        for (Characters* temp : GameManager::units)
+        int i = 0;
+        for (Characters* temp : selectedUnits)
         {
-            if(temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
+            if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
             {
-                temp->SetCurrentState(temp->MOVING);
-                temp->isFormationMoving = true;
-                if (temp->GetSelected())
+                /*if (temp->GetSelected())
+                {*/
+                if (temp != leader)
                 {
-                    if (temp != leader)
+                    ++i;
+                    temp->SetCurrentState(temp->MOVING);
+                    temp->isFormationMoving = true;
+
+                    if (i == 1)
                     {
-                        ++i;
-
-                        if (i == 0)
-                        {
-                           // temp->targetPosition = { leader->targetPosition };
-                            yOffset = -50;
-
-                        }
-                        else if (i == 1)
-                        {
-                            yOffset = 0;
-                        }
-                        else if (i == 2)
-                        {
-                            yOffset = 50;
-                        }
-                        temp->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
-
-
-                        if (i == 2)
-                        {
-                            xOffset -= 50.0f;
-                            i = -1;
-                        }
+                        temp->pathFindingXOffset = 80 * (count);
+                        temp->pathFindingYOffset = 100;
+                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y - 1];
                     }
-                    else
+                    else if (i == 2)
                     {
-                        temp->targetPosition = { xPosLeader, yPosLeader };
+                        temp->pathFindingXOffset = 80 * (count);
+                        temp->pathFindingYOffset = 50;
+                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y];
+
+                    }
+                    else if (i == 3)
+                    {
+                        temp->pathFindingXOffset = 80 * (count);
+                        temp->pathFindingYOffset = 0;
+                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y + 1];
+
+                    }
+                    sf::Vector2i startTilePos = Global::ConvertPositionToCell(temp->body.getPosition());
+                    temp->startTile = &GameManager::tiles[startTilePos.x][startTilePos.y];
+                    temp->path = GameManager::FindPath(temp->startTile, temp->goalTile, false);
+
+
+                    if (temp->startTile == temp->goalTile)
+                    {
+                        temp->DeselectCharacter();
+                        temp->SetCurrentState(temp->IDLE);
+                    }
+
+                    if (i == 3)
+                    {
+                        i = 0;
+                        count++;
                     }
                 }
+                else
+                {
+                    leader->DeselectCharacter();
+                    temp->SetCurrentState(temp->IDLE);
+                }
             }
-       
         }
-    }
 
+
+    }
+    selectedUnits.clear();
 }
 
 // DOes not work
