@@ -78,6 +78,10 @@ void Characters::UpdateDetectionCircle()
 void Characters::UpdateCharacters()
 {
 	MoveCharacter();
+	if (isFormationMoving && isPartOfFormation)
+	{
+		MoveIntoFormation();
+	}
 	ChangeSelectedColour();
 	UpdateDetectionCircle();
 
@@ -149,6 +153,27 @@ void Characters::MoveCharacter()
 				currentState = IDLE; 
 			}
 		}
+	}
+}
+
+void Characters::MoveIntoFormation()
+{
+	sf::Vector2f direction = targetPosition - body.getPosition();
+	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+	if (distance > 1.0f)
+	{
+		direction /= distance;
+
+		sf::Vector2f temp = direction * currentMoveSpeed;
+		body.move(temp);
+		FlipSpriteWithDirection(direction, body);
+		
+	}
+	else
+	{
+		body.setPosition(targetPosition);
+		isFormationMoving = false;
 	}
 }
 

@@ -131,18 +131,18 @@ C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YE
           ]
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(60,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\BuildingUI.h(64,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(97,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Characters.h(99,24): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Buildings.h(89,24): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\HazmatMan.h(38,23): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Enemy.h(47,24): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.h(46,2): warning C4091: 'static ': ignored on left of 'GameState' when no variable is declared
 C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(47,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(761,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(834,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(762,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\josep\OneDrive - South East Technological University (Carlow Campus)\YEAR 4\4th-Year-Final-Year-Project\Final Project\Final Project\Game.cpp(835,11): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float

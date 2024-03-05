@@ -61,7 +61,7 @@ public:
 	bool GetCurrentState(State stateToCheck);
 	void SetCurrentState(State stateToChange);
 
-	
+	void MoveIntoFormation();
 
 	
 	State currentState = IDLE;
@@ -80,6 +80,8 @@ public:
 
 	bool isPartOfFormation = false;
 	
+
+
 	bool isSelected = false;
 	bool isFormationMoving = false;
 	bool isWorking = false;

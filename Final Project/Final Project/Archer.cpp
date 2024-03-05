@@ -24,25 +24,27 @@ void Archer::AnimateArcher()
 
 void Archer::CheckAnimationState()
 {
-	switch (currentState)
+
+	if (GetCurrentState(IDLE) && !isFormationMoving)
 	{
-	case Characters::IDLE:
 		currentFrameY = 0;
 		textureHeight = 50;
-		break;
-	case Characters::MOVING:
+	}
+	else if (GetCurrentState(MOVING) || isFormationMoving)
+	{
 		currentFrameY = 2;
 		textureHeight = 52;
-		break;
-	case Characters::ATTACKING:
-		currentFrameY = 3;
-		break;
-	case Characters::DEAD:
-		currentFrameY = 4;
-		break;
-	default:
-		break;
 	}
+	else if (GetCurrentState(ATTACKING))
+	{
+		currentFrameY = 3;
+	}
+	else if (GetCurrentState(DEAD))
+	{
+		currentFrameY = 4;
+	}
+
+
 }
 
 sf::Sprite& Archer::GetSprite()

@@ -22,22 +22,21 @@ void Warrior::AnimateWarrior()
 
 void Warrior::CheckAnimationState()
 {
-	switch (currentState)
+	if (GetCurrentState(IDLE) && !isFormationMoving)
 	{
-	case Characters::IDLE:
 		currentFrameY = 0;
-		break;
-	case Characters::MOVING:
+	}
+	else if (GetCurrentState(MOVING) || isFormationMoving)
+	{
 		currentFrameY = 2;
-		break;
-	case Characters::ATTACKING:
+	}
+	else if (GetCurrentState(ATTACKING))
+	{
 		currentFrameY = 3;
-		break;
-	case Characters::DEAD:
+	}
+	else if (GetCurrentState(DEAD))
+	{
 		currentFrameY = 4;
-		break;
-	default:
-		break;
 	}
 }
 

@@ -54,9 +54,9 @@ void Game::Init()
     BuildingUI::Init();
 
     CreateHeadquarters(basePos);
-    CreateArcher({ 300, 400 });
-    CreateWarrior({ 350, 400 });
-    CreateWarrior({ 400, 400 });
+  //  CreateArcher({ 300, 400 });
+   // CreateWarrior({ 350, 400 });
+  //  CreateWarrior({ 400, 400 });
     CreateMiner({ 450, 400 });
 }
 
@@ -647,20 +647,13 @@ void Game::SelectUnits()
 void Game::MakeFormation()
 {
     Characters* leader = nullptr;
-    sf::Vector2i leaderTilePos;
 
-    int count = 1;
-
-    for (Characters* temp : selectedUnits)
+    for (Characters* unit : selectedUnits)
     {
-        if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
+        if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR)
         {
-            if (temp->GetSelected())
-            {
-                leader = temp;
-                leaderTilePos = Global::ConvertPositionToCell(leader->body.getPosition());
-                break;
-            }
+            leader = unit;
+            break;
         }
     }
 
@@ -669,86 +662,171 @@ void Game::MakeFormation()
         float xPosLeader = leader->body.getPosition().x;
         float yPosLeader = leader->body.getPosition().y;
 
-        //float xOffset = -50;
-        //float yOffset = -50;
+        float xOffset = -50;
+        float yOffset = -50;
 
-        int i = 0;
-        for (Characters* temp : selectedUnits)
+        int i = -1;
+        for (Characters* unit : selectedUnits)
         {
-            if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
+            if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR)
             {
-                /*if (temp->GetSelected())
-                {*/
-                if (temp != leader)
+                unit->DeselectCharacter();
+
+                if (unit != leader)
                 {
                     ++i;
-                    temp->SetCurrentState(temp->MOVING);
-                    temp->isFormationMoving = true;
+                    unit->isFormationMoving = true;
+                    unit->isPartOfFormation = true;
 
-                    if (i == 1)
+                    if (i == 0)
                     {
-                        temp->pathFindingXOffset = 80 * (count);
-                        temp->pathFindingYOffset = 100;
-                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y - 1];
+                        yOffset = -50;
+                    }
+                    else if (i == 1)
+                    {
+                        yOffset = 0;
                     }
                     else if (i == 2)
                     {
-                        temp->pathFindingXOffset = 80 * (count);
-                        temp->pathFindingYOffset = 50;
-                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y];
-
+                        yOffset = 50;
                     }
-                    else if (i == 3)
+                    unit->targetPosition = { xPosLeader + xOffset, yPosLeader + yOffset };
+
+                    if (unit->targetPosition == unit->body.getPosition())
                     {
-                        temp->pathFindingXOffset = 80 * (count);
-                        temp->pathFindingYOffset = 0;
-                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y + 1];
-
-                    }
-                    sf::Vector2i startTilePos = Global::ConvertPositionToCell(temp->body.getPosition());
-                    temp->startTile = &GameManager::tiles[startTilePos.x][startTilePos.y];
-                    temp->path = GameManager::FindPath(temp->startTile, temp->goalTile, false);
-
-
-                    if (temp->startTile == temp->goalTile)
-                    {
-                        temp->DeselectCharacter();
-                        temp->SetCurrentState(temp->IDLE);
+                        unit->DeselectCharacter();
                     }
 
-                    if (i == 3)
+
+                    if (i == 2)
                     {
-                        i = 0;
-                        count++;
+                        xOffset -= 50.0f;
+                        i = -1;
                     }
                 }
                 else
                 {
+                    leader->targetPosition = { xPosLeader, yPosLeader };
                     leader->DeselectCharacter();
-                    temp->SetCurrentState(temp->IDLE);
+                    leader->SetCurrentState(leader->IDLE);
+                   // selectedUnits.erase(std::remove(selectedUnits.begin(), selectedUnits.end(), leader), selectedUnits.end());
                 }
             }
         }
-
-
     }
-    selectedUnits.clear();
 }
+
+//void Game::MakeFormation()
+//{
+//    Characters* leader = nullptr;
+//    sf::Vector2i leaderTilePos;
+//
+//    int count = 1;
+//
+//    for (Characters* temp : selectedUnits)
+//    {
+//        if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
+//        {
+//            if (temp->GetSelected())
+//            {
+//                leader = temp;
+//                leaderTilePos = Global::ConvertPositionToCell(leader->body.getPosition());
+//                break;
+//            }
+//        }
+//    }
+//
+//    if (leader != nullptr)
+//    {
+//        float xPosLeader = leader->body.getPosition().x;
+//        float yPosLeader = leader->body.getPosition().y;
+//
+//        //float xOffset = -50;
+//        //float yOffset = -50;
+//
+//        int i = 0;
+//        for (Characters* temp : selectedUnits)
+//        {
+//            if (temp->characterType == temp->ARCHER || temp->characterType == temp->WARRIOR)
+//            {
+//                /*if (temp->GetSelected())
+//                {*/
+//                if (temp != leader)
+//                {
+//                    ++i;
+//                    temp->SetCurrentState(temp->MOVING);
+//                    temp->isFormationMoving = true;
+//
+//                    if (i == 1)
+//                    {
+//                        temp->pathFindingXOffset = 80 * (count);
+//                        temp->pathFindingYOffset = 100;
+//                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y - 1];
+//                    }
+//                    else if (i == 2)
+//                    {
+//                        temp->pathFindingXOffset = 80 * (count);
+//                        temp->pathFindingYOffset = 50;
+//                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y];
+//
+//                    }
+//                    else if (i == 3)
+//                    {
+//                        temp->pathFindingXOffset = 80 * (count);
+//                        temp->pathFindingYOffset = 0;
+//                        temp->goalTile = &GameManager::tiles[leaderTilePos.x - count][leaderTilePos.y + 1];
+//
+//                    }
+//                    sf::Vector2i startTilePos = Global::ConvertPositionToCell(temp->body.getPosition());
+//                    temp->startTile = &GameManager::tiles[startTilePos.x][startTilePos.y];
+//                    temp->path = GameManager::FindPath(temp->startTile, temp->goalTile, false);
+//
+//
+//                    if (temp->startTile == temp->goalTile)
+//                    {
+//                        temp->DeselectCharacter();
+//                        temp->SetCurrentState(temp->IDLE);
+//                    }
+//
+//                    if (i == 3)
+//                    {
+//                        i = 0;
+//                        count++;
+//                    }
+//                }
+//                else
+//                {
+//                    leader->DeselectCharacter();
+//                    temp->SetCurrentState(temp->IDLE);
+//                }
+//            }
+//        }
+//
+//
+//    }
+//    selectedUnits.clear();
+////}
 
 // DOes not work
 void Game::AlignFormationFacingDirection()
 {
-    for (Characters* unit : GameManager::units)
+    for (Characters* unit : selectedUnits)
     {
-        if (unit != GameManager::units[0] && unit->isFormationMoving && unit->currentState!= unit->MOVING)
+        if (unit != selectedUnits[0] && !unit->isFormationMoving && unit->isPartOfFormation)
         {
-            if (unit->direction != GameManager::units[0]->direction)
+            if (selectedUnits[0]->body.getScale().x > 0 && unit->body.getScale().x < 0)
+            {
+                unit->FlipSprite();
+            }
+            else if (selectedUnits[0]->body.getScale().x < 0 && unit->body.getScale().x > 0)
             {
                 unit->FlipSprite();
             }
             unit->isFormationMoving = false;
+            //  selectedUnits.erase(std::remove(selectedUnits.begin(), selectedUnits.end(), unit), selectedUnits.end());
         }
     }
+    
 }
 
 void Game::CreateHeadquarters(sf::Vector2f pos)
