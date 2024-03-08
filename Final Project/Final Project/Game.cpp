@@ -646,13 +646,18 @@ void Game::SelectUnits()
 
 void Game::MakeFormation()
 {
+    Formation *newFormation = new Formation;
+
     Characters* leader = nullptr;
+
+
 
     for (Characters* unit : selectedUnits)
     {
         if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR)
         {
-            leader = unit;
+           // newFormation.le
+           // leader = unit;
             break;
         }
     }

@@ -192,6 +192,7 @@ public:
     static std::vector<Characters*> units;
     static std::vector<Enemy*> enemies;
     static Buildings* buildingToPlace;
+    static std::vector<Formation*> formations;
 
 private:
     static sf::RenderWindow* window;

@@ -29,6 +29,7 @@
 #include "TileTypes.h"
 #include "json.hpp"
 //#include "GameObject.h"
+#include "Formation.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
