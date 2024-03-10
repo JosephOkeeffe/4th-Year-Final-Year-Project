@@ -28,7 +28,6 @@
 #include "HUD.h"
 #include "TileTypes.h"
 #include "json.hpp"
-//#include "GameObject.h"
 #include "Formation.h"
 
 #define Display_Text(x) std::cout << x << "\n";
@@ -92,6 +91,7 @@ private:
 
     void SelectUnits();
     void MakeFormation();
+    void MoveFormationWithLeader();
     void AlignFormationFacingDirection();
     bool isDragging = false;
     sf::Vector2f startDragPos;

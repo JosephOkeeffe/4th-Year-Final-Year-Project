@@ -11,6 +11,7 @@ class Headquarters;
 class GoldMine;
 class Miner;
 class Enemy;
+class Formation;
 
 class GameManager
 {

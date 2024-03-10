@@ -22,11 +22,11 @@ void Warrior::AnimateWarrior()
 
 void Warrior::CheckAnimationState()
 {
-	if (GetCurrentState(IDLE) && !isFormationMoving)
+	if (GetCurrentState(IDLE) && !isMovingIntoFormation)
 	{
 		currentFrameY = 0;
 	}
-	else if (GetCurrentState(MOVING) || isFormationMoving)
+	else if (GetCurrentState(MOVING) || isMovingIntoFormation)
 	{
 		currentFrameY = 2;
 	}

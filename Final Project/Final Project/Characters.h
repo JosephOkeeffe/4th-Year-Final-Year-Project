@@ -51,6 +51,8 @@ public:
 	
 	void SetPosition(sf::Vector2f pos);
 	void MoveCharacter();
+	void MoveIntoFormation();
+	void FollowLeader();
 	void SelectCharacter();
 	void DeselectCharacter();
 	bool GetSelected();
@@ -61,7 +63,6 @@ public:
 	bool GetCurrentState(State stateToCheck);
 	void SetCurrentState(State stateToChange);
 
-	void MoveIntoFormation();
 
 	
 	State currentState = IDLE;
@@ -75,15 +76,15 @@ public:
 	sf::CircleShape detectionCircle;
 
 	sf::Vector2f direction = { 0, 1 };
+	sf::Vector2f velocity;
 	sf::Vector2f targetPosition;
 	sf::CircleShape tileDetectionCircle;
 
 	bool isPartOfFormation = false;
 	
-
-
 	bool isSelected = false;
-	bool isFormationMoving = false;
+	bool isMovingIntoFormation = false;
+	bool isFollowingLeader = false;
 	bool isWorking = false;
 
 	float detectionRadius = 100.0f;
@@ -107,6 +108,9 @@ public:
 	int pathFindingXOffset = 50;
 	int pathFindingYOffset = 40;
 
+	sf::Vector2f distanceFromLeader;
+
+	bool hasFlipped = false;
 
 private:
 

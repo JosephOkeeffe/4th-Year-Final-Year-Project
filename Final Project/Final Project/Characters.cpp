@@ -77,11 +77,16 @@ void Characters::UpdateDetectionCircle()
 }
 void Characters::UpdateCharacters()
 {
-	MoveCharacter();
-	if (isFormationMoving && isPartOfFormation)
+	if (GetCurrentState(MOVING) && !path.empty())
+	{
+		MoveCharacter();
+	}
+
+	if (isMovingIntoFormation && isPartOfFormation)
 	{
 		MoveIntoFormation();
 	}
+
 	ChangeSelectedColour();
 	UpdateDetectionCircle();
 
@@ -112,48 +117,46 @@ void Characters::UpdateCharacters()
 void Characters::MoveCharacter()
 {
 	float length = 0;
+	DeselectCharacter();
+	particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
+	particleSystem.update();
 
-	if (GetCurrentState(MOVING) && !path.empty())
+	targetPosition = path.front()->tile.getPosition();
+	targetPosition.x += pathFindingXOffset;
+	targetPosition.y += pathFindingYOffset;
+
+	direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
+	length = behaviour->VectorLength(direction);
+
+	if (length != 0)
 	{
-		DeselectCharacter();
-		particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
-		particleSystem.update();
+		direction /= length;
+	}
 
-		targetPosition = path.front()->tile.getPosition();
-		targetPosition.x += pathFindingXOffset;
-		targetPosition.y += pathFindingYOffset;
+	FlipSpriteWithDirection(direction, body);
 
-		direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
-		length = behaviour->VectorLength(direction);
+	if (length > 5)
+	{
+		velocity = direction * currentMoveSpeed;
+		body.move(velocity);
+	}
+	else
+	{
+		path.erase(path.begin());
 
-		if (length != 0)
+		if (!path.empty())
 		{
-			direction /= length;
-		}
-
-		FlipSpriteWithDirection(direction, body);
-
-		if (length > 5)
-		{
-			body.move(direction * currentMoveSpeed);
+			targetPosition = path.front()->tile.getPosition();
+			//particleSystem.update();
+			//targetPosition.x += 50;
+			//targetPosition.y += 50;
 		}
 		else
 		{
-			path.erase(path.begin());
-
-			if (!path.empty())
-			{
-				targetPosition = path.front()->tile.getPosition();
-				//particleSystem.update();
-				//targetPosition.x += 50;
-				//targetPosition.y += 50;
-			}
-			else
-			{
-				currentState = IDLE; 
-			}
+			currentState = IDLE;
 		}
 	}
+
 }
 
 void Characters::MoveIntoFormation()
@@ -165,16 +168,20 @@ void Characters::MoveIntoFormation()
 	{
 		direction /= distance;
 
-		sf::Vector2f temp = direction * currentMoveSpeed;
-		body.move(temp);
+		velocity = direction * currentMoveSpeed;
+		body.move(velocity);
 		FlipSpriteWithDirection(direction, body);
-		
 	}
 	else
 	{
 		body.setPosition(targetPosition);
-		isFormationMoving = false;
+		isMovingIntoFormation = false;		
 	}
+}
+
+void Characters::FollowLeader()
+{
+
 }
 
 

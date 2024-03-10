@@ -25,12 +25,12 @@ void Archer::AnimateArcher()
 void Archer::CheckAnimationState()
 {
 
-	if (GetCurrentState(IDLE) && !isFormationMoving)
+	if (GetCurrentState(IDLE) && !isMovingIntoFormation)
 	{
 		currentFrameY = 0;
 		textureHeight = 50;
 	}
-	else if (GetCurrentState(MOVING) || isFormationMoving)
+	else if (GetCurrentState(MOVING) || isMovingIntoFormation)
 	{
 		currentFrameY = 2;
 		textureHeight = 52;
