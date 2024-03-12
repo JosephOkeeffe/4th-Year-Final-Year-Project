@@ -41,7 +41,7 @@ void HazmatMan::MouseRelease()
 
 void HazmatMan::Update()
 {
-	UpdateCharacters();
+	Characters::Update();
 	CheckAnimationState();
 	AnimateWorker();
 	RemoveFromWorkPlace();

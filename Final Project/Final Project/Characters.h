@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Behaviour.h"
 #include "Textures.h"
 #include "GameManager.h"
 #include "HUD.h"
 #include "Particles.h"
+#include "Projectile.h"
+#include "Stats.h";
 
 class Particles;
 class ParticleSystem;
@@ -39,12 +40,11 @@ public:
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize);
 	virtual void Update();
 	virtual void MouseRelease();
-	void Draw();
+	virtual void Draw();
 
 	void InitDetectionCircle(int radius);
 
 	void UpdateDetectionCircle();
-	void UpdateCharacters();
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
 
 	void ChangeSpeedDependingOnTiles();
@@ -52,7 +52,6 @@ public:
 	void SetPosition(sf::Vector2f pos);
 	void MoveCharacter();
 	void MoveIntoFormation();
-	void FollowLeader();
 	void SelectCharacter();
 	void DeselectCharacter();
 	bool GetSelected();
@@ -67,8 +66,6 @@ public:
 	
 	State currentState = IDLE;
 	CharacterType characterType;
-
-	Behaviour* behaviour;
 
 	sf::Sprite body;
 	sf::Texture texture;
@@ -112,6 +109,9 @@ public:
 
 	bool hasFlipped = false;
 
+	std::vector<Projectile> projectiles;
+
+	Stats stats{ 10, 1, 1 };
 private:
 
 

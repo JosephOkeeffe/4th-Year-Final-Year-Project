@@ -95,4 +95,15 @@ public:
 
         return randomVelocity;
     }
+
+    static float DotProduct(sf::Vector2f& v1, sf::Vector2f& v2)
+    {
+        return v1.x * v2.x + v1.y * v2.y;
+    }
+
+    static sf::Vector2f Normalize(sf::Vector2f vector)
+    {
+        float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+        return length > 0 ? vector / length : vector;
+    }
 };

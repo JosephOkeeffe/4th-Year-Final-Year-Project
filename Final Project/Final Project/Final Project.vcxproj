@@ -136,7 +136,6 @@
     <ClCompile Include="Formation.cpp" />
     <ClCompile Include="HazmatMan.cpp" />
     <ClCompile Include="Headquarters.cpp" />
-    <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Buildings.cpp" />
     <ClCompile Include="BuildingUI.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -150,7 +149,9 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GoldMine.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Stats.cpp" />
     <ClCompile Include="UraniumExtractor.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -166,7 +167,6 @@
     <ClInclude Include="Formation.h" />
     <ClInclude Include="HazmatMan.h" />
     <ClInclude Include="Headquarters.h" />
-    <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Buildings.h" />
     <ClInclude Include="BuildingUI.h" />
     <ClInclude Include="Button.h" />
@@ -180,13 +180,14 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="GoldMine.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="UraniumExtractor.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="HUD.h" />
-    <ClInclude Include="SteeringOutput.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Warrior.h" />

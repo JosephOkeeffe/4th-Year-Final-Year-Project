@@ -19,7 +19,40 @@ void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& te
 
 void Characters::Update()
 {
+	if (GetCurrentState(MOVING) && !path.empty())
+	{
+		MoveCharacter();
+	}
 
+	if (isMovingIntoFormation && isPartOfFormation)
+	{
+		MoveIntoFormation();
+	}
+
+	ChangeSelectedColour();
+	UpdateDetectionCircle();
+
+	if (!isWorking)
+	{
+		if (GetSelected())
+		{
+			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
+			particleSystem.update();
+
+			int x = body.getPosition().x / Global::CELL_SIZE;
+			int y = body.getPosition().y / Global::CELL_SIZE;
+
+			startTile = &GameManager::tiles[x][y];
+		}
+		else
+		{
+			if (!GetCurrentState(MOVING))
+			{
+				particleSystem.clearParticles();
+			}
+		}
+	}
 }
 
 void Characters::MouseRelease()
@@ -75,45 +108,7 @@ void Characters::UpdateDetectionCircle()
 	detectionCircle.setPosition(body.getPosition());
 	tileDetectionCircle.setPosition(body.getPosition().x, body.getPosition().y + 30);
 }
-void Characters::UpdateCharacters()
-{
-	if (GetCurrentState(MOVING) && !path.empty())
-	{
-		MoveCharacter();
-	}
 
-	if (isMovingIntoFormation && isPartOfFormation)
-	{
-		MoveIntoFormation();
-	}
-
-	ChangeSelectedColour();
-	UpdateDetectionCircle();
-
-	if(!isWorking )
-	{
-		if (GetSelected())
-		{
-
-			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
-
-			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
-			particleSystem.update();
-
-			int x = body.getPosition().x / Global::CELL_SIZE;
-			int y = body.getPosition().y / Global::CELL_SIZE;
-
-			startTile = &GameManager::tiles[x][y];
-		}
-		else
-		{
-			if (!GetCurrentState(MOVING))
-			{
-				particleSystem.clearParticles();
-			}
-		}
-	}
-}
 void Characters::MoveCharacter()
 {
 	float length = 0;
@@ -125,8 +120,8 @@ void Characters::MoveCharacter()
 	targetPosition.x += pathFindingXOffset;
 	targetPosition.y += pathFindingYOffset;
 
-	direction = behaviour->GetDirectionFacing(targetPosition, body.getPosition());
-	length = behaviour->VectorLength(direction);
+	direction = targetPosition - body.getPosition();
+	length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
 	if (length != 0)
 	{
@@ -178,12 +173,6 @@ void Characters::MoveIntoFormation()
 		isMovingIntoFormation = false;		
 	}
 }
-
-void Characters::FollowLeader()
-{
-
-}
-
 
 void Characters::SelectCharacter()
 {
@@ -299,18 +288,6 @@ void Characters::SetPosition(sf::Vector2f pos)
 {
 	body.setPosition(pos);
 }
-
-//SteeringOutput Characters::SetWanderBehaviour(sf::Sprite& sprite)
-//{
-//	SteeringOutput steeringOutput = behaviour->WanderBehaviour(sprite);
-//	return steeringOutput;
-//}
-//
-//SteeringOutput Characters::SetSeekBehaviour(sf::Vector2f targetPos, sf::Sprite& sprite)
-//{
-//	SteeringOutput steeringOutput = behaviour->SeekBehaviour(targetPos, sprite);
-//	return steeringOutput;
-//}
 
 
 

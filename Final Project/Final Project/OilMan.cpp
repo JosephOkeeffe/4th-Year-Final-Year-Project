@@ -41,7 +41,7 @@ void OilMan::MouseRelease()
 
 void OilMan::Update()
 {
-	UpdateCharacters();
+	Characters::Update();
 	CheckAnimationState();
 	AnimateWorker();
 	RemoveFromWorkPlace();

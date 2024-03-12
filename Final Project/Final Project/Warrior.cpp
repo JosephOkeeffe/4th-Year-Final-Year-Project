@@ -10,7 +10,7 @@ Warrior::Warrior()
 
 void Warrior::Update()
 {
-	UpdateCharacters();
+	Characters::Update();
 	CheckAnimationState();
 	AnimateWarrior();
 }

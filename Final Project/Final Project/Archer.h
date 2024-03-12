@@ -1,12 +1,15 @@
 #pragma once
-#include "Characters.h"
 #include <SFML/Graphics.hpp>
+#include "Characters.h"
+
+//#include "Projectile.h"
 class Archer : public Characters
 {
 public:
 
 	Archer();
 	void Update() override;
+	void Draw() override;
 	void AnimateArcher();
 	void CheckAnimationState();
 
@@ -22,6 +25,10 @@ private:
 	// Moving
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
+
+
+
+	//std::vector<Projectile> projectiles;
 };
 
  

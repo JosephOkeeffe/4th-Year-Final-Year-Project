@@ -56,7 +56,7 @@ void Miner::MouseRelease()
 
 void Miner::Update()
 { 
-	UpdateCharacters();
+	Characters::Update();
 	CheckAnimationState();
 	AnimateWorker();
 	RemoveFromWorkPlace();

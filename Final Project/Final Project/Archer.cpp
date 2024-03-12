@@ -12,9 +12,43 @@ Archer::Archer()
 
 void Archer::Update()
 {
-	UpdateCharacters();
+	Characters::Update();
 	CheckAnimationState();
 	AnimateArcher();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	{
+		Projectile projectile(Textures::GetInstance().GetTexture("coin"), body.getPosition(), { 200,200 });
+
+		projectiles.push_back(projectile);
+	}
+
+	for (Projectile& projectile : projectiles)
+	{
+		projectile.Update();
+
+		if (projectile.IsOutOfRange(100))
+		{
+			projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+		}
+	}
+
+
+}
+
+void Archer::Draw()
+{
+	Characters::Draw();
+
+	for (Projectile& projectile : projectiles)
+	{
+		projectile.Draw(*GameManager::GetWindow());
+	}
+
+	if(GetSelected())
+	{
+		stats.DisplayStats(*GameManager::GetWindow());
+	}
 }
 
 void Archer::AnimateArcher()

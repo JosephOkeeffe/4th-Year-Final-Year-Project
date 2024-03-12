@@ -58,6 +58,7 @@ void Game::Init()
     // CreateWarrior({ 350, 400 });
     CreateWarrior({ 400, 400 });
     CreateMiner({ 450, 400 });
+    CreateEnemy({ 600, 600 });
 }
 
 void Game::ProcessEvents()
@@ -410,6 +411,18 @@ void Game::Update(sf::Time t_deltaTime)
         }
 
         MoveFormationWithLeader();
+        for (Formation* formation : GameManager::formations)
+        {
+            if (formation->leader != nullptr && formation->leader->GetCurrentState(formation->leader->IDLE))
+            {
+                sf::Vector2f leaderPosition = formation->leader->body.getPosition();
+
+                for (Characters* unit : formation->units)
+                {
+                    unit->hasFlipped = false;
+                }
+            }
+        }
 
         break;
     case PAUSED:
@@ -711,36 +724,30 @@ void Game::MoveFormationWithLeader()
 
             for (Characters* unit : formation->units)
             {
-                // issue with this, keeps changing because MoveIntoFormation function 
                 unit->isMovingIntoFormation = true;
 
                 if (!unit->hasFlipped)
                 {
-                    // PLAN - If leader is facing right, have all units to the left side of him, vice versa
-                    // This will be done by flipping the sign of the distance from the leader
-                    if (formation->leader->body.getScale().x > 0)
+                    if (formation->leader->body.getScale().x > 0 && unit->distanceFromLeader.x > 0)
                     {
                         Display_Text("FACING RIGHT");
 
-                        // issue with this, need to call it once
                         unit->distanceFromLeader *= -1.0f;
-
+                        unit->hasFlipped = true; 
                     }
-                    else if (formation->leader->body.getScale().x < 0)
+                    else if (formation->leader->body.getScale().x < 0 && unit->distanceFromLeader.x < 0)
                     {
                         Display_Text("FACING LEFT");
 
                         unit->distanceFromLeader *= -1.0f;
+                        unit->hasFlipped = true;   
                     }
-                    unit->hasFlipped = true;
-
                 }
-
                 unit->targetPosition = leaderPosition + unit->distanceFromLeader;
-
             }
         }
     }
+
 }
 
 void Game::AlignFormationFacingDirection()
