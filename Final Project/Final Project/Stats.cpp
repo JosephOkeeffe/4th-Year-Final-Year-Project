@@ -9,7 +9,7 @@ void Stats::Draw(sf::RenderWindow& window)
 {
 }
 
-void Stats::DisplayStats(sf::RenderWindow& window)
+void Stats::DisplayStats(sf::RenderWindow& window, sf::Vector2f pos)
 {
     sf::Text text;
     text.setFont(Global::font);
@@ -24,8 +24,8 @@ void Stats::DisplayStats(sf::RenderWindow& window)
 
     window.draw(text);
 
-    DrawStatBar(window, "HP", GetHealth() / MAX_HEALTH, sf::Color::Red, 300, 300);
-    DrawStatBar(window, "XP", GetCurrentXP() / xpNeededForNextLevel, sf::Color::Green, 300, 350);
+    DrawStatBar(window, "HP", GetHealth() / MAX_HEALTH, sf::Color::Red, pos.x, pos.y);
+    DrawStatBar(window, "XP", GetCurrentXP() / xpNeededForNextLevel, sf::Color::Green, pos.x, pos.y + 20);
 }
 
 void Stats::DrawStatBar(sf::RenderWindow& window, const std::string& label, int percentage, const sf::Color& color, float xPosition, float yPosition)

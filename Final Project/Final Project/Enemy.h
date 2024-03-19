@@ -27,7 +27,7 @@ public:
 
 	bool IsCharacterWithinRadius(const sf::Sprite& target);
 
-	CurrentState state = IDLE;
+	CurrentState state = DEAD;
 
 	sf::Sprite body;
 	sf::IntRect textureRect = { 0, 0, 35, 68 };

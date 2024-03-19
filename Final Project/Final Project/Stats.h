@@ -20,15 +20,14 @@ public:
 
     void InitSprites();
     void Draw(sf::RenderWindow& window);
-    void DisplayStats(sf::RenderWindow& window);
+    void DisplayStats(sf::RenderWindow& window, sf::Vector2f pos);
     void DrawStatBar(sf::RenderWindow& window, const std::string& label, int percentage, const sf::Color& color, float xPosition, float yPosition);
+
     sf::Text text;
     sf::RectangleShape healthBar;
     sf::RectangleShape healthBarBackground;
     sf::RectangleShape xpBar;
     sf::RectangleShape xpBarBackground;
-
-
 
     void LevelUp()
     {

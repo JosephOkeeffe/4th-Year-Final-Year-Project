@@ -45,7 +45,7 @@ public:
 	void InitDetectionCircle(int radius);
 
 	void UpdateDetectionCircle();
-	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
+	virtual void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
 
 	void ChangeSpeedDependingOnTiles();
 	

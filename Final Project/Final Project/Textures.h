@@ -52,6 +52,8 @@ private:
     sf::Texture rotateTexture;
     sf::Texture scaleTexture;
     sf::Texture goldParticleTexture;
+
+    sf::Texture blastTexture;
     // Main Menu
     sf::Texture menuBackgroundTexture;
     sf::Texture menuMountainFarTexture;

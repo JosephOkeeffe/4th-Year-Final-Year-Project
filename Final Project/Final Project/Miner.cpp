@@ -148,7 +148,6 @@ void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
     if (path.empty())
     {
-        // If the path is empty, generate a new path using A*
         int startX = body.getPosition().x / Global::CELL_SIZE;
         int startY = body.getPosition().y / Global::CELL_SIZE;
 
@@ -163,7 +162,6 @@ void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
 
     if (!path.empty())
     {
-        // Move along the path
         Tile* nextTile = path.front();
 
         sf::Vector2f direction = nextTile->tile.getPosition() - body.getPosition();
@@ -179,15 +177,12 @@ void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
         }
         else
         {
-            // Move to the next tile in the path
             body.setPosition(nextTile->tile.getPosition());
             path.erase(path.begin());
 
             if (!path.empty())
             {
-                // Set the new target position for the next tile in the path
                 targetPosition = path.front()->tile.getPosition();
-                //FlipSpriteWithDirection(behaviour->GetDirectionFacing(targetPosition, body.getPosition()), body);
             }
         }
     }

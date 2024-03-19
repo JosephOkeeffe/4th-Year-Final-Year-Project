@@ -26,6 +26,9 @@ void Textures::SetupTextures()
     goldParticleTexture.loadFromFile("./assets/images/gold-particle.png");
     textureMap["gold-icon"] = goldParticleTexture;
 
+    blastTexture.loadFromFile("./assets/images/blast.png");
+    textureMap["blast"] = blastTexture;
+
 
     // Characters
         warriorTexture.loadFromFile("./assets/images/warrior.png");

@@ -190,10 +190,11 @@ void Characters::DeselectCharacter()
 void Characters::Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites)
 {
 	int playerAnimation = m_frameNo;
+	
 	m_frameValue += animationSpeed;
 	m_frameNo = static_cast<int>(m_frameValue);
-	
 	m_frameNo = m_frameNo % amountOfSprites;
+	
 
 	if (playerAnimation != m_frameNo)
 	{

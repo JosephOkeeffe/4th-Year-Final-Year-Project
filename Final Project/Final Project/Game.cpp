@@ -730,14 +730,12 @@ void Game::MoveFormationWithLeader()
                 {
                     if (formation->leader->body.getScale().x > 0 && unit->distanceFromLeader.x > 0)
                     {
-                        Display_Text("FACING RIGHT");
 
                         unit->distanceFromLeader *= -1.0f;
                         unit->hasFlipped = true; 
                     }
                     else if (formation->leader->body.getScale().x < 0 && unit->distanceFromLeader.x < 0)
                     {
-                        Display_Text("FACING LEFT");
 
                         unit->distanceFromLeader *= -1.0f;
                         unit->hasFlipped = true;   
