@@ -82,6 +82,12 @@ void Textures::SetupTextures()
         scaleTexture.loadFromFile("./assets/images/scale.png");
         textureMap["scale"] = scaleTexture;
 
+        buildHammerTexture.loadFromFile("./assets/images/build-hammer.png");
+        textureMap["build-hammer"] = buildHammerTexture;       
+        
+        trainUnitsTexture.loadFromFile("./assets/images/train-units.png");
+        textureMap["train-units"] = trainUnitsTexture;
+
 
 
 

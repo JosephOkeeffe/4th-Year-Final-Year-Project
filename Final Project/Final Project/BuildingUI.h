@@ -17,12 +17,13 @@ public:
         font.loadFromFile("./assets/fonts/Flinton.otf");
 
         buildButton.setSize(sf::Vector2f( mainRectangle.getSize().x * 0.35, mainRectangle.getSize().y / 1.5 ));
-        buildButton.setFillColor(sf::Color::Red);
         buildButton.setOrigin(buildButton.getLocalBounds().width / 2, buildButton.getLocalBounds().height / 2);
+        buildButton.setTexture(&Textures::GetInstance().GetTexture("build-hammer"));
            
         trainButton.setSize(sf::Vector2f(mainRectangle.getSize().x * 0.35, mainRectangle.getSize().y / 1.5));
-        trainButton.setFillColor(sf::Color::Red);
         trainButton.setOrigin(buildButton.getLocalBounds().width / 2, buildButton.getLocalBounds().height / 2);
+        trainButton.setTexture(&Textures::GetInstance().GetTexture("train-units"));
+
 
         for (int i = 0; i < 2; i++)
         {

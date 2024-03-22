@@ -42,6 +42,9 @@ private:
     sf::Texture oilManButtonIconTexture;
     sf::Texture hazmatManButtonIconTexture;
 
+    sf::Texture buildHammerTexture;
+    sf::Texture trainUnitsTexture;
+
     sf::Texture goldMineButtonIconTexture;
     sf::Texture oilExtractorButtonIconTexture;
     sf::Texture uraniumExtractorButtonIconTexture;

@@ -54,9 +54,9 @@ void Game::Init()
     BuildingUI::Init();
 
     CreateHeadquarters(basePos);
-    CreateArcher({ 300, 400 });
+   // CreateArcher({ 300, 400 });
     // CreateWarrior({ 350, 400 });
-    CreateWarrior({ 400, 400 });
+   // CreateWarrior({ 400, 400 });
     CreateMiner({ 450, 400 });
     CreateEnemy({ 600, 600 });
 }
