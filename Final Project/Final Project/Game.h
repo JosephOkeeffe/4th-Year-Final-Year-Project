@@ -20,6 +20,7 @@
 #include "OilMan.h"
 #include "HazmatMan.h"
 #include "Enemy.h"
+#include "Suckler.h"
 
 #include "Headquarters.h"
 #include "GoldMine.h"
@@ -81,12 +82,15 @@ private:
     void CreateHazmatMan(sf::Vector2f pos);
 
     void CreateEnemy(sf::Vector2f pos);
+    void CreateSuckler(sf::Vector2f pos);
 
 
     void CreateHeadquarters(sf::Vector2f pos);
     void CreateGoldMine();
     void CreateOilExtractor();
     void CreateUraniumExtractor();
+
+    void MergeEnemies();
 
 
     void SelectUnits();

@@ -11,6 +11,8 @@ class Headquarters;
 class GoldMine;
 class Miner;
 class Enemy;
+class Suckler;
+class Gumper;
 class Formation;
 
 class GameManager
@@ -192,8 +194,11 @@ public:
     static std::vector<Buildings*> buildings;
     static std::vector<Characters*> units;
     static std::vector<Enemy*> enemies;
+    static std::vector<Suckler*> sucklers;
     static Buildings* buildingToPlace;
     static std::vector<Formation*> formations;
+
+    static int enemyID;
 
 private:
     static sf::RenderWindow* window;

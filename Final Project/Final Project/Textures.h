@@ -26,7 +26,11 @@ private:
 
     // Enemy
     sf::Texture enemyTexture;
-
+    sf::Texture sucklerTexture;
+    sf::Texture suckler2Texture;
+    sf::Texture bigSucklerTexture;
+    sf::Texture gumperTexture;
+    sf::Texture bigGumperTexture;
 
     // Buildings
     sf::Texture baseTexture;

@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "Textures.h"
 #include "Globals.h"
 #include "GameManager.h"
 #include "Characters.h"
+
+#define Display_Text(x) std::cout << x << "\n";
 
 class Enemy
 {
@@ -11,41 +14,65 @@ public:
 
 	enum CurrentState
 	{
-		IDLE, // 35 ,  68 
-		WALKING, // 58, 69, 72 
-		THINKING, // 26, 144,  68 
-		ATTACKING, // 67, 214 , 89 
-		DEAD //  50, 304 , 68
+		IDLE,
+		WALKING,
+		MERGING,
+		ATTACKING,
+		DEAD 
 	};
 
-	Enemy();
+	enum EnemyType
+	{
+		SUCKLER_MALE,
+		SUCKLER_FEMALE,
+		BIG_SUCKLER,
+		GUMPER,
+		BIG_GUMPER
+	};
+
+	//enum MergingState
+	//{
+	//	NONE,
+	//	MERGER,
+	//	GETTING_MERGED
+	//};
+
+	EnemyType enemyType;
+	//MergingState mergingState = NONE;
+
+	void Init(sf::Texture& _texture);
 	void Draw();
-	void Update();
-	void Animate(); 
+	virtual void Update();
 	void SetPosition(sf::Vector2f pos);
-	void CheckState();
 
-	bool IsCharacterWithinRadius(const sf::Sprite& target);
+	void CheckIfAnythingIsWithinRadius();
+	void ChangeState(CurrentState newState);
+	void UpdateStates();
+	bool GetCurrentState(CurrentState checkState);
+	bool IsCharacterWithinRadius(sf::Sprite& target);
 
-	CurrentState state = DEAD;
+
+	int id = 0;
+	bool hasMerged = false;
+	CurrentState state = IDLE;
+	
 
 	sf::Sprite body;
-	sf::IntRect textureRect = { 0, 0, 35, 68 };
+	sf::Texture texture;
 	sf::CircleShape detectionCircle;
 
-	float detectionRadius = 100.0f;
+	float detectionRadius = 100.0f;    
 
-	int currentFrameX = 36;
-	int currentFrameY = 0;
-	int textureWidth = 35;
-	int textureHeight = 68;
-	int amountOfSprites = 7;
+	Enemy* target;
 
-	int animationCount = 0;
-	int m_frameNo{ 0 };
-	float m_frameValue{ 0.0f };
-	float animationSpeed{ 0.05 };
-	int playerAnimation = 0;           
+	std::vector <Enemy*> enemiesInRadius;
+
+	bool toBeDeleted = false;
+
+	bool hasFoundMerge = false;
+
+
+	sf::Vector2f targetPos;
 private:
 };
 

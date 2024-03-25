@@ -152,6 +152,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Stats.cpp" />
+    <ClCompile Include="Suckler.cpp" />
     <ClCompile Include="UraniumExtractor.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Stats.h" />
+    <ClInclude Include="Suckler.h" />
     <ClInclude Include="TileTypes.h" />
     <ClInclude Include="UraniumExtractor.h" />
     <ClInclude Include="View.h" />

@@ -58,7 +58,11 @@ void Game::Init()
     // CreateWarrior({ 350, 400 });
    // CreateWarrior({ 400, 400 });
     CreateMiner({ 450, 400 });
-    CreateEnemy({ 600, 600 });
+
+    CreateSuckler({ 150, 150 });
+    CreateSuckler({ 200, 150 });
+    CreateSuckler({ 150, 250 });
+   // CreateSuckler({ 200, 250 });
 }
 
 void Game::ProcessEvents()
@@ -424,6 +428,7 @@ void Game::Update(sf::Time t_deltaTime)
             }
         }
 
+        MergeEnemies();
         break;
     case PAUSED:
 
@@ -624,6 +629,16 @@ void Game::CreateEnemy(sf::Vector2f pos)
     GameManager::enemies.push_back(newEnemy);
 }
 
+void Game::CreateSuckler(sf::Vector2f pos)
+{
+    Suckler* newSuckler = new Suckler(GameManager::enemyID);
+    newSuckler->SetPosition(pos);
+
+    GameManager::sucklers.push_back(newSuckler);
+    GameManager::enemies.push_back(newSuckler);
+    GameManager::enemyID++;
+}
+
 void Game::SelectUnits()
 {
     for (Characters* temp : GameManager::units)
@@ -807,6 +822,54 @@ void Game::CreateUraniumExtractor()
 {
     UraniumExtractor* newUraniumExtractor = new UraniumExtractor({ 1,1 });
     GameManager::buildingToPlace = newUraniumExtractor;
+}
+
+void Game::MergeEnemies()
+{
+    for (Enemy* x : GameManager::enemies)
+    {
+        // SKips if its not a merge and skips if it has already startedMerging
+        if (x->enemyType != x->SUCKLER_MALE || x->hasFoundMerge) { continue; }
+
+        for (Enemy* y : GameManager::enemies)
+        {
+            if (y->enemyType != y->SUCKLER_FEMALE || y->hasFoundMerge) { continue; }
+
+            if (x != y)
+            {
+                if (x->IsCharacterWithinRadius(y->body))
+                {
+                    x->hasFoundMerge = true;
+                    y->hasFoundMerge = true;
+
+                    y->targetPos = x->body.getPosition();
+                    y->target = x;
+
+                }
+            }
+        }
+    }
+
+    for (Enemy* x : GameManager::enemies)
+    {
+        if (x->hasMerged) { continue; }
+
+        if (x->target != nullptr)
+        {
+            sf::Vector2f direction = x->body.getPosition() - x->target->body.getPosition();
+            float distance = std::hypot(direction.x, direction.y);
+
+            if (distance < 0.1)
+            {
+                x->hasMerged = true;
+                x->target->toBeDeleted = true;
+                break;
+            }
+        }
+    }
+
+    GameManager::enemies.erase(std::remove_if(GameManager::enemies.begin(), GameManager::enemies.end(),
+        [](Enemy* e) { return e->toBeDeleted; }), GameManager::enemies.end());
 }
 
 void Game::ClearFog(sf::CircleShape radius)

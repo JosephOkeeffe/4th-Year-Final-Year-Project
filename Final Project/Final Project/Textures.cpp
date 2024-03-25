@@ -58,6 +58,21 @@ void Textures::SetupTextures()
         enemyTexture.loadFromFile("./assets/images/enemy2.png");
         textureMap["enemy"] = enemyTexture;
 
+        sucklerTexture.loadFromFile("./assets/images/suckler.png");
+        textureMap["suckler"] = sucklerTexture;
+
+        suckler2Texture.loadFromFile("./assets/images/suckler2.png");
+        textureMap["suckler2"] = suckler2Texture;
+
+        bigSucklerTexture.loadFromFile("./assets/images/suckler-big.png");
+        textureMap["big-suckler"] = bigSucklerTexture;
+
+        gumperTexture.loadFromFile("./assets/images/gumper.png");
+        textureMap["gumper"] = gumperTexture;
+
+        bigGumperTexture.loadFromFile("./assets/images/gumper-big.png");
+        textureMap["big-gumper"] = bigGumperTexture;
+
 
     // Buildings
         baseTexture.loadFromFile("./assets/images/base.png");
