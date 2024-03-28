@@ -100,7 +100,7 @@ void Button::render(sf::RenderWindow& window)
         // add particles that go up
         particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
 
-        particleSystem.update();
+        particleSystem.Update();
     }
 }
 

@@ -16,16 +16,34 @@ void Enemy::Init(sf::Texture& _texture)
 void Enemy::Draw()
 {
 	GameManager::GetWindow()->draw(body);
-	GameManager::GetWindow()->draw(detectionCircle);
+
+	if (!GetCurrentState(DEAD))
+	{
+		GameManager::GetWindow()->draw(detectionCircle);
+
+		particleSystem.draw(*GameManager::GetWindow());
+
+		for (Projectile* projectile : projectiles)
+		{
+			projectile->Draw(*GameManager::GetWindow());
+		}
+	}
 }
 
 void Enemy::Update()
 {
-	detectionCircle.setPosition(body.getPosition());
+	if (!GetCurrentState(DEAD))
+	{
+		detectionCircle.setPosition(body.getPosition());
+		CheckIfAnythingIsWithinRadius();
+		UpdateStates();
+		particleSystem.Update();
 
-	CheckIfAnythingIsWithinRadius();
-	UpdateStates();
-
+		if (body.getColor() == sf::Color::Red && redTimer.getElapsedTime().asSeconds() > 0.3)
+		{
+			body.setColor(sf::Color::White);
+		}
+	}
 }
 
 void Enemy::UpdateStates()
@@ -107,7 +125,36 @@ bool Enemy::IsCharacterWithinRadius(sf::Sprite& target)
 	return (distance <= detectionRadius);
 }
 
+void Enemy::TakeDamage(int damage)
+{
+	stats.LoseHealth(damage);
+	body.setColor(sf::Color::Red);
+	redTimer.restart();
 
+	for (int i = 0; i < 10; i++)
+	{
+		particleSystem.AddSpriteParticle(body.getPosition(), Global::GetRandomVector() * 2.0f, sf::Color::White, Textures::GetInstance().GetTexture("blast"), 20, 0.3, 1);
+	}
+}																					 
 
+void Enemy::ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance)
+{
+	float length = sqrt(knockbackDirection.x * knockbackDirection.x + knockbackDirection.y * knockbackDirection.y);
 
+	if (length != 0)
+	{
+		knockbackDirection.x /= length;
+		knockbackDirection.y /= length;
+	}
 
+	body.move(knockbackDirection * knockbackDistance);
+}
+
+void Enemy::DeleteEnemy()
+{
+	target = nullptr;
+	projectiles.clear();
+	toBeDeleted = true;
+	GameManager::enemies.erase(std::remove(GameManager::enemies.begin(), GameManager::enemies.end(), this), GameManager::enemies.end());
+	GameManager::aliveEnemies.erase(std::remove(GameManager::aliveEnemies.begin(), GameManager::aliveEnemies.end(), this), GameManager::aliveEnemies.end());
+}

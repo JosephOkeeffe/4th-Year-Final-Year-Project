@@ -8,6 +8,7 @@ public:
     Stats(int maxHealth, int dmg, float attackSpeed)
     {
         level = 1;
+        knockBackDistance = 20;
         SetCurrentXP(0);
         SetXPNeededForNextLevel(10);
         SetMaxHealth(maxHealth);
@@ -101,6 +102,11 @@ public:
         return attackSpeed;
     }
 
+    float GetKnockback()
+    {
+        return knockBackDistance;
+    }
+
 private:
     int level;
     int currentXP;
@@ -109,4 +115,6 @@ private:
     int MAX_HEALTH;
     int damage;
     float attackSpeed;
+    float knockBackDistance;
+    // Maybe add in some debuffs
 };

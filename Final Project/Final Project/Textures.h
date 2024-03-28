@@ -28,9 +28,18 @@ private:
     sf::Texture enemyTexture;
     sf::Texture sucklerTexture;
     sf::Texture suckler2Texture;
+    sf::Texture sucklerDeadTexture;
     sf::Texture bigSucklerTexture;
+    sf::Texture bigSucklerDeadTexture;
     sf::Texture gumperTexture;
     sf::Texture bigGumperTexture;
+
+    // Projectiles
+    sf::Texture blastTexture;
+    sf::Texture blastTrailTexture;
+    sf::Texture spitTexture;
+    sf::Texture shieldTexture;
+    sf::Texture flamingSwordTexture;
 
     // Buildings
     sf::Texture baseTexture;
@@ -60,7 +69,6 @@ private:
     sf::Texture scaleTexture;
     sf::Texture goldParticleTexture;
 
-    sf::Texture blastTexture;
     // Main Menu
     sf::Texture menuBackgroundTexture;
     sf::Texture menuMountainFarTexture;

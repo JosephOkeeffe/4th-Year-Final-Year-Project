@@ -9,6 +9,7 @@ std::vector<Buildings*> GameManager::buildings;
 std::vector<Characters*> GameManager::units;
 std::vector<Formation*> GameManager::formations;
 std::vector<Enemy*> GameManager::enemies;
+std::vector<Enemy*> GameManager::aliveEnemies;
 std::vector<Suckler*> GameManager::sucklers;
 Buildings* GameManager::buildingToPlace;
 

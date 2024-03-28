@@ -194,6 +194,7 @@ public:
     static std::vector<Buildings*> buildings;
     static std::vector<Characters*> units;
     static std::vector<Enemy*> enemies;
+    static std::vector<Enemy*> aliveEnemies;
     static std::vector<Suckler*> sucklers;
     static Buildings* buildingToPlace;
     static std::vector<Formation*> formations;

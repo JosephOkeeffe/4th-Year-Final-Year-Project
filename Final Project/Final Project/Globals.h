@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
-
-
+#include <random>
 
 struct Global
 {
@@ -78,7 +77,7 @@ public:
         return mousePos;
     }
 
-    static float distance(const sf::Vector2f& p1, const sf::Vector2f& p2)
+    static float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2)
     {
         return std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2));
     }
@@ -105,5 +104,20 @@ public:
     {
         float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
         return length > 0 ? vector / length : vector;
+    }
+
+    static sf::Vector2f GetRandomVector()
+    {
+        sf::Vector2f randomVector;
+        // Generate a random angle between 0 and 360 degrees
+        float angle = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * 360.0f;
+
+        // Convert angle to radians
+        float angleRad = angle * 3.14159265f / 180.0f;
+
+        randomVector = { std::cos(angleRad), std::sin(angleRad) };
+
+        // Calculate components of unit vector using trigonometry
+        return randomVector;
     }
 };

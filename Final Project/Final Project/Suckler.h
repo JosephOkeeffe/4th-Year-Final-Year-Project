@@ -1,18 +1,24 @@
 #pragma once
 #include "Enemy.h"
+#include "Stats.h"
 class Suckler : public Enemy
 {
 public:
 
-	enum MyEnum
-	{
-
-	};
 	Suckler(int id);
 	void Update() override;
+	void Merge();
+	void MoveTowardsMergingTarget();
 
+	void ShootSpit();
+	void ShootShield();
 
 	bool mergeComplete = false;
-	//Enemy* target;
+
+	sf::Clock shieldTimer;
+	sf::Clock spitTimer;
+	int shieldFireRate = 20;
+	int chanceToSpawnShield = 4;
+
 };
 

@@ -26,8 +26,21 @@ void Textures::SetupTextures()
     goldParticleTexture.loadFromFile("./assets/images/gold-particle.png");
     textureMap["gold-icon"] = goldParticleTexture;
 
+    // Projectiles
     blastTexture.loadFromFile("./assets/images/blast.png");
     textureMap["blast"] = blastTexture;
+
+    blastTrailTexture.loadFromFile("./assets/images/blast-trail.png");
+    textureMap["blast-trail"] = blastTrailTexture;
+
+    spitTexture.loadFromFile("./assets/images/spit.png");
+    textureMap["spit"] = spitTexture;
+
+    shieldTexture.loadFromFile("./assets/images/shield.png");
+    textureMap["shield"] = shieldTexture;
+
+    flamingSwordTexture.loadFromFile("./assets/images/flaming-sword.png");
+    textureMap["flaming-sword"] = flamingSwordTexture;
 
 
     // Characters
@@ -64,8 +77,14 @@ void Textures::SetupTextures()
         suckler2Texture.loadFromFile("./assets/images/suckler2.png");
         textureMap["suckler2"] = suckler2Texture;
 
+        sucklerDeadTexture.loadFromFile("./assets/images/suckler-dead.png");
+        textureMap["suckler-dead"] = sucklerDeadTexture;
+
         bigSucklerTexture.loadFromFile("./assets/images/suckler-big.png");
         textureMap["big-suckler"] = bigSucklerTexture;
+
+        bigSucklerDeadTexture.loadFromFile("./assets/images/suckler-big-dead.png");
+        textureMap["big-suckler-dead"] = bigSucklerDeadTexture;
 
         gumperTexture.loadFromFile("./assets/images/gumper.png");
         textureMap["gumper"] = gumperTexture;

@@ -323,13 +323,15 @@ void Game::Render()
             {
                 building->Draw();
             }
-            for (Characters* unit : GameManager::units)
-            {
-                unit->Draw();
-            }
+
             for (Enemy* enemy : GameManager::enemies)
             {
                 enemy->Draw();
+            }
+
+            for (Characters* unit : GameManager::units)
+            {
+                unit->Draw();
             }
 
             if (isDragging)
@@ -621,21 +623,22 @@ void Game::CreateHazmatMan(sf::Vector2f pos)
     GameManager::units.push_back(newHazmatMan);
 }
 
-void Game::CreateEnemy(sf::Vector2f pos)
-{
-    Enemy* newEnemy = new Enemy;
-    newEnemy->SetPosition(pos);
-
-    GameManager::enemies.push_back(newEnemy);
-}
+//void Game::CreateEnemy(sf::Vector2f pos)
+//{
+//    Enemy* newEnemy = new Enemy;
+//    newEnemy->SetPosition(pos);
+//
+//    GameManager::enemies.push_back(newEnemy);
+//}
 
 void Game::CreateSuckler(sf::Vector2f pos)
 {
     Suckler* newSuckler = new Suckler(GameManager::enemyID);
     newSuckler->SetPosition(pos);
 
-    GameManager::sucklers.push_back(newSuckler);
+
     GameManager::enemies.push_back(newSuckler);
+    GameManager::aliveEnemies.push_back(newSuckler);
     GameManager::enemyID++;
 }
 
@@ -862,14 +865,13 @@ void Game::MergeEnemies()
             if (distance < 0.1)
             {
                 x->hasMerged = true;
-                x->target->toBeDeleted = true;
+                x->target->DeleteEnemy();
                 break;
             }
         }
     }
 
-    GameManager::enemies.erase(std::remove_if(GameManager::enemies.begin(), GameManager::enemies.end(),
-        [](Enemy* e) { return e->toBeDeleted; }), GameManager::enemies.end());
+
 }
 
 void Game::ClearFog(sf::CircleShape radius)

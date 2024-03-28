@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "Characters.h"
 
-//#include "Projectile.h"
 class Archer : public Characters
 {
 public:
@@ -11,17 +10,16 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites) override;
-	void AnimateArcher();
 	void CheckAnimationState();
-	void Attack();
+	void Attack(Enemy* target);
 
 	sf::Sprite& GetSprite();	
 
 private:
 
-	int currentFrameX = 35;
+	int currentFrameX = 34;
 	int currentFrameY = 0;
-	int textureWidth = 35;
+	int textureWidth = 34;
 	int textureHeight = 50;
 	int amountOfSprites = 2;
 	// Moving
@@ -29,8 +27,13 @@ private:
 	float moveSpeed = 2.0f;
 
 
+	//int bulletRange = 210;
+	//float reloadDelay = 3;
+	//sf::Clock reloadTimer;
 
-	//std::vector<Projectile> projectiles;
+	//Enemy* closestEnemy;
+	//float closestEnemyDistance = 500000;
+
 };
 
  

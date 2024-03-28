@@ -120,10 +120,10 @@ void Miner::UpdateWorkingStates()
 		if (particleTimer.getElapsedTime().asMilliseconds() >= 100)
 		{
 			particleTimer.restart();
-			particleSystem.addSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
+			particleSystem.AddSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
 
-		particleSystem.update();
+		particleSystem.Update();
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))

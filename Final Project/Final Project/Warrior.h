@@ -7,11 +7,15 @@ class Warrior : public Characters
 public:
 	Warrior();
 	void Update() override;
+	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites) override;
 	void AnimateWarrior();
 	void CheckAnimationState();
+	void Attack(Enemy* target);
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
+
+
 
 private:
 

@@ -14,39 +14,135 @@ void Archer::Update()
 {
 	Characters::Update();
 	CheckAnimationState();
-	AnimateArcher();
+	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 
 	if (GetSelected())
 	{
 		SetCurrentState(IDLE);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	if (GetCurrentState(ATTACKING) &&  reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
 	{
-		Attack();
-		
-		
+		Attack(closestEnemy);
 	}
 
-	for (Projectile& projectile : projectiles)
-	{
-		projectile.Update();
+	//if (GameManager::aliveEnemies.size() < 1)
+	//{
+	//	if (!GetCurrentState(MOVING))
+	//	{
+	//		SetCurrentState(IDLE);
+	//		detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+	//	}
+	//}
+	//else
+	//{
+	//	// Picks closest enemy
+	//	bool anyEnemyInRadius = false;
+	//	for (Enemy* enemy : GameManager::aliveEnemies)
+	//	{
+	//		if (IsEnemyInAttackRadius(enemy->body))
+	//		{
+	//			float distance = Global::Distance(enemy->body.getPosition(), body.getPosition());
+	//			anyEnemyInRadius = true;
 
-		if (projectile.IsOutOfRange(100))
-		{
-			projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
-		}
-	}
+	//			if (closestEnemy != nullptr && closestEnemy->GetCurrentState(closestEnemy->DEAD))
+	//			{
+	//				closestEnemy = nullptr;
+	//			}
+
+	//			if (distance < closestEnemyDistance || closestEnemy == nullptr)
+	//			{
+	//				closestEnemyDistance = distance;
+	//				closestEnemy = enemy;
+	//			}
+	//		}
+	//		else if (!GetCurrentState(MOVING))
+	//		{
+	//			SetCurrentState(IDLE);      
+	//		}
+	//	}
+
+	//	if (!anyEnemyInRadius)
+	//	{
+	//		closestEnemy = nullptr;
+	//	}
+	//	//  turnn them red
+	//	// Then enemies attacking player
+	//	// Then enemies moving
+
+	//	if (!GetSelected() && !GetCurrentState(MOVING))
+	//	{
+	//		if (closestEnemy == nullptr || !IsEnemyInAttackRadius(closestEnemy->body)) 
+	//		{ 
+	//			return; 
+	//		}
+	//		SetCurrentState(ATTACKING);
+
+	//		if (closestEnemy->body.getPosition().x < body.getPosition().x && body.getScale().x > 1)
+	//		{
+	//			FlipSprite();
+	//		}
+	//		else if (closestEnemy->body.getPosition().x > body.getPosition().x && body.getScale().x < 1)
+	//		{
+	//			FlipSprite();
+	//		}
+
+	//		if (reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+	//		{
+	//			Attack(closestEnemy);
+	//		}
+	//	}
 
 
+	//	for (Enemy* enemy : GameManager::aliveEnemies)
+	//	{
+	//		if (!IsEnemyInAttackRadius(enemy->body))
+	//		{
+	//			continue;
+	//		}
+
+	//		for (Projectile* projectile : projectiles)
+	//		{
+	//			if (projectile->body.getGlobalBounds().intersects(enemy->body.getGlobalBounds()))
+	//			{
+	//				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
+
+	//				enemy->TakeDamage(stats.GetDamage());
+	//				enemy->ApplyKnockback(knockbackDirection, stats.GetKnockback());
+
+	//				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+	//			}
+
+	//			// If projectle hits enemy projectile
+	//			if (enemy->projectiles.size() > 0)
+	//			{
+	//				for (Projectile* enemyProjectile : enemy->projectiles)
+	//				{
+	//					if (projectile->body.getGlobalBounds().intersects(enemyProjectile->body.getGlobalBounds()))
+	//					{
+	//						projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+	//						enemy->projectiles.erase(std::remove(enemy->projectiles.begin(), enemy->projectiles.end(), enemyProjectile), enemy->projectiles.end());
+	//					}
+	//				}
+	//			}
+
+	//		}
+	//	}
+	//}
+
+	//for (Projectile* projectile : projectiles)
+	//{
+	//	projectile->Update();
+
+	//	if (projectile->IsOutOfRange(projectile->body.getPosition(), projectile->startPosition))
+	//	{
+	//		projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+	//	}
+	//}
 }
 
 void Archer::Draw()
 {
-	for (Projectile& projectile : projectiles)
-	{
-		projectile.Draw(*GameManager::GetWindow());
-	}
 	Characters::Draw();
 
 	if(GetSelected())
@@ -61,13 +157,6 @@ void Archer::Animate(float startX, float startY, float spriteWidth, float sprite
 	m_frameValue += animationSpeed;
 	m_frameNo = static_cast<int>(m_frameValue);
 	m_frameNo = m_frameNo % amountOfSprites;
-
-	if (GetCurrentState(ATTACKING) && m_frameNo == amountOfSprites - 1)
-	{
-		Projectile projectile(Textures::GetInstance().GetTexture("blast"), body.getPosition(), { 200,200 }, 1);
-
-		projectiles.push_back(projectile);
-	}
 	
 	if (playerAnimation != m_frameNo)
 	{
@@ -81,12 +170,6 @@ void Archer::Animate(float startX, float startY, float spriteWidth, float sprite
 		}
 		
 	}
-}
-
-
-void Archer::AnimateArcher()
-{
-	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 }
 
 void Archer::CheckAnimationState()
@@ -120,13 +203,30 @@ void Archer::CheckAnimationState()
 		currentFrameY = 4;
 	}
 
-
+	if (GetCurrentState(ATTACKING))
+	{
+		animationSpeed = 0.01;
+	}
+	else
+	{
+		animationSpeed = 0.04;
+	}
 }
 
-void Archer::Attack()
+void Archer::Attack(Enemy* target)
 {
-	m_frameNo = 0;
-	SetCurrentState(ATTACKING);
+	if (m_frameNo == amountOfSprites - 1)
+	{
+		if (body.getScale().x > 1)
+		{
+			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), 1, detectionRadius + 10, 1));
+		}
+		else
+		{
+			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -1));
+		}
+		reloadTimer.restart();
+	}
 }
 
 sf::Sprite& Archer::GetSprite()

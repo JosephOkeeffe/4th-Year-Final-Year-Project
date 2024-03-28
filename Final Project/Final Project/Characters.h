@@ -3,9 +3,10 @@
 #include "Textures.h"
 #include "GameManager.h"
 #include "HUD.h"
-#include "Particles.h"
-#include "Projectile.h"
+#include "ParticleSystem.h"
 #include "Stats.h";
+#include "Enemy.h"
+#include "ProjectileFactory.h"
 
 class Particles;
 class ParticleSystem;
@@ -56,11 +57,15 @@ public:
 	void DeselectCharacter();
 	bool GetSelected();
 	void ChangeSelectedColour();
-	void CalculateAngle(sf::Sprite& target);
+	bool IsEnemyInAttackRadius(sf::Sprite& target);
 	void FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite);
 	void FlipSprite();
 	bool GetCurrentState(State stateToCheck);
 	void SetCurrentState(State stateToChange);
+
+	void FindClosestEnemy();
+	void StartAttackingClosestEnemy();
+	void DetectProjectileCollision();
 
 
 	
@@ -78,13 +83,12 @@ public:
 	sf::CircleShape tileDetectionCircle;
 
 	bool isPartOfFormation = false;
-	
 	bool isSelected = false;
 	bool isMovingIntoFormation = false;
 	bool isFollowingLeader = false;
 	bool isWorking = false;
 
-	float detectionRadius = 100.0f;
+	float detectionRadius = 200.0f;
 	float tileDetectionRadius = 10;
 
 	float defaultMoveSpeed = 1.0f;
@@ -94,24 +98,31 @@ public:
 	int animationCount = 0;
 	int m_frameNo{ 0 };
 	float m_frameValue{ 0.0f }; 
-	float animationSpeed{ 0.2 };
+	float animationSpeed;
 	int playerAnimation = 0;
 
+	// Path
 	Tile* startTile;
 	Tile* goalTile;
 	std::vector<Tile*> path;
-	ParticleSystem particleSystem;
-
 	int pathFindingXOffset = 50;
 	int pathFindingYOffset = 40;
-
 	sf::Vector2f distanceFromLeader;
-
 	bool hasFlipped = false;
 
-	std::vector<Projectile> projectiles;
+	// Particles
+	ParticleSystem particleSystem;
 
-	Stats stats{ 10, 1, 1 };
+	// Projectiles
+	ProjectileFactory factory;
+	std::vector<Projectile*> projectiles;
+	sf::Clock reloadTimer;
+	float reloadDelay = 3;
+
+	Enemy* closestEnemy;
+	float closestEnemyDistance = INT_MAX;
+
+	Stats stats{ 10, 1, 1.5 };
 private:
 
 

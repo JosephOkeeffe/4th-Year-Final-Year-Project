@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include "Particles.h"
+#include "ParticleSystem.h"
 
 
 class Button

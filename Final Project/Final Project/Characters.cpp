@@ -14,9 +14,13 @@ void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& te
 	textureRect = textureSize;
 	body.setTexture(_texture);
 
-	InitDetectionCircle(150);
+	InitDetectionCircle(detectionRadius);
 }
 
+// TO DO
+// Then enemies attacking player
+// Then enemies moving
+// Formations - changed radius to the centre of the whole formation, get the distance, get the average and make a new formation radius
 void Characters::Update()
 {
 	if (GetCurrentState(MOVING) && !path.empty())
@@ -38,7 +42,7 @@ void Characters::Update()
 		{
 			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
-			particleSystem.update();
+			particleSystem.Update();
 
 			int x = body.getPosition().x / Global::CELL_SIZE;
 			int y = body.getPosition().y / Global::CELL_SIZE;
@@ -51,6 +55,32 @@ void Characters::Update()
 			{
 				particleSystem.clearParticles();
 			}
+		}
+	}
+
+	if (GameManager::aliveEnemies.size() < 1)
+	{
+		if (!GetCurrentState(MOVING))
+		{
+			SetCurrentState(IDLE);
+			detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+		}
+	}
+	else
+	{
+
+		FindClosestEnemy();
+		StartAttackingClosestEnemy();
+		DetectProjectileCollision();
+	}
+
+	for (Projectile* projectile : projectiles)
+	{
+		projectile->Update();
+
+		if (projectile->IsOutOfRange(projectile->body.getPosition(), projectile->startPosition))
+		{
+			projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
 		}
 	}
 }
@@ -84,9 +114,16 @@ void Characters::MouseRelease()
 
 void Characters::Draw()
 {
+	for (Projectile* projectile : projectiles)
+	{
+		projectile->Draw(*GameManager::GetWindow());
+	}
+
 	particleSystem.draw(*GameManager::GetWindow());
 	GameManager::GetWindow()->draw(detectionCircle);
 	GameManager::GetWindow()->draw(body);
+
+
 }
 
 void Characters::InitDetectionCircle(int radius)
@@ -114,7 +151,7 @@ void Characters::MoveCharacter()
 	float length = 0;
 	DeselectCharacter();
 	particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
-	particleSystem.update();
+	particleSystem.Update();
 
 	targetPosition = path.front()->tile.getPosition();
 	targetPosition.x += pathFindingXOffset;
@@ -236,7 +273,7 @@ void Characters::ChangeSelectedColour()
 	}
 }
 
-void Characters::CalculateAngle(sf::Sprite& target)
+bool Characters::IsEnemyInAttackRadius(sf::Sprite& target)
 {
 	float dx = body.getPosition().x - target.getPosition().x;
 	float dy = body.getPosition().y - target.getPosition().y;
@@ -247,11 +284,12 @@ void Characters::CalculateAngle(sf::Sprite& target)
 	if (distance <= detectionRadius)
 	{
 		detectionCircle.setFillColor(sf::Color(255, 0, 0, 100)); 
-
+		return true;
 	}
 	else
 	{
 		detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+		return false;
 	}
 }
 
@@ -283,6 +321,100 @@ bool Characters::GetCurrentState(State stateToCheck)
 void Characters::SetCurrentState(State stateToChange)
 {
 	currentState = stateToChange;
+}
+
+void Characters::FindClosestEnemy()
+{
+	bool anyEnemyInRadius = false;
+	for (Enemy* enemy : GameManager::aliveEnemies)
+	{
+		if (IsEnemyInAttackRadius(enemy->body))
+		{
+			float distance = Global::Distance(enemy->body.getPosition(), body.getPosition());
+			anyEnemyInRadius = true;
+
+			if (closestEnemy != nullptr && closestEnemy->GetCurrentState(closestEnemy->DEAD))
+			{
+				closestEnemy = nullptr;
+			}
+
+			if (distance < closestEnemyDistance || closestEnemy == nullptr)
+			{
+				closestEnemyDistance = distance;
+				closestEnemy = enemy;
+			}
+		}
+		else if (!GetCurrentState(MOVING))
+		{
+			SetCurrentState(IDLE);
+		}
+	}
+
+	if (!anyEnemyInRadius)
+	{
+		closestEnemy = nullptr;
+		closestEnemyDistance = INT_MAX;
+	}
+}
+
+void Characters::StartAttackingClosestEnemy()
+{
+	if (!GetSelected() && !GetCurrentState(MOVING))
+	{
+		if (closestEnemy == nullptr || !IsEnemyInAttackRadius(closestEnemy->body)) { return; }
+
+		SetCurrentState(ATTACKING);
+
+		if (closestEnemy->body.getPosition().x < body.getPosition().x && body.getScale().x > 1 ||
+			closestEnemy->body.getPosition().x > body.getPosition().x && body.getScale().x < 1)
+		{
+			FlipSprite();
+		}
+
+		//if (reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+		//{
+		//	Attack(closestEnemy);
+		//}
+	}
+}
+
+void Characters::DetectProjectileCollision()
+{
+	for (Enemy* enemy : GameManager::aliveEnemies)
+	{
+		if (!IsEnemyInAttackRadius(enemy->body))
+		{
+			continue;
+		}
+
+		for (Projectile* projectile : projectiles)
+		{
+			// If projectle hits enemy 
+			if (projectile->body.getGlobalBounds().intersects(enemy->body.getGlobalBounds()))
+			{
+				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
+
+				enemy->TakeDamage(stats.GetDamage());
+				enemy->ApplyKnockback(knockbackDirection, stats.GetKnockback());
+
+				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+			}
+
+			// If projectle hits enemy projectile
+			if (enemy->projectiles.size() > 0)
+			{
+				for (Projectile* enemyProjectile : enemy->projectiles)
+				{
+					if (projectile->body.getGlobalBounds().intersects(enemyProjectile->body.getGlobalBounds()))
+					{
+						projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+						enemy->projectiles.erase(std::remove(enemy->projectiles.begin(), enemy->projectiles.end(), enemyProjectile), enemy->projectiles.end());
+					}
+				}
+			}
+
+		}
+	}
 }
 
 void Characters::SetPosition(sf::Vector2f pos)
