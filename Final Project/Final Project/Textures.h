@@ -40,6 +40,7 @@ private:
     sf::Texture spitTexture;
     sf::Texture shieldTexture;
     sf::Texture flamingSwordTexture;
+    sf::Texture flamingTrailTexture;
 
     // Buildings
     sf::Texture baseTexture;
@@ -68,6 +69,7 @@ private:
     sf::Texture rotateTexture;
     sf::Texture scaleTexture;
     sf::Texture goldParticleTexture;
+    sf::Texture bloodTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;

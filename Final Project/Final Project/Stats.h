@@ -21,8 +21,11 @@ public:
 
     void InitSprites();
     void Draw(sf::RenderWindow& window);
-    void DisplayStats(sf::RenderWindow& window, sf::Vector2f pos);
-    void DrawStatBar(sf::RenderWindow& window, const std::string& label, int percentage, const sf::Color& color, float xPosition, float yPosition);
+    void DisplayAllStats(sf::RenderWindow& window, sf::Vector2f pos);
+    void DisplayTextStats(sf::RenderWindow& window, sf::Vector2f pos);
+    void DisplayHealthBar(sf::RenderWindow& window, sf::Vector2f pos);
+    void DisplayXPBar(sf::RenderWindow& window, sf::Vector2f pos);
+    void DrawStatBar(sf::RenderWindow& window, const std::string& label, int currentStat, int maxStat, const sf::Color& color, float xPosition, float yPosition);
 
     sf::Text text;
     sf::RectangleShape healthBar;
@@ -37,7 +40,7 @@ public:
         SetCurrentXP(0);
     }
 
-    void GainXP(int newXP)
+    void IncreaseXP(int newXP)
     {
         currentXP += newXP;
         if (GetCurrentXP() >= xpNeededForNextLevel)
@@ -89,9 +92,17 @@ public:
     {
         return currentXP;
     }
-    int GetHealth()
+    int GetXPNeededForNextLevel()
+    {
+        return xpNeededForNextLevel;
+    }
+    int GetCurrentHealth()
     {
         return currentHealth;
+    }
+    int GetMaxHealth()
+    {
+        return MAX_HEALTH;
     }
     int GetDamage()
     {

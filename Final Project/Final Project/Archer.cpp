@@ -25,120 +25,6 @@ void Archer::Update()
 	{
 		Attack(closestEnemy);
 	}
-
-	//if (GameManager::aliveEnemies.size() < 1)
-	//{
-	//	if (!GetCurrentState(MOVING))
-	//	{
-	//		SetCurrentState(IDLE);
-	//		detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
-	//	}
-	//}
-	//else
-	//{
-	//	// Picks closest enemy
-	//	bool anyEnemyInRadius = false;
-	//	for (Enemy* enemy : GameManager::aliveEnemies)
-	//	{
-	//		if (IsEnemyInAttackRadius(enemy->body))
-	//		{
-	//			float distance = Global::Distance(enemy->body.getPosition(), body.getPosition());
-	//			anyEnemyInRadius = true;
-
-	//			if (closestEnemy != nullptr && closestEnemy->GetCurrentState(closestEnemy->DEAD))
-	//			{
-	//				closestEnemy = nullptr;
-	//			}
-
-	//			if (distance < closestEnemyDistance || closestEnemy == nullptr)
-	//			{
-	//				closestEnemyDistance = distance;
-	//				closestEnemy = enemy;
-	//			}
-	//		}
-	//		else if (!GetCurrentState(MOVING))
-	//		{
-	//			SetCurrentState(IDLE);      
-	//		}
-	//	}
-
-	//	if (!anyEnemyInRadius)
-	//	{
-	//		closestEnemy = nullptr;
-	//	}
-	//	//  turnn them red
-	//	// Then enemies attacking player
-	//	// Then enemies moving
-
-	//	if (!GetSelected() && !GetCurrentState(MOVING))
-	//	{
-	//		if (closestEnemy == nullptr || !IsEnemyInAttackRadius(closestEnemy->body)) 
-	//		{ 
-	//			return; 
-	//		}
-	//		SetCurrentState(ATTACKING);
-
-	//		if (closestEnemy->body.getPosition().x < body.getPosition().x && body.getScale().x > 1)
-	//		{
-	//			FlipSprite();
-	//		}
-	//		else if (closestEnemy->body.getPosition().x > body.getPosition().x && body.getScale().x < 1)
-	//		{
-	//			FlipSprite();
-	//		}
-
-	//		if (reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
-	//		{
-	//			Attack(closestEnemy);
-	//		}
-	//	}
-
-
-	//	for (Enemy* enemy : GameManager::aliveEnemies)
-	//	{
-	//		if (!IsEnemyInAttackRadius(enemy->body))
-	//		{
-	//			continue;
-	//		}
-
-	//		for (Projectile* projectile : projectiles)
-	//		{
-	//			if (projectile->body.getGlobalBounds().intersects(enemy->body.getGlobalBounds()))
-	//			{
-	//				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
-
-	//				enemy->TakeDamage(stats.GetDamage());
-	//				enemy->ApplyKnockback(knockbackDirection, stats.GetKnockback());
-
-	//				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
-	//			}
-
-	//			// If projectle hits enemy projectile
-	//			if (enemy->projectiles.size() > 0)
-	//			{
-	//				for (Projectile* enemyProjectile : enemy->projectiles)
-	//				{
-	//					if (projectile->body.getGlobalBounds().intersects(enemyProjectile->body.getGlobalBounds()))
-	//					{
-	//						projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
-	//						enemy->projectiles.erase(std::remove(enemy->projectiles.begin(), enemy->projectiles.end(), enemyProjectile), enemy->projectiles.end());
-	//					}
-	//				}
-	//			}
-
-	//		}
-	//	}
-	//}
-
-	//for (Projectile* projectile : projectiles)
-	//{
-	//	projectile->Update();
-
-	//	if (projectile->IsOutOfRange(projectile->body.getPosition(), projectile->startPosition))
-	//	{
-	//		projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
-	//	}
-	//}
 }
 
 void Archer::Draw()
@@ -147,7 +33,7 @@ void Archer::Draw()
 
 	if(GetSelected())
 	{
-		stats.DisplayStats(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - body.getLocalBounds().height});
+		stats.DisplayAllStats(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - body.getLocalBounds().height});
 	}
 }
 
@@ -219,11 +105,13 @@ void Archer::Attack(Enemy* target)
 	{
 		if (body.getScale().x > 1)
 		{
-			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), 1, detectionRadius + 10, 1));
+			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
+				0.3, { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), 1, detectionRadius + 10, 1));
 		}
 		else
 		{
-			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -1));
+			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
+				0.3, { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -1));
 		}
 		reloadTimer.restart();
 	}

@@ -66,8 +66,6 @@ public:
 	void FindClosestEnemy();
 	void StartAttackingClosestEnemy();
 	void DetectProjectileCollision();
-
-
 	
 	State currentState = IDLE;
 	CharacterType characterType;

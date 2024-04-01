@@ -80,13 +80,13 @@ void Warrior::Attack(Enemy* target)
 	{
 		if (body.getScale().x > 1)
 		{
-			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"),
-				{ body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
+			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
+				0.1, { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
 		}
 		else
 		{
-			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"),
-				{ body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
+			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
+				0.1, { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
 		}
 		reloadTimer.restart();
 	}

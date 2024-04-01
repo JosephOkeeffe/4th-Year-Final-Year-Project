@@ -829,9 +829,10 @@ void Game::CreateUraniumExtractor()
 
 void Game::MergeEnemies()
 {
+    // Finding Merge
     for (Enemy* x : GameManager::enemies)
     {
-        // SKips if its not a merge and skips if it has already startedMerging
+        // Skips if its not a merge and skips if it has already startedMerging
         if (x->enemyType != x->SUCKLER_MALE || x->hasFoundMerge) { continue; }
 
         for (Enemy* y : GameManager::enemies)
@@ -843,7 +844,9 @@ void Game::MergeEnemies()
                 if (x->IsCharacterWithinRadius(y->body))
                 {
                     x->hasFoundMerge = true;
+                    x->ChangeState(x->MERGING);
                     y->hasFoundMerge = true;
+                    y->ChangeState(y->MERGING);
 
                     y->targetPos = x->body.getPosition();
                     y->target = x;
@@ -853,6 +856,7 @@ void Game::MergeEnemies()
         }
     }
 
+    // Actually merge enemies
     for (Enemy* x : GameManager::enemies)
     {
         if (x->hasMerged) { continue; }
@@ -865,6 +869,7 @@ void Game::MergeEnemies()
             if (distance < 0.1)
             {
                 x->hasMerged = true;
+                x->ChangeState(x->IDLE);
                 x->target->DeleteEnemy();
                 break;
             }

@@ -20,7 +20,7 @@ public:
 	enum CurrentState
 	{
 		IDLE,
-		WALKING,
+		MOVING,
 		MERGING,
 		ATTACKING,
 		DEAD 
@@ -43,24 +43,33 @@ public:
 	virtual void Update();
 	void SetPosition(sf::Vector2f pos);
 
+	bool IsCharacterWithinRadius(sf::Sprite& target);
 	void CheckIfAnythingIsWithinRadius();
+	std::vector<Characters*> GetUnitsWithinRadius();
+	Characters* FindClosestEnemy();
 	void ChangeState(CurrentState newState);
 	void UpdateStates();
 	bool GetCurrentState(CurrentState checkState);
-	bool IsCharacterWithinRadius(sf::Sprite& target);
+
+	void Move();
+	void StartWandering();
 
 	void TakeDamage(int damage);
 	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
 	void DeleteEnemy();
+
+
 
 	int id = 0;
 	CurrentState state = IDLE;
 	
 	sf::Sprite body;
 	sf::Texture texture;
-	sf::CircleShape detectionCircle;
+	sf::CircleShape enemyDetectionCircle;
+	sf::CircleShape wanderCircle;
 
-	float detectionRadius = 100.0f;    
+	float detectionRadius = 150.0f;    
+	float wanderRadius = 300.0f;    
 
 	Enemy* target;
 	std::vector <Enemy*> enemiesInRadius;
@@ -69,15 +78,30 @@ public:
 	bool hasMerged = false;
 	bool hasFoundMerge = false;
 
-
-
-
 	sf::Clock redTimer;
 	sf::Vector2f targetPos;
 
 	ProjectileFactory factory;
 	std::vector<Projectile*> projectiles; 
 	ParticleSystem particleSystem;
+
+	// Path
+	sf::Vector2f targetPosition;
+	sf::Vector2f direction;
+	sf::Vector2f velocity;
+	Tile* startTile;
+	Tile* goalTile;
+	std::vector<Tile*> path;
+	int pathFindingXOffset = 50;
+	int pathFindingYOffset = 40;
+	float defaultMoveSpeed = 1.0f;
+	float currentMoveSpeed = defaultMoveSpeed;
+
+	sf::Clock wanderTimer;
+
+	sf::Vector2i currentTilePos;
+	Tile* currentTile;
+	bool readyToMove = false;
 
 	Stats stats{ 5, 1, 1 };
 

@@ -26,6 +26,9 @@ void Textures::SetupTextures()
     goldParticleTexture.loadFromFile("./assets/images/gold-particle.png");
     textureMap["gold-icon"] = goldParticleTexture;
 
+    bloodTexture.loadFromFile("./assets/images/blood.png");
+    textureMap["blood"] = bloodTexture;
+
     // Projectiles
     blastTexture.loadFromFile("./assets/images/blast.png");
     textureMap["blast"] = blastTexture;
@@ -41,6 +44,9 @@ void Textures::SetupTextures()
 
     flamingSwordTexture.loadFromFile("./assets/images/flaming-sword.png");
     textureMap["flaming-sword"] = flamingSwordTexture;
+
+    flamingTrailTexture.loadFromFile("./assets/images/fire-trail.png");
+    textureMap["fire-trail"] = flamingTrailTexture;
 
 
     // Characters

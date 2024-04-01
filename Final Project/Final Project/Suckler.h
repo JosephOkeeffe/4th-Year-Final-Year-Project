@@ -10,7 +10,9 @@ public:
 	void Merge();
 	void MoveTowardsMergingTarget();
 
-	void ShootSpit();
+	void ChangeStateToDead();
+
+	void ShootSpit(sf::Vector2f target);
 	void ShootShield();
 
 	bool mergeComplete = false;
@@ -19,6 +21,8 @@ public:
 	sf::Clock spitTimer;
 	int shieldFireRate = 20;
 	int chanceToSpawnShield = 4;
+
+	int spitFireRate = 3;
 
 };
 

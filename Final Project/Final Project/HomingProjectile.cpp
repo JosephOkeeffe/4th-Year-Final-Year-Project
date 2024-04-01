@@ -22,13 +22,13 @@ HomingProjectile::HomingProjectile(sf::Texture& texture, sf::Vector2f startPos, 
 void HomingProjectile::Update()
 {
     Projectile::Update();
-    particleSystem.AddSpriteParticle(body.getPosition(), { 0,0 }, sf::Color::White, Textures::GetInstance().GetTexture("blast-trail"), 200, 0.3, 7);
+    //particleSystem.AddSpriteParticle(body.getPosition(), { 0,0 }, sf::Color::White, Textures::GetInstance().GetTexture("blast-trail"), 200, 0.3, 7);
     sf::Vector2f targetDirection = Global::Normalize(targetPosition - body.getPosition());
     
 
     if (timer.getElapsedTime().asSeconds() > homingDelay)
     {
-        float angle = atan2(targetDirection.y, targetDirection.x) * 180 / 3.14;
+        float angle = atan2(targetDirection.y, targetDirection.x) * 180 / Global::PI;
         float currentRotation = body.getRotation();
         float angleRad = currentRotation * 3.14 / 180;
         float rotationDiff = angle - currentRotation;
@@ -43,11 +43,6 @@ void HomingProjectile::Update()
         }
       
         float rotationSpeed = 1.5f;
-
-        if (scale < 0)
-        {
-           // rotationSpeed = -1.5f; 
-        }
 
         if (std::abs(rotationDiff) > rotationSpeed)
         {

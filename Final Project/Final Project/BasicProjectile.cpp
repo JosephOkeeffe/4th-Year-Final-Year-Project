@@ -17,7 +17,7 @@ void BasicProjectile::Update()
 {
     Projectile::Update();
 
-    sf::Vector2f direction = Global::Normalize(targetPosition - body.getPosition());
+    sf::Vector2f direction = Global::Normalize(targetPosition - startPosition);
     body.move(direction * speed);
     float angle = std::atan2(direction.y, direction.x) * 180 / 3.14;
     body.setRotation(angle - 90);

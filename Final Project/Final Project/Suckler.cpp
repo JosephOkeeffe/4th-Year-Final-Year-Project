@@ -23,43 +23,45 @@ Suckler::Suckler(int _id)
 
 void Suckler::Update()
 {
-	if (stats.GetHealth() <= 0 && !GetCurrentState(DEAD))
+	if (stats.GetCurrentHealth() <= 0 && !GetCurrentState(DEAD))
 	{
-		ChangeState(DEAD);
-		sf::Color colour = sf::Color::White;
-		colour.a = 150;
-		if (enemyType == SUCKLER_MALE || enemyType == SUCKLER_FEMALE)
-		{
-			body.setTexture(Textures::GetInstance().GetTexture("suckler-dead"));
-			body.setTextureRect(sf::IntRect{ 0, 0, 144 , 156 });
-		}
-		else if (enemyType == BIG_SUCKLER)
-		{
-			body.setTexture(Textures::GetInstance().GetTexture("big-suckler-dead"));
-			body.setTextureRect(sf::IntRect{ 0, 0, 218 , 208 });
-		}
-
-
-		GameManager::aliveEnemies.erase(std::remove(GameManager::aliveEnemies.begin(), GameManager::aliveEnemies.end(), this), GameManager::aliveEnemies.end());
-		body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
-		body.setColor(colour);
-		projectiles.clear();
+		ChangeStateToDead();
 	}
 
 	if (!GetCurrentState(DEAD))
 	{
 		Enemy::Update();
 
-		if (hasMerged && !mergeComplete)
-		{
-			Merge();
-		}
-
+		// Merging
 		if (enemyType == SUCKLER_FEMALE && enemyType != BIG_SUCKLER)
 		{
 			if (target != nullptr && !target->hasMerged)
 			{
 				MoveTowardsMergingTarget();
+			}
+		}
+		//
+		if (hasMerged && !mergeComplete)
+		{
+			Merge();
+		}
+
+		// Projectiles
+
+		if (GetCurrentState(ATTACKING) && spitTimer.getElapsedTime().asSeconds() > spitFireRate)
+		{
+			spitTimer.restart();
+			ShootSpit(FindClosestEnemy()->body.getPosition());
+		}
+		else if (GetCurrentState(ATTACKING))
+		{
+			Characters* closestEnemy = FindClosestEnemy();
+			if (closestEnemy != nullptr)
+			{
+				sf::Vector2f direction = closestEnemy->body.getPosition() - body.getPosition();
+				float angle = std::atan2(direction.y, direction.x) * 180 / Global::PI; 
+				body.setRotation(angle + 90);
+
 			}
 
 		}
@@ -94,6 +96,9 @@ void Suckler::Merge()
 	body.setTextureRect(sf::IntRect{ 0, 0, 218 , 208 });
 	body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
 	projectiles.clear();
+
+	stats.SetMaxHealth(stats.GetMaxHealth() + 5);
+	stats.SetCurrentHealth(stats.GetMaxHealth());
 }
 
 void Suckler::MoveTowardsMergingTarget()
@@ -114,10 +119,33 @@ void Suckler::MoveTowardsMergingTarget()
 	body.rotate(rotationAngle);
 }
 
-void Suckler::ShootSpit()
+void Suckler::ChangeStateToDead()
 {
-	sf::Vector2f targetPos = { 600, 600 };
-	int offset = 100;
+	ChangeState(DEAD);
+	sf::Color colour = sf::Color::White;
+	colour.a = 150;
+
+	if (enemyType == SUCKLER_MALE || enemyType == SUCKLER_FEMALE)
+	{
+		body.setTexture(Textures::GetInstance().GetTexture("suckler-dead"));
+		body.setTextureRect(sf::IntRect{ 0, 0, 144 , 156 });
+	}
+	else if (enemyType == BIG_SUCKLER)
+	{
+		body.setTexture(Textures::GetInstance().GetTexture("big-suckler-dead"));
+		body.setTextureRect(sf::IntRect{ 0, 0, 218 , 208 });
+	}
+
+	GameManager::aliveEnemies.erase(std::remove(GameManager::aliveEnemies.begin(), GameManager::aliveEnemies.end(), this), GameManager::aliveEnemies.end());
+	body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
+	body.setColor(colour);
+	projectiles.clear();
+}
+
+void Suckler::ShootSpit(sf::Vector2f target)
+{
+	sf::Vector2f targetPos = target;
+	int offset = 50;
 
 	int randomOffsetX = rand() % (2 * offset + 1) - offset;
 	int randomOffsetY = rand() % (2 * offset + 1) - offset;
@@ -125,17 +153,20 @@ void Suckler::ShootSpit()
 	targetPos.x += randomOffsetX;
 	targetPos.y += randomOffsetY;
 
-	projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("spit"), body.getPosition(), targetPos, 1, 500, 0.5));
+	projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("spit"), Textures::GetInstance().GetTexture(""), 
+		0, body.getPosition(), targetPos, 1, 300, 0.5));
 }
 
 void Suckler::ShootShield()
 {
 	if (enemyType == BIG_SUCKLER)
 	{
-		projectiles.push_back(factory.CreateShieldProjectile(Textures::GetInstance().GetTexture("shield"), { body.getPosition().x - 10, body.getPosition().y - 10 }, 1, 0.2, 75));
+		projectiles.push_back(factory.CreateShieldProjectile(Textures::GetInstance().GetTexture("shield"), Textures::GetInstance().GetTexture(""), 
+			0, { body.getPosition().x - 10, body.getPosition().y - 10 }, 1, 0.2, 75));
 	}
 	else
 	{
-		projectiles.push_back(factory.CreateShieldProjectile(Textures::GetInstance().GetTexture("shield"), { body.getPosition().x - 10, body.getPosition().y - 10 }, 1, 0.2, 50));
+		projectiles.push_back(factory.CreateShieldProjectile(Textures::GetInstance().GetTexture("shield"), Textures::GetInstance().GetTexture(""), 
+			0, { body.getPosition().x - 10, body.getPosition().y - 10 }, 1, 0.2, 50));
 	}
 }

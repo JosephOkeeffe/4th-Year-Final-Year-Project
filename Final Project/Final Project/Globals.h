@@ -88,8 +88,8 @@ public:
         float maxOffset = endAngle;
         float midpoint = body.getPosition().x;
         float randomOffset = minOffset + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (maxOffset - minOffset);
-        float randomAngle = (midpoint + randomOffset) * (3.14159265359 / 180.0);
-        randomAngle += (offset * (3.14159265359 / 180.0));
+        float randomAngle = (midpoint + randomOffset) * (Global::PI / 180.0);
+        randomAngle += (offset * (Global::PI / 180.0));
         sf::Vector2f randomVelocity(std::cos(randomAngle), std::sin(randomAngle));
 
         return randomVelocity;
@@ -109,15 +109,45 @@ public:
     static sf::Vector2f GetRandomVector()
     {
         sf::Vector2f randomVector;
-        // Generate a random angle between 0 and 360 degrees
         float angle = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * 360.0f;
 
-        // Convert angle to radians
-        float angleRad = angle * 3.14159265f / 180.0f;
+        float angleRad = angle * Global::PI / 180.0f;
 
         randomVector = { std::cos(angleRad), std::sin(angleRad) };
 
-        // Calculate components of unit vector using trigonometry
         return randomVector;
+    }
+
+    static void RotateToFaceTarget(sf::Sprite& currentSprite, sf::Sprite& target, float rotationSpeed, int angleOffset)
+    {
+        float angle = atan2(target.getPosition().y, target.getPosition().x) * 180 / Global::PI;
+        float currentRotation = currentSprite.getRotation();
+        float angleRad = currentRotation * Global::PI / 180;
+        float rotationDiff = (angle + angleOffset) - currentRotation;
+
+        if (rotationDiff > 180)
+        {
+            rotationDiff -= 360;
+        }
+        else if (rotationDiff < -180)
+        {
+            rotationDiff += 360;
+        }
+
+        if (std::abs(rotationDiff) > rotationSpeed)
+        {
+            if (rotationDiff > 0)
+            {
+                currentSprite.rotate(rotationSpeed);
+            }
+            else
+            {
+                currentSprite.rotate(-rotationSpeed);
+            }
+        }
+        else
+        {
+            currentSprite.setRotation(angle + angleOffset);
+        }
     }
 };

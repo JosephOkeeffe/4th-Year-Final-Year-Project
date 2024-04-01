@@ -179,9 +179,6 @@ void Characters::MoveCharacter()
 		if (!path.empty())
 		{
 			targetPosition = path.front()->tile.getPosition();
-			//particleSystem.update();
-			//targetPosition.x += 50;
-			//targetPosition.y += 50;
 		}
 		else
 		{
@@ -325,6 +322,9 @@ void Characters::SetCurrentState(State stateToChange)
 
 void Characters::FindClosestEnemy()
 {
+	closestEnemy = nullptr;
+	closestEnemyDistance = INT_MAX; 
+
 	bool anyEnemyInRadius = false;
 	for (Enemy* enemy : GameManager::aliveEnemies)
 	{
@@ -357,6 +357,7 @@ void Characters::FindClosestEnemy()
 	}
 }
 
+
 void Characters::StartAttackingClosestEnemy()
 {
 	if (!GetSelected() && !GetCurrentState(MOVING))
@@ -370,11 +371,6 @@ void Characters::StartAttackingClosestEnemy()
 		{
 			FlipSprite();
 		}
-
-		//if (reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
-		//{
-		//	Attack(closestEnemy);
-		//}
 	}
 }
 
@@ -400,11 +396,13 @@ void Characters::DetectProjectileCollision()
 				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
 			}
 
-			// If projectle hits enemy projectile
+			// If projectle hits enemy shield projectile
 			if (enemy->projectiles.size() > 0)
 			{
 				for (Projectile* enemyProjectile : enemy->projectiles)
 				{
+					if (enemyProjectile->tag != "shield") { continue; }
+
 					if (projectile->body.getGlobalBounds().intersects(enemyProjectile->body.getGlobalBounds()))
 					{
 						projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());

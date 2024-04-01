@@ -23,12 +23,14 @@ public:
     float range = 200;
     float scale = 1;
     ParticleSystem particleSystem;
-
+    sf::Texture trailTexture;
+    float trailScale;
+    std::string tag = "";
 
     virtual void Update()
     {
         previousPosition = body.getPosition();
-        particleSystem.AddSpriteParticle(body.getPosition(), { 0,0 }, sf::Color::White, Textures::GetInstance().GetTexture("blast-trail"), 200, 0.3, 7);
+        particleSystem.AddSpriteParticle(body.getPosition(), { 0,0 }, sf::Color::White , trailTexture, 200, trailScale, 7);
     }
     virtual void Draw(sf::RenderWindow& window)
     {
@@ -36,7 +38,7 @@ public:
         window.draw(body);        
     }
 
-    bool IsOutOfRange( sf::Vector2f currentPos, sf::Vector2f startPos)
+    bool IsOutOfRange(sf::Vector2f currentPos, sf::Vector2f startPos)
     {
         float distanceTravelled = GetDistanceTraveled(currentPos, startPos);
         return distanceTravelled > range;
@@ -61,9 +63,9 @@ public:
     ProjectileFactory();
     ~ProjectileFactory();
 
-    Projectile* CreateBasicProjectile(sf::Texture& texture, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale);
-    Projectile* CreateHomingProjectile(sf::Texture& texture, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale);
-    Projectile* CreateShieldProjectile(sf::Texture& texture, sf::Vector2f startPos,float _speed, float scale, float _radius);
+    Projectile* CreateBasicProjectile(sf::Texture& texture, sf::Texture& trailTexture, float trailScale, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale);
+    Projectile* CreateHomingProjectile(sf::Texture& texture, sf::Texture& trailTexture, float trailScale, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale);
+    Projectile* CreateShieldProjectile(sf::Texture& texture, sf::Texture& trailTexture, float trailScale, sf::Vector2f startPos,float _speed, float scale, float _radius);
 
 private:
     std::vector<Projectile*> m_projectiles;
