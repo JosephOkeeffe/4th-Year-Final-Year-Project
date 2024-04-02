@@ -56,7 +56,10 @@ public:
 
 	void TakeDamage(int damage);
 	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
+	void ProjectilesCollideWithPlayerUnits();
+	void MakeWalkingTrail();
 	void DeleteEnemy();
+	void ChangeStateToDead();
 
 
 
@@ -78,7 +81,6 @@ public:
 	bool hasMerged = false;
 	bool hasFoundMerge = false;
 
-	sf::Clock redTimer;
 	sf::Vector2f targetPos;
 
 	ProjectileFactory factory;
@@ -97,7 +99,11 @@ public:
 	float defaultMoveSpeed = 1.0f;
 	float currentMoveSpeed = defaultMoveSpeed;
 
+	// Timers
 	sf::Clock wanderTimer;
+	sf::Clock redTimer;
+	sf::Clock walkingTrailTimer;
+
 
 	sf::Vector2i currentTilePos;
 	Tile* currentTile;

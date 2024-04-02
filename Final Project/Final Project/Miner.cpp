@@ -56,36 +56,31 @@ void Miner::MouseRelease()
 
 void Miner::Update()
 { 
-	Characters::Update();
-	CheckAnimationState();
-	AnimateWorker();
-	RemoveFromWorkPlace();
-	UpdateWorkingStates();
-}
-
-void Miner::RemoveFromWorkPlace()
-{
-	if (GetSelected())
+	if (GetCurrentState(DEAD))
 	{
-		SetCurrentState(IDLE);
+		body.setTextureRect(sf::IntRect{ 467, 0, 76, 67 });
+		StopWorking();
+	}
+
+	if (!GetCurrentState(DEAD))
+	{
+		Characters::Update();
+		CheckAnimationState();
+		AnimateWorker();
+		UpdateWorkingStates();
 	}
 }
 
 void Miner::UpdateWorkingStates()
 {
+	if (GetSelected())
+	{
+		SetCurrentState(IDLE);
+	}
+
 	if (GetCurrentState(IDLE))
 	{
-		body.setScale(defaulScale, defaulScale);
-
-		if (workingPlace != nullptr)
-		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(body.getPosition().x, body.getPosition().y + 130);
-			}
-			isWorking = false;
-		}
-		workingPlace = nullptr;
+		StopWorking();
 	}
 
 	if (workingPlace != nullptr)
@@ -109,8 +104,6 @@ void Miner::UpdateWorkingStates()
 		}
 	}
 
-	// ENEMY MOVEMENT
-	// ENEMY PLAY COLLISION / FIGHTING
 	// INVENTORY
 	// RADAR / SHOWS ENEMY AS A DOT
 	if (GetCurrentState(GATHERING))
@@ -119,11 +112,12 @@ void Miner::UpdateWorkingStates()
 
 		if (particleTimer.getElapsedTime().asMilliseconds() >= 100)
 		{
+			sf::Vector2f particlePos;
+			particlePos.x = body.getPosition().x;
+			particlePos.y = body.getPosition().y - 50;
 			particleTimer.restart();
-			particleSystem.AddSpriteParticle(body.getPosition(), randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
+			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
-
-		particleSystem.Update();
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
@@ -221,10 +215,21 @@ void Miner::CheckAnimationState()
 		currentFrameY = 138;
 		amountOfSprites = 2;
 	}
-	else if (GetCurrentState(DEAD))
-	{
+}
 
+void Miner::StopWorking()
+{
+	body.setScale(defaulScale, defaulScale);
+
+	if (workingPlace != nullptr)
+	{
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+		{
+			body.setPosition(body.getPosition().x, body.getPosition().y + 130);
+		}
+		isWorking = false;
 	}
+	workingPlace = nullptr;
 }
 
 sf::Sprite& Miner::GetSprite()

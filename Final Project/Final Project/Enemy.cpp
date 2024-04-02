@@ -34,10 +34,11 @@ void Enemy::Draw()
 	if (!GetCurrentState(DEAD))
 	{
 		stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
+		particleSystem.draw(*GameManager::GetWindow());
 		GameManager::GetWindow()->draw(enemyDetectionCircle);
 		GameManager::GetWindow()->draw(wanderCircle);
 
-		particleSystem.draw(*GameManager::GetWindow());
+		
 		  
 		for (Projectile* projectile : projectiles)
 		{
@@ -47,21 +48,27 @@ void Enemy::Draw()
 }
 
 // TO DO
-// Create collisions between enemy bullet and player
-// Display player stat bar like enemy
-// Enemy can kill player
+// Miner and Oil Man done...hazmat man NOT DONE- Fix up and copy from others, make him die
 // Enemy has a few more radius'
 // If female - Search for male in certain radius - If found, move in that direction
 // Search for good guys - If found, move in that direction
 // Enemies can destroy buildings
 // Do something with resocures
+// Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
 // Invenotry maybe
 // End game screen 
 // Once enemy is there, wait and observe in smaller radius
 // If nothing of interest is there, move to another random point in radius
+// Make better UI that shows things all the time , resources, buildings etc
  
 void Enemy::Update()
 {
+
+	if (stats.GetCurrentHealth() <= 0 && !GetCurrentState(DEAD))
+	{
+		ChangeStateToDead();
+	}
+
 	if (!GetCurrentState(DEAD))
 	{
 		currentTilePos = Global::ConvertPositionToCell(body.getPosition());
@@ -91,6 +98,8 @@ void Enemy::Update()
 		{
 			StartWandering();
 		}
+
+		ProjectilesCollideWithPlayerUnits();
 	}
 }
 
@@ -142,7 +151,11 @@ void Enemy::SetPosition(sf::Vector2f pos)
 void Enemy::Move()
 {
 	float length = 0;
-	//particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
+
+	if (walkingTrailTimer.getElapsedTime().asSeconds() > 0.3)
+	{
+		MakeWalkingTrail();
+	}
 
 	targetPosition = path.front()->tile.getPosition();
 	targetPosition.x += pathFindingXOffset;
@@ -214,7 +227,7 @@ void Enemy::CheckIfAnythingIsWithinRadius()
 {
 	bool anyCharacterWithinRadius = false;
 
-	for (Characters* unit : GameManager::units)
+	for (Characters* unit : GameManager::aliveUnits)
 	{
 		if (IsCharacterWithinRadius(unit->body))
 		{
@@ -243,7 +256,7 @@ std::vector<Characters*> Enemy::GetUnitsWithinRadius()
 	bool anyCharacterWithinRadius = false;
 	std::vector<Characters*> unitsInRadius;
 
-	for (Characters* unit : GameManager::units)
+	for (Characters* unit : GameManager::aliveUnits)
 	{
 		if (IsCharacterWithinRadius(unit->body))
 		{
@@ -299,6 +312,82 @@ void Enemy::ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDista
 	}
 
 	body.move(knockbackDirection * knockbackDistance);
+}
+
+void Enemy::ProjectilesCollideWithPlayerUnits()
+{
+	for (Characters* unit : GetUnitsWithinRadius())
+	{
+
+		for (Projectile* projectile : projectiles)
+		{
+			// If projectle hits character 
+			if (projectile->body.getGlobalBounds().intersects(unit->body.getGlobalBounds()))
+			{
+				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
+
+				unit->TakeDamage(stats.GetDamage());
+				unit->ApplyKnockback(knockbackDirection, stats.GetKnockback());
+
+				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+			}
+
+			// If projectle hits character shield projectile
+			if (unit->projectiles.size() > 0)
+			{
+				for (Projectile* enemyProjectile : unit->projectiles)
+				{
+					if (enemyProjectile->tag != "shield") { continue; }
+
+					if (projectile->body.getGlobalBounds().intersects(enemyProjectile->body.getGlobalBounds()))
+					{
+						projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+						unit->projectiles.erase(std::remove(unit->projectiles.begin(), unit->projectiles.end(), enemyProjectile), unit->projectiles.end());
+					}
+				}
+			}
+
+		}
+	}
+}
+
+void Enemy::ChangeStateToDead()
+{
+	ChangeState(DEAD);
+	sf::Color colour = sf::Color::White;
+	colour.a = 150;
+
+	if (enemyType == SUCKLER_MALE || enemyType == SUCKLER_FEMALE)
+	{
+		body.setTexture(Textures::GetInstance().GetTexture("suckler-dead"));
+		body.setTextureRect(sf::IntRect{ 0, 0, 144 , 156 });
+	}
+	else if (enemyType == BIG_SUCKLER)
+	{
+		body.setTexture(Textures::GetInstance().GetTexture("big-suckler-dead"));
+		body.setTextureRect(sf::IntRect{ 0, 0, 218 , 208 });
+	}
+
+	GameManager::aliveEnemies.erase(std::remove(GameManager::aliveEnemies.begin(), GameManager::aliveEnemies.end(), this), GameManager::aliveEnemies.end());
+	body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
+	body.setColor(colour);
+	projectiles.clear();
+}
+
+void Enemy::MakeWalkingTrail()
+{
+	int randomNumberOffset = 15;
+	int loopAmount = 3;
+	sf::Vector2f randPosOffset;
+	for (int i = 0; i < loopAmount; i++)
+	{
+		sf::Vector2f randPosOffset; 
+		randPosOffset.x = static_cast<float>(Global::GetRandomNumber(-randomNumberOffset, randomNumberOffset));
+		randPosOffset.y = static_cast<float>(Global::GetRandomNumber(-randomNumberOffset, randomNumberOffset));
+
+		particleSystem.AddSpriteParticle(body.getPosition() + randPosOffset, (velocity * -1.0f) * 0.5f, sf::Color::White, Textures::GetInstance().GetTexture("suckler-trail"), 50, 0.2, 7);
+	}
+	walkingTrailTimer.restart();
 }
 
 void Enemy::DeleteEnemy()

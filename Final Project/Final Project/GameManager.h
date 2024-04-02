@@ -193,6 +193,7 @@ public:
     static Headquarters* headquarters;
     static std::vector<Buildings*> buildings;
     static std::vector<Characters*> units;
+    static std::vector<Characters*> aliveUnits;
     static std::vector<Enemy*> enemies;
     static std::vector<Enemy*> aliveEnemies;
     static std::vector<Suckler*> sucklers;

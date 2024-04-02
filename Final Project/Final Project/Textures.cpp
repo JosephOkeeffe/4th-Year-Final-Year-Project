@@ -29,6 +29,9 @@ void Textures::SetupTextures()
     bloodTexture.loadFromFile("./assets/images/blood.png");
     textureMap["blood"] = bloodTexture;
 
+    sucklerTrailTexture.loadFromFile("./assets/images/suckler-trail.png");
+    textureMap["suckler-trail"] = sucklerTrailTexture;
+
     // Projectiles
     blastTexture.loadFromFile("./assets/images/blast.png");
     textureMap["blast"] = blastTexture;
@@ -67,6 +70,9 @@ void Textures::SetupTextures()
 
         miner4Texture.loadFromFile("./assets/images/worker4.png");
         textureMap["miner4"] = miner4Texture;
+
+        miner5Texture.loadFromFile("./assets/images/worker5.png");
+        textureMap["miner5"] = miner5Texture;
 
         oilManTexture.loadFromFile("./assets/images/oil-man.png");
         textureMap["oil-man"] = oilManTexture;

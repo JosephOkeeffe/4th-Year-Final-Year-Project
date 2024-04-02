@@ -10,7 +10,7 @@ public:
 	void Merge();
 	void MoveTowardsMergingTarget();
 
-	void ChangeStateToDead();
+	//void ChangeStateToDead();
 
 	void ShootSpit(sf::Vector2f target);
 	void ShootShield();

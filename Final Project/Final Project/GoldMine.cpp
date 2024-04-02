@@ -47,29 +47,37 @@ void GoldMine::Update()
 		break;
 	}
 
-	for (Characters* temp : GameManager::units)
+	for (Characters* worker : GameManager::aliveUnits)
 	{
-		if (temp->characterType == temp->MINER)
+		if (worker->characterType != worker->MINER) { continue; }
+		
+		if (worker->body.getGlobalBounds().intersects(body.getGlobalBounds()))
 		{
-			if (temp->body.getGlobalBounds().intersects(body.getGlobalBounds()))
+			if ((worker->GetCurrentState(worker->SEARCH_FOR_RESOURCE) || worker->GetCurrentState(worker->MOVING)))
 			{
-				if ((temp->GetCurrentState(temp->SEARCH_FOR_RESOURCE) || temp->GetCurrentState(temp->MOVING)))
-				{
-					static_cast<Miner*>(temp)->workingPlace = this;
-					assignedWorkers.push_back(static_cast<Miner*>(temp));
-					temp->SetCurrentState(temp->GATHERING);
+				static_cast<Miner*>(worker)->workingPlace = this;
+				assignedWorkers.push_back(static_cast<Miner*>(worker));
+				worker->SetCurrentState(worker->GATHERING);
 
-					if (status != DEPOSITING)
-					{
-						status = GENERATING;
-					}
+				if (status != DEPOSITING)
+				{
+					status = GENERATING;
 				}
 			}
+		}
 
-			if (assignedWorkers.size() > 0 && temp->GetSelected())
-			{
-				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<Miner*>(temp)), assignedWorkers.end());
-			}
+		if (assignedWorkers.size() > 0 && worker->GetSelected())
+		{
+			assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<Miner*>(worker)), assignedWorkers.end());
+		}
+		
+	}
+
+	for (Characters* worker : assignedWorkers)
+	{
+		if ( worker->GetCurrentState(worker->DEAD))
+		{
+			assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<Miner*>(worker)), assignedWorkers.end());
 		}
 	}
 

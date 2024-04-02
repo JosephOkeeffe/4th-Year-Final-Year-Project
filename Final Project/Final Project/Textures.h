@@ -21,6 +21,7 @@ private:
     sf::Texture miner2Texture;
     sf::Texture miner3Texture;
     sf::Texture miner4Texture;
+    sf::Texture miner5Texture;
     sf::Texture oilManTexture;
     sf::Texture hazmatManTexture;
 
@@ -70,6 +71,7 @@ private:
     sf::Texture scaleTexture;
     sf::Texture goldParticleTexture;
     sf::Texture bloodTexture;
+    sf::Texture sucklerTrailTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;

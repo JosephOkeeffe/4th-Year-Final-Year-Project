@@ -73,7 +73,12 @@ public:
         else if (type == 7)
         {
            // size -= 0.001f;
-           color.a -= 3;
+            if (color.a >= 5)
+            {
+                color.a -= 5;
+            }
+
+           
         }
     }
 

@@ -12,28 +12,26 @@ Archer::Archer()
 
 void Archer::Update()
 {
-	Characters::Update();
-	CheckAnimationState();
-	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
-
-	if (GetSelected())
+	if (GetCurrentState(DEAD) && m_frameNo != amountOfSprites - 1)
 	{
-		SetCurrentState(IDLE);
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 	}
 
-	if (GetCurrentState(ATTACKING) &&  reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+	if (!GetCurrentState(DEAD))
 	{
-		Attack(closestEnemy);
-	}
-}
+		Characters::Update();
+		CheckAnimationState();
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 
-void Archer::Draw()
-{
-	Characters::Draw();
+		if (GetSelected())
+		{
+			SetCurrentState(IDLE);
+		}
 
-	if(GetSelected())
-	{
-		stats.DisplayAllStats(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - body.getLocalBounds().height});
+		if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+		{
+			Attack(closestEnemy);
+		}
 	}
 }
 
@@ -60,7 +58,6 @@ void Archer::Animate(float startX, float startY, float spriteWidth, float sprite
 
 void Archer::CheckAnimationState()
 {
-
 	if (GetCurrentState(IDLE) && !isMovingIntoFormation)
 	{
 		amountOfSprites = 5;
@@ -86,7 +83,11 @@ void Archer::CheckAnimationState()
 	}
 	else if (GetCurrentState(DEAD))
 	{
-		currentFrameY = 4;
+		amountOfSprites = 6;
+		currentFrameX = 50;
+		currentFrameY = 102;
+		textureHeight = 52;
+		textureWidth = 50;
 	}
 
 	if (GetCurrentState(ATTACKING))

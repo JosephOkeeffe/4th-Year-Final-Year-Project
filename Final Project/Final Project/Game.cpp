@@ -268,8 +268,9 @@ void Game::ProcessMouseRelease(sf::Event t_event)
             }
         }
 
-        for (Characters* character : GameManager::units)
+        for (Characters* character : GameManager::aliveUnits)
         {
+
             character->MouseRelease();
             selectedUnits.clear();
         }
@@ -589,6 +590,7 @@ void Game::CreateWarrior(sf::Vector2f pos)
     newWarrior->SetPosition(pos);
 
     GameManager::units.push_back(newWarrior);
+    GameManager::aliveUnits.push_back(newWarrior);
 }
 
 void Game::CreateArcher(sf::Vector2f pos)
@@ -597,6 +599,7 @@ void Game::CreateArcher(sf::Vector2f pos)
     newArcher->SetPosition(pos);
 
     GameManager::units.push_back(newArcher);
+    GameManager::aliveUnits.push_back(newArcher);
 }
 
 void Game::CreateMiner(sf::Vector2f pos)
@@ -605,6 +608,8 @@ void Game::CreateMiner(sf::Vector2f pos)
     newWorker->SetPosition(pos);
 
     GameManager::units.push_back(newWorker);
+    GameManager::aliveUnits.push_back(newWorker);
+
 }
 
 void Game::CreateOilMan(sf::Vector2f pos)
@@ -613,6 +618,7 @@ void Game::CreateOilMan(sf::Vector2f pos)
     newOilMan->SetPosition(pos);
 
     GameManager::units.push_back(newOilMan);
+    GameManager::aliveUnits.push_back(newOilMan);
 }
 
 void Game::CreateHazmatMan(sf::Vector2f pos)
@@ -621,15 +627,8 @@ void Game::CreateHazmatMan(sf::Vector2f pos)
     newHazmatMan->SetPosition(pos);
 
     GameManager::units.push_back(newHazmatMan);
+    GameManager::aliveUnits.push_back(newHazmatMan);
 }
-
-//void Game::CreateEnemy(sf::Vector2f pos)
-//{
-//    Enemy* newEnemy = new Enemy;
-//    newEnemy->SetPosition(pos);
-//
-//    GameManager::enemies.push_back(newEnemy);
-//}
 
 void Game::CreateSuckler(sf::Vector2f pos)
 {
@@ -644,7 +643,7 @@ void Game::CreateSuckler(sf::Vector2f pos)
 
 void Game::SelectUnits()
 {
-    for (Characters* temp : GameManager::units)
+    for (Characters* temp : GameManager::aliveUnits)
     {
         if (dragRect.getGlobalBounds().intersects(temp->body.getGlobalBounds()))
         {

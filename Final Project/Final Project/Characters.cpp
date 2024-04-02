@@ -18,70 +18,77 @@ void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& te
 }
 
 // TO DO
-// Then enemies attacking player
-// Then enemies moving
 // Formations - changed radius to the centre of the whole formation, get the distance, get the average and make a new formation radius
 void Characters::Update()
 {
-	if (GetCurrentState(MOVING) && !path.empty())
+	if (!GetCurrentState(DEAD))
 	{
-		MoveCharacter();
-	}
-
-	if (isMovingIntoFormation && isPartOfFormation)
-	{
-		MoveIntoFormation();
-	}
-
-	ChangeSelectedColour();
-	UpdateDetectionCircle();
-
-	if (!isWorking)
-	{
-		if (GetSelected())
+		if (GetCurrentState(MOVING) && !path.empty())
 		{
-			sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
-			particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
-			particleSystem.Update();
-
-			int x = body.getPosition().x / Global::CELL_SIZE;
-			int y = body.getPosition().y / Global::CELL_SIZE;
-
-			startTile = &GameManager::tiles[x][y];
+			MoveCharacter();
 		}
-		else
+
+		if (isMovingIntoFormation && isPartOfFormation)
 		{
-			if (!GetCurrentState(MOVING))
+			MoveIntoFormation();
+		}
+
+		/*ChangeSelectedColour();*/
+		UpdateDetectionCircle();
+		particleSystem.Update();
+
+		// Dont do this for workers
+		if (characterType == ARCHER || characterType == WARRIOR)
+		{
+			if (GameManager::aliveEnemies.size() < 1)
 			{
-				particleSystem.clearParticles();
+				if (!GetCurrentState(MOVING))
+				{
+					SetCurrentState(IDLE);
+					detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+				}
+			}
+			else
+			{
+				FindClosestEnemy();
+				StartAttackingClosestEnemy();
+				ProjectilesCollideWithEnemies();
 			}
 		}
-	}
 
-	if (GameManager::aliveEnemies.size() < 1)
-	{
-		if (!GetCurrentState(MOVING))
+		if (!isWorking)
 		{
-			SetCurrentState(IDLE);
-			detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
+			if (GetSelected())
+			{
+				sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+				particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
+				particleSystem.Update();
+
+				int x = body.getPosition().x / Global::CELL_SIZE;
+				int y = body.getPosition().y / Global::CELL_SIZE;
+
+				startTile = &GameManager::tiles[x][y];
+			}
+			else
+			{
+				if (!GetCurrentState(MOVING))
+				{
+					particleSystem.clearParticles();
+				}
+			}
 		}
-	}
-	else
-	{
 
-		FindClosestEnemy();
-		StartAttackingClosestEnemy();
-		DetectProjectileCollision();
-	}
-
-	for (Projectile* projectile : projectiles)
-	{
-		projectile->Update();
-
-		if (projectile->IsOutOfRange(projectile->body.getPosition(), projectile->startPosition))
+		if (body.getColor() == sf::Color::Red && redTimer.getElapsedTime().asSeconds() > 0.3)
 		{
-			projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+			body.setColor(sf::Color::White);
 		}
+
+		UpdateProjectiles();
+	}
+
+	if (stats.GetCurrentHealth() <= 0 && !GetCurrentState(DEAD))
+	{
+		ChangeStateToDead();
 	}
 }
 
@@ -114,14 +121,23 @@ void Characters::MouseRelease()
 
 void Characters::Draw()
 {
-	for (Projectile* projectile : projectiles)
+	if (GetCurrentState(DEAD))
 	{
-		projectile->Draw(*GameManager::GetWindow());
+		GameManager::GetWindow()->draw(body);
 	}
+	else
+	{
+		stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
 
-	particleSystem.draw(*GameManager::GetWindow());
-	GameManager::GetWindow()->draw(detectionCircle);
-	GameManager::GetWindow()->draw(body);
+		for (Projectile* projectile : projectiles)
+		{
+			projectile->Draw(*GameManager::GetWindow());
+		}
+
+		particleSystem.draw(*GameManager::GetWindow());
+		GameManager::GetWindow()->draw(detectionCircle);
+		GameManager::GetWindow()->draw(body);		
+	}
 
 
 }
@@ -151,7 +167,6 @@ void Characters::MoveCharacter()
 	float length = 0;
 	DeselectCharacter();
 	particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
-	particleSystem.Update();
 
 	targetPosition = path.front()->tile.getPosition();
 	targetPosition.x += pathFindingXOffset;
@@ -182,7 +197,7 @@ void Characters::MoveCharacter()
 		}
 		else
 		{
-			currentState = IDLE;
+			SetCurrentState(IDLE);
 		}
 	}
 
@@ -212,12 +227,14 @@ void Characters::SelectCharacter()
 {
 	if (HUD::currentState == HUD::NONE)
 	{
+		body.setColor(sf::Color(200, 50, 50));
 		isSelected = true;
 	}
 }
 
 void Characters::DeselectCharacter()
 {
+	body.setColor(sf::Color::White);
 	isSelected = false;
 }
 
@@ -260,14 +277,17 @@ bool Characters::GetSelected()
 
 void Characters::ChangeSelectedColour()
 {
-	if (GetSelected())
-	{
-		body.setColor(sf::Color(200, 50, 50));
-	}
-	else
-	{
-		body.setColor(sf::Color::White);
-	}
+	//if (GetSelected())
+	//{
+	//	
+	//}
+	//else
+	//{
+	//	if(!GetCurrentState(ATTACKING))
+	//	{
+	//		body.setColor(sf::Color::White);
+	//	}
+	//}
 }
 
 bool Characters::IsEnemyInAttackRadius(sf::Sprite& target)
@@ -374,7 +394,44 @@ void Characters::StartAttackingClosestEnemy()
 	}
 }
 
-void Characters::DetectProjectileCollision()
+void Characters::TakeDamage(int damage)
+{
+	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
+	stats.LoseHealth(damage);
+	body.setColor(sf::Color::Red);
+	redTimer.restart();
+
+	for (int i = 0; i < 10; i++)
+	{
+		particleSystem.AddSpriteParticle(body.getPosition(), Global::GetRandomVector() * 2.0f, sf::Color::White, Textures::GetInstance().GetTexture("blood"), 20, 0.2, 1);
+	}
+}
+
+void Characters::ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance)
+{
+	float length = sqrt(knockbackDirection.x * knockbackDirection.x + knockbackDirection.y * knockbackDirection.y);
+
+	if (length != 0)
+	{
+		knockbackDirection.x /= length;
+		knockbackDirection.y /= length;
+	}
+
+	body.move(knockbackDirection * knockbackDistance);
+}
+void Characters::UpdateProjectiles()
+{
+	for (Projectile* projectile : projectiles)
+	{
+		projectile->Update();
+
+		if (projectile->IsOutOfRange(projectile->body.getPosition(), projectile->startPosition))
+		{
+			projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+		}
+	}
+}
+void Characters::ProjectilesCollideWithEnemies()
 {
 	for (Enemy* enemy : GameManager::aliveEnemies)
 	{
@@ -413,6 +470,23 @@ void Characters::DetectProjectileCollision()
 
 		}
 	}
+}
+
+void Characters::ChangeStateToDead()
+{
+	SetCurrentState(DEAD);
+	sf::Color colour = sf::Color::White;
+	colour.a = 150;
+	isSelected = false;
+	isWorking = false;
+
+
+	GameManager::aliveUnits.erase(std::remove(GameManager::aliveUnits.begin(), GameManager::aliveUnits.end(), this), GameManager::aliveUnits.end());
+	body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
+	body.setColor(colour);
+	projectiles.clear();
+	particleSystem.clearParticles();
+	return;
 }
 
 void Characters::SetPosition(sf::Vector2f pos)

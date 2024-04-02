@@ -19,6 +19,8 @@ public:
 	void AnimateWorker();
 	void CheckAnimationState();
 
+	void StopWorking();
+
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
 	OilExtractor* workingPlace = nullptr;
@@ -38,6 +40,8 @@ private:
 	float moveSpeed = 2.0f;
 
 	float defaulScale = 1;
+
+	sf::Clock particleTimer;
 
 };
 

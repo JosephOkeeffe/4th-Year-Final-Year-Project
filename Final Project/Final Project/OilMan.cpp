@@ -13,39 +13,42 @@ OilMan::OilMan()
 
 void OilMan::MouseRelease()
 {
+	Characters::MouseRelease();
+
 	if (isSelected)
 	{
-		SetCurrentState(MOVING);
-		targetPosition = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-
 		for (Buildings* object : GameManager::buildings)
 		{
-			if (object->GetBuildingType() == object->OIL_EXTRACTOR_BUILDING)
+			if (object->GetBuildingType() == object->GOLD_MINE_BUILDING)
 			{
 				if (object->body.getGlobalBounds().contains(targetPosition))
 				{
-					Display_Text("OIL TIME");
+					Display_Text("MINE TIME");
 					workingPlace = static_cast<OilExtractor*>(object);
 				}
 
 			}
 		}
 	}
-
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-	{
-		SelectCharacter();
-	}
 }
 
 void OilMan::Update()
 {
-	Characters::Update();
-	CheckAnimationState();
-	AnimateWorker();
-	RemoveFromWorkPlace();
-	UpdateWorkingStates();
+	if (GetCurrentState(DEAD))
+	{
+		body.setTextureRect(sf::IntRect{ 488, 0, 56, 68});
+		StopWorking();
+		
+	}
+
+	if (!GetCurrentState(DEAD))
+	{
+		Characters::Update();
+		CheckAnimationState();
+		AnimateWorker();
+		RemoveFromWorkPlace();
+		UpdateWorkingStates();
+	}
 }
 
 void OilMan::RemoveFromWorkPlace()
@@ -58,6 +61,11 @@ void OilMan::RemoveFromWorkPlace()
 
 void OilMan::UpdateWorkingStates()
 {
+	if (GetCurrentState(IDLE))
+	{
+		StopWorking();
+	}
+
 	if (workingPlace != nullptr)
 	{
 		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
@@ -79,19 +87,18 @@ void OilMan::UpdateWorkingStates()
 		}
 	}
 
-	if (GetCurrentState(IDLE))
+	if (GetCurrentState(GATHERING))
 	{
-		body.setScale(1, 1);
+		sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-22.5, 22.5, body, 95);
 
-		if (workingPlace != nullptr)
+		if (particleTimer.getElapsedTime().asMilliseconds() >= 100)
 		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(workingPlace->body.getPosition().x, body.getPosition().y + 130);
-			}
-			isWorking = false;
+			sf::Vector2f particlePos;
+			particlePos.x = body.getPosition().x;
+			particlePos.y = body.getPosition().y - 25;
+			particleTimer.restart();
+			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
-		workingPlace = nullptr;
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
@@ -105,7 +112,7 @@ void OilMan::UpdateWorkingStates()
 		isWorking = false;
 	}
 
-	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr)
 	{
 		SetCurrentState(SEARCH_FOR_RESOURCE);
 	}
@@ -114,20 +121,45 @@ void OilMan::UpdateWorkingStates()
 
 void OilMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
-	sf::Vector2f direction = targetPosition - body.getPosition();
-	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-	if (distance > 1.0f)
+	if (path.empty())
 	{
-		direction /= distance;
+		int startX = body.getPosition().x / Global::CELL_SIZE;
+		int startY = body.getPosition().y / Global::CELL_SIZE;
 
-		sf::Vector2f temp = direction * currentMoveSpeed;
-		body.move(temp);
-		FlipSpriteWithDirection(direction, body);
+		int endX = targetPosition.x / Global::CELL_SIZE;
+		int endY = targetPosition.y / Global::CELL_SIZE;
+
+		Tile* startTile = &GameManager::tiles[startX][startY];
+		Tile* goalTile = &GameManager::tiles[endX][endY];
+
+		path = GameManager::FindPath(startTile, goalTile, true);
 	}
-	else
+
+	if (!path.empty())
 	{
-		body.setPosition(targetPosition);
+		Tile* nextTile = path.front();
+
+		sf::Vector2f direction = nextTile->tile.getPosition() - body.getPosition();
+		float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+		if (distance > 1.0f)
+		{
+			direction /= distance;
+
+			sf::Vector2f temp = direction * currentMoveSpeed;
+			body.move(temp);
+			FlipSpriteWithDirection(direction, body);
+		}
+		else
+		{
+			body.setPosition(nextTile->tile.getPosition());
+			path.erase(path.begin());
+
+			if (!path.empty())
+			{
+				targetPosition = path.front()->tile.getPosition();
+			}
+		}
 	}
 }
 
@@ -167,6 +199,21 @@ void OilMan::CheckAnimationState()
 	{
 
 	}
+}
+
+void OilMan::StopWorking()
+{
+	body.setScale(defaulScale, defaulScale);
+
+	if (workingPlace != nullptr)
+	{
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+		{
+			body.setPosition(body.getPosition().x, body.getPosition().y + 130);
+		}
+		isWorking = false;
+	}
+	workingPlace = nullptr;
 }
 
 sf::Sprite& OilMan::GetSprite()

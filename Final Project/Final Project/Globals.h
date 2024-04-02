@@ -118,6 +118,11 @@ public:
         return randomVector;
     }
 
+    static int GetRandomNumber(int min, int max) 
+    {
+        return min + std::rand() % (max - min + 1);
+    }
+
     static void RotateToFaceTarget(sf::Sprite& currentSprite, sf::Sprite& target, float rotationSpeed, int angleOffset)
     {
         float angle = atan2(target.getPosition().y, target.getPosition().x) * 180 / Global::PI;

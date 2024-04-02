@@ -54,29 +54,37 @@ void OilExtractor::Update()
 		break;
 	}
 
-	for (Characters* temp : GameManager::units)
+	for (Characters* worker : GameManager::aliveUnits)
 	{
-		if (temp->characterType == temp->OIL_MAN)
-		{
-			if (temp->body.getGlobalBounds().intersects(body.getGlobalBounds()))
-			{
-				if ((temp->GetCurrentState(temp->SEARCH_FOR_RESOURCE) || temp->GetCurrentState(temp->MOVING)))
-				{
-					static_cast<OilMan*>(temp)->workingPlace = this;
-					assignedWorkers.push_back(static_cast<OilMan*>(temp));
-					temp->SetCurrentState(temp->GATHERING);
+		if (worker->characterType != worker->OIL_MAN) { continue; }
 
-					if (status != DEPOSITING)
-					{
-						status = GENERATING;
-					}
+		if (worker->body.getGlobalBounds().intersects(body.getGlobalBounds()))
+		{
+			if ((worker->GetCurrentState(worker->SEARCH_FOR_RESOURCE) || worker->GetCurrentState(worker->MOVING)))
+			{
+				static_cast<OilMan*>(worker)->workingPlace = this;
+				assignedWorkers.push_back(static_cast<OilMan*>(worker));
+				worker->SetCurrentState(worker->GATHERING);
+
+				if (status != DEPOSITING)
+				{
+					status = GENERATING;
 				}
 			}
+		}
 
-			if (assignedWorkers.size() > 0 && temp->GetSelected())
-			{
-				assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<OilMan*>(temp)), assignedWorkers.end());
-			}
+		if (assignedWorkers.size() > 0 && worker->GetSelected())
+		{
+			assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<OilMan*>(worker)), assignedWorkers.end());
+		}
+
+	}
+
+	for (Characters* worker : assignedWorkers)
+	{
+		if (worker->GetCurrentState(worker->DEAD))
+		{
+			assignedWorkers.erase(std::remove(assignedWorkers.begin(), assignedWorkers.end(), static_cast<OilMan*>(worker)), assignedWorkers.end());
 		}
 	}
 

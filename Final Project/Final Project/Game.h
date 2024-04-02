@@ -81,7 +81,6 @@ private:
     void CreateOilMan(sf::Vector2f pos);
     void CreateHazmatMan(sf::Vector2f pos);
 
-    void CreateEnemy(sf::Vector2f pos);
     void CreateSuckler(sf::Vector2f pos);
 
 

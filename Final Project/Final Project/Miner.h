@@ -21,6 +21,8 @@ public:
 	void AnimateWorker();
 	void CheckAnimationState();
 
+	void StopWorking();
+
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
 	GoldMine* workingPlace = nullptr;

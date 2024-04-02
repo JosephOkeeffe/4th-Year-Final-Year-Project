@@ -10,18 +10,26 @@ Warrior::Warrior()
 
 void Warrior::Update()
 {
-	Characters::Update();
-	CheckAnimationState();
-	Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites);
-
-	if (GetSelected())
+	if (GetCurrentState(DEAD) && m_frameNo != amountOfSprites - 1)
 	{
-		SetCurrentState(IDLE);
+		Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites);
 	}
 
-	if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+	if (!GetCurrentState(DEAD))
 	{
-		Attack(closestEnemy);
+		Characters::Update();
+		CheckAnimationState();
+		Animate(currentFrameX, currentFrameY * textureHeight, textureWidth, textureHeight, body, amountOfSprites);
+
+		if (GetSelected())
+		{
+			SetCurrentState(IDLE);
+		}
+
+		if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+		{
+			Attack(closestEnemy);
+		}
 	}
 }
 
@@ -81,12 +89,12 @@ void Warrior::Attack(Enemy* target)
 		if (body.getScale().x > 1)
 		{
 			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
-				0.1, { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
+				0.1, { body.getPosition().x + 10, body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
 		}
 		else
 		{
 			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
-				0.1, { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
+				0.1, { body.getPosition().x - 10 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
 		}
 		reloadTimer.restart();
 	}

@@ -65,7 +65,12 @@ public:
 
 	void FindClosestEnemy();
 	void StartAttackingClosestEnemy();
-	void DetectProjectileCollision();
+	void TakeDamage(int damage);
+	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
+	void UpdateProjectiles();
+	void ProjectilesCollideWithEnemies();
+
+	void ChangeStateToDead();
 	
 	State currentState = IDLE;
 	CharacterType characterType;
@@ -117,10 +122,12 @@ public:
 	sf::Clock reloadTimer;
 	float reloadDelay = 3;
 
+	sf::Clock redTimer;
+
 	Enemy* closestEnemy;
 	float closestEnemyDistance = INT_MAX;
 
-	Stats stats{ 10, 1, 1.5 };
+	Stats stats{ 5, 1, 1.5 };
 private:
 
 

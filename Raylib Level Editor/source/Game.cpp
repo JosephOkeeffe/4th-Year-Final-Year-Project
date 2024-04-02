@@ -77,8 +77,6 @@ void Game::Init()
     {
         resourcePaletteRects[i] = { static_cast<float>(10 + i * (TILE_SIZE + 10)), 250, TILE_SIZE, TILE_SIZE };
     }
-
-
 }
 
 void Game::Update()

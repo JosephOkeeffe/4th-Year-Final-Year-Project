@@ -8,7 +8,6 @@ public:
 
 	Archer();
 	void Update() override;
-	void Draw() override;
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites) override;
 	void CheckAnimationState();
 	void Attack(Enemy* target);
