@@ -7,7 +7,7 @@ OilMan::OilMan()
 	textureRect = { 0, 0, textureWidth, textureHeight };
 	animationSpeed = 0.08;
 	Init(Textures::GetInstance().GetTexture("oil-man"), body, textureRect);
-	body.setScale(defaulScale, defaulScale);
+	body.setScale(defaultScale, defaultScale);
 	characterType = OIL_MAN;
 }
 
@@ -45,7 +45,7 @@ void OilMan::Update()
 	{
 		Characters::Update();
 		CheckAnimationState();
-		AnimateWorker();
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 		RemoveFromWorkPlace();
 		UpdateWorkingStates();
 	}
@@ -81,7 +81,7 @@ void OilMan::UpdateWorkingStates()
 			}
 			else if (workingPlace->status == workingPlace->EMPTY && GetCurrentState(UNLOADING))
 			{
-				body.setScale(defaulScale, defaulScale);
+				body.setScale(defaultScale, defaultScale);
 				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
@@ -95,7 +95,7 @@ void OilMan::UpdateWorkingStates()
 		{
 			sf::Vector2f particlePos;
 			particlePos.x = body.getPosition().x;
-			particlePos.y = body.getPosition().y - 25;
+			particlePos.y = body.getPosition().y - 50;
 			particleTimer.restart();
 			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
@@ -163,11 +163,6 @@ void OilMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 	}
 }
 
-void OilMan::AnimateWorker()
-{
-	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
-}
-
 void OilMan::CheckAnimationState()
 {
 	if (GetCurrentState(IDLE) && !GetSelected())
@@ -203,7 +198,7 @@ void OilMan::CheckAnimationState()
 
 void OilMan::StopWorking()
 {
-	body.setScale(defaulScale, defaulScale);
+	body.setScale(defaultScale, defaultScale);
 
 	if (workingPlace != nullptr)
 	{

@@ -13,11 +13,10 @@ HazmatMan::HazmatMan()
 
 void HazmatMan::MouseRelease()
 {
+	Characters::MouseRelease();
+
 	if (isSelected)
 	{
-		SetCurrentState(MOVING);
-		targetPosition = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-
 		for (Buildings* object : GameManager::buildings)
 		{
 			if (object->GetBuildingType() == object->URANIUM_EXTRACTOR_BUILDING)
@@ -31,41 +30,51 @@ void HazmatMan::MouseRelease()
 			}
 		}
 	}
-
-	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
-	if (body.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-	{
-		SelectCharacter();
-	}
 }
 
 void HazmatMan::Update()
 {
-	Characters::Update();
-	CheckAnimationState();
-	AnimateWorker();
-	RemoveFromWorkPlace();
-	UpdateWorkingStates();
+	//if (GetCurrentState(DEAD))
+	//{
+	//	body.setTextureRect(sf::IntRect{ 467, 0, 76, 67 });
+	//	StopWorking();
+	//}
+
+	if (GetCurrentState(DEAD) && m_frameNo != amountOfSprites - 1)
+	{
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		StopWorking();
+	}
+
+	if (!GetCurrentState(DEAD))
+	{
+		Characters::Update();
+		CheckAnimationState();
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		UpdateWorkingStates();
+	}
 	
 }
 
-void HazmatMan::RemoveFromWorkPlace()
+void HazmatMan::UpdateWorkingStates()
 {
 	if (GetSelected())
 	{
 		SetCurrentState(IDLE);
 	}
-}
 
-void HazmatMan::UpdateWorkingStates()
-{
+	if (GetCurrentState(IDLE))
+	{
+		StopWorking();
+	}
+
 	if (workingPlace != nullptr)
 	{
-		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && isWorking)
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()) && workingPlace->GetPlacedStatus() && isWorking)
 		{
 			if (workingPlace->status == workingPlace->GENERATING)
 			{
-				body.setScale(1.4, 1.4);
+				body.setScale(1.6, 1.6);
 				SetCurrentState(GATHERING);
 			}
 			else if (workingPlace->status == workingPlace->DEPOSITING)
@@ -80,19 +89,18 @@ void HazmatMan::UpdateWorkingStates()
 		}
 	}
 
-	if (GetCurrentState(IDLE))
+	if (GetCurrentState(GATHERING))
 	{
-		body.setScale(defaultScale, defaultScale);
+		sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-22.5, 22.5, body, 95);
 
-		if (workingPlace != nullptr)
+		if (particleTimer.getElapsedTime().asMilliseconds() >= 100)
 		{
-			if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
-			{
-				body.setPosition(workingPlace->body.getPosition().x, body.getPosition().y + 130);
-			}
-			isWorking = false;
+			sf::Vector2f particlePos;
+			particlePos.x = body.getPosition().x;
+			particlePos.y = body.getPosition().y - 40;
+			particleTimer.restart();
+			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
 		}
-		workingPlace = nullptr;
 	}
 
 	if (GetCurrentState(SEARCH_FOR_RESOURCE))
@@ -106,7 +114,7 @@ void HazmatMan::UpdateWorkingStates()
 		isWorking = false;
 	}
 
-	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()))
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr)
 	{
 		SetCurrentState(SEARCH_FOR_RESOURCE);
 	}
@@ -114,27 +122,46 @@ void HazmatMan::UpdateWorkingStates()
 
 void HazmatMan::MoveSpriteToTarget(sf::Vector2f targetPosition)
 {
-	sf::Vector2f direction = targetPosition - body.getPosition();
-	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-	if (distance > 1.0f)
+	if (path.empty())
 	{
-		direction /= distance;
+		int startX = body.getPosition().x / Global::CELL_SIZE;
+		int startY = body.getPosition().y / Global::CELL_SIZE;
 
-		sf::Vector2f temp = direction * currentMoveSpeed;
-		body.move(temp);
-		
-		FlipSpriteWithDirection(direction, body);
+		int endX = targetPosition.x / Global::CELL_SIZE;
+		int endY = targetPosition.y / Global::CELL_SIZE;
+
+		Tile* startTile = &GameManager::tiles[startX][startY];
+		Tile* goalTile = &GameManager::tiles[endX][endY];
+
+		path = GameManager::FindPath(startTile, goalTile, true);
 	}
-	else
+
+	if (!path.empty())
 	{
-		body.setPosition(targetPosition);
-	}
-}
+		Tile* nextTile = path.front();
 
-void HazmatMan::AnimateWorker()
-{
-	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		sf::Vector2f direction = nextTile->tile.getPosition() - body.getPosition();
+		float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+		if (distance > 1.0f)
+		{
+			direction /= distance;
+
+			sf::Vector2f temp = direction * currentMoveSpeed;
+			body.move(temp);
+			FlipSpriteWithDirection(direction, body);
+		}
+		else
+		{
+			body.setPosition(nextTile->tile.getPosition());
+			path.erase(path.begin());
+
+			if (!path.empty())
+			{
+				targetPosition = path.front()->tile.getPosition();
+			}
+		}
+	}
 }
 
 void HazmatMan::CheckAnimationState()
@@ -184,8 +211,27 @@ void HazmatMan::CheckAnimationState()
 	}
 	else if (GetCurrentState(DEAD))
 	{
-
+		currentFrameX = 50;
+		currentFrameY = 241;
+		textureWidth = 50;
+		textureHeight = 46;
+		amountOfSprites = 16 ;
 	}
+}
+
+void HazmatMan::StopWorking()
+{
+	body.setScale(defaultScale, defaultScale);
+
+	if (workingPlace != nullptr)
+	{
+		if (body.getGlobalBounds().intersects(workingPlace->body.getGlobalBounds()))
+		{
+			body.setPosition(body.getPosition().x, body.getPosition().y + 200);
+		}
+		isWorking = false;
+	}
+	workingPlace = nullptr;
 }
 
 sf::Sprite& HazmatMan::GetSprite()

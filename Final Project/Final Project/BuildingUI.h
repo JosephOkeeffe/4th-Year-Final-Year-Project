@@ -75,7 +75,6 @@ public:
     static void Deactivate()
     {
         isActive = false;
-       // HUD::currentState = HUD::NONE;
     }
 
     static void BuildMenu(sf::RenderWindow& window, sf::View& view)

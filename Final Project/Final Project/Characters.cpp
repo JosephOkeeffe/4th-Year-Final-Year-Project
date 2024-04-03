@@ -62,7 +62,7 @@ void Characters::Update()
 			{
 				sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 				particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
-				particleSystem.Update();
+				//particleSystem.Update();
 
 				int x = body.getPosition().x / Global::CELL_SIZE;
 				int y = body.getPosition().y / Global::CELL_SIZE;
@@ -96,6 +96,8 @@ void Characters::MouseRelease()
 {
 	sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 	sf::Vector2i cellPos = Global::GetCurrentCell(*GameManager::GetWindow(), *GameManager::GetView());
+	if (cellPos.x < 0 || cellPos.y < 0) { return; }
+
 	if (isSelected)
 	{
 		SetCurrentState(MOVING);
@@ -479,6 +481,7 @@ void Characters::ChangeStateToDead()
 	colour.a = 150;
 	isSelected = false;
 	isWorking = false;
+	m_frameNo = 0;
 
 
 	GameManager::aliveUnits.erase(std::remove(GameManager::aliveUnits.begin(), GameManager::aliveUnits.end(), this), GameManager::aliveUnits.end());

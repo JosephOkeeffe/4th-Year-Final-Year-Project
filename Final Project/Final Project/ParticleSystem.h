@@ -179,13 +179,13 @@ public:
                 }),
             particles.end());
 
-        //spriteParticles.erase(std::remove_if(spriteParticles.begin(), spriteParticles.end(), [](const SpriteParticle& particle) {return particle.size < -1 || particle.color.a <= 0; }), spriteParticles.end());
+        spriteParticles.erase(std::remove_if(spriteParticles.begin(), spriteParticles.end(), [](const SpriteParticle& particle) {return particle.size < -1 || particle.color.a <= 0; }), spriteParticles.end());
     }
 
     void clearParticles()
     {
         particles.clear();
-       // spriteParticles.clear();
+        spriteParticles.clear();
     }
 
  

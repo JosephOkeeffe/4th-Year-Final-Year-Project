@@ -7,6 +7,7 @@
 #include "GameManager.h"
 #include "Characters.h"
 #include "ParticleSystem.h"
+#include "Buildings.h"
 
 
 #include "ProjectileFactory.h"
@@ -47,16 +48,24 @@ public:
 	void CheckIfAnythingIsWithinRadius();
 	std::vector<Characters*> GetUnitsWithinRadius();
 	Characters* FindClosestEnemy();
+	Buildings* FindClosestBuilding();
+	std::vector<sf::Vector2f> GetUnitsToMoveTowardsWithinWanderRadius();
+	std::vector<sf::Vector2f> GetMergeTargetsToMoveTowardsWithinWanderRadius();
+	std::vector<sf::Vector2f> GetBuildingsToMoveTowardsWithinWanderRadius();
 	void ChangeState(CurrentState newState);
 	void UpdateStates();
 	bool GetCurrentState(CurrentState checkState);
 
+
+
 	void Move();
+	void MoveTowardsPointOfInterest();
 	void StartWandering();
 
 	void TakeDamage(int damage);
 	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
 	void ProjectilesCollideWithPlayerUnits();
+	void ProjectilesCollideWithPlayerBuildings();
 	void MakeWalkingTrail();
 	void DeleteEnemy();
 	void ChangeStateToDead();
@@ -72,7 +81,7 @@ public:
 	sf::CircleShape wanderCircle;
 
 	float detectionRadius = 150.0f;    
-	float wanderRadius = 300.0f;    
+	float wanderRadius = 500.0f;    
 
 	Enemy* target;
 	std::vector <Enemy*> enemiesInRadius;
@@ -100,14 +109,17 @@ public:
 	float currentMoveSpeed = defaultMoveSpeed;
 
 	// Timers
+	bool isReadyToAttack = true;
+	sf::Clock attackingStateChangeTimer;
 	sf::Clock wanderTimer;
 	sf::Clock redTimer;
 	sf::Clock walkingTrailTimer;
 
-
 	sf::Vector2i currentTilePos;
 	Tile* currentTile;
 	bool readyToMove = false;
+
+	std::vector<sf::Vector2f> pointsOfInterest;
 
 	Stats stats{ 5, 1, 1 };
 

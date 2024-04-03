@@ -33,10 +33,20 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	 sf::Vector2f(sprite.getLocalBounds().width * scale, sprite.getLocalBounds().height * scale);
 }
 
-//void Buildings::Update()
-//{
-//}
-//void Buildings::MouseRelease(){}
+void Buildings::Update()
+{
+	UpdateDetectionCircle();
+
+	if (body.getColor() == sf::Color::Red && redTimer.getElapsedTime().asSeconds() > 0.3)
+	{
+		body.setColor(sf::Color::White);
+	}
+
+	if (!GetPlacedStatus())
+	{
+		MoveBuilding();
+	}
+}
 
 void Buildings::Draw()
 {
@@ -49,8 +59,6 @@ void Buildings::Draw()
 		GameManager::GetWindow()->draw(background);
 		GameManager::GetWindow()->draw(resource);
 	}
-
-
 }
 
 void Buildings::InitDetectionCircle(int radius)
@@ -61,16 +69,6 @@ void Buildings::InitDetectionCircle(int radius)
 	detectionCircle.setFillColor(sf::Color::Transparent);
 	detectionCircle.setOutlineThickness(1);
 	detectionCircle.setOutlineColor(sf::Color(255, 0, 0, 255));
-}
-
-void Buildings::UpdateBuildings()
-{
-	UpdateDetectionCircle();
-
-	if (!GetPlacedStatus())
-	{ 
-		MoveBuilding();
-	}
 }
 
 void Buildings::UpdateDetectionCircle()
@@ -239,4 +237,12 @@ void Buildings::AlignWorkersPosition(std::vector<Characters*> t_assignedWorkers,
 
 		t_assignedWorkers[i]->SetPosition(workerPos);
 	}
+}
+
+void Buildings::TakeDamage(int damage)
+{
+	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
+	stats.LoseHealth(damage);
+	body.setColor(sf::Color::Red);
+	redTimer.restart();
 }

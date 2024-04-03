@@ -58,6 +58,7 @@ void Game::Init()
     // CreateWarrior({ 350, 400 });
    // CreateWarrior({ 400, 400 });
     CreateMiner({ 450, 400 });
+   // CreateHazmatMan({ 750, 900 });
 
     CreateSuckler({ 150, 150 });
     CreateSuckler({ 200, 150 });
@@ -83,7 +84,7 @@ void Game::ProcessEvents()
         {
             ProcessKeyRelease(newEvent);
         }
-        if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseWheelScrolled == newEvent.type)
+        if (sf::Event::MouseButtonPressed == newEvent.type /*|| sf::Event::MouseWheelScrolled == newEvent.type*/)
         {
             ProcessMousePress(newEvent);
         }
@@ -878,14 +879,20 @@ void Game::MergeEnemies()
 
 }
 
-void Game::ClearFog(sf::CircleShape radius)
+void Game::ClearFog(sf::CircleShape radius) 
 {
-    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    sf::Vector2f circleCenter = radius.getPosition();
+    float circleRadius = radius.getRadius();
+
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++) 
     {
-        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
         {
-           
-            if (radius.getGlobalBounds().intersects(GameManager::tiles[row][col].tile.getGlobalBounds()))
+            sf::Vector2f tileCenter = GameManager::tiles[row][col].tile.getPosition();
+            float tileRadius = std::min(GameManager::tiles[row][col].tile.getLocalBounds().width, GameManager::tiles[row][col].tile.getLocalBounds().height) / 2.0f;
+            float distance = Global::Distance(circleCenter, tileCenter);
+
+            if (distance <= circleRadius + tileRadius) 
             {
                 GameManager::tiles[row][col].DiscoverTile();
             }

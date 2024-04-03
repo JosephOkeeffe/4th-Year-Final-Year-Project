@@ -5,6 +5,7 @@
 #include "Globals.h"
 
 #include "Characters.h"
+#include "Stats.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -28,13 +29,12 @@ public:
 	};
 
 	void Init(sf::Texture& texture, sf::Sprite& sprite, sf::IntRect& textureSize, float scale);
-	virtual void Update() = 0;
+	virtual void Update();
 	virtual void MouseRelease() = 0;
 	virtual void Draw();
 
 	void InitDetectionCircle(int radius);
 	
-	void UpdateBuildings();
 	void UpdateDetectionCircle();
 
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites);
@@ -50,14 +50,14 @@ public:
 	bool CheckIfCanBePlaced(sf::Vector2i cell);
 	void ChangeSelectedColour();
 
-
-
 	void AlignWorkersPosition(std::vector<Characters*> temp, int texWidth, int texHeight);
 
 	std::vector<Characters*> assignedWorkers;
 
 	void SetBuildingType(BuildingType type);
 	BuildingType GetBuildingType();
+
+	void TakeDamage(int damage);
 
 	BuildingType buildingType;
 	BuildingStatus status;
@@ -89,12 +89,19 @@ public:
 	float animationSpeed{ 0.2 };
 	int playerAnimation = 0;
 
+	sf::Clock redTimer;
+	ParticleSystem particleSystem;
+
 private:
 
 	bool canBePlaced = true;
 	bool isPlaced = false;
 	sf::RectangleShape mainRectangle;
 	const int numSmallRectangles = 4;
+
+	Stats stats{ 25, 0, 0 };
+
+
 
 	
 

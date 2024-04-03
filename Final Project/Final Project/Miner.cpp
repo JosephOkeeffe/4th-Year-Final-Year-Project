@@ -27,7 +27,7 @@ Miner::Miner()
 	default:
 		break;
 	}
-	body.setScale(defaulScale, defaulScale);
+	body.setScale(defaultScale, defaultScale);
 
 
 }
@@ -66,7 +66,7 @@ void Miner::Update()
 	{
 		Characters::Update();
 		CheckAnimationState();
-		AnimateWorker();
+		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
 		UpdateWorkingStates();
 	}
 }
@@ -98,7 +98,7 @@ void Miner::UpdateWorkingStates()
 			}
 			else if (workingPlace->status == workingPlace->EMPTY && GetCurrentState(UNLOADING))
 			{
-				body.setScale(defaulScale, defaulScale);
+				body.setScale(defaultScale, defaultScale);
 				SetCurrentState(RETURN_TO_BASE);
 			}
 		}
@@ -182,12 +182,6 @@ void Miner::MoveSpriteToTarget(sf::Vector2f targetPosition)
     }
 }
 
-
-void Miner::AnimateWorker()
-{ 
-	Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
-}
-
 void Miner::CheckAnimationState()
 {
 	if (GetCurrentState(IDLE) && !GetSelected())
@@ -219,7 +213,7 @@ void Miner::CheckAnimationState()
 
 void Miner::StopWorking()
 {
-	body.setScale(defaulScale, defaulScale);
+	body.setScale(defaultScale, defaultScale);
 
 	if (workingPlace != nullptr)
 	{

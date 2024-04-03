@@ -28,7 +28,7 @@ void GoldMine::MouseRelease()
 
 void GoldMine::Update()
 {
-	UpdateBuildings();
+	Buildings::Update();
 	deltaTime = clock.restart();
 
 	switch (status)

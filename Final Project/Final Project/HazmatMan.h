@@ -12,11 +12,11 @@ public:
 	HazmatMan();
 	void MouseRelease() override;
 	void Update() override;
-	void RemoveFromWorkPlace();
 	void UpdateWorkingStates();
 	void MoveSpriteToTarget(sf::Vector2f targetPosition);
-	void AnimateWorker();
 	void CheckAnimationState();
+
+	void StopWorking();
 
 	sf::Sprite& GetSprite();
 	sf::Vector2f& GetPos();
@@ -36,6 +36,8 @@ private:
 	float moveSpeed = 2.0f;
 	  
 	float defaultScale = 1.8;
+
+	sf::Clock particleTimer;
 
 };
 

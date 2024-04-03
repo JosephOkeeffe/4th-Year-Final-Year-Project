@@ -48,11 +48,9 @@ void Enemy::Draw()
 }
 
 // TO DO
-// Miner and Oil Man done...hazmat man NOT DONE- Fix up and copy from others, make him die
-// Enemy has a few more radius'
-// If female - Search for male in certain radius - If found, move in that direction
-// Search for good guys - If found, move in that direction
-// Enemies can destroy buildings
+// Enemies can destroy buildings - 
+// CAN DO - can attack HQ, 
+// CANT DO - destroy, fix particles, show health bar, do other buildings
 // Do something with resocures
 // Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
 // Invenotry maybe
@@ -60,6 +58,8 @@ void Enemy::Draw()
 // Once enemy is there, wait and observe in smaller radius
 // If nothing of interest is there, move to another random point in radius
 // Make better UI that shows things all the time , resources, buildings etc
+// ENEMY IDEAS - Suicde man, moves slowly but one shots who ever
+// ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
  
 void Enemy::Update()
 {
@@ -94,12 +94,30 @@ void Enemy::Update()
 			ChangeState(IDLE);
 		}
 
-		if(GetCurrentState(IDLE) && wanderTimer.getElapsedTime().asSeconds() > 10)
+		if (GetCurrentState(IDLE) && wanderTimer.getElapsedTime().asSeconds() > 10)
 		{
-			StartWandering();
+			std::vector<sf::Vector2f> unitsToMove = GetUnitsToMoveTowardsWithinWanderRadius();
+			std::vector<sf::Vector2f> mergeTargets = GetMergeTargetsToMoveTowardsWithinWanderRadius();
+			std::vector<sf::Vector2f> buildings = GetBuildingsToMoveTowardsWithinWanderRadius();
+
+			pointsOfInterest.insert(pointsOfInterest.end(), unitsToMove.begin(), unitsToMove.end());
+			pointsOfInterest.insert(pointsOfInterest.end(), mergeTargets.begin(), mergeTargets.end());
+			pointsOfInterest.insert(pointsOfInterest.end(), buildings.begin(), buildings.end());
+
+			if (pointsOfInterest.size() > 0)
+			{
+				MoveTowardsPointOfInterest();
+				pointsOfInterest.clear();
+			}
+			else
+			{
+				StartWandering();
+			}					
+			wanderTimer.restart();
 		}
 
 		ProjectilesCollideWithPlayerUnits();
+		ProjectilesCollideWithPlayerBuildings();
 	}
 }
 
@@ -191,12 +209,67 @@ void Enemy::Move()
 	}
 }
 
+void Enemy::MoveTowardsPointOfInterest()
+{
+	ChangeState(MOVING);
+
+	float closestDistance = std::numeric_limits<float>::max();
+	sf::Vector2f closestVector;
+	int randomOffset = 5;
+
+	for (sf::Vector2f targets : pointsOfInterest)
+	{
+		std::cout << "X: " << targets.x << "\n";
+		std::cout << "Y: " << targets.y << "\n";
+
+		float currentDistance = Global::Distance(body.getPosition(), targets);
+		if (currentDistance < closestDistance)
+		{
+			closestDistance = currentDistance;
+			closestVector = targets;
+		}
+	}
+
+	std::cout << "Closest distance: " << closestDistance << "\n";
+	std::cout << "Closest vector: " << closestVector.x << ", " << closestVector.y << "\n";
+
+	sf::Vector2i startPos = Global::ConvertPositionToCell(body.getPosition());
+	startTile = &GameManager::tiles[startPos.x][startPos.y];
+
+	std::cout << "Start vector: " << startPos.x << ", " << startPos.y << "\n";
+
+	float randX = Global::GetRandomNumber(-randomOffset, randomOffset);
+	float randY = Global::GetRandomNumber(-randomOffset, randomOffset);
+
+	sf::Vector2i endPos = Global::ConvertPositionToCell(closestVector);
+
+	while (endPos.x + randX < 1 || endPos.y + randY < 1)
+	{
+		randX = Global::GetRandomNumber(-randomOffset, randomOffset);
+		randY = Global::GetRandomNumber(-randomOffset, randomOffset);
+	}
+
+	endPos.x += randX;
+	endPos.y += randY;
+
+	std::cout << "End vector: " << endPos.x << ", " << endPos.y << "\n";
+
+	goalTile = &GameManager::tiles[endPos.x][endPos.y];
+
+	path = GameManager::FindPath(startTile, goalTile, false);
+}
+
 void Enemy::StartWandering()
 {
 	ChangeState(MOVING);
-	int tilesInRadius = wanderRadius / Global::CELL_SIZE;
+
 	sf::Vector2i cellPos = Global::ConvertPositionToCell(body.getPosition());
 	startTile = &GameManager::tiles[cellPos.x][cellPos.y];
+
+	// Getting the tiles in the wander radius
+	int tilesInRadius = wanderRadius / Global::CELL_SIZE;
+
+	// Getting a random tile to move to within the radius
 	int randX = randX = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 	int randY = randY = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 
@@ -205,6 +278,7 @@ void Enemy::StartWandering()
 		randX = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 		randY = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 	}
+	// making the goal tile that random tile
 	cellPos.x += randX;
 	cellPos.y += randY;
 	std::cout << "X: " << cellPos.x << ", Y: " << cellPos.y << "\n";
@@ -226,25 +300,48 @@ bool Enemy::IsCharacterWithinRadius(sf::Sprite& target)
 void Enemy::CheckIfAnythingIsWithinRadius()
 {
 	bool anyCharacterWithinRadius = false;
+	float stateChangeDelay = 0.5f;
 
 	for (Characters* unit : GameManager::aliveUnits)
 	{
 		if (IsCharacterWithinRadius(unit->body))
 		{
 			anyCharacterWithinRadius = true;
+			if(isReadyToAttack)
+			{
+				isReadyToAttack = false;
+				attackingStateChangeTimer.restart();
+			}
+		}
+	}
+
+	for (Buildings* building : GameManager::buildings)
+	{
+		if (IsCharacterWithinRadius(building->body))
+		{
+			anyCharacterWithinRadius = true;
+			if (isReadyToAttack)
+			{
+				isReadyToAttack = false;
+				attackingStateChangeTimer.restart();
+			}
 		}
 	}
 
 	if (!GetCurrentState(MERGING))
 	{
-		if (anyCharacterWithinRadius)
+		if (anyCharacterWithinRadius )
 		{
-			ChangeState(ATTACKING);
+			if (attackingStateChangeTimer.getElapsedTime().asSeconds() > stateChangeDelay)
+			{
+				ChangeState(ATTACKING);
+			}
 		}
 		else
 		{
 			if (!GetCurrentState(MOVING))
 			{
+				isReadyToAttack = true;
 				ChangeState(IDLE);
 			}
 		}
@@ -288,6 +385,102 @@ Characters* Enemy::FindClosestEnemy()
 
 	return closest;
 }
+
+Buildings* Enemy::FindClosestBuilding()
+{
+	float closestDistance = std::numeric_limits<float>::max();
+	Buildings* closest = nullptr;
+
+	sf::Vector2f buildingPosition = body.getPosition();
+
+	for (Buildings* building : GameManager::buildings)
+	{
+		float distance = std::sqrt(std::pow(building->body.getPosition().x - buildingPosition.x, 2) + std::pow(building->body.getPosition().y - buildingPosition.y, 2));
+
+		if (distance < closestDistance)
+		{
+			closestDistance = distance;
+			closest = building;
+		}
+	}
+
+	return closest;
+}
+
+std::vector<sf::Vector2f> Enemy::GetUnitsToMoveTowardsWithinWanderRadius()
+{
+	std::vector<sf::Vector2f> unitsInRadius;
+
+	sf::Vector2f currentPos = body.getPosition();
+	sf::Vector2f targetPos;
+	float distance;
+
+	for (Characters* unit : GameManager::aliveUnits)
+	{
+		targetPos = unit->body.getPosition();
+		distance = Global::Distance(currentPos, targetPos);
+
+		if (distance <= wanderRadius)
+		{
+			unitsInRadius.push_back(unit->body.getPosition());
+		}
+	}
+
+	return unitsInRadius;
+}
+
+std::vector<sf::Vector2f> Enemy::GetMergeTargetsToMoveTowardsWithinWanderRadius()
+{
+	std::vector<sf::Vector2f> meregTargetsInRadius;
+
+	sf::Vector2f currentPos = body.getPosition();
+	sf::Vector2f targetPos;
+	float distance;
+
+	// Look for merge if this enemy is female
+	if (enemyType == SUCKLER_FEMALE)
+	{
+		for (Enemy* enemy : GameManager::aliveEnemies)
+		{
+			// Only look for males to merge with if enemy is female
+			if (enemy->enemyType != enemy->SUCKLER_MALE) { continue; }
+
+			targetPos = enemy->body.getPosition();
+			distance = Global::Distance(currentPos, targetPos);
+
+			if (distance <= wanderRadius)
+			{
+				meregTargetsInRadius.push_back(enemy->body.getPosition());
+			}
+
+		}
+	}
+
+	return meregTargetsInRadius;
+}
+
+std::vector<sf::Vector2f> Enemy::GetBuildingsToMoveTowardsWithinWanderRadius()
+{
+	std::vector<sf::Vector2f> buildingsInRadius;
+
+	sf::Vector2f currentPos = body.getPosition();
+	sf::Vector2f targetPos;
+	float distance;
+
+	for (Buildings* building : GameManager::buildings)
+	{
+		targetPos = building->body.getPosition();
+		distance = Global::Distance(currentPos, targetPos);
+
+		if (distance <= wanderRadius)
+		{
+			buildingsInRadius.push_back(building->body.getPosition());
+		}
+	}
+
+	return buildingsInRadius;
+}
+
 void Enemy::TakeDamage(int damage)
 {
 	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
@@ -318,7 +511,6 @@ void Enemy::ProjectilesCollideWithPlayerUnits()
 {
 	for (Characters* unit : GetUnitsWithinRadius())
 	{
-
 		for (Projectile* projectile : projectiles)
 		{
 			// If projectle hits character 
@@ -347,6 +539,25 @@ void Enemy::ProjectilesCollideWithPlayerUnits()
 				}
 			}
 
+		}
+	}
+}
+
+void Enemy::ProjectilesCollideWithPlayerBuildings()
+{
+	for (Buildings* building : GameManager::buildings)
+	{
+		for (Projectile* projectile : projectiles)
+		{
+			// If projectle hits character 
+			if (projectile->body.getGlobalBounds().intersects(building->body.getGlobalBounds()))
+			{
+				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
+
+				building->TakeDamage(stats.GetDamage());
+
+				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+			}
 		}
 	}
 }

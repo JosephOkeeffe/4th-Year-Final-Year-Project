@@ -18,7 +18,6 @@ public:
 	void RemoveFromWorkPlace();
 	void UpdateWorkingStates();
 	void MoveSpriteToTarget(sf::Vector2f targetPosition);
-	void AnimateWorker();
 	void CheckAnimationState();
 
 	void StopWorking();
@@ -39,7 +38,7 @@ private:
 	// Moving
 	float moveSpeed = 2.0f;
 
-	float defaulScale = 1;
+	float defaultScale = 1;
 
 	sf::Clock particleTimer;
 

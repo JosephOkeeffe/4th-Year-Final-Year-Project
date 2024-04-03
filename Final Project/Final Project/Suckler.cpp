@@ -47,17 +47,36 @@ void Suckler::Update()
 		if (GetCurrentState(ATTACKING) && spitTimer.getElapsedTime().asSeconds() > spitFireRate)
 		{
 			spitTimer.restart();
-			ShootSpit(FindClosestEnemy()->body.getPosition());
+			if(FindClosestEnemy() != nullptr)
+			{
+				ShootSpit(FindClosestEnemy()->body.getPosition());
+			}
+
+			if (FindClosestBuilding() != nullptr)
+			{
+				ShootSpit(FindClosestBuilding()->body.getPosition());
+			}
+
 		}
 		else if (GetCurrentState(ATTACKING))
 		{
 			Characters* closestEnemy = FindClosestEnemy();
+			Buildings* closestBuilding = FindClosestBuilding();
 			if (closestEnemy != nullptr)
 			{
 				sf::Vector2f direction = closestEnemy->body.getPosition() - body.getPosition();
 				float angle = std::atan2(direction.y, direction.x) * 180 / Global::PI; 
 				body.setRotation(angle + 90);
 
+			}
+			else
+			{
+				if (closestBuilding != nullptr)
+				{
+					sf::Vector2f direction = closestBuilding->body.getPosition() - body.getPosition();
+					float angle = std::atan2(direction.y, direction.x) * 180 / Global::PI;
+					body.setRotation(angle + 90);
+				}
 			}
 
 		}

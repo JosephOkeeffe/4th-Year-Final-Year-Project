@@ -70,14 +70,21 @@ void Headquarters::MouseRelease()
 }
 void Headquarters::Update()
 {
+	Buildings::Update();
 
+	//
+	sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-50, 50, body, 0);
+	sf::Vector2f particlePos;
+	particlePos.x = body.getPosition().x;
+	particlePos.y = body.getPosition().y - 50;
+	particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
+	particleSystem.Update();
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
 		if (GetPlacedStatus() && GetSelectedStatus())
 		{
-			Display_Text("Working??");
 			HandleRightClick(mousePos);
 		}
 	}
@@ -94,11 +101,10 @@ void Headquarters::Update()
 
 	shader.Update();
 	ChangeSelectedColour();
-	UpdateDetectionCircle();
 }
 void Headquarters::Draw()
 {
-	//Buildings::Draw();
+	particleSystem.draw(*GameManager::GetWindow());
 
 	GameManager::GetWindow()->draw(detectionCircle);
 
@@ -128,7 +134,6 @@ void Headquarters::ChangeSelectedColour()
 	{
 		HUD::currentState = HUD::NONE;
 		BuildingUI::Deactivate();
-		body.setColor(sf::Color::White);
 	}
 }
 

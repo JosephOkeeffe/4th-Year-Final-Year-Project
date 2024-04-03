@@ -43,7 +43,7 @@ void UraniumExtractor::MouseRelease()
 
 void UraniumExtractor::Update()
 {
-	UpdateBuildings();
+	Buildings::Update();
 	deltaTime = clock.restart();
 
 	switch (status)

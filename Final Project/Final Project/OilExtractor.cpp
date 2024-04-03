@@ -30,7 +30,7 @@ void OilExtractor::MouseRelease()
 
 void OilExtractor::Update()
 {
-	UpdateBuildings();
+	Buildings::Update();
 	deltaTime = clock.restart();
 
 	if (GetPlacedStatus())
