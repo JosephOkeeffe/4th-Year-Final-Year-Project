@@ -35,8 +35,8 @@ void Enemy::Draw()
 	{
 		stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
 		particleSystem.draw(*GameManager::GetWindow());
-		GameManager::GetWindow()->draw(enemyDetectionCircle);
-		GameManager::GetWindow()->draw(wanderCircle);
+		//GameManager::GetWindow()->draw(enemyDetectionCircle);
+	//	GameManager::GetWindow()->draw(wanderCircle);
 
 		
 		  
@@ -48,10 +48,7 @@ void Enemy::Draw()
 }
 
 // TO DO
-// Enemies can destroy buildings - 
-// CAN DO - can attack HQ, 
-// CANT DO - destroy, fix particles, show health bar, do other buildings
-// Do something with resocures
+// Inventory Add - Hook it up to the game and ADD UI
 // Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
 // Invenotry maybe
 // End game screen 
@@ -60,6 +57,7 @@ void Enemy::Draw()
 // Make better UI that shows things all the time , resources, buildings etc
 // ENEMY IDEAS - Suicde man, moves slowly but one shots who ever
 // ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
+// IDEAS - Debuffs
  
 void Enemy::Update()
 {
@@ -118,6 +116,7 @@ void Enemy::Update()
 
 		ProjectilesCollideWithPlayerUnits();
 		ProjectilesCollideWithPlayerBuildings();
+		
 	}
 }
 
@@ -219,9 +218,6 @@ void Enemy::MoveTowardsPointOfInterest()
 
 	for (sf::Vector2f targets : pointsOfInterest)
 	{
-		std::cout << "X: " << targets.x << "\n";
-		std::cout << "Y: " << targets.y << "\n";
-
 		float currentDistance = Global::Distance(body.getPosition(), targets);
 		if (currentDistance < closestDistance)
 		{
@@ -230,13 +226,8 @@ void Enemy::MoveTowardsPointOfInterest()
 		}
 	}
 
-	std::cout << "Closest distance: " << closestDistance << "\n";
-	std::cout << "Closest vector: " << closestVector.x << ", " << closestVector.y << "\n";
-
 	sf::Vector2i startPos = Global::ConvertPositionToCell(body.getPosition());
 	startTile = &GameManager::tiles[startPos.x][startPos.y];
-
-	std::cout << "Start vector: " << startPos.x << ", " << startPos.y << "\n";
 
 	float randX = Global::GetRandomNumber(-randomOffset, randomOffset);
 	float randY = Global::GetRandomNumber(-randomOffset, randomOffset);
@@ -252,7 +243,6 @@ void Enemy::MoveTowardsPointOfInterest()
 	endPos.x += randX;
 	endPos.y += randY;
 
-	std::cout << "End vector: " << endPos.x << ", " << endPos.y << "\n";
 
 	goalTile = &GameManager::tiles[endPos.x][endPos.y];
 
@@ -281,7 +271,6 @@ void Enemy::StartWandering()
 	// making the goal tile that random tile
 	cellPos.x += randX;
 	cellPos.y += randY;
-	std::cout << "X: " << cellPos.x << ", Y: " << cellPos.y << "\n";
 	goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
 	path = GameManager::FindPath(startTile, goalTile, false);
 

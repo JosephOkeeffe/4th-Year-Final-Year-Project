@@ -73,7 +73,7 @@ void Characters::Update()
 			{
 				if (!GetCurrentState(MOVING))
 				{
-					particleSystem.clearParticles();
+					//particleSystem.clearParticles();
 				}
 			}
 		}
@@ -129,7 +129,10 @@ void Characters::Draw()
 	}
 	else
 	{
-		stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
+		if(!isWorking)
+		{
+			stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
+		}
 
 		for (Projectile* projectile : projectiles)
 		{
@@ -167,8 +170,14 @@ void Characters::UpdateDetectionCircle()
 void Characters::MoveCharacter()
 {
 	float length = 0;
+
+	if (walkingTrailTimer.getElapsedTime().asSeconds() > 0.3)
+	{
+		MakeWalkingTrail();
+	}
+
 	DeselectCharacter();
-	particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
+	//particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
 
 	targetPosition = path.front()->tile.getPosition();
 	targetPosition.x += pathFindingXOffset;
@@ -277,21 +286,6 @@ bool Characters::GetSelected()
 	return isSelected;
 }
 
-void Characters::ChangeSelectedColour()
-{
-	//if (GetSelected())
-	//{
-	//	
-	//}
-	//else
-	//{
-	//	if(!GetCurrentState(ATTACKING))
-	//	{
-	//		body.setColor(sf::Color::White);
-	//	}
-	//}
-}
-
 bool Characters::IsEnemyInAttackRadius(sf::Sprite& target)
 {
 	float dx = body.getPosition().x - target.getPosition().x;
@@ -398,7 +392,6 @@ void Characters::StartAttackingClosestEnemy()
 
 void Characters::TakeDamage(int damage)
 {
-	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
 	stats.LoseHealth(damage);
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
@@ -472,6 +465,22 @@ void Characters::ProjectilesCollideWithEnemies()
 
 		}
 	}
+}
+
+void Characters::MakeWalkingTrail()
+{
+	int randomNumberOffset = 15;
+	int loopAmount = 3;
+	sf::Vector2f randPosOffset;
+	for (int i = 0; i < loopAmount; i++)
+	{
+		sf::Vector2f randPosOffset;
+		randPosOffset.x = static_cast<float>(Global::GetRandomNumber(-randomNumberOffset, randomNumberOffset));
+		randPosOffset.y = static_cast<float>(Global::GetRandomNumber(-randomNumberOffset, randomNumberOffset));
+
+		particleSystem.AddSpriteParticle(body.getPosition() + randPosOffset, (velocity * -1.0f) * 0.5f, sf::Color::White, Textures::GetInstance().GetTexture("suckler-trail"), 50, 0.2, 7);
+	}
+	walkingTrailTimer.restart();
 }
 
 void Characters::ChangeStateToDead()

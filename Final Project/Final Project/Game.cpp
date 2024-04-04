@@ -46,6 +46,9 @@ void Game::Init()
 {
     srand(time(nullptr));
     Global::font.loadFromFile("./assets/fonts/Flinton.otf");
+
+    GameManager::itemManager.LoadItemsFromJSON();
+
     mainMenu.Init();
     pauseMenu.Init();
 
@@ -54,15 +57,12 @@ void Game::Init()
     BuildingUI::Init();
 
     CreateHeadquarters(basePos);
-   // CreateArcher({ 300, 400 });
-    // CreateWarrior({ 350, 400 });
-   // CreateWarrior({ 400, 400 });
+
     CreateMiner({ 450, 400 });
-   // CreateHazmatMan({ 750, 900 });
 
     CreateSuckler({ 150, 150 });
-    CreateSuckler({ 200, 150 });
-    CreateSuckler({ 150, 250 });
+    CreateSuckler({ 250, 150 });
+    CreateSuckler({ 150, 700 });
    // CreateSuckler({ 200, 250 });
 }
 
@@ -84,7 +84,7 @@ void Game::ProcessEvents()
         {
             ProcessKeyRelease(newEvent);
         }
-        if (sf::Event::MouseButtonPressed == newEvent.type /*|| sf::Event::MouseWheelScrolled == newEvent.type*/)
+        if (sf::Event::MouseButtonPressed == newEvent.type)
         {
             ProcessMousePress(newEvent);
         }
@@ -211,6 +211,15 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::W == t_event.key.code)
     {
+        GameManager::inventory.AddItem("Gold", 5);
+    }
+    if (sf::Keyboard::E == t_event.key.code)
+    {
+        GameManager::inventory.PrintItems();
+    }
+    if (sf::Keyboard::R == t_event.key.code)
+    {
+        GameManager::inventory.RemoveItem("Gold", 1);
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
@@ -219,17 +228,12 @@ void Game::ProcessKeyPress(sf::Event t_event)
 }
 void Game::ProcessKeyRelease(sf::Event t_event)
 {
-   /* if (sf::Keyboard::Q == t_event.key.code)
-    {
-        CreateEnemy({ 100,100 });
-    }*/
 }
 void Game::ProcessMousePress(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
-        std::cout << currentCell.x << ", " << currentCell.y << "\n";
         if (!BuildingUI::isActive)
         {
             isDragging = true;

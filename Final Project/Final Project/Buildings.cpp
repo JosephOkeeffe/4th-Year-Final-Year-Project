@@ -37,6 +37,14 @@ void Buildings::Update()
 {
 	UpdateDetectionCircle();
 
+	if(stats.GetCurrentHealth() <= stats.GetMaxHealth() * 0.8)
+	{
+		CreateSmokeDependingOnDamageTaken();
+	}
+
+	particleSystem.Update();
+
+
 	if (body.getColor() == sf::Color::Red && redTimer.getElapsedTime().asSeconds() > 0.3)
 	{
 		body.setColor(sf::Color::White);
@@ -46,10 +54,17 @@ void Buildings::Update()
 	{
 		MoveBuilding();
 	}
+
+	if (stats.GetCurrentHealth() <= 0 && !isDestroyed)
+	{
+		DestroyBuilding();
+	}
 }
 
 void Buildings::Draw()
 {
+	particleSystem.draw(*GameManager::GetWindow());
+
 	GameManager::GetWindow()->draw(detectionCircle);
 	GameManager::GetWindow()->draw(body);
 
@@ -241,8 +256,78 @@ void Buildings::AlignWorkersPosition(std::vector<Characters*> t_assignedWorkers,
 
 void Buildings::TakeDamage(int damage)
 {
-	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
 	stats.LoseHealth(damage);
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
+}
+
+void Buildings::CreateSmokeDependingOnDamageTaken()
+{
+	sf::Vector2f velocity{ 0, -0.3 };
+	int particleDelay = { 100 };
+
+	sf::Color colour = sf::Color::White;
+
+	if (stats.GetCurrentHealth() >= stats.GetMaxHealth() * 0.7 && stats.GetCurrentHealth() <= stats.GetMaxHealth() * 0.8)
+	{
+		velocity.y = -0.3;
+		particleDelay = 500;
+		colour = sf::Color(255, 165, 0);
+	}
+	else if (stats.GetCurrentHealth() >= stats.GetMaxHealth() * 0.5 && stats.GetCurrentHealth() < stats.GetMaxHealth() * 0.7)
+	{
+		velocity.y = -0.5;
+		particleDelay = 300;
+		colour = sf::Color(255, 69, 0);
+	}
+	else if (stats.GetCurrentHealth() >= stats.GetMaxHealth() * 0.3 && stats.GetCurrentHealth() < stats.GetMaxHealth() * 0.5)
+	{
+		velocity.y = -1;
+		particleDelay = 100;
+		colour = sf::Color::Red;
+	}
+	else if (stats.GetCurrentHealth() >= stats.GetMaxHealth() * 0.1 && stats.GetCurrentHealth() < stats.GetMaxHealth() * 0.3)
+	{
+		velocity.y = -1.5;
+		particleDelay = 50;
+		colour = sf::Color(178, 34, 34);
+	}
+
+
+	if (particleTimer.getElapsedTime().asMilliseconds() >= particleDelay)
+	{
+		sf::Vector2f particlePos;
+		particlePos.x = body.getPosition().x + Global::GetRandomNumber(-20,20);
+		particlePos.y = body.getPosition().y - 70;
+		particleSystem.AddSpriteParticle(particlePos, velocity, colour, Textures::GetInstance().GetTexture("smoke"), 250, 0.5, 8);
+
+		particleTimer.restart();
+	}
+}
+
+void Buildings::DestroyBuilding()
+{
+	sf::Vector2i tilePos = Global::ConvertPositionToCell(body.getPosition());
+
+	Tile* currentTile = &GameManager::tiles[tilePos.x][tilePos.y];
+	currentTile->SetTileType(TileType::NONE);
+
+	GameManager::buildings.erase(std::remove(GameManager::buildings.begin(), GameManager::buildings.end(), this), GameManager::buildings.end());
+
+	isDestroyed = true;
+
+	//switch (buildingType)
+	//{
+	//case Buildings::HEADQUATERS_BUILDING:
+	//	currentTile->SetTileType()
+	//	break;
+	//case Buildings::GOLD_MINE_BUILDING:
+	//	break;
+	//case Buildings::URANIUM_EXTRACTOR_BUILDING:
+	//	break;
+	//case Buildings::OIL_EXTRACTOR_BUILDING:
+	//	break;
+	//default:
+	//	break;
+	//}
 }

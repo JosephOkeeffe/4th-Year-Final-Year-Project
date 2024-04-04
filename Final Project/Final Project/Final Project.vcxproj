@@ -142,8 +142,9 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OilExtractor.cpp" />
     <ClCompile Include="OilMan.cpp" />
@@ -178,6 +179,8 @@
     <ClInclude Include="Characters.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OilExtractor.h" />
     <ClInclude Include="OilMan.h" />

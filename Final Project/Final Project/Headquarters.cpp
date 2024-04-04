@@ -73,12 +73,7 @@ void Headquarters::Update()
 	Buildings::Update();
 
 	//
-	sf::Vector2f randomVelocity = Global::CalculateVelocityUsingAnglesForParticles(-50, 50, body, 0);
-	sf::Vector2f particlePos;
-	particlePos.x = body.getPosition().x;
-	particlePos.y = body.getPosition().y - 50;
-	particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
-	particleSystem.Update();
+
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{

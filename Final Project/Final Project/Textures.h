@@ -72,6 +72,9 @@ private:
     sf::Texture goldParticleTexture;
     sf::Texture bloodTexture;
     sf::Texture sucklerTrailTexture;
+    sf::Texture goopTexture;
+    sf::Texture oilDropTexture;
+    sf::Texture smokeTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;

@@ -97,7 +97,7 @@ void OilMan::UpdateWorkingStates()
 			particlePos.x = body.getPosition().x;
 			particlePos.y = body.getPosition().y - 50;
 			particleTimer.restart();
-			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
+			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("oil-drop"), 200, 0.3, 7);
 		}
 	}
 

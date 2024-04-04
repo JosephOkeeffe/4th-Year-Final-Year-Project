@@ -74,7 +74,7 @@ void HazmatMan::UpdateWorkingStates()
 		{
 			if (workingPlace->status == workingPlace->GENERATING)
 			{
-				body.setScale(1.6, 1.6);
+				body.setScale(1.2, 1.2);
 				SetCurrentState(GATHERING);
 			}
 			else if (workingPlace->status == workingPlace->DEPOSITING)
@@ -99,7 +99,7 @@ void HazmatMan::UpdateWorkingStates()
 			particlePos.x = body.getPosition().x;
 			particlePos.y = body.getPosition().y - 40;
 			particleTimer.restart();
-			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("gold-icon"), 200, 0.3, 7);
+			particleSystem.AddSpriteParticle(particlePos, randomVelocity, sf::Color::White, Textures::GetInstance().GetTexture("goop"), 200, 0.3, 7);
 		}
 	}
 

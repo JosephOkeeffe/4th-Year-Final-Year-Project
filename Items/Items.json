@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Gold",
+    "texture": "gold-icon"
+  },
+  {
+    "id": 2,
+    "name": "Oil",
+    "texture": "oil-drop"
+  },
+  {
+    "id": 3,
+    "name": "Uranium",
+    "texture": "goop"
+  }
+]

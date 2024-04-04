@@ -77,8 +77,13 @@ public:
             {
                 color.a -= 5;
             }
-
-           
+        }
+        else if (type == 8)
+        {
+            if (color.a >= 2)
+            {
+                color.a -= 2;
+            }
         }
     }
 

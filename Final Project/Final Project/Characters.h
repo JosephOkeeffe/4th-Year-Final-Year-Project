@@ -56,7 +56,6 @@ public:
 	void SelectCharacter();
 	void DeselectCharacter();
 	bool GetSelected();
-	void ChangeSelectedColour();
 	bool IsEnemyInAttackRadius(sf::Sprite& target);
 	void FlipSpriteWithDirection(sf::Vector2f& direction, sf::Sprite& sprite);
 	void FlipSprite();
@@ -69,6 +68,8 @@ public:
 	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
 	void UpdateProjectiles();
 	void ProjectilesCollideWithEnemies();
+
+	void MakeWalkingTrail();
 
 	void ChangeStateToDead();
 	
@@ -113,6 +114,7 @@ public:
 	sf::Vector2f distanceFromLeader;
 	bool hasFlipped = false;
 
+
 	// Particles
 	ParticleSystem particleSystem;
 
@@ -123,6 +125,7 @@ public:
 	float reloadDelay = 3;
 
 	sf::Clock redTimer;
+	sf::Clock walkingTrailTimer;
 
 	Enemy* closestEnemy;
 	float closestEnemyDistance = INT_MAX;

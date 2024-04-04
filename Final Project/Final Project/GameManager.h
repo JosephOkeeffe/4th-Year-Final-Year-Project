@@ -4,6 +4,8 @@
 
 #include "Globals.h"
 #include "Tile.h"
+#include "ItemManager.h"
+#include "Inventory.h"
 
 class Buildings;
 class Characters;
@@ -14,6 +16,7 @@ class Enemy;
 class Suckler;
 class Gumper;
 class Formation;
+class Inventory;
 
 class GameManager
 {
@@ -24,6 +27,23 @@ public:
 
     static sf::RenderWindow* GetWindow() { return window; }
     static sf::View* GetView() { return gameView; }
+
+
+    static Tile** tiles;
+
+    static Headquarters* headquarters;
+    static std::vector<Buildings*> buildings;
+    static std::vector<Characters*> units;
+    static std::vector<Characters*> aliveUnits;
+    static std::vector<Enemy*> enemies;
+    static std::vector<Enemy*> aliveEnemies;
+    static std::vector<Suckler*> sucklers;
+    static Buildings* buildingToPlace;
+    static std::vector<Formation*> formations;
+    static ItemManager itemManager;
+    static Inventory inventory;
+
+    static int enemyID;
 
 	static void InitTiles()
 	{
@@ -184,23 +204,6 @@ public:
 
         return straightCost * (dx + dy) + (diagonalCost - 2 * straightCost) * std::min(dx, dy) + tileCost;
     }
-
-
-   
-
-    static Tile** tiles;
-
-    static Headquarters* headquarters;
-    static std::vector<Buildings*> buildings;
-    static std::vector<Characters*> units;
-    static std::vector<Characters*> aliveUnits;
-    static std::vector<Enemy*> enemies;
-    static std::vector<Enemy*> aliveEnemies;
-    static std::vector<Suckler*> sucklers;
-    static Buildings* buildingToPlace;
-    static std::vector<Formation*> formations;
-
-    static int enemyID;
 
 private:
     static sf::RenderWindow* window;

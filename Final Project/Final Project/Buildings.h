@@ -52,12 +52,13 @@ public:
 
 	void AlignWorkersPosition(std::vector<Characters*> temp, int texWidth, int texHeight);
 
-	std::vector<Characters*> assignedWorkers;
 
 	void SetBuildingType(BuildingType type);
 	BuildingType GetBuildingType();
 
 	void TakeDamage(int damage);
+	void CreateSmokeDependingOnDamageTaken(); 
+	void DestroyBuilding();
 
 	BuildingType buildingType;
 	BuildingStatus status;
@@ -69,6 +70,9 @@ public:
 
 	sf::RectangleShape background;
 	sf::RectangleShape resource;
+
+	std::vector<Characters*> assignedWorkers;
+
 
 	sf::Text resourceText;
 	float amount = 0;
@@ -90,7 +94,10 @@ public:
 	int playerAnimation = 0;
 
 	sf::Clock redTimer;
+	sf::Clock particleTimer;
 	ParticleSystem particleSystem;
+
+	bool isDestroyed = false;
 
 private:
 

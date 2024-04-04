@@ -52,7 +52,7 @@ void Suckler::Update()
 				ShootSpit(FindClosestEnemy()->body.getPosition());
 			}
 
-			if (FindClosestBuilding() != nullptr)
+			if (FindClosestBuilding() != nullptr && FindClosestEnemy() == nullptr)
 			{
 				ShootSpit(FindClosestBuilding()->body.getPosition());
 			}

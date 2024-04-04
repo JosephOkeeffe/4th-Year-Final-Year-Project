@@ -51,6 +51,15 @@ void Textures::SetupTextures()
     flamingTrailTexture.loadFromFile("./assets/images/fire-trail.png");
     textureMap["fire-trail"] = flamingTrailTexture;
 
+    goopTexture.loadFromFile("./assets/images/goop.png");
+    textureMap["goop"] = goopTexture;
+
+    oilDropTexture.loadFromFile("./assets/images/oil-drop.png");
+    textureMap["oil-drop"] = oilDropTexture;
+
+    smokeTexture.loadFromFile("./assets/images/smoke.png");
+    textureMap["smoke"] = smokeTexture;
+
 
     // Characters
         warriorTexture.loadFromFile("./assets/images/warrior.png");

@@ -3,6 +3,8 @@
 sf::RenderWindow* GameManager::window = nullptr;
 sf::View* GameManager::gameView = nullptr;
 Tile** GameManager::tiles = nullptr;
+ItemManager GameManager::itemManager;
+Inventory GameManager::inventory;
 
 Headquarters* GameManager::headquarters;
 std::vector<Buildings*> GameManager::buildings;
