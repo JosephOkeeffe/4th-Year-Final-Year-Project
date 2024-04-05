@@ -116,7 +116,7 @@ private:
     View view{ m_window, gameView, hudView };
 
 
-
+    bool isInventoryOpen = false;
     bool loadGame = false;
 
    std::vector<Characters*> selectedUnits;

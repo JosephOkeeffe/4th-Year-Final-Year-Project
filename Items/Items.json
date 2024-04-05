@@ -13,5 +13,20 @@
     "id": 3,
     "name": "Uranium",
     "texture": "goop"
+  },
+  {
+    "id": 4,
+    "name": "Suckler Head",
+    "texture": "suckler-head"
+  },
+  {
+    "id": 5,
+    "name": "Suckler Tentacle",
+    "texture": "suckler-tentacle"
+  },
+  {
+    "id": 6,
+    "name": "Suckler Spit",
+    "texture": "spit"
   }
 ]

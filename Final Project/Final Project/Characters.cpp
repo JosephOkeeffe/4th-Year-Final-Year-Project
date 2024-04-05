@@ -90,6 +90,11 @@ void Characters::Update()
 	{
 		ChangeStateToDead();
 	}
+
+	if (closestEnemy == nullptr && !GetCurrentState(ATTACKING))
+	{
+		projectiles.clear();
+	}
 }
 
 void Characters::MouseRelease()

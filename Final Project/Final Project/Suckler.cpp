@@ -23,10 +23,11 @@ Suckler::Suckler(int _id)
 
 void Suckler::Update()
 {
+	Enemy::Update();
 
 	if (!GetCurrentState(DEAD))
 	{
-		Enemy::Update();
+		
 
 		// Merging
 		if (enemyType == SUCKLER_FEMALE && enemyType != BIG_SUCKLER)

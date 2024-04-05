@@ -21,6 +21,10 @@ void Enemy::Init(sf::Texture& _texture)
 	wanderCircle.setOutlineThickness(1);
 	wanderCircle.setOutlineColor(sf::Color(0, 255, 0, 255));
 
+	itemDropSprite.setSize({ 30, 30 });
+	itemDropSprite.setFillColor(sf::Color::White);
+	itemDropSprite.setOrigin(itemDropSprite.getSize().x / 2, itemDropSprite.getSize().y / 2);
+
 	int x = body.getPosition().x / Global::CELL_SIZE;
 	int y = body.getPosition().y / Global::CELL_SIZE;
 
@@ -38,33 +42,44 @@ void Enemy::Draw()
 		//GameManager::GetWindow()->draw(enemyDetectionCircle);
 	//	GameManager::GetWindow()->draw(wanderCircle);
 
-		
-		  
+
+
 		for (Projectile* projectile : projectiles)
 		{
 			projectile->Draw(*GameManager::GetWindow());
 		}
 	}
+	else
+	{
+		if (!isItemCollected)
+		{
+			GameManager::GetWindow()->draw(itemDropSprite);
+		}
+	}
 }
 
 // TO DO
-// Inventory Add - Hook it up to the game and ADD UI
+// // Add buttons for sorting inventory
 // Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
-// Invenotry maybe
 // End game screen 
-// Once enemy is there, wait and observe in smaller radius
-// If nothing of interest is there, move to another random point in radius
 // Make better UI that shows things all the time , resources, buildings etc
 // ENEMY IDEAS - Suicde man, moves slowly but one shots who ever
 // ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
 // IDEAS - Debuffs
- 
+// ENEMIES PLACE DOWN BUILDING, SPAWNS MORE ENEMIES
+
+
 void Enemy::Update()
 {
-
 	if (stats.GetCurrentHealth() <= 0 && !GetCurrentState(DEAD))
 	{
 		ChangeStateToDead();
+		GetRandomItemFromDropTable();
+	}
+
+	if (GetCurrentState(DEAD) && !isItemCollected)
+	{
+		UnitsCanCollectItemDrop();
 	}
 
 	if (!GetCurrentState(DEAD))
@@ -102,16 +117,19 @@ void Enemy::Update()
 			pointsOfInterest.insert(pointsOfInterest.end(), mergeTargets.begin(), mergeTargets.end());
 			pointsOfInterest.insert(pointsOfInterest.end(), buildings.begin(), buildings.end());
 
+
 			if (pointsOfInterest.size() > 0)
 			{
 				MoveTowardsPointOfInterest();
+				//wanderTimer.restart();
 				pointsOfInterest.clear();
 			}
 			else
 			{
 				StartWandering();
+				//wanderTimer.restart();
 			}					
-			wanderTimer.restart();
+			
 		}
 
 		ProjectilesCollideWithPlayerUnits();
@@ -204,6 +222,7 @@ void Enemy::Move()
 		else
 		{
 			ChangeState(IDLE);
+			wanderTimer.restart();
 		}
 	}
 }
@@ -214,7 +233,7 @@ void Enemy::MoveTowardsPointOfInterest()
 
 	float closestDistance = std::numeric_limits<float>::max();
 	sf::Vector2f closestVector;
-	int randomOffset = 5;
+	int randomOffset = 3;
 
 	for (sf::Vector2f targets : pointsOfInterest)
 	{
@@ -472,7 +491,6 @@ std::vector<sf::Vector2f> Enemy::GetBuildingsToMoveTowardsWithinWanderRadius()
 
 void Enemy::TakeDamage(int damage)
 {
-	std::cout << "Current Health: " << stats.GetCurrentHealth() << "\n";
 	stats.LoseHealth(damage);
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
@@ -573,6 +591,75 @@ void Enemy::ChangeStateToDead()
 	body.setColor(colour);
 	projectiles.clear();
 }
+
+void Enemy::GetRandomItemFromDropTable()
+{
+	std::map<double, std::string> itemProbabilities = 
+	{
+		{0.25, "Gold"},
+		{0.15, "Oil"},
+		{0.10, "Uranium"},
+		{0.20, "Suckler Head"},
+		{0.15, "Suckler Tentacle"},
+		{0.15, "Suckler Spit"},
+	};
+
+	float randomDrop = static_cast<double>(std::rand()) / RAND_MAX;
+	float totalProbability = 0;
+
+	for (auto& pair : itemProbabilities)
+	{
+		totalProbability += pair.first;
+	}
+
+	float cumulativeProbability = 0;
+
+	for (auto& pair : itemProbabilities)
+	{
+		cumulativeProbability += pair.first / totalProbability;
+		if (randomDrop < cumulativeProbability)
+		{
+			DropItem(pair.second);
+			return;
+		}
+	}
+}
+
+void Enemy::DropItem(std::string& itemName)
+{
+	Item tempItem = GameManager::itemManager.GetItemByName(itemName);
+
+	if (droppedItem == nullptr)
+	{
+		droppedItem = new Item(tempItem);
+	}
+	else 
+	{
+		*droppedItem = tempItem;
+	}
+
+	droppedItem->IncreaseQuantity(5);
+
+	itemDropSprite.setTexture(&Textures::GetInstance().GetTexture(droppedItem->GetTextureName()));
+	itemDropSprite.setPosition(body.getPosition());
+}
+
+void Enemy::UnitsCanCollectItemDrop()
+{
+	if (droppedItem != nullptr) 
+	{
+		for (Characters* unit : GameManager::aliveUnits)
+		{
+			if (unit->body.getGlobalBounds().intersects(itemDropSprite.getGlobalBounds()))
+			{
+				GameManager::inventory.AddItem(droppedItem->GetName(), droppedItem->GetQuantity());
+				isItemCollected = true;
+				break;
+			}
+		}
+	}
+}
+
 
 void Enemy::MakeWalkingTrail()
 {

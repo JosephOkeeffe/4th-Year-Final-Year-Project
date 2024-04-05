@@ -213,6 +213,14 @@ void Game::ProcessKeyPress(sf::Event t_event)
     {
         GameManager::inventory.AddItem("Gold", 5);
     }
+    if (sf::Keyboard::Y == t_event.key.code)
+    {
+        GameManager::inventory.AddItem("Uranium", 2);
+    }
+    if (sf::Keyboard::U == t_event.key.code)
+    {
+        GameManager::inventory.SortInventorySlotsByID();
+    }
     if (sf::Keyboard::E == t_event.key.code)
     {
         GameManager::inventory.PrintItems();
@@ -228,6 +236,10 @@ void Game::ProcessKeyPress(sf::Event t_event)
 }
 void Game::ProcessKeyRelease(sf::Event t_event)
 {
+    if (sf::Keyboard::I == t_event.key.code)
+    {
+        isInventoryOpen = !isInventoryOpen;
+    }
 }
 void Game::ProcessMousePress(sf::Event t_event)
 {
@@ -352,6 +364,10 @@ void Game::Render()
 
             BuildingUI::Draw(m_window);
         view.SetHudView();
+            if(isInventoryOpen)
+            {
+                GameManager::inventory.Draw(m_window);
+            }
             HUD::Render(m_window);
         break;
     case PAUSED:

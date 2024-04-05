@@ -14,7 +14,7 @@ void main()
 
     float glow = 0.5 + 0.5 * sin(time * 4.0 + distance * 0.1);
 
-    vec3 baseColor = vec3(0.7, 0.2, 0.1); // Adjust as needed
+    vec3 baseColor = vec3(0.7, 0.2, 0.1);
     vec3 pulseColor = mix(baseColor * 0.8, baseColor * 1.2, glow);
 
     color.rgb *= pulseColor;

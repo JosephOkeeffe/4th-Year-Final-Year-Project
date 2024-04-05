@@ -73,9 +73,9 @@ public:
 
 	std::vector<Characters*> assignedWorkers;
 
-
 	sf::Text resourceText;
-	float amount = 0;
+	float resourcePerRun = 1;
+
 	float detectionRadius = 100.0f;
 
 	sf::Vector2f barSize{ 100, 10 };

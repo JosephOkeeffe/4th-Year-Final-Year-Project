@@ -21,11 +21,12 @@ void ItemManager::LoadItemsFromJSON()
             std::string textureName = itemData["texture"];
 
             sf::Texture texture = Textures::GetInstance().GetTexture(textureName);
-            items.emplace_back(id, name, 0, texture);
+            items.emplace_back(id, name, 0, texture, textureName);
 
             std::cout << "Loaded Item: \n";
             std::cout << "ID: " << id << "\n";
             std::cout << "NAME: " << name << "\n";
+            std::cout << "TEXTURE NAME: " << textureName << "\n";
         }
     }
     else

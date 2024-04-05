@@ -8,6 +8,7 @@
 #include "Characters.h"
 #include "ParticleSystem.h"
 #include "Buildings.h"
+#include "ItemManager.h"
 
 
 #include "ProjectileFactory.h"
@@ -34,6 +35,16 @@ public:
 		BIG_SUCKLER,
 		GUMPER,
 		BIG_GUMPER
+	};
+
+	enum DropTable
+	{
+		GOLD_RESOURCE_DROP,
+		OIL_RESOURCE_DROP,
+		URANIUM_RESOURCE_DROP,
+		MUSHED_SUCKLER_HEAD_DROP,
+		SUCKLER_TENTACLE_DROP,
+		PRESERVED_SUCKLER_SPIT_DROP
 	};
 
 
@@ -70,6 +81,11 @@ public:
 	void DeleteEnemy();
 	void ChangeStateToDead();
 
+	void GetRandomItemFromDropTable();
+	void DropItem(std::string& itemName);
+	void UnitsCanCollectItemDrop();
+	
+
 
 
 	int id = 0;
@@ -79,6 +95,10 @@ public:
 	sf::Texture texture;
 	sf::CircleShape enemyDetectionCircle;
 	sf::CircleShape wanderCircle;
+
+	sf::RectangleShape itemDropSprite;
+	Item* droppedItem;
+	bool isItemCollected = false;
 
 	float detectionRadius = 150.0f;    
 	float wanderRadius = 500.0f;    
@@ -121,7 +141,7 @@ public:
 
 	std::vector<sf::Vector2f> pointsOfInterest;
 
-	Stats stats{ 5, 1, 1 };
+	Stats stats{ 1, 1, 1 };
 
 private:
 };

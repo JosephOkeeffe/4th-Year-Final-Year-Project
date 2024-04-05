@@ -75,6 +75,8 @@ private:
     sf::Texture goopTexture;
     sf::Texture oilDropTexture;
     sf::Texture smokeTexture;
+    sf::Texture sucklerHeadTexture;
+    sf::Texture sucklerTentacleTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;
