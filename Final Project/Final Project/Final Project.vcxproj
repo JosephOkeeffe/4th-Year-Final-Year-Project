@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
     <ClCompile Include="BasicProjectile.cpp" />
+    <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Formation.cpp" />
     <ClCompile Include="HazmatMan.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="HomingProjectile.cpp" />
     <ClCompile Include="ProjectileFactory.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Spaceship.cpp" />
     <ClCompile Include="Stats.cpp" />
     <ClCompile Include="Suckler.cpp" />
     <ClCompile Include="UraniumExtractor.cpp" />
@@ -169,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="Archer.h" />
     <ClInclude Include="BasicProjectile.h" />
+    <ClInclude Include="Egg.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Formation.h" />
     <ClInclude Include="HazmatMan.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="HomingProjectile.h" />
     <ClInclude Include="ProjectileFactory.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Spaceship.h" />
     <ClInclude Include="Stats.h" />
     <ClInclude Include="Suckler.h" />
     <ClInclude Include="TileTypes.h" />

@@ -22,6 +22,8 @@ public:
     std::string GetName() const { return itemName; }
     std::string GetTextureName() const { return itemTextureName; }
 
+    void SetQuantity(int newQuantity) { itemQuantity = newQuantity; }
+
     void IncreaseQuantity(int amountToAdd) { itemQuantity += amountToAdd; }
     void DecreaseQuantity(int amountToLose) { itemQuantity -= amountToLose; }
 

@@ -49,6 +49,24 @@ void Game::Init()
 
     GameManager::itemManager.LoadItemsFromJSON();
 
+    fogTiles = new sf::RectangleShape * [Global::ROWS_COLUMNS];
+
+    for (int i = 0; i < Global::ROWS_COLUMNS; i++)
+    {
+        fogTiles[i] = new sf::RectangleShape[Global::ROWS_COLUMNS];
+    }
+
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    {
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        {
+            sf::Vector2f temp = { static_cast<float>(row * Global::CELL_SIZE), static_cast<float>(col * Global::CELL_SIZE) };
+            fogTiles[row][col].setPosition(temp);
+            fogTiles[row][col].setSize({ Global::CELL_SIZE, Global::CELL_SIZE });
+            fogTiles[row][col].setFillColor(sf::Color::Black);
+        }
+    }
+
     mainMenu.Init();
     pauseMenu.Init();
 
@@ -63,7 +81,7 @@ void Game::Init()
     CreateSuckler({ 150, 150 });
     CreateSuckler({ 250, 150 });
     CreateSuckler({ 150, 700 });
-   // CreateSuckler({ 200, 250 });
+   // CreateSpaceship({ 200, 250 });
 }
 
 void Game::ProcessEvents()
@@ -260,7 +278,6 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-        // SOmehow add a way where if unit is selected you cant select enemy
         for (Buildings* building : GameManager::buildings)
         {
             if (selectedUnits.size() == 0)
@@ -275,7 +292,6 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 
         if (GameManager::buildingToPlace != nullptr)
         {
-            // NEed to fix this cant push back if istn vALID
             GameManager::buildingToPlace->MouseRelease();
             GameManager::buildingToPlace->DeselectBuilding();
             if (GameManager::buildingToPlace->CheckIfCanBePlaced(Global::GetCurrentCell(m_window, gameView)))
@@ -290,6 +306,11 @@ void Game::ProcessMouseRelease(sf::Event t_event)
 
             character->MouseRelease();
             selectedUnits.clear();
+        }
+
+        if (isInventoryOpen)
+        {
+            GameManager::inventory.ProcessMouseRelease(t_event);
         }
 
         SelectUnits();
@@ -352,6 +373,11 @@ void Game::Render()
                 unit->Draw();
             }
 
+         /*   for (Spaceship* spaceship : GameManager::spaceships)
+            {
+                spaceship->Draw(m_window);
+            }*/
+
             if (isDragging)
             {
                 m_window.draw(dragRect);
@@ -363,6 +389,21 @@ void Game::Render()
             }
 
             BuildingUI::Draw(m_window);
+
+
+            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+            {
+                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+                {
+                   m_window.draw(fogTiles[row][col]);
+                }
+            }
+
+            for (Spaceship* spaceship : GameManager::spaceships)
+            {
+                spaceship->Draw(m_window);
+
+            }
         view.SetHudView();
             if(isInventoryOpen)
             {
@@ -419,7 +460,6 @@ void Game::Update(sf::Time t_deltaTime)
 
         AlignFormationFacingDirection();
 
-        //ChangeThingsDependingOnTileType();
 
         for (Buildings* building : GameManager::buildings)
         {
@@ -453,6 +493,24 @@ void Game::Update(sf::Time t_deltaTime)
         }
 
         MergeEnemies();
+
+        if (GameManager::spaceShipTimer.getElapsedTime().asSeconds() > spaceShipSpawnDelay)
+        {
+            CreateSpaceship();
+            for (Spaceship* spaceship : GameManager::spaceships)
+            {
+                spaceship->Init();
+            }
+            std::cout << GameManager::spaceships.size() << " spaceships in bound \n";
+            GameManager::spaceShipTimer.restart();
+
+        }
+
+        for (Spaceship* spaceship : GameManager::spaceships)
+        {
+            spaceship->Update();
+        }
+
         break;
     case PAUSED:
 
@@ -660,6 +718,12 @@ void Game::CreateSuckler(sf::Vector2f pos)
     GameManager::enemies.push_back(newSuckler);
     GameManager::aliveEnemies.push_back(newSuckler);
     GameManager::enemyID++;
+}
+
+void Game::CreateSpaceship()
+{
+    Spaceship* newSpaceship = new Spaceship();
+    GameManager::spaceships.push_back(newSpaceship);
 }
 
 void Game::SelectUnits()
@@ -899,22 +963,34 @@ void Game::MergeEnemies()
 
 }
 
-void Game::ClearFog(sf::CircleShape radius) 
+void Game::ClearFog(sf::CircleShape radius)
 {
     sf::Vector2f circleCenter = radius.getPosition();
     float circleRadius = radius.getRadius();
 
-    for (int row = 0; row < Global::ROWS_COLUMNS; row++) 
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
     {
-        for (int col = 0; col < Global::ROWS_COLUMNS; col++) 
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
         {
-            sf::Vector2f tileCenter = GameManager::tiles[row][col].tile.getPosition();
-            float tileRadius = std::min(GameManager::tiles[row][col].tile.getLocalBounds().width, GameManager::tiles[row][col].tile.getLocalBounds().height) / 2.0f;
+            if (fogTiles[row][col].getFillColor() == sf::Color::Transparent) { continue; }
+
+            sf::Vector2f tileCenter = fogTiles[row][col].getPosition();
+            float tileRadius = std::min(fogTiles[row][col].getLocalBounds().width, fogTiles[row][col].getLocalBounds().height) / 2.0f;
             float distance = Global::Distance(circleCenter, tileCenter);
 
-            if (distance <= circleRadius + tileRadius) 
+            if (distance <= (circleRadius * 0.7) + tileRadius)
             {
-                GameManager::tiles[row][col].DiscoverTile();
+                fogTiles[row][col].setFillColor(sf::Color::Transparent);
+            }
+            else if (distance <= circleRadius + tileRadius && fogTiles[row][col].getFillColor() != sf::Color::Transparent)
+            {
+                sf::Color colour = fogTiles[row][col].getFillColor();
+                colour.a = 200;
+                fogTiles[row][col].setFillColor(colour);
+            }
+            else if (distance > circleRadius + tileRadius && fogTiles[row][col].getFillColor() != sf::Color::Transparent)
+            {
+                fogTiles[row][col].setFillColor(sf::Color::Black);
             }
         }
     }

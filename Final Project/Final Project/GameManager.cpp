@@ -5,7 +5,6 @@ sf::View* GameManager::gameView = nullptr;
 Tile** GameManager::tiles = nullptr;
 ItemManager GameManager::itemManager;
 Inventory GameManager::inventory;
-
 Headquarters* GameManager::headquarters;
 std::vector<Buildings*> GameManager::buildings;
 std::vector<Characters*> GameManager::units;
@@ -14,6 +13,10 @@ std::vector<Formation*> GameManager::formations;
 std::vector<Enemy*> GameManager::enemies;
 std::vector<Enemy*> GameManager::aliveEnemies;
 std::vector<Suckler*> GameManager::sucklers;
+std::vector<Spaceship*> GameManager::spaceships;
+std::vector<Egg*> GameManager::eggs;
 Buildings* GameManager::buildingToPlace;
+
+sf::Clock GameManager::spaceShipTimer;
 
 int GameManager::enemyID = 0;

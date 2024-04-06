@@ -34,6 +34,8 @@ private:
     sf::Texture bigSucklerDeadTexture;
     sf::Texture gumperTexture;
     sf::Texture bigGumperTexture;
+    sf::Texture spaceshipsTexture;
+    sf::Texture eggTexture;
 
     // Projectiles
     sf::Texture blastTexture;
@@ -77,6 +79,8 @@ private:
     sf::Texture smokeTexture;
     sf::Texture sucklerHeadTexture;
     sf::Texture sucklerTentacleTexture;
+
+    sf::Texture arrowTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;

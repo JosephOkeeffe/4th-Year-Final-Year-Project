@@ -7,6 +7,7 @@
 #include "ItemManager.h"
 #include "Inventory.h"
 
+
 class Buildings;
 class Characters;
 class Headquarters;
@@ -17,6 +18,8 @@ class Suckler;
 class Gumper;
 class Formation;
 class Inventory;
+class Spaceship;
+class Egg;
 
 class GameManager
 {
@@ -31,6 +34,8 @@ public:
 
     static Tile** tiles;
 
+    static sf::Clock spaceShipTimer;
+
     static Headquarters* headquarters;
     static std::vector<Buildings*> buildings;
     static std::vector<Characters*> units;
@@ -42,6 +47,9 @@ public:
     static std::vector<Formation*> formations;
     static ItemManager itemManager;
     static Inventory inventory;
+
+    static std::vector<Spaceship*> spaceships;
+    static std::vector<Egg> eggs;
 
     static int enemyID;
 

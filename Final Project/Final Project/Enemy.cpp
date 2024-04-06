@@ -59,7 +59,6 @@ void Enemy::Draw()
 }
 
 // TO DO
-// // Add buttons for sorting inventory
 // Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
 // End game screen 
 // Make better UI that shows things all the time , resources, buildings etc
@@ -121,13 +120,11 @@ void Enemy::Update()
 			if (pointsOfInterest.size() > 0)
 			{
 				MoveTowardsPointOfInterest();
-				//wanderTimer.restart();
 				pointsOfInterest.clear();
 			}
 			else
 			{
 				StartWandering();
-				//wanderTimer.restart();
 			}					
 			
 		}
@@ -282,7 +279,8 @@ void Enemy::StartWandering()
 	int randX = randX = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 	int randY = randY = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 
-	while (cellPos.x + randX < 1 || cellPos.y + randY < 1)
+	while (cellPos.x + randX < 1 || cellPos.y + randY < 1 || 
+		   cellPos.x + randX > Global::ROWS_COLUMNS - 1 || cellPos.y + randY > Global::ROWS_COLUMNS - 1)
 	{
 		randX = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
 		randY = (rand() % (2 * tilesInRadius + 1)) - tilesInRadius;
@@ -638,7 +636,9 @@ void Enemy::DropItem(std::string& itemName)
 		*droppedItem = tempItem;
 	}
 
-	droppedItem->IncreaseQuantity(5);
+	int randomQuantity = rand() % 3 + 1;
+	droppedItem->IncreaseQuantity(randomQuantity);
+
 
 	itemDropSprite.setTexture(&Textures::GetInstance().GetTexture(droppedItem->GetTextureName()));
 	itemDropSprite.setPosition(body.getPosition());

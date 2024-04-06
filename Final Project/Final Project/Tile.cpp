@@ -15,27 +15,12 @@ void Tile::Init(sf::Vector2f& position)
 	tile.setFillColor(sf::Color::White);
 	tile.setTexture(&Textures::GetInstance().GetTexture("tiles"));
 	CheckGrassType();
-	shader.InitShader("FogShader.frag");
-
-	if (!isShaderInitialized) 
-	{
-		shader.InitShader("FogShader.frag");
-		isShaderInitialized = true;
-	}
+	
 }
 
 void Tile::Render(sf::RenderWindow& window)
 {
-	if (!isDiscovered)
-	{
-		tile.setTexture(&Textures::GetInstance().GetTexture("fog"));
-		shader.Update();
-		window.draw(tile, &shader.GetShader());
-	}          
-	else
-	{
-		window.draw(tile);
-	}
+	window.draw(tile);
 }
 
 void Tile::CheckGrassType()

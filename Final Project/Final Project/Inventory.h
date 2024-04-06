@@ -36,6 +36,7 @@ public:
     Inventory();
 
     void Draw(sf::RenderWindow& window);
+    void ProcessMouseRelease(sf::Event t_event);
     void AddItem(std::string itemName, int amount);
     void RemoveItem(std::string itemName, int amount);
 
@@ -43,15 +44,23 @@ public:
     void SortInventorySlotsByID();
     
 
-    bool ascending = false;
+    bool quantityAscending = false;
+    bool idAscending = false;
     void PrintItems();
 
 private:
 
-    std::vector<Item> items;
+    std::vector<Item*> items;
     sf::Text inventoryText;
     sf::RectangleShape inventoryBackground;
     std::vector<InventorySlots> inventorySlots;
+
+
+    sf::Text sortByQuantityText;
+    sf::RectangleShape sortByQuantityButton;
+
+    sf::Text sortByIDText;
+    sf::RectangleShape sortByIDButton;
 
     int numSlots = 1; 
     int numRows = 5; 

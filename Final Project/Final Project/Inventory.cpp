@@ -13,6 +13,30 @@ Inventory::Inventory()
     inventoryText.setFillColor(sf::Color::Red);
     inventoryText.setPosition(inventoryBackground.getPosition().x - 90, inventoryBackground.getPosition().y * 0.1);    
 
+    sortByQuantityButton.setSize({ 30, 30 });
+    sortByQuantityButton.setFillColor(sf::Color::White);
+    sortByQuantityButton.setPosition(inventoryBackground.getPosition().x * 0.78, inventoryBackground.getPosition().y * 0.2);
+    sortByQuantityButton.setOrigin(sortByQuantityButton.getSize().x / 2, sortByQuantityButton.getSize().y / 2);
+
+    sortByQuantityText.setFont(Global::font);
+    sortByQuantityText.setString("Quantity");
+    sortByQuantityText.setCharacterSize(30);
+    sortByQuantityText.setFillColor(sf::Color::Red);
+    sortByQuantityText.setPosition(inventoryBackground.getPosition().x * 0.56, inventoryBackground.getPosition().y * 0.15);
+
+    sortByIDButton.setSize({ 30, 30 });
+    sortByIDButton.setFillColor(sf::Color::White);
+    sortByIDButton.setPosition(inventoryBackground.getPosition().x * 1.2, inventoryBackground.getPosition().y * 0.2);
+    sortByIDButton.setOrigin(sortByIDButton.getSize().x / 2, sortByIDButton.getSize().y / 2);
+
+    sortByIDText.setFont(Global::font);
+    sortByIDText.setString("ID");
+    sortByIDText.setCharacterSize(30);
+    sortByIDText.setFillColor(sf::Color::Red);
+    sortByIDText.setPosition(sortByIDButton.getPosition().x + 30, inventoryBackground.getPosition().y * 0.15);
+
+
+
     float totalWidth = numCols * (slotSize + padding) - padding;
     float totalHeight = numRows * (slotSize + padding) - padding;
 
@@ -61,6 +85,10 @@ void Inventory::Draw(sf::RenderWindow& window)
 {
     window.draw(inventoryBackground);
     window.draw(inventoryText);
+    window.draw(sortByQuantityText);
+    window.draw(sortByQuantityButton);
+    window.draw(sortByIDText);
+    window.draw(sortByIDButton);
 
     for (InventorySlots& slot : inventorySlots)
     {
@@ -79,11 +107,10 @@ void Inventory::AddItem(std::string itemName, int amount)
         // Create new slot
         if (!slot.isItemAlreadyInInventory)
         { 
-            Item* newItem = new Item(item.GetID(), item.GetName(), item.GetQuantity(), item.GetTexture(), item.GetTextureName());
-            slot.item = newItem;
+            slot.item = new Item(item.GetID(), item.GetName(), item.GetQuantity(), item.GetTexture(), item.GetTextureName());
             slot.item->IncreaseQuantity(amount);
             slot.CreateSlot();
-            items.push_back(*slot.item);
+            items.push_back(slot.item);
             std::cout << slot.item->GetQuantity() << " " << slot.item->GetName() << " added to inventory \n";
             return;
         }
@@ -101,18 +128,56 @@ void Inventory::AddItem(std::string itemName, int amount)
         }
     }
 }
+void Inventory::ProcessMouseRelease(sf::Event t_event)
+{
+    sf::Vector2i mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
+
+    if (sortByQuantityButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        SortInventorySlotsByQuantity();
+        sortByIDButton.setTexture(nullptr);
+        if (quantityAscending)
+        {
+            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByQuantityButton.setRotation(0);
+            
+        }
+        else
+        {
+            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByQuantityButton.setRotation(180);
+        }
+    }
+    else if (sortByIDButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        SortInventorySlotsByID();
+        sortByQuantityButton.setTexture(nullptr);
+        if (idAscending)
+        {
+            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByIDButton.setRotation(0);
+
+        }
+        else
+        {
+            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByIDButton.setRotation(180);
+        }
+    }
+
+}
 void Inventory::RemoveItem(std::string itemName, int amount)
 {
-    auto it = std::remove_if(items.begin(), items.end(), [&](Item& item) 
+    auto it = std::remove_if(items.begin(), items.end(), [&](Item* item) 
         {
-            if (item.GetName() == itemName) 
+            if (item->GetName() == itemName) 
             {
-                item.DecreaseQuantity(amount);
-                std::cout << amount << " " << item.GetName() << " removed from inventory \n";
+                item->DecreaseQuantity(amount);
+                std::cout << amount << " " << item->GetName() << " removed from inventory \n";
 
-                if (item.GetQuantity() <= 0) 
+                if (item->GetQuantity() <= 0) 
                 {
-                    std::cout << item.GetName() << " is no longer in your inventory \n";
+                    std::cout << item->GetName() << " is no longer in your inventory \n";
                     return true;
                 }
             }
@@ -125,18 +190,16 @@ void Inventory::RemoveItem(std::string itemName, int amount)
 void Inventory::PrintItems()
 {
     std::cout << "Inventory Items:" << "\n";
-    for (Item& item : items) 
+    for (Item* item : items) 
     {
-        std::cout << "Name: " << item.GetName() << ", ID: " << item.GetID() << ", Quantity: " << item.GetQuantity() << " \n";
+        std::cout << "Name: " << item->GetName() << ", ID: " << item->GetID() << ", Quantity: " << item->GetQuantity() << " \n";
     }
 }
 
 void Inventory::SortInventorySlotsByQuantity()
 {
+    quantityAscending = !quantityAscending;
 
-    ascending = !ascending;
-
-    // Sort the inventory slots by item quantity
     std::sort(inventorySlots.begin(), inventorySlots.end(),
         [](const InventorySlots& slot1, const InventorySlots& slot2)
         {
@@ -147,8 +210,7 @@ void Inventory::SortInventorySlotsByQuantity()
             return false;
         });
 
-    // If descending order is requested, reverse the sorting order
-    if (!ascending)
+    if (!quantityAscending)
     {
         std::reverse(inventorySlots.begin(), inventorySlots.end());
     }
@@ -166,6 +228,8 @@ void Inventory::SortInventorySlotsByQuantity()
 
     for (InventorySlots& slot : inventorySlots)
     {
+        if (!slot.isItemAlreadyInInventory) { continue; }
+
         float posX = startX + (col + 0.5f) * (slotSize + padding);
         float posY = startY + (row + 0.5f) * (slotSize + padding);
 
@@ -185,9 +249,10 @@ void Inventory::SortInventorySlotsByQuantity()
     }
 }
 
-
 void Inventory::SortInventorySlotsByID()
 {
+    idAscending = !idAscending;
+
     std::sort(inventorySlots.begin(), inventorySlots.end(),
         [](const InventorySlots& slot1, const InventorySlots& slot2)
         {
@@ -209,6 +274,12 @@ void Inventory::SortInventorySlotsByID()
             return false;
         });
 
+    if (!idAscending)
+    {
+        std::reverse(inventorySlots.begin(), inventorySlots.end());
+    }
+
+
     float totalWidth = numCols * (slotSize + padding) - padding;
     float totalHeight = numRows * (slotSize + padding) - padding;
 
@@ -222,6 +293,8 @@ void Inventory::SortInventorySlotsByID()
 
     for (InventorySlots& slot : inventorySlots)
     {
+        if (!slot.isItemAlreadyInInventory) { continue; }
+
         float posX = startX + (col + 0.5f) * (slotSize + padding);
         float posY = startY + (row + 0.5f) * (slotSize + padding);
 

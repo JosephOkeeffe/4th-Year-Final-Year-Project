@@ -36,7 +36,7 @@ public:
 
 private:
 
-	bool isDiscovered = false;
+	bool isDiscovered = true;
 	GrassType grassType = GRASS1;
 	ResourceType resourceType = NO_RESOURCE;
 	Shader shader;

@@ -21,6 +21,7 @@
 #include "HazmatMan.h"
 #include "Enemy.h"
 #include "Suckler.h"
+#include "Spaceship.h"
 
 #include "Headquarters.h"
 #include "GoldMine.h"
@@ -82,6 +83,7 @@ private:
     void CreateHazmatMan(sf::Vector2f pos);
 
     void CreateSuckler(sf::Vector2f pos);
+    void CreateSpaceship();
 
 
     void CreateHeadquarters(sf::Vector2f pos);
@@ -100,6 +102,8 @@ private:
     sf::Vector2f startDragPos;
     sf::Vector2f endDragPos;
     sf::RectangleShape dragRect;
+
+    sf::RectangleShape** fogTiles;
 
 
     void ClearFog(sf::CircleShape radius);
@@ -121,6 +125,7 @@ private:
 
    std::vector<Characters*> selectedUnits;
    
+   int spaceShipSpawnDelay = 60;
 
     sf::Vector2f basePos = {200, 200};
 

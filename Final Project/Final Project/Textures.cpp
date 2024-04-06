@@ -47,6 +47,9 @@ void Textures::SetupTextures()
     sucklerTentacleTexture.loadFromFile("./assets/images/suckler-tentacle.png");
     textureMap["suckler-tentacle"] = sucklerTentacleTexture;
 
+    arrowTexture.loadFromFile("./assets/images/arrow.png");
+    textureMap["arrow"] = arrowTexture;
+
 
 
     // Projectiles
@@ -120,6 +123,12 @@ void Textures::SetupTextures()
 
         bigGumperTexture.loadFromFile("./assets/images/gumper-big.png");
         textureMap["big-gumper"] = bigGumperTexture;
+
+        spaceshipsTexture.loadFromFile("./assets/images/spaceships.png");
+        textureMap["spaceship"] = spaceshipsTexture;
+
+        eggTexture.loadFromFile("./assets/images/egg.png");
+        textureMap["egg"] = eggTexture;
 
 
     // Buildings

@@ -192,6 +192,7 @@ void MainMenu::SetupButtons()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
 			loadSave = true;
 			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
 		});
 
 
@@ -213,6 +214,7 @@ void MainMenu::SetupButtons()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData1).string();
 			loadSave = true;
 			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
 		});
 
 	load1Button.centreLabel({ load1Button.getButtonPos().x, load1Button.getButtonPos().y - 5 });
@@ -233,6 +235,7 @@ void MainMenu::SetupButtons()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData2).string();
 			loadSave = true;
 			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
 		});
 
 	load2Button.centreLabel({ load2Button.getButtonPos().x, load2Button.getButtonPos().y - 5 });
@@ -253,6 +256,7 @@ void MainMenu::SetupButtons()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData3).string();
 			loadSave = true;
 			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
 		});
 
 	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });

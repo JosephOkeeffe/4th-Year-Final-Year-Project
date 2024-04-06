@@ -15,23 +15,27 @@ void View::move(sf::Vector2f offset)
 
 void View::handleInput(sf::Event& event)
 {
-    if (event.type == sf::Event::MouseWheelScrolled) 
+    if (event.type == sf::Event::MouseWheelScrolled)
     {
-        zoomFactor += (event.mouseWheelScroll.delta * 0.1f);
+        zoomFactor += event.mouseWheelScroll.delta * 0.1f;
 
         float minZoom = 0.01f;
         float maxZoom = 1.1f;
+
+        float minZoomDistance = 0.3;
+        float maxZoomDistance = 10;
+
         zoomFactor = std::max(minZoom, std::min(maxZoom, zoomFactor));
 
-        std::cout << "Zoom Factor: " << zoomFactor << "\n";
-        std::cout << "View Size X: " << gameView.getSize().x << "\n";
-        std::cout << "View Size Y: " << gameView.getSize().y << "\n";
-        gameView.zoom(zoomFactor + event.mouseWheel.delta * 0.1f);
+        float currentZoom = 1.0f - event.mouseWheelScroll.delta * 0.1f;
+        float zoomLevel = gameView.getSize().x / window.getSize().x;
+        gameView.zoom(currentZoom);
+
         SetGameView();
     }
 }
-// textures
-// save and load level
+
+
 void View::SetGameView() 
 {
    window.setView(gameView);
