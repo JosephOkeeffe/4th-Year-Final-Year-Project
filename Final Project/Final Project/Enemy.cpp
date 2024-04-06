@@ -59,7 +59,7 @@ void Enemy::Draw()
 }
 
 // TO DO
-// Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys
+// Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys - meh
 // End game screen 
 // Make better UI that shows things all the time , resources, buildings etc
 // ENEMY IDEAS - Suicde man, moves slowly but one shots who ever

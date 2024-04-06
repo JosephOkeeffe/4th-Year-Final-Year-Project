@@ -1,13 +1,11 @@
 #include "Egg.h"
 
-Egg::Egg(sf::Vector2f pos, int _health, int _hatchTime)
+Egg::Egg(sf::Vector2f pos, int _hatchTime, int tier) : hatchTime(_hatchTime), eggTier(tier)
 {
 	body.setTexture(Textures::GetInstance().GetTexture("egg"));
 	body.setPosition(pos);
-	body.setScale(2, 2);
+	body.setScale(0.5, 0.5);
 
-	health = _health;
-	hatchTime = _hatchTime;
 	isReadyToHatch = false;
 
 	hatchClock.restart();

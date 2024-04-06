@@ -404,6 +404,13 @@ void Game::Render()
                 spaceship->Draw(m_window);
 
             }
+
+            for (Egg* egg : GameManager::eggs)                 
+            {
+                egg->Draw(m_window);
+
+            }
+
         view.SetHudView();
             if(isInventoryOpen)
             {
@@ -510,6 +517,13 @@ void Game::Update(sf::Time t_deltaTime)
         {
             spaceship->Update();
         }
+
+        for (Egg* egg : GameManager::eggs)
+        {
+            egg->Update();
+        }
+
+        HatchEggs();
 
         break;
     case PAUSED:
@@ -720,6 +734,17 @@ void Game::CreateSuckler(sf::Vector2f pos)
     GameManager::enemyID++;
 }
 
+void Game::CreateBigSuckler(sf::Vector2f pos)
+{
+    Suckler* newSuckler = new Suckler(GameManager::enemyID);
+    newSuckler->SetPosition(pos);
+    newSuckler->Merge();
+
+    GameManager::enemies.push_back(newSuckler);
+    GameManager::aliveEnemies.push_back(newSuckler);
+    GameManager::enemyID++;
+}
+
 void Game::CreateSpaceship()
 {
     Spaceship* newSpaceship = new Spaceship();
@@ -876,6 +901,46 @@ void Game::AlignFormationFacingDirection()
 
     }
     
+}
+
+void Game::HatchEggs()
+{
+    GameManager::eggs.erase(std::remove_if(GameManager::eggs.begin(), GameManager::eggs.end(),
+        [&](Egg* egg)
+        {
+            if (egg->isReadyToHatch)
+            {
+                if (egg->eggTier == 1)
+                {
+                    CreateSuckler(egg->body.getPosition());
+                }
+                else if (egg->eggTier == 2)
+                {
+                    // Add another enemy but normal suckler for now - Maybe kamakaze bug who turns your guys into bad guys
+                    CreateSuckler(egg->body.getPosition());
+                }
+                else if (egg->eggTier == 3)
+                {
+                    // Add another enemy but normal suckler for now - Maybe Gumper
+                    CreateSuckler(egg->body.getPosition());
+                }
+                else if (egg->eggTier == 4)
+                {
+                    // Add another enemy but normal suckler for now
+                    CreateBigSuckler(egg->body.getPosition());
+                }
+                else if (egg->eggTier == 5)
+                {
+                    // Add another enemy but normal suckler for now - Maybe Big Gumper
+                    CreateSuckler(egg->body.getPosition());
+                }
+                
+                return true;
+            }
+            return false;
+        }), GameManager::eggs.end());
+
+  
 }
 
 void Game::CreateHeadquarters(sf::Vector2f pos)

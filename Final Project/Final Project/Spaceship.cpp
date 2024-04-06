@@ -151,8 +151,8 @@ void Spaceship::SpawnEgg()
 	if (GameManager::tiles[tilePos.x][tilePos.y].GetTileType() != TileType::OBSTACLE)
 	{
 		std::cout << "Spawn Egg on tile: " << tilePos.x << ", " << tilePos.y << "\n";
-		Egg* egg = new Egg(body.getPosition(), 1, 1);
-		GameManager::eggs.push_back(*egg);
+		Egg* egg = new Egg(body.getPosition(), eggSpawnDelay, spaceshipType);
+		GameManager::eggs.push_back(egg);
 		eggCounter++;
 		std::cout << eggCounter << " of  " << MAX_EGGS << " eggs used up\n";
 

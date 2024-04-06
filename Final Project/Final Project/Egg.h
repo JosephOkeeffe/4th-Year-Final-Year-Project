@@ -8,7 +8,7 @@ class Egg
 {
 public:
 
-	Egg(sf::Vector2f pos, int _health, int _hatchTime);
+	Egg(sf::Vector2f pos, int _hatchTime, int tier);
 	void Update();
 	void Draw(sf::RenderWindow& window);
 
@@ -16,8 +16,8 @@ public:
 	sf::Texture texture;
 	sf::Clock hatchClock;
 
+	int eggTier;
 	int hatchTime;
-	int health;
 
 	bool isReadyToHatch;
 };

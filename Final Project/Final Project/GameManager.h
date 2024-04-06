@@ -49,7 +49,7 @@ public:
     static Inventory inventory;
 
     static std::vector<Spaceship*> spaceships;
-    static std::vector<Egg> eggs;
+    static std::vector<Egg*> eggs;
 
     static int enemyID;
 

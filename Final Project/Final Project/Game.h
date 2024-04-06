@@ -83,6 +83,7 @@ private:
     void CreateHazmatMan(sf::Vector2f pos);
 
     void CreateSuckler(sf::Vector2f pos);
+    void CreateBigSuckler(sf::Vector2f pos);
     void CreateSpaceship();
 
 
@@ -98,6 +99,9 @@ private:
     void MakeFormation();
     void MoveFormationWithLeader();
     void AlignFormationFacingDirection();
+
+    void HatchEggs();
+
     bool isDragging = false;
     sf::Vector2f startDragPos;
     sf::Vector2f endDragPos;
@@ -125,7 +129,7 @@ private:
 
    std::vector<Characters*> selectedUnits;
    
-   int spaceShipSpawnDelay = 60;
+   int spaceShipSpawnDelay = 25;
 
     sf::Vector2f basePos = {200, 200};
 
