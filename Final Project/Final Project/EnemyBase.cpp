@@ -82,5 +82,6 @@ void EnemyBase::DestroyBase()
 	sf::Color colour = sf::Color::White;
 	colour.a = 220;
 	body.setColor(colour);
+	GameManager::enemyBasesLeftAlive--;
 }
 

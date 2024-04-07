@@ -67,7 +67,6 @@ void Enemy::Draw()
 // ENEMY IDEAS - Suicde man, moves slowly but one shots who ever
 // ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
 // IDEAS - Debuffs
-// ENEMIES PLACE DOWN BUILDING, SPAWNS MORE ENEMIES
 
 
 void Enemy::Update()
