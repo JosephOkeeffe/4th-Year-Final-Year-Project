@@ -28,7 +28,14 @@ void Warrior::Update()
 
 		if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
 		{
-			Attack(closestEnemy);
+			if (closestEnemy != nullptr)
+			{
+				Attack(closestEnemy->body.getPosition());
+			}
+			else
+			{
+				Attack(closestEnemyBase);
+			}
 		}
 	}
 }
@@ -82,19 +89,19 @@ void Warrior::CheckAnimationState()
 
 // Bug with warrior shooting to the right?
 // Fix reload delay
-void Warrior::Attack(Enemy* target)
+void Warrior::Attack(sf::Vector2f target)
 {
 	if (m_frameNo == amountOfSprites - 1)
 	{
 		if (body.getScale().x > 1)
 		{
 			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
-				0.1, { body.getPosition().x + 10, body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
+				0.1, { body.getPosition().x + 10, body.getPosition().y }, target, stats.GetAttackSpeed(), detectionRadius + 10, 0.3));
 		}
 		else
 		{
 			projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("flaming-sword"), Textures::GetInstance().GetTexture("fire-trail"),
-				0.1, { body.getPosition().x - 10 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
+				0.1, { body.getPosition().x - 10 , body.getPosition().y }, target, stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
 		}
 		reloadTimer.restart();
 	}

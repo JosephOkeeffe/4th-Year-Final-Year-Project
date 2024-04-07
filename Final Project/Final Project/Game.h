@@ -31,6 +31,7 @@
 #include "TileTypes.h"
 #include "json.hpp"
 #include "Formation.h"
+#include "EnemyBase.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -92,7 +93,13 @@ private:
     void CreateOilExtractor();
     void CreateUraniumExtractor();
 
+    void CreateEnemyBase(sf::Vector2f pos, Item item);
+
+    void SpawnEnemyBases();
+    void SpawnSpaceships();
     void MergeEnemies();
+
+    void UnlockEnemyBase();
 
 
     void SelectUnits();
@@ -102,6 +109,9 @@ private:
 
     void HatchEggs();
 
+    void ClearFog(sf::CircleShape radius);
+
+
     bool isDragging = false;
     sf::Vector2f startDragPos;
     sf::Vector2f endDragPos;
@@ -110,7 +120,6 @@ private:
     sf::RectangleShape** fogTiles;
 
 
-    void ClearFog(sf::CircleShape radius);
 
     sf::RenderWindow m_window;
     bool m_exitGame;

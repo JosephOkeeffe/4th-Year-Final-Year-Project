@@ -14,7 +14,7 @@ public:
 
     void setLabel(const std::string& text, unsigned characterSize, const sf::Color& textColor);
     void setCallback(std::function<void()> callback);
-    void handleEvent(const sf::Event& event);
+    void handleEvent(sf::Event& event);
     void update();
     void render(sf::RenderWindow& window);
     void centreLabel(sf::Vector2f position);

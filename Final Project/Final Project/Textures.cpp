@@ -50,6 +50,9 @@ void Textures::SetupTextures()
     arrowTexture.loadFromFile("./assets/images/arrow.png");
     textureMap["arrow"] = arrowTexture;
 
+    emptyTexture.loadFromFile("./assets/images/empty.png");
+    textureMap["empty"] = emptyTexture;
+
 
 
     // Projectiles
@@ -143,6 +146,12 @@ void Textures::SetupTextures()
 
         uraniumExtractorTexture.loadFromFile("./assets/images/reactor.png");
         textureMap["uranium"] = uraniumExtractorTexture;
+
+        enemyBaseTexture.loadFromFile("./assets/images/enemy-base.png");
+        textureMap["enemy-base"] = enemyBaseTexture;
+
+        enemyBaseDestroyedTexture.loadFromFile("./assets/images/enemy-base-destroyed.png");
+        textureMap["enemy-base-destroyed"] = enemyBaseDestroyedTexture;
 
     // UI
         coinTexture.loadFromFile("./assets/images/coin.png");

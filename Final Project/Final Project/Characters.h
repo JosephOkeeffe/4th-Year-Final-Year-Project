@@ -7,6 +7,7 @@
 #include "Stats.h";
 #include "Enemy.h"
 #include "ProjectileFactory.h"
+#include "EnemyBase.h"
 
 class Particles;
 class ParticleSystem;
@@ -64,10 +65,12 @@ public:
 
 	void FindClosestEnemy();
 	void StartAttackingClosestEnemy();
+	void StartAttackingEnemyBase();
 	void TakeDamage(int damage);
 	void ApplyKnockback(sf::Vector2f knockbackDirection, float knockbackDistance);
 	void UpdateProjectiles();
 	void ProjectilesCollideWithEnemies();
+	void ProjectilesCollideWithEnemyBase();
 
 	void MakeWalkingTrail();
 
@@ -127,6 +130,8 @@ public:
 	sf::Clock redTimer;
 	sf::Clock walkingTrailTimer;
 
+
+	sf::Vector2f closestEnemyBase;
 	Enemy* closestEnemy;
 	float closestEnemyDistance = INT_MAX;
 

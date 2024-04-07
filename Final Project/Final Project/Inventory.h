@@ -22,6 +22,14 @@ struct InventorySlots
        amountText.setString(std::to_string(item->GetQuantity()));
    }
 
+   void ResetSlot()
+   {
+       item = new Item(-1, "Default", 0, Textures::GetInstance().GetTexture("empty"), "empty");
+       itemSprite.setTexture(nullptr);
+       amountText.setString("");
+       isItemAlreadyInInventory = false;
+   }
+
     sf::RectangleShape background;
     sf::RectangleShape itemSprite;
     sf::Text amountText;
@@ -42,15 +50,20 @@ public:
 
     void SortInventorySlotsByQuantity();
     void SortInventorySlotsByID();
+
+    Item* GetInventoryItemByName(std::string name);
     
 
     bool quantityAscending = false;
     bool idAscending = false;
     void PrintItems();
 
-private:
 
     std::vector<Item*> items;
+
+private:
+
+   
     sf::Text inventoryText;
     sf::RectangleShape inventoryBackground;
     std::vector<InventorySlots> inventorySlots;

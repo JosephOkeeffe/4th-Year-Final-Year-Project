@@ -81,7 +81,9 @@ void Game::Init()
     CreateSuckler({ 150, 150 });
     CreateSuckler({ 250, 150 });
     CreateSuckler({ 150, 700 });
+    SpawnEnemyBases();
    // CreateSpaceship({ 200, 250 });
+   // CreateEnemyBa({ 200, 250 });
 }
 
 void Game::ProcessEvents()
@@ -229,21 +231,17 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::W == t_event.key.code)
     {
-        GameManager::inventory.AddItem("Gold", 5);
-    }
-    if (sf::Keyboard::Y == t_event.key.code)
-    {
-        GameManager::inventory.AddItem("Uranium", 2);
-    }
-    if (sf::Keyboard::U == t_event.key.code)
-    {
-        GameManager::inventory.SortInventorySlotsByID();
+        CreateSuckler({ 150, 150 });
     }
     if (sf::Keyboard::E == t_event.key.code)
     {
         GameManager::inventory.PrintItems();
     }
     if (sf::Keyboard::R == t_event.key.code)
+    {
+        GameManager::inventory.AddItem("Gold", 1);
+    }
+    if (sf::Keyboard::T == t_event.key.code)
     {
         GameManager::inventory.RemoveItem("Gold", 1);
     }
@@ -314,7 +312,12 @@ void Game::ProcessMouseRelease(sf::Event t_event)
         }
 
         SelectUnits();
+
+        UnlockEnemyBase();
+
     }
+
+
     if (sf::Mouse::Right == t_event.key.code)      
     {
         for (Buildings* building : GameManager::buildings)
@@ -391,6 +394,7 @@ void Game::Render()
             BuildingUI::Draw(m_window);
 
 
+            // FOG - Everything after this will be hidden by the fog
             for (int row = 0; row < Global::ROWS_COLUMNS; row++)
             {
                 for (int col = 0; col < Global::ROWS_COLUMNS; col++)
@@ -411,6 +415,11 @@ void Game::Render()
 
             }
 
+            for (EnemyBase* enemyBase : GameManager::enemyBases)
+            {
+                enemyBase->Draw(m_window);
+            }
+
         view.SetHudView();
             if(isInventoryOpen)
             {
@@ -419,13 +428,14 @@ void Game::Render()
             HUD::Render(m_window);
         break;
     case PAUSED:
-     /*   for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        view.SetHudView();
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
             {
                 GameManager::tiles[row][col].Render(m_window);
             }
-        }*/
+        }
         pauseMenu.Render(m_window);
 
         break;
@@ -501,16 +511,14 @@ void Game::Update(sf::Time t_deltaTime)
 
         MergeEnemies();
 
-        if (GameManager::spaceShipTimer.getElapsedTime().asSeconds() > spaceShipSpawnDelay)
-        {
-            CreateSpaceship();
-            for (Spaceship* spaceship : GameManager::spaceships)
-            {
-                spaceship->Init();
-            }
-            std::cout << GameManager::spaceships.size() << " spaceships in bound \n";
-            GameManager::spaceShipTimer.restart();
+        SpawnSpaceships();
 
+        for (EnemyBase* enemyBase : GameManager::enemyBases)
+        {
+            if(!enemyBase->isDestroyed)
+            {
+                enemyBase->Update();
+            }
         }
 
         for (Spaceship* spaceship : GameManager::spaceships)
@@ -751,6 +759,7 @@ void Game::CreateSpaceship()
     GameManager::spaceships.push_back(newSpaceship);
 }
 
+
 void Game::SelectUnits()
 {
     for (Characters* temp : GameManager::aliveUnits)
@@ -976,6 +985,40 @@ void Game::CreateUraniumExtractor()
     GameManager::buildingToPlace = newUraniumExtractor;
 }
 
+void Game::CreateEnemyBase(sf::Vector2f pos, Item item)
+{
+    EnemyBase* newEnemyBase = new EnemyBase(pos, item);
+    GameManager::enemyBases.push_back(newEnemyBase);
+
+    sf::Vector2i cellPos = Global::ConvertPositionToCell(pos);
+    GameManager::tiles[cellPos.x][cellPos.y].SetTileType(TILE_USED_UP);
+}
+
+void Game::SpawnEnemyBases()
+{
+    Item item = GameManager::itemManager.GetItemByName("Gold");
+  
+
+
+    CreateEnemyBase({ 450, 150 }, item );
+}
+
+void Game::SpawnSpaceships()
+{
+    if (GameManager::spaceShipTimer.getElapsedTime().asSeconds() > spaceShipSpawnDelay)
+    {
+        CreateSpaceship();
+        for (Spaceship* spaceship : GameManager::spaceships)
+        {
+            spaceship->Init();
+        }
+        std::cout << GameManager::spaceships.size() << " spaceships in bound \n";
+        GameManager::spaceShipTimer.restart();
+
+    }
+}
+
+
 void Game::MergeEnemies()
 {
     // Finding Merge
@@ -1026,6 +1069,36 @@ void Game::MergeEnemies()
     }
 
 
+}
+
+void Game::UnlockEnemyBase()
+{
+    for (EnemyBase* enemyBase : GameManager::enemyBases)
+    {
+        if (enemyBase->isDestroyed) { continue; }
+
+        for (Characters* character : GameManager::aliveUnits)
+        {
+            sf::Vector2f mousePos = Global::GetWindowMousePos(*GameManager::GetWindow(), *GameManager::GetView());
+
+            if (character->IsEnemyInAttackRadius(enemyBase->body) && enemyBase->body.getGlobalBounds().contains(mousePos))
+            {
+                std::string itemName = enemyBase->itemRequired.GetName();
+                Item* itemInInventory;
+
+                if (GameManager::inventory.GetInventoryItemByName(itemName) != nullptr)
+                {
+                    itemInInventory = GameManager::inventory.GetInventoryItemByName(itemName);
+                    int amount = itemInInventory->GetQuantity();
+
+                    if (amount > 5) { amount = 5; }
+
+                    GameManager::inventory.RemoveItem(itemName, amount);
+                    enemyBase->itemRequired.DecreaseQuantity(amount);
+                }
+            }
+        }
+    }
 }
 
 void Game::ClearFog(sf::CircleShape radius)

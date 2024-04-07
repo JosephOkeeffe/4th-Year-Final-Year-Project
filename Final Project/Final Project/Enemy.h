@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <algorithm>
 #include <random>
 #include "Textures.h"
 #include "Globals.h"
@@ -9,6 +10,7 @@
 #include "ParticleSystem.h"
 #include "Buildings.h"
 #include "ItemManager.h"
+#include "Shader.h"
 
 
 #include "ProjectileFactory.h"
@@ -141,7 +143,9 @@ public:
 
 	std::vector<sf::Vector2f> pointsOfInterest;
 
-	Stats stats{ 5, 1, 1 };
+	Stats stats{ 1, 1, 1 };
+
+	Shader shader;
 
 private:
 };

@@ -15,8 +15,12 @@ std::vector<Enemy*> GameManager::aliveEnemies;
 std::vector<Suckler*> GameManager::sucklers;
 std::vector<Spaceship*> GameManager::spaceships;
 std::vector<Egg*> GameManager::eggs;
+std::vector<EnemyBase*> GameManager::enemyBases;
+
+
 Buildings* GameManager::buildingToPlace;
 
 sf::Clock GameManager::spaceShipTimer;
 
 int GameManager::enemyID = 0;
+int GameManager::enemyBasesLeftAlive = 6;

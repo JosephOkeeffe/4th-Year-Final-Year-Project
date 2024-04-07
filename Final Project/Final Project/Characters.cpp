@@ -52,7 +52,9 @@ void Characters::Update()
 			{
 				FindClosestEnemy();
 				StartAttackingClosestEnemy();
+				StartAttackingEnemyBase();
 				ProjectilesCollideWithEnemies();
+				ProjectilesCollideWithEnemyBase();
 			}
 		}
 
@@ -145,7 +147,7 @@ void Characters::Draw()
 		}
 
 		particleSystem.draw(*GameManager::GetWindow());
-		GameManager::GetWindow()->draw(detectionCircle);
+	//	GameManager::GetWindow()->draw(detectionCircle);
 		GameManager::GetWindow()->draw(body);		
 	}
 
@@ -395,6 +397,27 @@ void Characters::StartAttackingClosestEnemy()
 	}
 }
 
+void Characters::StartAttackingEnemyBase()
+{
+	if (!GetSelected() && !GetCurrentState(MOVING))
+	{
+		for (EnemyBase* enemyBase : GameManager::enemyBases)
+		{
+			if (IsEnemyInAttackRadius(enemyBase->body) && enemyBase->isOpen && !enemyBase->isDestroyed)
+			{
+				SetCurrentState(ATTACKING);
+				closestEnemyBase = enemyBase->body.getPosition();
+
+				if (enemyBase->body.getPosition().x < body.getPosition().x && body.getScale().x > 1 ||
+					enemyBase->body.getPosition().x > body.getPosition().x && body.getScale().x < 1)
+				{
+					FlipSprite();
+				}
+			}
+		}
+	}
+}
+
 void Characters::TakeDamage(int damage)
 {
 	stats.LoseHealth(damage);
@@ -468,6 +491,29 @@ void Characters::ProjectilesCollideWithEnemies()
 				}
 			}
 
+		}
+	}
+}
+
+void Characters::ProjectilesCollideWithEnemyBase()
+{
+	for (EnemyBase* enemyBase : GameManager::enemyBases)
+	{
+		if (!IsEnemyInAttackRadius(enemyBase->body) || enemyBase->isDestroyed)
+		{
+			continue;
+		}
+
+		for (Projectile* projectile : projectiles)
+		{
+			// If projectle hits enemy 
+			if (projectile->body.getGlobalBounds().intersects(enemyBase->body.getGlobalBounds()))
+			{
+				sf::Vector2f knockbackDirection = projectile->CalculateMovementVector();
+
+				enemyBase->TakeDamage(stats.GetDamage());
+				projectiles.erase(std::remove(projectiles.begin(), projectiles.end(), projectile), projectiles.end());
+			}
 		}
 	}
 }

@@ -30,7 +30,24 @@ void Archer::Update()
 
 		if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
 		{
-			Attack(closestEnemy);
+			if(closestEnemy != nullptr)
+			{
+				Attack(closestEnemy->body.getPosition());
+			}
+			else
+			{
+				Attack(closestEnemyBase);
+			}
+		}
+
+
+
+		for (EnemyBase* enemyBase : GameManager::enemyBases)
+		{
+			if (IsEnemyInAttackRadius(enemyBase->body) && enemyBase->isOpen)
+			{
+
+			}
 		}
 	}
 }
@@ -100,19 +117,19 @@ void Archer::CheckAnimationState()
 	}
 }
 
-void Archer::Attack(Enemy* target)
+void Archer::Attack(sf::Vector2f target)
 {
 	if (m_frameNo == amountOfSprites - 1)
 	{
 		if (body.getScale().x > 1)
 		{
 			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
-				0.3, { body.getPosition().x + 30, body.getPosition().y }, target->body.getPosition(), 1, detectionRadius + 10, 1));
+				0.3, { body.getPosition().x + 30, body.getPosition().y }, target, 1, detectionRadius + 10, 1));
 		}
 		else
 		{
 			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
-				0.3, { body.getPosition().x - 30 , body.getPosition().y }, target->body.getPosition(), stats.GetAttackSpeed(), detectionRadius + 10, -1));
+				0.3, { body.getPosition().x - 30 , body.getPosition().y }, target, stats.GetAttackSpeed(), detectionRadius + 10, -1));
 		}
 		reloadTimer.restart();
 	}

@@ -156,6 +156,9 @@
     <ClCompile Include="Spaceship.cpp">
       <Filter>Source Files\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -272,6 +275,9 @@
     <ClInclude Include="Spaceship.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.hlsl">
@@ -282,7 +288,7 @@
     <None Include="SelectedShader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="FogShader.frag">
+    <None Include="GlowShader.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

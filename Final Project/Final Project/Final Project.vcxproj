@@ -135,6 +135,7 @@
     <ClCompile Include="BasicProjectile.cpp" />
     <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="Formation.cpp" />
     <ClCompile Include="HazmatMan.cpp" />
     <ClCompile Include="Headquarters.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="BasicProjectile.h" />
     <ClInclude Include="Egg.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Formation.h" />
     <ClInclude Include="HazmatMan.h" />
     <ClInclude Include="Headquarters.h" />
@@ -212,7 +214,7 @@
     <FxCompile Include="shader.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FogShader.frag" />
+    <None Include="GlowShader.frag" />
     <None Include="SelectedShader.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

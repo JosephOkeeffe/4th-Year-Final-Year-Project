@@ -20,6 +20,7 @@ class Formation;
 class Inventory;
 class Spaceship;
 class Egg;
+class EnemyBase;
 
 class GameManager
 {
@@ -50,8 +51,11 @@ public:
 
     static std::vector<Spaceship*> spaceships;
     static std::vector<Egg*> eggs;
+    static std::vector<EnemyBase*> enemyBases;
+
 
     static int enemyID;
+    static int enemyBasesLeftAlive;
 
 	static void InitTiles()
 	{

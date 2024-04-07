@@ -4,8 +4,6 @@
 #include "Globals.h"
 #include "HUD.h"
 
-#define Display_Text(x) std::cout << x << "\n";
-
 class BuildingUI
 {
 public:
@@ -98,7 +96,6 @@ public:
         {
             if (trainButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
-                Display_Text("Tain");
                 HUD::currentState = HUD::TRAIN_HUD;
                 isActive = false;
             }

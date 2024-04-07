@@ -3,9 +3,6 @@
 #include "Globals.h"
 #include "Textures.h"
 
-bool Tile::isShaderInitialized = false;
-sf::Texture Tile::shaderTexture;
-
 void Tile::Init(sf::Vector2f& position)
 {
 	tile.setSize(sf::Vector2f(Global::CELL_SIZE, Global::CELL_SIZE));

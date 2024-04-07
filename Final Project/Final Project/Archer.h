@@ -10,7 +10,7 @@ public:
 	void Update() override;
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites) override;
 	void CheckAnimationState();
-	void Attack(Enemy* target);
+	void Attack(sf::Vector2f target);
 
 	sf::Sprite& GetSprite();	
 

@@ -37,10 +37,6 @@ void Spaceship::Update()
 			eggSpawnTimer.restart();
 		}
 	}
-	else
-	{
-		std::cout << "Spaceship has reached end point \n";
-	}
 }
 
 void Spaceship::Draw(sf::RenderWindow& window)

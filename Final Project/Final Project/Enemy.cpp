@@ -28,6 +28,8 @@ void Enemy::Init(sf::Texture& _texture)
 	int x = body.getPosition().x / Global::CELL_SIZE;
 	int y = body.getPosition().y / Global::CELL_SIZE;
 
+	shader.InitShader("GlowShader.frag");
+
 	wanderTimer.restart();
 }
 
@@ -53,7 +55,7 @@ void Enemy::Draw()
 	{
 		if (!isItemCollected)
 		{
-			GameManager::GetWindow()->draw(itemDropSprite);
+			GameManager::GetWindow()->draw(itemDropSprite, &shader.GetShader());
 		}
 	}
 }
@@ -78,6 +80,20 @@ void Enemy::Update()
 
 	if (GetCurrentState(DEAD) && !isItemCollected)
 	{
+		shader.Update();
+
+		for (Enemy* temp : GameManager::enemies)
+		{
+			// Bug with items merging into one
+			if (temp == this || !temp->GetCurrentState(DEAD)) { continue; }
+
+			if (itemDropSprite.getGlobalBounds().intersects(temp->itemDropSprite.getGlobalBounds()))
+			{
+				itemDropSprite.setPosition(itemDropSprite.getPosition().x - 25, itemDropSprite.getPosition().y - 25);
+				temp->itemDropSprite.setPosition(temp->itemDropSprite.getPosition().x + 25, temp->itemDropSprite.getPosition().y + 25);
+			}
+		}
+
 		UnitsCanCollectItemDrop();
 	}
 
@@ -592,7 +608,7 @@ void Enemy::ChangeStateToDead()
 
 void Enemy::GetRandomItemFromDropTable()
 {
-	std::map<double, std::string> itemProbabilities = 
+	std::vector<std::pair<double, std::string>> itemProbabilities =
 	{
 		{0.25, "Gold"},
 		{0.15, "Oil"},
@@ -602,15 +618,19 @@ void Enemy::GetRandomItemFromDropTable()
 		{0.15, "Suckler Spit"},
 	};
 
-	float randomDrop = static_cast<double>(std::rand()) / RAND_MAX;
-	float totalProbability = 0;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<double> dis(0.0, 1.0);
+
+	double randomDrop = dis(gen);
+	double cumulativeProbability = 0;
+
+	double totalProbability = 0;
 
 	for (auto& pair : itemProbabilities)
 	{
 		totalProbability += pair.first;
 	}
-
-	float cumulativeProbability = 0;
 
 	for (auto& pair : itemProbabilities)
 	{
@@ -623,25 +643,42 @@ void Enemy::GetRandomItemFromDropTable()
 	}
 }
 
+
+
 void Enemy::DropItem(std::string& itemName)
 {
 	Item tempItem = GameManager::itemManager.GetItemByName(itemName);
 
-	if (droppedItem == nullptr)
+	int id = tempItem.GetID();
+	std::string name = tempItem.GetName();
+	int quantity = tempItem.GetQuantity();
+	std::string textureName = tempItem.GetTextureName();
+
+	droppedItem = new Item(id, name, quantity, Textures::GetInstance().GetTexture(textureName), textureName);
+
+
+	/*if (droppedItem == nullptr)
 	{
 		droppedItem = new Item(tempItem);
 	}
 	else 
 	{
 		*droppedItem = tempItem;
-	}
+	}*/
+
 
 	int randomQuantity = rand() % 3 + 1;
 	droppedItem->IncreaseQuantity(randomQuantity);
 
+	float offsetX = static_cast<float>(rand() % 100 - 50);
+	float offsetY = static_cast<float>(rand() % 100 - 50); 
 
+	sf::Vector2f dropPosition = body.getPosition() + sf::Vector2f(offsetX, offsetY);
 	itemDropSprite.setTexture(&Textures::GetInstance().GetTexture(droppedItem->GetTextureName()));
-	itemDropSprite.setPosition(body.getPosition());
+	itemDropSprite.setPosition(dropPosition);
+
+	std::cout << droppedItem->GetQuantity() << " " << droppedItem->GetName() << " have dropped \n";
+
 }
 
 void Enemy::UnitsCanCollectItemDrop()
@@ -654,12 +691,12 @@ void Enemy::UnitsCanCollectItemDrop()
 			{
 				GameManager::inventory.AddItem(droppedItem->GetName(), droppedItem->GetQuantity());
 				isItemCollected = true;
-				break;
+				delete droppedItem;
+				return;
 			}
 		}
 	}
 }
-
 
 void Enemy::MakeWalkingTrail()
 {

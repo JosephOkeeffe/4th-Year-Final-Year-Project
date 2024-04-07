@@ -50,7 +50,7 @@ Inventory::Inventory()
     {
         for (int col = 0; col < numCols; ++col)
         {
-            Item* newItem = new Item(-1, "Default", 0, Textures::GetInstance().GetTexture("gold-icon"), "gold-icon"); 
+            Item* newItem = new Item(-1, "Default", 0, Textures::GetInstance().GetTexture("empty"), "empty");
             InventorySlots slot(newItem);
 
             float posX = startX + (col + 0.5f) * (slotSize + padding);
@@ -94,8 +94,53 @@ void Inventory::Draw(sf::RenderWindow& window)
     {
         window.draw(slot.background);
         window.draw(slot.itemSprite);
-        window.draw(slot.amountText);
+
+        if(slot.item->GetQuantity() > 0)
+        {
+            window.draw(slot.amountText);
+        }
+
+        slot.UpdateSlot();
     }
+}
+
+void Inventory::ProcessMouseRelease(sf::Event t_event)
+{
+    sf::Vector2i mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
+
+    if (sortByQuantityButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        SortInventorySlotsByQuantity();
+        sortByIDButton.setTexture(nullptr);
+        if (quantityAscending)
+        {
+            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByQuantityButton.setRotation(0);
+
+        }
+        else
+        {
+            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByQuantityButton.setRotation(180);
+        }
+    }
+    else if (sortByIDButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        SortInventorySlotsByID();
+        sortByQuantityButton.setTexture(nullptr);
+        if (idAscending)
+        {
+            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByIDButton.setRotation(0);
+
+        }
+        else
+        {
+            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
+            sortByIDButton.setRotation(180);
+        }
+    }
+
 }
 
 void Inventory::AddItem(std::string itemName, int amount)
@@ -128,63 +173,46 @@ void Inventory::AddItem(std::string itemName, int amount)
         }
     }
 }
-void Inventory::ProcessMouseRelease(sf::Event t_event)
-{
-    sf::Vector2i mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
 
-    if (sortByQuantityButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-    {
-        SortInventorySlotsByQuantity();
-        sortByIDButton.setTexture(nullptr);
-        if (quantityAscending)
-        {
-            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
-            sortByQuantityButton.setRotation(0);
-            
-        }
-        else
-        {
-            sortByQuantityButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
-            sortByQuantityButton.setRotation(180);
-        }
-    }
-    else if (sortByIDButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
-    {
-        SortInventorySlotsByID();
-        sortByQuantityButton.setTexture(nullptr);
-        if (idAscending)
-        {
-            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
-            sortByIDButton.setRotation(0);
-
-        }
-        else
-        {
-            sortByIDButton.setTexture(&Textures::GetInstance().GetTexture("arrow"));
-            sortByIDButton.setRotation(180);
-        }
-    }
-
-}
 void Inventory::RemoveItem(std::string itemName, int amount)
 {
-    auto it = std::remove_if(items.begin(), items.end(), [&](Item* item) 
+    auto it = std::remove_if(items.begin(), items.end(), [&](Item* item)
         {
-            if (item->GetName() == itemName) 
+            if (item->GetName() == itemName)
             {
                 item->DecreaseQuantity(amount);
                 std::cout << amount << " " << item->GetName() << " removed from inventory \n";
 
-                if (item->GetQuantity() <= 0) 
+                if (item->GetQuantity() <= 0)
                 {
+                    for (InventorySlots& slot : inventorySlots)
+                    {
+                        if (slot.item->GetName() == item->GetName())
+                        {
+                            slot.ResetSlot();
+                            break;
+                        }
+                    }
                     std::cout << item->GetName() << " is no longer in your inventory \n";
                     return true;
+                }
+                else
+                {
+                    for (InventorySlots& slot : inventorySlots)
+                    {
+                        if (slot.item->GetName() == item->GetName())
+                        {
+                            slot.UpdateSlot();
+                            break;
+                        }
+                    }
                 }
             }
             return false;
         });
 
-    items.erase(it, items.end()); 
+    // Erase the removed items from the vector
+    items.erase(it, items.end());
 }
 
 void Inventory::PrintItems()
@@ -247,6 +275,21 @@ void Inventory::SortInventorySlotsByQuantity()
             row++;
         }
     }
+}
+
+Item* Inventory::GetInventoryItemByName(std::string name)
+{
+    bool isItemThere = false;
+    for(Item* item : items)
+    {
+        if (item->GetName() == name)
+        {
+            return item;
+        }
+    }
+
+    return nullptr;
+    
 }
 
 void Inventory::SortInventorySlotsByID()

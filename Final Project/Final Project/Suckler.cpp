@@ -43,8 +43,7 @@ void Suckler::Update()
 			Merge();
 		}
 
-		// Projectiles
-
+		// Projectile
 		if (GetCurrentState(ATTACKING) && spitTimer.getElapsedTime().asSeconds() > spitFireRate)
 		{
 			spitTimer.restart();

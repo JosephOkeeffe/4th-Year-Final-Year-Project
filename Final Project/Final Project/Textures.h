@@ -51,6 +51,8 @@ private:
     sf::Texture oilExtractorTexture;
     sf::Texture uraniumExtractorTexture;
     sf::Texture tilesTexture;
+    sf::Texture enemyBaseTexture;
+    sf::Texture enemyBaseDestroyedTexture;
 
     // Buttons
     sf::Texture warriorButtonIconTexture;
@@ -67,6 +69,8 @@ private:
     sf::Texture uraniumExtractorButtonIconTexture;
 
     // Other
+    sf::Texture emptyTexture;
+
     sf::Texture fogTexture;
     sf::Texture coinTexture;
     sf::Texture rotateTexture;

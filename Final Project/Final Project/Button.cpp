@@ -37,13 +37,13 @@ void Button::setCallback(std::function<void()> callback)
     onClick = callback;
 }
 
-void Button::handleEvent(const sf::Event& event)
+void Button::handleEvent(sf::Event& event)
 {
     if (event.type == sf::Event::MouseMoved) 
     {
-        mousePos = static_cast<sf::Vector2i>(Global::GetLocalMousePos(*GameManager::GetWindow()));
+        mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
 
-        if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) 
+        if (shape.getGlobalBounds().contains(sf::Vector2f(mousePos))) 
         {
             isHovered = true;
             shape.setFillColor(hoverColour);
