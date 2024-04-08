@@ -2,7 +2,7 @@
 #define GAME_H
 
 #define TILE_SIZE 56
-#define GRID_SIZE 50
+#define GRID_SIZE 25
 
 #define MIN_ZOOM 0.3f
 #define MAX_ZOOM 1.0f

@@ -119,7 +119,7 @@ private:
 
     sf::RectangleShape** fogTiles;
 
-
+    sf::Sprite cloudBackground;
 
     sf::RenderWindow m_window;
     bool m_exitGame;
@@ -138,7 +138,7 @@ private:
 
    std::vector<Characters*> selectedUnits;
    
-   int spaceShipSpawnDelay = 25;
+   int spaceShipSpawnDelay = 60;
 
     sf::Vector2f basePos = {200, 200};
 

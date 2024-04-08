@@ -26,13 +26,6 @@ private:
 	float moveSpeed = 2.0f;
 
 
-	//int bulletRange = 210;
-	//float reloadDelay = 3;
-	//sf::Clock reloadTimer;
-
-	//Enemy* closestEnemy;
-	//float closestEnemyDistance = 500000;
-
 };
 
  

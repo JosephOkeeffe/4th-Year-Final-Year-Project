@@ -85,6 +85,7 @@ private:
     sf::Texture sucklerTentacleTexture;
 
     sf::Texture arrowTexture;
+    sf::Texture cloudTexture;
 
     // Main Menu
     sf::Texture menuBackgroundTexture;

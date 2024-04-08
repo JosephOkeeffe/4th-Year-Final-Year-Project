@@ -53,6 +53,9 @@ void Textures::SetupTextures()
     emptyTexture.loadFromFile("./assets/images/empty.png");
     textureMap["empty"] = emptyTexture;
 
+    cloudTexture.loadFromFile("./assets/images/clouds.png");
+    textureMap["cloud"] = cloudTexture;
+
 
 
     // Projectiles

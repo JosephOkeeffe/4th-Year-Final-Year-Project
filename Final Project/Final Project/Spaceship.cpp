@@ -44,6 +44,7 @@ void Spaceship::Draw(sf::RenderWindow& window)
 	window.draw(body);
 }
 
+//  tier,  _speed,  eggDelay,  amountOfEggs
 void Spaceship::SetShipType()
 {
 	int randomNumber = rand() % 5;
@@ -51,22 +52,22 @@ void Spaceship::SetShipType()
 	switch (randomNumber)
 	{
 	case Spaceship::TIER_1:
-		SetupShip(1, 2, 20, 1);
+		SetupShip(1, 1, 10, 1);
 		break;
 	case Spaceship::TIER_2:
-		SetupShip(2, 2, 18, 2);
+		SetupShip(2, 1, 9, 2);
 		break;
 	case Spaceship::TIER_3:
-		SetupShip(3, 2, 16, 2);
+		SetupShip(3, 1, 7, 2);
 		break;
 	case Spaceship::TIER_4:
-		SetupShip(4, 2, 16, 3);
+		SetupShip(4, 1, 6, 3);
 		break;
 	case Spaceship::TIER_5:
-		SetupShip(5, 2, 10, 4);
+		SetupShip(5, 1, 5, 4);
 		break;
 	default:
-		SetupShip(1, 2, 20, 1);
+		SetupShip(1, 1, 10, 1);
 		break;
 	}
 }
@@ -79,7 +80,7 @@ void Spaceship::PickStartPointAndEndPoint()
 
 	int rangeSize = (offset)-((Global::CELL_SIZE * Global::ROWS_COLUMNS) - offset) + 1;
 	float randomStartingPoint = rand() % rangeSize + offset;
-	float oppositePoint = 5000 - randomStartingPoint;
+	float oppositePoint = Global::CELL_SIZE * Global::ROWS_COLUMNS - randomStartingPoint;
 
 	int side = rand() % 4;
 
@@ -112,6 +113,7 @@ void Spaceship::PickStartPointAndEndPoint()
 	}
 	body.setPosition(startPos);
 }
+
 
 void Spaceship::SetupShip(int tier, float _speed, float eggDelay, int amountOfEggs)
 {
