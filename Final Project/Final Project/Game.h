@@ -32,6 +32,7 @@
 #include "json.hpp"
 #include "Formation.h"
 #include "EnemyBase.h"
+#include "TutorialScreen.h"
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -57,6 +58,8 @@ public:
     void run();
 
     static GameState currentState;
+    static bool isInstructionsOpen;
+    static bool isControlsOpen;
 
 private:
 
@@ -111,6 +114,10 @@ private:
 
     void ClearFog(sf::CircleShape radius);
 
+    void SetupClouds();
+
+    void SetupTutorialPages();
+
 
     bool isDragging = false;
     sf::Vector2f startDragPos;
@@ -119,7 +126,9 @@ private:
 
     sf::RectangleShape** fogTiles;
 
-    sf::Sprite cloudBackground;
+    sf::RectangleShape cloudBackground[28];
+    int divider = 6;
+    int totalAmountOfClouds = divider * 4 + 4;
 
     sf::RenderWindow m_window;
     bool m_exitGame;
@@ -145,7 +154,8 @@ private:
     // Timers
     sf::Clock incomeTimer;
     sf::Time elapsedTime;
-    
+
+    TutorialScreen tutorialScreen;    
 };
 
 #endif

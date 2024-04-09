@@ -4,8 +4,11 @@ std::string savePath = "";
 std::string loadGameDataPath = "";
 std::string loadTilesDataPath = "";
 sf::Font Global::font;
+sf::Font Global::tutorialFont;
 bool saveGame = false;
 bool loadSave = false;
+bool Game::isInstructionsOpen = false;
+bool Game::isControlsOpen = false;
 
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
@@ -67,6 +70,11 @@ void Game::Init()
         }
     }
 
+   
+    SetupClouds();
+
+   // isTutoria
+
     mainMenu.Init();
     pauseMenu.Init();
 
@@ -82,8 +90,8 @@ void Game::Init()
     CreateSuckler({ 250, 150 });
     CreateSuckler({ 150, 700 });
     SpawnEnemyBases();
-   // CreateSpaceship({ 200, 250 });
-   // CreateEnemyBa({ 200, 250 });
+
+    SetupTutorialPages();
 }
 
 void Game::ProcessEvents()
@@ -235,7 +243,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::E == t_event.key.code)
     {
-        GameManager::inventory.PrintItems();
+        isInstructionsOpen = !isInstructionsOpen;
     }
     if (sf::Keyboard::R == t_event.key.code)
     {
@@ -261,6 +269,11 @@ void Game::ProcessMousePress(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
+        if(isInstructionsOpen)
+        {
+            tutorialScreen.HandleEvent(t_event, isInstructionsOpen);
+        }
+
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
         if (!BuildingUI::isActive)
         {
@@ -353,6 +366,12 @@ void Game::Render()
     case GAME:
         // Game
         view.SetGameView();
+
+            for (int i = 0; i < totalAmountOfClouds; i++)
+            {
+                m_window.draw(cloudBackground[i]);
+            }
+
             for (int row = 0; row < Global::ROWS_COLUMNS; row++)
             {
                 for (int col = 0; col < Global::ROWS_COLUMNS; col++)
@@ -421,6 +440,8 @@ void Game::Render()
             }
 
         view.SetHudView();
+        
+
             if(isInventoryOpen)
             {
                 GameManager::inventory.Draw(m_window);
@@ -436,7 +457,13 @@ void Game::Render()
                 GameManager::tiles[row][col].Render(m_window);
             }
         }
+
         pauseMenu.Render(m_window);
+
+        if (isInstructionsOpen)
+        {
+            tutorialScreen.Draw(m_window);
+        }
 
         break;
     default:
@@ -456,6 +483,10 @@ void Game::Update(sf::Time t_deltaTime)
     {
     case MENU:
         mainMenu.Update();
+        if (isInstructionsOpen)
+        {
+            tutorialScreen.Update();
+        }
         break;
     case GAME:
 
@@ -533,9 +564,22 @@ void Game::Update(sf::Time t_deltaTime)
 
         HatchEggs();
 
+        if (isInstructionsOpen)
+        {
+            tutorialScreen.Update();
+        }
+
+        if (GameManager::enemyBasesLeftAlive <= 0)
+        {
+            Display_Text("WINNER");
+        }
+
         break;
     case PAUSED:
-
+        if (isInstructionsOpen)
+        {
+            tutorialScreen.Update();
+        }
         break;
     default:
         break;
@@ -992,15 +1036,22 @@ void Game::CreateEnemyBase(sf::Vector2f pos, Item item)
 
     sf::Vector2i cellPos = Global::ConvertPositionToCell(pos);
     GameManager::tiles[cellPos.x][cellPos.y].SetTileType(TILE_USED_UP);
+    GameManager::enemyBasesLeftAlive++;
 }
 
 void Game::SpawnEnemyBases()
 {
-    Item item = GameManager::itemManager.GetItemByName("Gold");
+    Item goldItem = GameManager::itemManager.GetItemByName("Gold");
+    Item uraniumItem = GameManager::itemManager.GetItemByName("Uranium");
+    Item sucklerHeadItem = GameManager::itemManager.GetItemByName("Suckler Head");
+    Item sucklerTentacleItem = GameManager::itemManager.GetItemByName("Suckler Tentacle");
   
 
 
-    CreateEnemyBase({ 450, 150 }, item );
+    CreateEnemyBase({ 450, 150 }, goldItem );
+    CreateEnemyBase({ 250, 150 }, uraniumItem);
+    CreateEnemyBase({ 50, 150 }, sucklerHeadItem);
+    CreateEnemyBase({ 450, 550 }, sucklerTentacleItem);
 }
 
 void Game::SpawnSpaceships()
@@ -1132,6 +1183,105 @@ void Game::ClearFog(sf::CircleShape radius)
             }
         }
     }
+}
+
+void Game::SetupClouds()
+{
+    float size = (Global::ROWS_COLUMNS * Global::CELL_SIZE) / divider;
+
+    sf::Vector2f topPosition(0, -size);
+    sf::Vector2f bottomPosition(0, Global::ROWS_COLUMNS * Global::CELL_SIZE);
+    sf::Vector2f leftPosition(-size, 0);
+    sf::Vector2f rightPosition(Global::ROWS_COLUMNS * Global::CELL_SIZE, 0);
+
+    sf::Vector2f topLeftPosition(-size, -size);
+    sf::Vector2f topRightPosition(Global::ROWS_COLUMNS * Global::CELL_SIZE, -size);
+    sf::Vector2f bottomLeftPosition(-size, Global::ROWS_COLUMNS * Global::CELL_SIZE);
+    sf::Vector2f bottomRightPosition(Global::ROWS_COLUMNS * Global::CELL_SIZE, Global::ROWS_COLUMNS * Global::CELL_SIZE);
+
+    for (int i = 0; i < totalAmountOfClouds; i++)
+    {
+        cloudBackground[i].setTexture(&Textures::GetInstance().GetTexture("cloud"));
+        cloudBackground[i].setSize({ size, size });
+
+        if (i < divider)
+        {
+            // Top
+            cloudBackground[i].setPosition(i * size, topPosition.y);
+        }
+        else if (i >= divider && i < divider * 2)
+        {
+            // Bottom
+            cloudBackground[i].setPosition((i - divider) * size, bottomPosition.y);
+        }
+        else if (i >= divider * 2 && i < divider * 3)
+        {
+            // Left
+            cloudBackground[i].setPosition(leftPosition.x, (i - divider * 2) * size);
+        }
+        else if (i >= divider * 3 && i < divider * 4)
+        {
+            // Right
+            cloudBackground[i].setPosition(rightPosition.x, (i - divider * 3) * size);
+        }
+        else if (i == divider * 4)
+        {
+            // Top Left corner
+            cloudBackground[i].setPosition(topLeftPosition);
+        }
+        else if (i == divider * 4 + 1)
+        {
+            // Top Right corner
+            cloudBackground[i].setPosition(topRightPosition);
+        }
+        else if (i == divider * 4 + 2)
+        {
+            // Bottom Left corner
+            cloudBackground[i].setPosition(bottomLeftPosition);
+        }
+        else if (i == divider * 4 + 3)
+        {
+            // Bottom Right corner
+            cloudBackground[i].setPosition(bottomRightPosition);
+        }
+    }
+}
+
+void Game::SetupTutorialPages()
+{
+    tutorialScreen.AddPage("The Upper-Cliff Valley!",
+        "An excting RTS game where you can train units to fight enemies\nCreate buildings to gather resources and\nDefend your base from the enemies!",
+        Textures::GetInstance().GetTexture("train-units"));
+    tutorialScreen.AddPage("Headquaters",
+        "This is your main building in the game\nFrom here, you can train units and create buildings\nIf this gets destroyed you will lose the game\nSo, defend it at all costs!",
+        Textures::GetInstance().GetTexture("hq-icon"));
+    tutorialScreen.AddPage("Training units",
+        "To train units, click on the HQ and select the icon as seen below\nA HUD menu will appear at the bottom\nThen select the unit you want to train",
+        Textures::GetInstance().GetTexture("train-units"));
+    tutorialScreen.AddPage("Types of units",
+        "There are 2 different types of units: Fighters and Workers\nFighters: are used to attack enemies and destroy enemies base\nWorkers: get assigned to buildings to gather resources",
+        Textures::GetInstance().GetTexture("warrior-icon"));
+    tutorialScreen.AddPage("Creating buildings",
+        "You an create buildings the exact same way as units\nBuildings are way to generate resources\n You do this by assigning workers to them",
+        Textures::GetInstance().GetTexture("build-hammer"));
+    tutorialScreen.AddPage("Types of buildings",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("mine"));
+    tutorialScreen.AddPage("Inventory",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("Empty"));
+    tutorialScreen.AddPage("Formations",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("Empty"));
+    tutorialScreen.AddPage("Types of enemy",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("suckler"));
+    tutorialScreen.AddPage("Enemy Base's",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("enemy-base"));
+    tutorialScreen.AddPage("Spaceships",
+        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
+        Textures::GetInstance().GetTexture("spaceship-icon"));
 }
 
 

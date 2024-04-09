@@ -55,7 +55,11 @@ void Textures::SetupTextures()
 
     cloudTexture.loadFromFile("./assets/images/clouds.png");
     textureMap["cloud"] = cloudTexture;
+    cloudTexture.setSmooth(true);
+    cloudTexture.setRepeated(true);
 
+    spaceshipIconTexture.loadFromFile("./assets/images/spaceship-icon.png");
+    textureMap["spaceship-icon"] = spaceshipIconTexture;
 
 
     // Projectiles
@@ -193,6 +197,9 @@ void Textures::SetupTextures()
             textureMap["hazmat-man-icon"] = hazmatManButtonIconTexture;
 
         // Buildings
+
+            hqButtonIconTexture.loadFromFile("./assets/images/hq-icon.png");
+            textureMap["hq-icon"] = hqButtonIconTexture;
 
             goldMineButtonIconTexture.loadFromFile("./assets/images/mine-icon.png");
             textureMap["mine-icon"] = goldMineButtonIconTexture;

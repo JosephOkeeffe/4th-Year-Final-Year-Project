@@ -23,10 +23,12 @@ public:
     inline static const std::string tileData3 = { "Tile_Data_3.json" };
 
     static sf::Font font;
+    static sf::Font tutorialFont;
 
     static void LoadFont()
     {
        font.loadFromFile("./assets/fonts/Flinton.otf");
+       tutorialFont.loadFromFile("./assets/fonts/zai_TornPaper.ttf");
     }
 
 	static sf::Vector2f GetMousePos(sf::RenderWindow& window)

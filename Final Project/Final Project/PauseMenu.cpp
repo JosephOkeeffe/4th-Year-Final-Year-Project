@@ -4,8 +4,8 @@
 
 void PauseMenu::Init()
 {
+	pauseBackground.setSize(sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT * 0.6));
 	pauseBackground.setPosition(Global::S_WIDTH / 2, Global::S_HEIGHT / 2);
-	pauseBackground.setSize(sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2));
 	pauseBackground.setOrigin(pauseBackground.getSize().x / 2, pauseBackground.getSize().y / 2);
 	pauseBackground.setFillColor(sf::Color::Red);
 
@@ -38,8 +38,42 @@ void PauseMenu::Init()
 	//
 	//
 	//
-	Button saveMenuButton(
+	Button controlsButton(
 		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.85),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("edit"));
+
+	controlsButton.setLabel("Controls", 30, sf::Color(0, 0, 0, 150));
+	controlsButton.setCallback([=]()
+		{
+			Game::isControlsOpen = true;
+		});
+	controlsButton.centreLabel({ controlsButton.getButtonPos().x, controlsButton.getButtonPos().y - 5 });
+	buttons.push_back(controlsButton);
+	//
+	//
+	//
+	Button instructionsButton(
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.05),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("edit"));
+
+	instructionsButton.setLabel("Instructions", 30, sf::Color(0, 0, 0, 150));
+	instructionsButton.setCallback([=]()
+		{
+			Game::isInstructionsOpen = true;
+		});
+	instructionsButton.centreLabel({ instructionsButton.getButtonPos().x, instructionsButton.getButtonPos().y - 5 });
+	buttons.push_back(instructionsButton);
+	//
+	//
+	//
+	Button saveMenuButton(
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.25),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
@@ -58,7 +92,7 @@ void PauseMenu::Init()
 	//
 
 	Button loadMenuButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.05),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.45),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,

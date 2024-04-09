@@ -41,9 +41,6 @@ void Enemy::Draw()
 	{
 		stats.DisplayHealthBar(*GameManager::GetWindow(), { body.getPosition().x, body.getPosition().y - 50 });
 		particleSystem.draw(*GameManager::GetWindow());
-		//GameManager::GetWindow()->draw(enemyDetectionCircle);
-	//	GameManager::GetWindow()->draw(wanderCircle);
-
 
 
 		for (Projectile* projectile : projectiles)

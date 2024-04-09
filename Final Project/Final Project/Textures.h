@@ -64,9 +64,12 @@ private:
     sf::Texture buildHammerTexture;
     sf::Texture trainUnitsTexture;
 
+    sf::Texture hqButtonIconTexture;
     sf::Texture goldMineButtonIconTexture;
     sf::Texture oilExtractorButtonIconTexture;
     sf::Texture uraniumExtractorButtonIconTexture;
+
+    sf::Texture spaceshipIconTexture;
 
     // Other
     sf::Texture emptyTexture;

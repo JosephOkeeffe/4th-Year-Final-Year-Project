@@ -499,7 +499,7 @@ void Characters::ProjectilesCollideWithEnemyBase()
 {
 	for (EnemyBase* enemyBase : GameManager::enemyBases)
 	{
-		if (!IsEnemyInAttackRadius(enemyBase->body) || enemyBase->isDestroyed)
+		if (!IsEnemyInAttackRadius(enemyBase->body) || enemyBase->isDestroyed || !enemyBase->isOpen)
 		{
 			continue;
 		}

@@ -23,4 +23,4 @@ Buildings* GameManager::buildingToPlace;
 sf::Clock GameManager::spaceShipTimer;
 
 int GameManager::enemyID = 0;
-int GameManager::enemyBasesLeftAlive = 6;
+int GameManager::enemyBasesLeftAlive = 0;
