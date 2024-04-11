@@ -84,7 +84,7 @@ void Button::update()
 
 void Button::render(sf::RenderWindow& window) 
 {
-    particleSystem.draw(window);
+  //  particleSystem.draw(window);
     window.draw(shape);
     window.draw(label);
 
@@ -98,9 +98,9 @@ void Button::render(sf::RenderWindow& window)
         float randomSize = static_cast<float>(rand() % 5 + 2);
 
         // add particles that go up
-        particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
+        //particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
 
-        particleSystem.Update();
+       // particleSystem.Update();
     }
 }
 

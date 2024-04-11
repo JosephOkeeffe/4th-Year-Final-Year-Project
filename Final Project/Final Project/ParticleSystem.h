@@ -42,12 +42,14 @@ public:
         }
         else if (type == 3)
         {
+            // 540, 360 pos
+            // 540 , 432 size
             // Bounce off the walls
-            if (position.x < 0 || position.x > 800)
+            if (position.x < 260 || position.x > 800)
             {
                 velocity.x = -velocity.x;
             }
-            if (position.y < 0 || position.y > 600)
+            if (position.y < 130  || position.y > 562)
             {
                 velocity.y = -velocity.y;
             }

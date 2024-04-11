@@ -236,6 +236,7 @@ void PauseMenu::Init()
 void PauseMenu::Render(sf::RenderWindow& window)
 {
 	window.draw(pauseBackground);
+	particleSystem.draw(window);
 
 	for (Button& button : buttons)
 	{
@@ -263,6 +264,18 @@ void PauseMenu::Render(sf::RenderWindow& window)
 			button.render(window);
 		}
 	}
+
+
+	sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
+	float randomSize = static_cast<float>(rand() % 5 + 2);
+
+	if (delay.getElapsedTime().asMilliseconds() > 100)
+	{
+		delay.restart();
+		particleSystem.addParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, randomSize, 3);
+	}
+
+    particleSystem.Update();
 }
 
 void PauseMenu::HandleEvents(sf::Event& event)

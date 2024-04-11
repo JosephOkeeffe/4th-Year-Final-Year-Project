@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Button.h"
 #include "Textures.h"
+#include "ParticleSystem.h"
 
 class PauseMenu
 {
@@ -20,5 +21,7 @@ public:
 	std::vector<Button> buttons;
 	std::vector<Button> saveButtons;
 	std::vector<Button> loadButtons;
+	ParticleSystem particleSystem;
+	sf::Clock delay;
 
 };

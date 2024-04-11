@@ -112,6 +112,27 @@ public:
         return randomVector;
     }
 
+    static sf::Vector2f GetRandomVectorBetween1()
+    {
+        sf::Vector2f randomVector;
+        float angle = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * 360.0f;
+
+        float angleRad = angle * Global::PI / 180.0f;
+
+        // Calculate the random vector with values between -1 and 1
+        randomVector = { std::cos(angleRad), std::sin(angleRad) };
+
+        // Normalize the vector
+        float length = std::sqrt(randomVector.x * randomVector.x + randomVector.y * randomVector.y);
+        if (length != 0)
+        {
+            randomVector.x /= length;
+            randomVector.y /= length;
+        }
+
+        return randomVector;
+    }
+
     static int GetRandomNumber(int min, int max) 
     {
         return min + std::rand() % (max - min + 1);

@@ -111,7 +111,7 @@ void TutorialScreen::Draw(sf::RenderWindow& window)
     window.draw(exitButton);
     window.draw(exitText);
     exitText.setOrigin(exitText.getGlobalBounds().width / 2, exitText.getGlobalBounds().height / 2);
-    if (currentPage < pages.size())
+    if (currentPage < pages.size() - 1)
     {
         window.draw(nextPageButton);
         window.draw(nextText);

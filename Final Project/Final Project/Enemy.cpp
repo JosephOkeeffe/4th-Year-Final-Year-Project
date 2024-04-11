@@ -58,10 +58,13 @@ void Enemy::Draw()
 }
 
 // TO DO
-// Level up - Enemeis spawn at certain levels, players can get xp when they kill bad guys - meh
+// // Get rid of AWFUL menu particles and add bouncy
+// // SOUNDS
+// USE GIPHY FOR GIFS
+// // TEXTURES FOR MENUS
+// SAVE GAME
 // End game screen 
 // Make better UI that shows things all the time , resources, buildings etc
-// ENEMY IDEAS - Suicde man, moves slowly but one shots who ever
 // ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
 // IDEAS - Debuffs
 
