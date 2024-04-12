@@ -227,6 +227,18 @@ void Textures::SetupTextures()
 
        menuTreesCloseTexture.loadFromFile("./assets/images/parallax-trees-close.png");
        textureMap["menu-trees-close"] = menuTreesCloseTexture;
+
+       background1.loadFromFile("./assets/images/background1.png");
+       textureMap["background1"] = background1;
+
+       background2.loadFromFile("./assets/images/background2.png");
+       textureMap["background2"] = background2;
+
+       background3.loadFromFile("./assets/images/background3.png");
+       textureMap["background3"] = background3;
+
+       button1.loadFromFile("./assets/images/button1.png");
+       textureMap["button1"] = button1;
 }
 
 sf::Texture& Textures::GetTexture(const std::string& textureName) 

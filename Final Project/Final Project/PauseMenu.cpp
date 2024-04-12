@@ -4,10 +4,14 @@
 
 void PauseMenu::Init()
 {
+
+	sf::Vector2f buttonSize {200, 40};
+
 	pauseBackground.setSize(sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT * 0.6));
 	pauseBackground.setPosition(Global::S_WIDTH / 2, Global::S_HEIGHT / 2);
 	pauseBackground.setOrigin(pauseBackground.getSize().x / 2, pauseBackground.getSize().y / 2);
-	pauseBackground.setFillColor(sf::Color::Red);
+	//pauseBackground.setFillColor(sf::Color::Red);
+	pauseBackground.setTexture(&Textures::GetInstance().GetTexture("background2"));
 
 	saveBackground.setSize(sf::Vector2f(Global::S_WIDTH / 5, Global::S_HEIGHT / 5));
 	saveBackground.setPosition(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.85 + (saveBackground.getSize().y / 2) + 30);
@@ -20,11 +24,11 @@ void PauseMenu::Init()
 	loadBackground.setFillColor(sf::Color::Blue);
 
 	Button resumeButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.65),
-		sf::Vector2f(200, 50),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.60),
+		sf::Vector2f(buttonSize),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143,137,137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	resumeButton.setLabel("Resume", 30, sf::Color(0, 0, 0, 150));
 	resumeButton.setCallback([=]()
@@ -32,6 +36,8 @@ void PauseMenu::Init()
 			Game::currentState = GAME;
 			saveMenu = false;
 			loadMenu = false;
+			count = 0;
+			particleSystem.clearParticles();
 		});
 	resumeButton.centreLabel({ resumeButton.getButtonPos().x, resumeButton.getButtonPos().y - 5 });
 	buttons.push_back(resumeButton);
@@ -39,16 +45,18 @@ void PauseMenu::Init()
 	//
 	//
 	Button controlsButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.85),
-		sf::Vector2f(200, 50),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.80),
+		sf::Vector2f(buttonSize),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	controlsButton.setLabel("Controls", 30, sf::Color(0, 0, 0, 150));
 	controlsButton.setCallback([=]()
 		{
 			Game::isControlsOpen = true;
+			count = 0;
+			particleSystem.clearParticles();
 		});
 	controlsButton.centreLabel({ controlsButton.getButtonPos().x, controlsButton.getButtonPos().y - 5 });
 	buttons.push_back(controlsButton);
@@ -56,16 +64,18 @@ void PauseMenu::Init()
 	//
 	//
 	Button instructionsButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.05),
-		sf::Vector2f(200, 50),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1),
+		sf::Vector2f(buttonSize),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	instructionsButton.setLabel("Instructions", 30, sf::Color(0, 0, 0, 150));
 	instructionsButton.setCallback([=]()
 		{
 			Game::isInstructionsOpen = true;
+			count = 0;
+			particleSystem.clearParticles();
 		});
 	instructionsButton.centreLabel({ instructionsButton.getButtonPos().x, instructionsButton.getButtonPos().y - 5 });
 	buttons.push_back(instructionsButton);
@@ -73,17 +83,19 @@ void PauseMenu::Init()
 	//
 	//
 	Button saveMenuButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.25),
-		sf::Vector2f(200, 50),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.20),
+		sf::Vector2f(buttonSize),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	saveMenuButton.setLabel("Save", 30, sf::Color(0, 0, 0, 150));
 	saveMenuButton.setCallback([=]()
 		{
 			saveMenu = !saveMenu;
 			loadMenu = false;
+			count = 0;
+			particleSystem.clearParticles();
 		});
 	saveMenuButton.centreLabel({ saveMenuButton.getButtonPos().x, saveMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(saveMenuButton);
@@ -92,17 +104,19 @@ void PauseMenu::Init()
 	//
 
 	Button loadMenuButton(
-		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.45),
-		sf::Vector2f(200, 50),
+		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.40),
+		sf::Vector2f(buttonSize),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	loadMenuButton.setLabel("Load",  30, sf::Color(0, 0, 0, 150));
 	loadMenuButton.setCallback([=]()
 		{
 			loadMenu = !loadMenu;
 			saveMenu = false;
+			count = 0;
+			particleSystem.clearParticles();
 		});
 	loadMenuButton.centreLabel({ loadMenuButton.getButtonPos().x, loadMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(loadMenuButton);
@@ -112,13 +126,13 @@ void PauseMenu::Init()
 	//
 
 
-	// Save
+	// Saves
 	Button save1Button(
 		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y * 0.9),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	save1Button.setLabel("Save 1",  25, sf::Color(0, 0, 0, 150));
 	save1Button.setCallback([=]()
@@ -136,8 +150,8 @@ void PauseMenu::Init()
 		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	save2Button.setLabel("Save 2", 25, sf::Color(0, 0, 0, 150));
 	save2Button.setCallback([=]()
@@ -155,8 +169,8 @@ void PauseMenu::Init()
 		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y * 1.1),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	save3Button.setLabel("Save 3", 25, sf::Color(0, 0, 0, 150));
 	save3Button.setCallback([=]()
@@ -175,8 +189,8 @@ void PauseMenu::Init()
 		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 0.9),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	load1Button.setLabel("Load 1", 25, sf::Color(0, 0, 0, 150));
 	load1Button.setCallback([=]()
@@ -195,8 +209,8 @@ void PauseMenu::Init()
 		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	load2Button.setLabel("Load 2", 25, sf::Color(0, 0, 0, 150));
 	load2Button.setCallback([=]()
@@ -215,8 +229,8 @@ void PauseMenu::Init()
 		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1.1),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
-		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		sf::Color(143, 137, 137),
+		Textures::GetInstance().GetTexture("button1"));
 
 	load3Button.setLabel("Load 3", 25, sf::Color(0, 0, 0, 150));
 	load3Button.setCallback([=]()
@@ -269,10 +283,12 @@ void PauseMenu::Render(sf::RenderWindow& window)
 	sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
 	float randomSize = static_cast<float>(rand() % 5 + 2);
 
-	if (delay.getElapsedTime().asMilliseconds() > 100)
+	if (delay.getElapsedTime().asMilliseconds() > 300 && count < MAX_PARTICLES)
 	{
 		delay.restart();
-		particleSystem.addParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, randomSize, 3);
+		count++;
+		//particleSystem.addParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, randomSize, 3);
+		particleSystem.AddSpriteParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, Textures::GetInstance().GetTexture("coin"), 600, 0.1f, 3);
 	}
 
     particleSystem.Update();

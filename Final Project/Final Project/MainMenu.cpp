@@ -182,7 +182,7 @@ void MainMenu::SetupButtons()
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		Textures::GetInstance().GetTexture("button1"));
 
 	playButton.setLabel("Start new game", 30, sf::Color(0, 0, 0, 150));
 	playButton.setCallback([]()
@@ -204,7 +204,7 @@ void MainMenu::SetupButtons()
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		Textures::GetInstance().GetTexture("button1"));
 
 	load1Button.setLabel("Load save 1", 30, sf::Color(0, 0, 0, 150));
 	load1Button.setCallback([]()
@@ -225,7 +225,7 @@ void MainMenu::SetupButtons()
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		Textures::GetInstance().GetTexture("button1"));
 
 	load2Button.setLabel("Load save 2", 30, sf::Color(0, 0, 0, 150));
 	load2Button.setCallback([]()
@@ -246,7 +246,7 @@ void MainMenu::SetupButtons()
 		sf::Vector2f(200, 50),
 		sf::Color::White,
 		sf::Color::Magenta,
-		Textures::GetInstance().GetTexture("edit"));
+		Textures::GetInstance().GetTexture("button1"));
 
 	load3Button.setLabel("Load save 3", 30, sf::Color(0, 0, 0, 150));
 	load3Button.setCallback([]()

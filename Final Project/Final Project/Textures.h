@@ -97,6 +97,12 @@ private:
     sf::Texture menuTreesFarTexture;
     sf::Texture menuTreesCloseTexture;
 
+    // Backgrounds
+    sf::Texture background1;
+    sf::Texture background2;
+    sf::Texture background3;
+    sf::Texture button1;
+
 
     std::map<std::string, sf::Texture> textureMap;
 

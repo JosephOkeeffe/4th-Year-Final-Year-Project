@@ -3,12 +3,13 @@
 TutorialScreen::TutorialScreen() : currentPage(0)
 {
     background.setFillColor(sf::Color::White);
-    background.setSize({ Global::S_WIDTH * 0.7, Global::S_HEIGHT * 0.8 });
+    background.setSize({ Global::S_WIDTH * 0.8, Global::S_HEIGHT * 0.8 });
     background.setPosition(Global::S_WIDTH / 2, Global::S_HEIGHT / 2);
     background.setOrigin(background.getSize().x / 2, background.getSize().y / 2);
+    background.setTexture(&Textures::GetInstance().GetTexture("background1"));
 
     headingText.setFont(Global::tutorialFont);
-    headingText.setFillColor(sf::Color::Black);
+    headingText.setFillColor(sf::Color::White);
     headingText.setOutlineColor(sf::Color::Red);
     headingText.setOutlineThickness(0.5);
     headingText.setCharacterSize(30);
@@ -16,7 +17,7 @@ TutorialScreen::TutorialScreen() : currentPage(0)
     headingText.setStyle(headingText.Underlined);
 
     paragraphText.setFont(Global::tutorialFont);
-    paragraphText.setFillColor(sf::Color::Black);
+    paragraphText.setFillColor(sf::Color::White);
     paragraphText.setCharacterSize(18);
     paragraphText.setPosition(background.getPosition().x, background.getPosition().y * 0.7);
 
@@ -26,29 +27,33 @@ TutorialScreen::TutorialScreen() : currentPage(0)
     pageImage.setOrigin(pageImage.getSize().x / 2, pageImage.getSize().y / 2);
     pageImage.setOrigin(pageImage.getGlobalBounds().width / 2, pageImage.getGlobalBounds().height / 2);
 
-    nextPageButton.setFillColor(sf::Color::Black);
+    nextPageButton.setFillColor(sf::Color::White);
     nextPageButton.setSize({ 100, 50 });
-    nextPageButton.setPosition(background.getPosition().x * 1.5, background.getPosition().y * 1.7);
+    nextPageButton.setPosition(background.getPosition().x * 1.4, background.getPosition().y * 1.55);
     nextPageButton.setOrigin(nextPageButton.getSize().x / 2, nextPageButton.getSize().y / 2);
+    nextPageButton.setTexture(&Textures::GetInstance().GetTexture("button1"));
 
-    lastPageButton.setFillColor(sf::Color::Black);
+
+    lastPageButton.setFillColor(sf::Color::White);
     lastPageButton.setSize({ 100, 50 });
-    lastPageButton.setPosition(background.getPosition().x * 0.5, background.getPosition().y * 1.7);
+    lastPageButton.setPosition(background.getPosition().x * 0.6, background.getPosition().y * 1.55);
     lastPageButton.setOrigin(lastPageButton.getSize().x / 2, lastPageButton.getSize().y / 2);
+    lastPageButton.setTexture(&Textures::GetInstance().GetTexture("button1"));
 
     exitButton.setFillColor(sf::Color::Red);
     exitButton.setSize({ 50, 50 });
-    exitButton.setPosition(background.getPosition().x, background.getPosition().y * 1.7); 
+    exitButton.setPosition(background.getPosition().x, background.getPosition().y * 1.55); 
     exitButton.setOrigin(exitButton.getSize().x / 2, exitButton.getSize().y / 2);
+    exitButton.setTexture(&Textures::GetInstance().GetTexture("button1"));
 
     nextText.setFont(Global::tutorialFont);
-    nextText.setFillColor(sf::Color::White);
+    nextText.setFillColor(sf::Color::Black);
     nextText.setCharacterSize(25);
     nextText.setPosition(nextPageButton.getPosition().x, nextPageButton.getPosition().y);
     nextText.setString("Next");
 
     lastText.setFont(Global::tutorialFont);
-    lastText.setFillColor(sf::Color::White);
+    lastText.setFillColor(sf::Color::Black);
     lastText.setCharacterSize(25);
     lastText.setPosition(lastPageButton.getPosition().x, lastPageButton.getPosition().y);
     lastText.setString("Last");

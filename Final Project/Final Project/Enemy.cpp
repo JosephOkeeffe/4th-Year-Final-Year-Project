@@ -58,10 +58,8 @@ void Enemy::Draw()
 }
 
 // TO DO
-// // Get rid of AWFUL menu particles and add bouncy
 // // SOUNDS
 // USE GIPHY FOR GIFS
-// // TEXTURES FOR MENUS
 // SAVE GAME
 // End game screen 
 // Make better UI that shows things all the time , resources, buildings etc
