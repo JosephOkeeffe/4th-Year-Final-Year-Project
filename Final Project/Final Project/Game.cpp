@@ -9,6 +9,7 @@ bool saveGame = false;
 bool loadSave = false;
 bool Game::isInstructionsOpen = false;
 bool Game::isControlsOpen = false;
+bool Game::isInventoryOpen = false;
 
 Game::Game() :
     m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
@@ -77,6 +78,8 @@ void Game::Init()
 
     mainMenu.Init();
     pauseMenu.Init();
+    gameUI.Init();
+    loseScreen.Init();
 
     elapsedTime = incomeTimer.getElapsedTime();
     HUD::Init();
@@ -222,6 +225,10 @@ void Game::ProcessEvents()
         case PAUSED:
             pauseMenu.HandleEvents(newEvent);
             break;
+        case WIN:
+            break;
+        case LOSE:
+            break;
         default:
             break;
         }
@@ -243,7 +250,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::E == t_event.key.code)
     {
-        isInstructionsOpen = !isInstructionsOpen;
+        currentState = LOSE;
     }
     if (sf::Keyboard::R == t_event.key.code)
     {
@@ -275,11 +282,14 @@ void Game::ProcessMousePress(sf::Event t_event)
         }
 
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
+        std::cout << "X: " << currentCell.x << ", Y: " << currentCell.y << "\n";
         if (!BuildingUI::isActive)
         {
             isDragging = true;
             startDragPos = Global::GetWindowMousePos(m_window, gameView);
         }
+
+       
     } 
     if (sf::Mouse::Right == t_event.key.code)
     {
@@ -327,6 +337,8 @@ void Game::ProcessMouseRelease(sf::Event t_event)
         SelectUnits();
 
         UnlockEnemyBase();
+
+        gameUI.HandleEvent(t_event);
 
     }
 
@@ -410,25 +422,7 @@ void Game::Render()
                GameManager::buildingToPlace->Draw();
             }
 
-            BuildingUI::Draw(m_window);
-
-
-            // FOG - Everything after this will be hidden by the fog
-            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
-            {
-                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
-                {
-                   m_window.draw(fogTiles[row][col]);
-                }
-            }
-
-            for (Spaceship* spaceship : GameManager::spaceships)
-            {
-                spaceship->Draw(m_window);
-
-            }
-
-            for (Egg* egg : GameManager::eggs)                 
+            for (Egg* egg : GameManager::eggs)
             {
                 egg->Draw(m_window);
 
@@ -439,6 +433,25 @@ void Game::Render()
                 enemyBase->Draw(m_window);
             }
 
+            BuildingUI::Draw(m_window);
+
+            // FOG - Everything after this will be hidden by the fog
+            for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+            {
+                for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+                {
+                   m_window.draw(fogTiles[row][col]);
+                }
+            }
+            // FOG - Everything after this will be hidden by the fog
+
+            for (Spaceship* spaceship : GameManager::spaceships)
+            {
+                spaceship->Draw(m_window);
+
+            }
+
+
         view.SetHudView();
         
 
@@ -446,6 +459,8 @@ void Game::Render()
             {
                 GameManager::inventory.Draw(m_window);
             }
+
+            gameUI.Draw(m_window);
             HUD::Render(m_window);
         break;
     case PAUSED:
@@ -464,6 +479,13 @@ void Game::Render()
         {
             tutorialScreen.Draw(m_window);
         }
+
+        break;
+    case WIN:
+
+        break;
+    case LOSE:
+        loseScreen.Draw(m_window);
 
         break;
     default:
@@ -574,12 +596,20 @@ void Game::Update(sf::Time t_deltaTime)
             Display_Text("WINNER");
         }
 
+        gameUI.Update();
+
         break;
     case PAUSED:
         if (isInstructionsOpen)
         {
             tutorialScreen.Update();
         }
+        break;
+    case WIN:
+ 
+        break;
+    case LOSE:
+        loseScreen.Update();
         break;
     default:
         break;

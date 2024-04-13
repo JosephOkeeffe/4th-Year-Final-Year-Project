@@ -97,6 +97,12 @@ private:
     sf::Texture menuTreesFarTexture;
     sf::Texture menuTreesCloseTexture;
 
+    sf::Texture uiArrowTexture;
+    sf::Texture uiMenuTexture;
+
+    sf::Texture uiBagTexture;
+    sf::Texture uiSettingsTexture;
+
     // Backgrounds
     sf::Texture background1;
     sf::Texture background2;

@@ -33,6 +33,9 @@
 #include "Formation.h"
 #include "EnemyBase.h"
 #include "TutorialScreen.h"
+#include "GameUI.h"
+#include "LoseScreen.h"
+
 
 #define Display_Text(x) std::cout << x << "\n";
 
@@ -46,7 +49,9 @@ static enum GameState
 {
     MENU,
     GAME,
-    PAUSED
+    PAUSED,
+    WIN,
+    LOSE
 };
 
 class Game
@@ -60,6 +65,8 @@ public:
     static GameState currentState;
     static bool isInstructionsOpen;
     static bool isControlsOpen;
+    static bool isInventoryOpen;
+
 
 private:
 
@@ -142,7 +149,6 @@ private:
     View view{ m_window, gameView, hudView };
 
 
-    bool isInventoryOpen = false;
     bool loadGame = false;
 
    std::vector<Characters*> selectedUnits;
@@ -156,6 +162,8 @@ private:
     sf::Time elapsedTime;
 
     TutorialScreen tutorialScreen;    
+    GameUI gameUI;
+    LoseScreen loseScreen;
 };
 
 #endif

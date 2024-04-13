@@ -263,7 +263,8 @@ void Enemy::MoveTowardsPointOfInterest()
 
 	sf::Vector2i endPos = Global::ConvertPositionToCell(closestVector);
 
-	while (endPos.x + randX < 1 || endPos.y + randY < 1)
+	while (endPos.x + randX < 1 || endPos.x + randX >= Global::ROWS_COLUMNS
+		|| endPos.y + randY < 1 || endPos.y + randY >= Global::ROWS_COLUMNS)
 	{
 		randX = Global::GetRandomNumber(-randomOffset, randomOffset);
 		randY = Global::GetRandomNumber(-randomOffset, randomOffset);

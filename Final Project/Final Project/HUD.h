@@ -44,16 +44,6 @@ public:
 
 		InitBuildButtons();
 		InitUnitButtons();
-
-		coinSprite.setTexture(Textures::GetInstance().GetTexture("coin"));
-		coinSprite.setOrigin(coinSprite.getGlobalBounds().width / 2, coinSprite.getGlobalBounds().height / 2);
-		coinSprite.setPosition(Global::S_WIDTH * 0.95, Global::S_HEIGHT - hudBackground.getSize().y + 20);
-		coinSprite.setScale(0.1, 0.1);
-
-		coinsText.setFont(Global::font);
-		coinsText.setCharacterSize(24);
-		coinsText.setOrigin(coinsText.getCharacterSize() / 2, coinsText.getCharacterSize() / 2);
-		coinsText.setPosition(coinSprite.getPosition().x + 30, coinSprite.getPosition().y);
 	}
 	static void Render(sf::RenderWindow& window)
 	{
@@ -62,9 +52,6 @@ public:
 		{
 			window.draw(hudBackground);
 
-			//coinsText.setString("x" + std::to_string(ResourceManagement::GetCoins()));
-			window.draw(coinSprite);
-			window.draw(coinsText);
 		}
 
 		if (currentState == BUILD_HUD)
@@ -266,8 +253,6 @@ public:
 	static sf::RectangleShape hudBackground;
 	static std::vector<Button> buildingButtons;
 	static std::vector<Button> unitButtons;
-	static sf::Text coinsText;
-	static sf::Sprite coinSprite;
 	static HUDState currentState;
 	static UnitButtonType currentUnitSelected;
 	static BuildingButtonType currentBuildingSelected;

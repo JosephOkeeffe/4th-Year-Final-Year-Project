@@ -52,7 +52,7 @@ public:
     static std::vector<Spaceship*> spaceships;
     static std::vector<Egg*> eggs;
     static std::vector<EnemyBase*> enemyBases;
-
+    static bool isInventoryOpen;
 
     static int enemyID;
     static int enemyBasesLeftAlive;

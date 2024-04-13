@@ -176,6 +176,17 @@ void Textures::SetupTextures()
         trainUnitsTexture.loadFromFile("./assets/images/train-units.png");
         textureMap["train-units"] = trainUnitsTexture;
 
+        uiArrowTexture.loadFromFile("./assets/images/UI-arrow.png");
+        textureMap["ui-arrow"] = uiArrowTexture;
+
+        uiMenuTexture.loadFromFile("./assets/images/UI-menu.png");
+        textureMap["ui-menu"] = uiMenuTexture;
+
+        uiBagTexture.loadFromFile("./assets/images/bag.png");
+        textureMap["bag"] = uiBagTexture;
+
+        uiSettingsTexture.loadFromFile("./assets/images/settings.png");
+        textureMap["settings"] = uiSettingsTexture;
 
 
 

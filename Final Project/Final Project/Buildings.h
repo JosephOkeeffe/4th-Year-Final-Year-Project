@@ -80,7 +80,7 @@ public:
 
 	sf::Vector2f barSize{ 100, 10 };
 	float maxWidth = barSize.x + 1;
-	float fillSpeed = 5;
+	float fillSpeed = 10;
 	float currentWidth = 0;
 	sf::Clock clock;
 	sf::Time deltaTime;

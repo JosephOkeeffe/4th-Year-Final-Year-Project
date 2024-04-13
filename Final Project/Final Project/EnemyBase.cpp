@@ -8,9 +8,10 @@ EnemyBase::EnemyBase(sf::Vector2f pos, Item itemNeeded) : itemRequired(itemNeede
 void EnemyBase::Init(sf::Vector2f pos)
 {
 	body.setTexture(Textures::GetInstance().GetTexture("enemy-base"));
-	body.setPosition({ pos.x + 20, pos.y + 20});
-	body.setScale(1.6, 1.5);
+	body.setScale(2, 1.5);
 	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
+	body.setPosition({ pos.x + body.getGlobalBounds().width / 2, pos.y + 20 });
+
 
 	sf::Color colour = sf::Color::White;
 	colour.a = 220;
@@ -36,6 +37,7 @@ void EnemyBase::Init(sf::Vector2f pos)
 
 void EnemyBase::Update()
 {
+	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
 	itemRequiredText.setString("x" + std::to_string(itemRequired.GetQuantity()));
 
 	if (stats.GetCurrentHealth() <= 0)

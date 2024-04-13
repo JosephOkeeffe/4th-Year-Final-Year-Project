@@ -137,6 +137,7 @@
     <ClCompile Include="Egg.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="HazmatMan.cpp" />
     <ClCompile Include="Headquarters.cpp" />
     <ClCompile Include="Buildings.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="LoseScreen.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OilExtractor.cpp" />
     <ClCompile Include="OilMan.cpp" />
@@ -177,6 +179,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Formation.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="HazmatMan.h" />
     <ClInclude Include="Headquarters.h" />
     <ClInclude Include="Buildings.h" />
@@ -187,6 +190,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="LoseScreen.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="OilExtractor.h" />
     <ClInclude Include="OilMan.h" />
