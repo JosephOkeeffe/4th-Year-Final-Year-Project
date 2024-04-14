@@ -34,6 +34,7 @@
 #include "EnemyBase.h"
 #include "TutorialScreen.h"
 #include "GameUI.h"
+#include "WinScreen.h"
 #include "LoseScreen.h"
 
 
@@ -80,12 +81,17 @@ private:
     void Init();
 
     void SaveJSON();
+    void SaveTilesJSON(nlohmann::json& data);
     void LoadJSON();
     void LoadTilesJSON();
     void FixLoadedGrass(int type, int row, int col);
    // void ChangeThingsDependingOnTileType();
 
     void ManageTimers();
+
+    void CreateCharactersForLoading(sf::Vector2f pos, int type);
+    void CreateEnemiesForLoading(sf::Vector2f pos, int type);
+    void CreateBuildingsForLoading(sf::Vector2f pos, int type);
 
     void CreateWarrior(sf::Vector2f pos);
     void CreateArcher(sf::Vector2f pos);
@@ -100,8 +106,11 @@ private:
 
     void CreateHeadquarters(sf::Vector2f pos);
     void CreateGoldMine();
+    void CreateGoldMineWithPos(sf::Vector2f pos);
     void CreateOilExtractor();
+    void CreateOilExtractorWithPos(sf::Vector2f pos);
     void CreateUraniumExtractor();
+    void CreateUraniumExtractorWithPos(sf::Vector2f pos);
 
     void CreateEnemyBase(sf::Vector2f pos, Item item);
 
@@ -163,6 +172,7 @@ private:
 
     TutorialScreen tutorialScreen;    
     GameUI gameUI;
+    WinScreen winScreen;
     LoseScreen loseScreen;
 };
 

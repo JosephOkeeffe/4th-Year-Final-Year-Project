@@ -20,17 +20,12 @@ public:
 
 	static constexpr int numBlocks = 20;
 
-	// Vector to store falling blocks
 	std::vector<sf::RectangleShape> blocks;
-
-	// Texture for the squares
-	sf::Texture texture;
-
-	// Full image
-	sf::Sprite fullImage;
-
-	// Texture rectangle for each block
+	sf::RectangleShape fullImage;
 	sf::IntRect textureRect;
+
+	bool isImageDone;
+	sf::Clock timer;
 
 };
 

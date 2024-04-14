@@ -79,6 +79,7 @@ void Game::Init()
     mainMenu.Init();
     pauseMenu.Init();
     gameUI.Init();
+    winScreen.Init();
     loseScreen.Init();
 
     elapsedTime = incomeTimer.getElapsedTime();
@@ -250,15 +251,27 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::E == t_event.key.code)
     {
-        currentState = LOSE;
+        //currentState = LOSE;
     }
     if (sf::Keyboard::R == t_event.key.code)
     {
-        GameManager::inventory.AddItem("Gold", 1);
+        currentState = WIN;
     }
-    if (sf::Keyboard::T == t_event.key.code)
+    if (sf::Keyboard::A == t_event.key.code)
     {
-        GameManager::inventory.RemoveItem("Gold", 1);
+        GameManager::inventory.AddItem("Gold", 5);
+    }
+    if (sf::Keyboard::S == t_event.key.code)
+    {
+        GameManager::inventory.AddItem("Suckler Head", 5);
+    }
+    if (sf::Keyboard::D == t_event.key.code)
+    {
+        GameManager::inventory.AddItem("Suckler Tentacle", 5);
+    }
+    if (sf::Keyboard::F == t_event.key.code)
+    {
+        GameManager::inventory.AddItem("Uranium", 5);
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
@@ -482,7 +495,7 @@ void Game::Render()
 
         break;
     case WIN:
-
+        winScreen.Draw(m_window);
         break;
     case LOSE:
         loseScreen.Draw(m_window);
@@ -606,7 +619,7 @@ void Game::Update(sf::Time t_deltaTime)
         }
         break;
     case WIN:
- 
+        winScreen.Update();
         break;
     case LOSE:
         loseScreen.Update();
@@ -624,19 +637,43 @@ void Game::SaveJSON()
 
     nlohmann::json jsonData;
 
-    //jsonData["X"] = warrior.GetSprite().getPosition().x;
-    //jsonData["Y"] = warrior.GetSprite().getPosition().y;
 
-    //jsonData["Coins"] = ResourceManagement::GetCoins();
-    //jsonData["Shops"] = ResourceManagement::GetShops();
-
-    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    for (Characters* unit : GameManager::aliveUnits)
     {
-        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
-        {
-            jsonData["TileType"][row][col] = GameManager::tiles[row][col].GetTileType();
-        }
+        jsonData["AliveUnits"].push_back({
+            {"Position", {unit->body.getPosition().x, unit->body.getPosition().y}},
+            {"CurrentHealth", unit->stats.GetCurrentHealth()},
+            {"Type", unit->characterType}
+            });
     }
+
+    for (Enemy* enemy : GameManager::aliveEnemies)
+    {
+        jsonData["AliveEnemies"].push_back({
+            {"Position", {enemy->body.getPosition().x, enemy->body.getPosition().y}},
+            {"CurrentHealth", enemy->stats.GetCurrentHealth()},
+            {"Type", enemy->enemyType}
+            });
+    }
+
+    for (Buildings* building : GameManager::buildings)
+    {
+        jsonData["Buildings"].push_back({
+            {"Position", {building->body.getPosition().x, building->body.getPosition().y}},
+            {"Type", building->buildingType}
+            });
+    }
+
+    for (EnemyBase* enemyBase : GameManager::enemyBases)
+    {
+        jsonData["EnemyBases"].push_back({
+            {"Position", {enemyBase->body.getPosition().x, enemyBase->body.getPosition().y}},
+            {"Item Required Name", enemyBase->itemRequired.GetName()},
+            {"Item Required Amount", enemyBase->itemNeededAmount},
+            });
+    }
+
+    SaveTilesJSON(jsonData);
 
     std::ofstream file(savePath);
 
@@ -654,8 +691,25 @@ void Game::SaveJSON()
     saveGame = false;
 }
 
+void Game::SaveTilesJSON(nlohmann::json& data)
+{
+    for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+    {
+        for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+        {
+            data["TileType"][row][col] = GameManager::tiles[row][col].GetTileType();
+        }
+    }
+}
+
 void Game::LoadJSON()
 {
+    //GameManager::aliveUnits.clear();
+    //GameManager::units.clear();
+    //GameManager::aliveEnemies.clear();
+    //GameManager::enemies.clear();
+    //GameManager::buildings.clear();
+
     std::ifstream file(loadGameDataPath);
 
     if (file.is_open())
@@ -664,14 +718,57 @@ void Game::LoadJSON()
         file >> jsonData;
         file.close();
 
-        sf::Vector2f warriorLoadedPos;
-        warriorLoadedPos.x = jsonData["X"];
-        warriorLoadedPos.y = jsonData["Y"];
-       // warrior.SetPosition(warriorLoadedPos);
+        // Load character units
+        for (auto& unitData : jsonData["AliveUnits"])
+        {
+            sf::Vector2f position(unitData["Position"][0], unitData["Position"][1]);
+            float currentHealth = unitData["CurrentHealth"];
+            int type = unitData["Type"];
 
-        float coins = jsonData["Coins"];
-        float shops = jsonData["Shops"];
+            CreateCharactersForLoading(position, type);
+        }
 
+        // Load enemy units
+        for (auto& enemyData : jsonData["AliveEnemies"])
+        {
+            sf::Vector2f position(enemyData["Position"][0], enemyData["Position"][1]);
+            float currentHealth = enemyData["CurrentHealth"];
+            int type = enemyData["Type"];
+
+            CreateEnemiesForLoading(position, type);
+        }
+
+        // Load buildings
+        for (auto& buildingData : jsonData["Buildings"])
+        {
+            sf::Vector2f position(buildingData["Position"][0], buildingData["Position"][1]);
+            int type = buildingData["Type"];
+
+            //HEADQUATERS_BUILDING,
+            //    GOLD_MINE_BUILDING,
+            //    URANIUM_EXTRACTOR_BUILDING,
+            //    OIL_EXTRACTOR_BUILDING,
+
+            CreateBuildingsForLoading(position, type);
+
+            // Create and initialize building using loaded data
+            // Example: Building* building = new Building(position, type);
+            // GameManager::buildings.push_back(building);
+        }
+
+        // Load enemy bases
+        for (auto& enemyBaseData : jsonData["EnemyBases"])
+        {
+            sf::Vector2f position(enemyBaseData["Position"][0], enemyBaseData["Position"][1]);
+            std::string itemName = enemyBaseData["Item Required Name"];
+            int itemAmount = enemyBaseData["Item Required Amount"];
+
+            // Create and initialize enemy base using loaded data
+            // Example: EnemyBase* enemyBase = new EnemyBase(position, itemName, itemAmount);
+            // GameManager::enemyBases.push_back(enemyBase);
+        }
+
+        // Load tile types
         for (int row = 0; row < Global::ROWS_COLUMNS; row++)
         {
             for (int col = 0; col < Global::ROWS_COLUMNS; col++)
@@ -681,10 +778,7 @@ void Game::LoadJSON()
             }
         }
 
-        std::cout << "Loaded Game Data:\n";
-        std::cout << "X: " << warriorLoadedPos.x << "\n";
-        std::cout << "Y: " << warriorLoadedPos.y << "\n";
-        std::cout << "Coins: " << coins << "\n";
+        std::cout << "Loaded Game Data\n";
     }
     else
     {
@@ -805,6 +899,51 @@ void Game::CreateHazmatMan(sf::Vector2f pos)
     GameManager::aliveUnits.push_back(newHazmatMan);
 }
 
+void Game::CreateCharactersForLoading(sf::Vector2f pos, int type)
+{
+    switch (type)
+    {
+    case Characters::WARRIOR:
+        CreateWarrior(pos);
+        break;
+    case Characters::ARCHER:
+        CreateArcher(pos);
+        break;
+    case Characters::MINER:
+        CreateMiner(pos);
+        break;
+    case Characters::OIL_MAN:
+        CreateOilMan(pos);
+        break;
+    case Characters::HAZMAT_MAN:
+        CreateHazmatMan(pos);
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::CreateBuildingsForLoading(sf::Vector2f pos, int type)
+{
+    switch (type)
+    {
+    case Buildings::HEADQUATERS_BUILDING:
+        CreateHeadquarters(pos);
+        break;
+    case Buildings::GOLD_MINE_BUILDING:
+        CreateGoldMineWithPos(pos);
+        break;
+    case Buildings::URANIUM_EXTRACTOR_BUILDING:
+        CreateUraniumExtractorWithPos(pos);
+        break;
+    case Buildings::OIL_EXTRACTOR_BUILDING:
+        CreateOilExtractorWithPos(pos);
+        break;
+    default:
+        break;
+    }
+}
+
 void Game::CreateSuckler(sf::Vector2f pos)
 {
     Suckler* newSuckler = new Suckler(GameManager::enemyID);
@@ -832,6 +971,30 @@ void Game::CreateSpaceship()
     Spaceship* newSpaceship = new Spaceship();
     GameManager::spaceships.push_back(newSpaceship);
 }
+
+
+void Game::CreateEnemiesForLoading(sf::Vector2f pos, int type)
+{
+    switch (type)
+    {
+    case Enemy::SUCKLER_MALE:
+        CreateSuckler(pos);
+        break;
+    case Enemy::SUCKLER_FEMALE:
+        CreateSuckler(pos);
+        break;
+    case Enemy::BIG_SUCKLER:
+        CreateBigSuckler(pos);
+        break;
+    case Enemy::GUMPER:
+        break;
+    case Enemy::BIG_GUMPER:
+        break;
+    default:
+        break;
+    }
+}
+
 
 
 void Game::SelectUnits()
@@ -1047,16 +1210,35 @@ void Game::CreateGoldMine()
     GameManager::buildingToPlace = newGoldMine;
 }
 
+void Game::CreateGoldMineWithPos(sf::Vector2f pos)
+{
+    GoldMine* newGoldMine = new GoldMine(pos);
+    GameManager::buildings.push_back(newGoldMine);
+}
+
 void Game::CreateOilExtractor()
 {
     OilExtractor* newOilExtractor = new OilExtractor({ 1,1 });
     GameManager::buildingToPlace = newOilExtractor;
 }
 
+void Game::CreateOilExtractorWithPos(sf::Vector2f pos)
+{
+    OilExtractor* newOilExtractor = new OilExtractor(pos);
+    GameManager::buildings.push_back(newOilExtractor);
+}
+
+
 void Game::CreateUraniumExtractor()
 {
     UraniumExtractor* newUraniumExtractor = new UraniumExtractor({ 1,1 });
     GameManager::buildingToPlace = newUraniumExtractor;
+}
+
+void Game::CreateUraniumExtractorWithPos(sf::Vector2f pos)
+{
+    UraniumExtractor* newUraniumExtractor = new UraniumExtractor(pos);
+    GameManager::buildings.push_back(newUraniumExtractor);
 }
 
 void Game::CreateEnemyBase(sf::Vector2f pos, Item item)
@@ -1152,6 +1334,8 @@ void Game::MergeEnemies()
 
 }
 
+
+
 void Game::UnlockEnemyBase()
 {
     for (EnemyBase* enemyBase : GameManager::enemyBases)
@@ -1181,6 +1365,7 @@ void Game::UnlockEnemyBase()
         }
     }
 }
+
 
 void Game::ClearFog(sf::CircleShape radius)
 {

@@ -170,6 +170,7 @@
     <ClCompile Include="Warrior.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="ShieldProjectile.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Warrior.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="ShieldProjectile.h" />
+    <ClInclude Include="WinScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.hlsl" />

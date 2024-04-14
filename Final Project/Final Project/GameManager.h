@@ -217,6 +217,15 @@ public:
         return straightCost * (dx + dy) + (diagonalCost - 2 * straightCost) * std::min(dx, dy) + tileCost;
     }
 
+    static void ClearAllVectors()
+    {
+        aliveUnits.clear();
+        units.clear();
+        aliveEnemies.clear();
+        enemies.clear();
+        buildings.clear();
+    }
+
 private:
     static sf::RenderWindow* window;
     static sf::View* gameView;

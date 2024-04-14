@@ -14,12 +14,12 @@ void PauseMenu::Init()
 	pauseBackground.setTexture(&Textures::GetInstance().GetTexture("background2"));
 
 	saveBackground.setSize(sf::Vector2f(Global::S_WIDTH / 5, Global::S_HEIGHT / 5));
-	saveBackground.setPosition(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 0.85 + (saveBackground.getSize().y / 2) + 30);
+	saveBackground.setPosition(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.2 + (saveBackground.getSize().y / 2) + 30);
 	saveBackground.setOrigin(saveBackground.getSize().x / 2, saveBackground.getSize().y / 2);
 	saveBackground.setFillColor(sf::Color::Blue);
 
 	loadBackground.setSize(sf::Vector2f(Global::S_WIDTH / 5, Global::S_HEIGHT / 5));
-	loadBackground.setPosition(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.05 + (saveBackground.getSize().y / 2) + 30);
+	loadBackground.setPosition(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.4 + (saveBackground.getSize().y / 2) + 30);
 	loadBackground.setOrigin(saveBackground.getSize().x / 2, saveBackground.getSize().y / 2);
 	loadBackground.setFillColor(sf::Color::Blue);
 
@@ -92,10 +92,13 @@ void PauseMenu::Init()
 	saveMenuButton.setLabel("Save", 30, sf::Color(0, 0, 0, 150));
 	saveMenuButton.setCallback([=]()
 		{
-			saveMenu = !saveMenu;
-			loadMenu = false;
-			count = 0;
-			particleSystem.clearParticles();
+			if(!loadMenu)
+			{
+				saveMenu = !saveMenu;
+				loadMenu = false;
+				count = 0;
+				particleSystem.clearParticles();
+			}
 		});
 	saveMenuButton.centreLabel({ saveMenuButton.getButtonPos().x, saveMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(saveMenuButton);
@@ -113,10 +116,13 @@ void PauseMenu::Init()
 	loadMenuButton.setLabel("Load",  30, sf::Color(0, 0, 0, 150));
 	loadMenuButton.setCallback([=]()
 		{
-			loadMenu = !loadMenu;
-			saveMenu = false;
-			count = 0;
-			particleSystem.clearParticles();
+			if (!saveMenu)
+			{
+				loadMenu = !loadMenu;
+				saveMenu = false;
+				count = 0;
+				particleSystem.clearParticles();
+			}
 		});
 	loadMenuButton.centreLabel({ loadMenuButton.getButtonPos().x, loadMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(loadMenuButton);
@@ -186,7 +192,7 @@ void PauseMenu::Init()
 
 	// Load
 	Button load1Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 0.9),
+		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 0.92),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
 		sf::Color(143, 137, 137),
@@ -200,13 +206,14 @@ void PauseMenu::Init()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData1).string();
 			loadSave = true;
 			loadMenu = false;
+			GameManager::ClearAllVectors();
 			Game::currentState = GAME;
 		});
 	load1Button.centreLabel({ load1Button.getButtonPos().x, load1Button.getButtonPos().y - 5 });
 	loadButtons.push_back(load1Button);
 
 	Button load2Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y),
+		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
 		sf::Color(143, 137, 137),
@@ -220,13 +227,14 @@ void PauseMenu::Init()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData2).string();
 			loadSave = true;
 			loadMenu = false;
+			GameManager::ClearAllVectors();
 			Game::currentState = GAME;
 		});
 	load2Button.centreLabel({ load2Button.getButtonPos().x, load2Button.getButtonPos().y - 5 });
 	loadButtons.push_back(load2Button);
 
 	Button load3Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1.1),
+		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1.07),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
 		sf::Color(143, 137, 137),
@@ -240,6 +248,7 @@ void PauseMenu::Init()
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData3).string();
 			loadSave = true;
 			loadMenu = false;
+			GameManager::ClearAllVectors();
 			Game::currentState = GAME;
 		});
 	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });
