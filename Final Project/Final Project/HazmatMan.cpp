@@ -117,6 +117,7 @@ void HazmatMan::UpdateWorkingStates()
 	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr)
 	{
 		SetCurrentState(SEARCH_FOR_RESOURCE);
+		GameManager::inventory.AddItem("Uranium", workingPlace->resourcePerRun);
 	}
 }
 

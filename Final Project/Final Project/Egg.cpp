@@ -4,7 +4,7 @@ Egg::Egg(sf::Vector2f pos, int _hatchTime, int tier) : hatchTime(_hatchTime), eg
 {
 	body.setTexture(Textures::GetInstance().GetTexture("egg"));
 	body.setPosition(pos);
-	body.setScale(0.5, 0.5);
+	body.setScale(0.3, 0.3);
 
 	isReadyToHatch = false;
 

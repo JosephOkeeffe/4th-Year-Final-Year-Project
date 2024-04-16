@@ -188,7 +188,7 @@ void MainMenu::SetupButtons()
 	playButton.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
-			//loadGameDataPath = (currentPath / "../../Saves/" / Global::gameData1).string();
+			//loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData).string();
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
 			loadSave = true;
 			Game::currentState = GAME;

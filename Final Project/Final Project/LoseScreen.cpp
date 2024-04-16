@@ -2,6 +2,7 @@
 #include <algorithm> 
 #include <random>   
 #include <cmath>
+#include "Game.h"
 
 LoseScreen::LoseScreen()
 {
@@ -62,8 +63,21 @@ void LoseScreen::Init()
     fullImage.setOrigin(fullImage.getSize().x / 2, fullImage.getSize().y / 2);
     fullImage.setScale(0.1, 0.1);
     fullImage.setFillColor(sf::Color(255,255,255,0));
-
     isImageDone = false;
+
+    homeButton.setTexture(&Textures::GetInstance().GetTexture("button1"));
+    homeButton.setSize({ 150,30 });
+    homeButton.setPosition(fullImage.getPosition().x, fullImage.getPosition().y * 1.4);
+    homeButton.setOrigin(homeButton.getSize().x / 2, homeButton.getSize().y / 2);
+    homeButton.setScale(0.1, 0.1);
+    homeButton.setFillColor(sf::Color(255, 255, 255, 0));
+
+    homeText.setFont(Global::font);
+    homeText.setCharacterSize(30);
+    homeText.setString("Home");
+    homeText.setPosition(homeButton.getPosition().x, homeButton.getPosition().y - 5);
+    homeText.setScale(0.1, 0.1);
+    homeText.setFillColor(sf::Color::Black);
 }
 
 
@@ -77,11 +91,22 @@ void LoseScreen::Draw(sf::RenderWindow& window)
     if (isImageDone)
     {
         window.draw(fullImage);
+        window.draw(homeButton);
+        window.draw(homeText);
+
+       
     }
 }
 
 void LoseScreen::HandleEvent(sf::Event event)
 {
+    sf::Vector2i mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
+
+    if (homeButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        Game::currentState = GameState::MENU;
+    }
+  
 }
 
 void LoseScreen::Update()
@@ -90,6 +115,8 @@ void LoseScreen::Update()
     float stopY = 600;
     float rotationSpeed = 1;
     bool allStopped = true; 
+
+    homeText.setOrigin(homeText.getGlobalBounds().width / 2, homeText.getGlobalBounds().height / 2);
 
     for (int col = 0; col < 10; ++col)
     {
@@ -169,6 +196,8 @@ void LoseScreen::Update()
         }
 
         fullImage.setFillColor(sf::Color(color.r, color.g, color.b, alpha));
+        homeButton.setFillColor(sf::Color(color.r, color.g, color.b, alpha));
+        homeText.setFillColor(sf::Color(0, 0, 0, alpha));
 
         sf::Vector2f size = fullImage.getScale();
         if(size.x < 1)
@@ -176,6 +205,8 @@ void LoseScreen::Update()
             size *= 1.15f;
         }
         fullImage.setScale(size);
+        homeButton.setScale(size);
+        homeText.setScale(size);
 
         timer.restart();
     }

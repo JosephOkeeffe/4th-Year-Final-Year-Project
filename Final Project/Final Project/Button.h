@@ -26,9 +26,10 @@ public:
     sf::RectangleShape getButtonSprite();
 
     ParticleSystem particleSystem;
+    sf::RectangleShape shape;
+
 
 private:
-    sf::RectangleShape shape;
     sf::Text label;
     std::function<void()> onClick;
 

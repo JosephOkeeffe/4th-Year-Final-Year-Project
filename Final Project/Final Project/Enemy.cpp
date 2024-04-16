@@ -58,14 +58,9 @@ void Enemy::Draw()
 }
 
 // TO DO
-// // SOUNDS
+// SOUNDS
 // USE GIPHY FOR GIFS
-// SAVE GAME
-// End game screen 
-// Make better UI that shows things all the time , resources, buildings etc
-// ENEMY IDEAS - Enemy hits player and converts them into bad guy (spawn enem,y on position of dead good guy)
-// IDEAS - Debuffs
-
+// MAKE DEFAULT SAVE GAME AND CREATE SAVE FOR ENEMY BASES
 
 void Enemy::Update()
 {

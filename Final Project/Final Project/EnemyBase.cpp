@@ -1,6 +1,6 @@
 #include "EnemyBase.h"
 
-EnemyBase::EnemyBase(sf::Vector2f pos, Item itemNeeded) : itemRequired(itemNeeded), isOpen(false), isDestroyed(false), itemNeededAmount(5)
+EnemyBase::EnemyBase(sf::Vector2f pos, Item itemNeeded) : itemRequired(itemNeeded), isOpen(false), isDestroyed(false), itemNeededAmount(1)
 {
 	Init(pos);
 }

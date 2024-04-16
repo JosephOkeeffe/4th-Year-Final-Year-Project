@@ -24,8 +24,12 @@ public:
 	sf::RectangleShape fullImage;
 	sf::IntRect textureRect;
 
+	sf::RectangleShape homeButton;
+	sf::Text homeText;
+
 	bool isImageDone;
 	sf::Clock timer;
+
 
 };
 

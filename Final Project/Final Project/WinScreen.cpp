@@ -44,13 +44,13 @@ void WinScreen::Init()
             c.sprite.setScale(2, 2);
         }
         c.sprite.setPosition(static_cast<float>(rand() % Global::S_WIDTH), static_cast<float>(rand() % Global::S_HEIGHT));
-        c.sprite.setOrigin(c.sprite.getGlobalBounds().width / 2, c.sprite.getGlobalBounds().height / 2); // Center origin
+        c.sprite.setOrigin(c.sprite.getGlobalBounds().width / 2, c.sprite.getGlobalBounds().height / 2); 
         sf::Color color = c.sprite.getColor();
         color.r = (rand() % 256);
         color.g = (rand() % 256);
         color.b = (rand() % 256);
         c.sprite.setColor(color);
-        c.velocity = sf::Vector2f(static_cast<float>(rand() % 200 - 100), static_cast<float>(rand() % 200 - 100)); // Random velocity
+        c.velocity = sf::Vector2f(static_cast<float>(rand() % 200 - 100), static_cast<float>(rand() % 200 - 100)); 
         c.rotationSpeed = static_cast<float>(rand() % 200 - 100); 
         confetti.push_back(c);
     }

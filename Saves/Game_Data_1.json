@@ -7,30 +7,22 @@
                 150.0
             ],
             "Type": 2
-        },
-        {
-            "CurrentHealth": 1,
-            "Position": [
-                246.039794921875,
-                642.3760986328125
-            ],
-            "Type": 0
         }
     ],
     "AliveUnits": [
         {
             "CurrentHealth": 5,
             "Position": [
-                450.0,
-                400.0
+                522.0,
+                397.5
             ],
             "Type": 2
         },
         {
-            "CurrentHealth": 5,
+            "CurrentHealth": 4,
             "Position": [
-                250.0,
-                350.0
+                252.768310546875,
+                736.4361572265625
             ],
             "Type": 0
         }
@@ -42,6 +34,13 @@
                 230.0
             ],
             "Type": 0
+        },
+        {
+            "Position": [
+                550.0,
+                430.0
+            ],
+            "Type": 1
         }
     ],
     "EnemyBases": [
@@ -76,6 +75,16 @@
                 504.0,
                 570.0
             ]
+        }
+    ],
+    "Inventory": [
+        {
+            "Item Name": "Suckler Tentacle",
+            "Item Quantity": 3
+        },
+        {
+            "Item Name": "Gold",
+            "Item Quantity": 1
         }
     ],
     "TileType": [
@@ -219,7 +228,7 @@
             0,
             1,
             0,
-            3,
+            4,
             0,
             0,
             0,

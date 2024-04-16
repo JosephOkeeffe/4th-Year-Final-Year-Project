@@ -45,6 +45,7 @@ public:
 		InitBuildButtons();
 		InitUnitButtons();
 	}
+
 	static void Render(sf::RenderWindow& window)
 	{
 
@@ -69,7 +70,56 @@ public:
 				button.update();
 				button.render(window);
 			}
+
+			window.draw(CreateUnitCostText(150, GameManager::warriorPurchaseCost));
+			window.draw(CreateUnitCostText(260, GameManager::archerPurchaseCost));
+			window.draw(CreateUnitCostText(370, GameManager::minerPurchaseCost));
+			window.draw(CreateUnitCostText(480, GameManager::oilManPurchaseCost));
+			window.draw(CreateUnitCostText(590, GameManager::hazmatManPurchaseCost));
+
+		/*	sf::Text warriorText;
+			warriorText.setFont(Global::font);
+			warriorText.setPosition(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
+			warriorText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::warriorPurchaseCost));
+			window.draw(warriorText);
+
+			sf::Text archerText;
+			archerText.setFont(Global::font);
+			archerText.setPosition(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
+			archerText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::archerPurchaseCost));
+			window.draw(archerText);
+
+			sf::Text minerText;
+			minerText.setFont(Global::font);
+			minerText.setPosition(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
+			minerText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::minerPurchaseCost));
+			window.draw(minerText);
+
+			sf::Text oilManText;
+			oilManText.setFont(Global::font);
+			oilManText.setPosition(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
+			oilManText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::oilManPurchaseCost));
+			window.draw(oilManText);
+
+			sf::Text hazmatManText;
+			hazmatManText.setFont(Global::font);
+			hazmatManText.setPosition(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
+			hazmatManText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::hazmatManPurchaseCost));
+			window.draw(hazmatManText);*/
 		}
+
+
+
+
+		CheckIfCanPurchaseUnit(GameManager::warriorPurchaseCost, canPurchaseWarrior);
+		CheckIfCanPurchaseUnit(GameManager::archerPurchaseCost, canPurchaseArcher);
+		CheckIfCanPurchaseUnit(GameManager::minerPurchaseCost, canPurchaseMiner);
+		CheckIfCanPurchaseUnit(GameManager::oilManPurchaseCost, canPurchaseOilMan);
+		CheckIfCanPurchaseUnit(GameManager::hazmatManPurchaseCost, canPurchaseHazmatMan);
+
+
+		
+	
 	}
 	static void HandleEvents(sf::Event& event)
 	{
@@ -94,11 +144,11 @@ public:
 	{
 		// Gold Mine
 		Button mineButton(sf::Vector2f(150, 
-			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
-			sf::Vector2f(100, 100), // size
-			sf::Color::White, // color
-			sf::Color::Magenta, // click color
-			Textures::GetInstance().GetTexture("mine-icon")); // texture
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), 
+			sf::Vector2f(100, 100),
+			sf::Color::White, 
+			sf::Color(210, 210, 210),
+			Textures::GetInstance().GetTexture("mine-icon")); 
 
 		mineButton.setLabel("Mine", 30, sf::Color::Black);
 		mineButton.setCallback([]()
@@ -108,11 +158,11 @@ public:
 
 		// Oil Extractor
 		Button oilButton(sf::Vector2f(280, 
-			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
-			sf::Vector2f(100, 100), // size
-			sf::Color::White, // color
-			sf::Color::Magenta, // click color
-			Textures::GetInstance().GetTexture("oil-icon")); // texture
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), 
+			sf::Vector2f(100, 100), 
+			sf::Color::White, 
+			sf::Color(210, 210, 210), 
+			Textures::GetInstance().GetTexture("oil-icon"));
 
 		oilButton.setLabel("Oil Extractor", 30, sf::Color::Black);
 		oilButton.setCallback([]()
@@ -122,11 +172,11 @@ public:
 
 		// Uranium Extractor
 		Button reactorButton(sf::Vector2f(410,
-			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), // pos
-			sf::Vector2f(100, 100), // size
-			sf::Color::White, // color
-			sf::Color::Magenta, // click color
-			Textures::GetInstance().GetTexture("reactor-icon")); // texture
+			hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)), 
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color(210, 210, 210),
+			Textures::GetInstance().GetTexture("reactor-icon")); 
 
 		reactorButton.setLabel("Reactor", 30, sf::Color::Black);
 		reactorButton.setCallback([]()
@@ -162,7 +212,32 @@ public:
 		warriorButton.setLabel("Warrior", 30, sf::Color::Black);
 		warriorButton.setCallback([]()
 			{
-				ChangeUnitSelected(WARRIOR);
+				if (canPurchaseWarrior)
+				{
+					ChangeUnitSelected(WARRIOR);
+					GameManager::warriorPurchaseCost++;
+				}
+				else
+				{
+				}
+			/*	if (GameManager::warriorPurchaseCost <= 0)
+				{
+
+					ChangeUnitSelected(WARRIOR);
+					GameManager::warriorPurchaseCost++;
+				}
+				else if (GameManager::inventory.GetInventoryItemByName("Gold") != nullptr)
+				{
+					if (GameManager::inventory.GetInventoryItemByName("Gold")->GetQuantity() >= GameManager::warriorPurchaseCost)
+					{
+						ChangeUnitSelected(WARRIOR);
+						GameManager::warriorPurchaseCost++;
+					}
+					else
+					{
+						std::cout << "Cant afford warrior \n";
+					}
+				}*/
 			});
 
 		// ARCHER
@@ -170,7 +245,7 @@ public:
 			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
-			sf::Color::Magenta,
+			sf::Color(210, 210, 210),
 			Textures::GetInstance().GetTexture("archer-icon"));
 
 		archerButton.setLabel("Archer",  30, sf::Color::Black);
@@ -185,7 +260,7 @@ public:
 			sf::Vector2f(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
-			sf::Color::Magenta,
+			sf::Color(210, 210, 210),
 			Textures::GetInstance().GetTexture("miner-icon"));
 
 		workerButton.setLabel("Miner",  30, sf::Color::Black);
@@ -199,7 +274,7 @@ public:
 			sf::Vector2f(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
-			sf::Color::Magenta,
+			sf::Color(210, 210, 210),
 			Textures::GetInstance().GetTexture("oil-man-icon"));
 
 		oilManButton.setLabel("Oil Man", 30, sf::Color::Black);
@@ -213,7 +288,7 @@ public:
 			sf::Vector2f(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
-			sf::Color::Magenta,
+			sf::Color(210, 210, 210),
 			Textures::GetInstance().GetTexture("hazmat-man-icon"));
 
 		hazmatManButton.setLabel("Hazmat Man", 30, sf::Color::Black);
@@ -249,7 +324,53 @@ public:
 		currentBuildingSelected = name;
 		currentState = NONE;
 	}
+
+	static void CheckIfCanPurchaseUnit(int price, bool& unitToCheckBool)
+	{
+		if (GameManager::inventory.GetInventoryItemByName("Gold") != nullptr)
+		{
+			currentGoldInInventory = GameManager::inventory.GetInventoryItemByName("Gold")->GetQuantity();
+		}
+		else
+		{
+			currentGoldInInventory = 0;
+		}
+
+
+		if (price <= 0 || currentGoldInInventory >= price)
+		{
+			unitToCheckBool = true;
+		}
+		else if (currentGoldInInventory < price)
+		{
+			unitToCheckBool = false;
+		}
+	}
+
+	static sf::Text CreateUnitCostText(float xPos, int price )
+	{
+		sf::Text text;
+		text.setFont(Global::font);
+		text.setPosition(xPos, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.2));
+		text.setFillColor(sf::Color::Black);
+		text.setOutlineColor(sf::Color::White);
+		text.setOutlineThickness(1);
+		text.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(price));
+		text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2);
+
+		return  text;
+	}
+
 	
+	static bool canPurchaseWarrior;
+	static bool canPurchaseArcher;
+	static bool canPurchaseMiner;
+	static bool canPurchaseOilMan;
+	static bool canPurchaseHazmatMan;
+
+	
+
+	static int currentGoldInInventory;
 	static sf::RectangleShape hudBackground;
 	static std::vector<Button> buildingButtons;
 	static std::vector<Button> unitButtons;

@@ -54,6 +54,13 @@ public:
     static std::vector<EnemyBase*> enemyBases;
     static bool isInventoryOpen;
 
+
+    static int warriorPurchaseCost;
+    static int archerPurchaseCost;
+    static int minerPurchaseCost;
+    static int oilManPurchaseCost;
+    static int hazmatManPurchaseCost;
+
     static int enemyID;
     static int enemyBasesLeftAlive;
 
@@ -224,6 +231,8 @@ public:
         aliveEnemies.clear();
         enemies.clear();
         buildings.clear();
+        spaceships.clear();
+        enemyBases.clear();
     }
 
 private:

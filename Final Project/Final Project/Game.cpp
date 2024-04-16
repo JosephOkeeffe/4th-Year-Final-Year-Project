@@ -12,7 +12,7 @@ bool Game::isControlsOpen = false;
 bool Game::isInventoryOpen = false;
 
 Game::Game() :
-    m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Big One" },
+    m_window{ sf::VideoMode{ Global::S_WIDTH, Global::S_HEIGHT, 32U }, "The Upper-Cliff Valley" },
     m_exitGame{ false },
     view(m_window, gameView, hudView)
 {
@@ -67,14 +67,12 @@ void Game::Init()
             sf::Vector2f temp = { static_cast<float>(row * Global::CELL_SIZE), static_cast<float>(col * Global::CELL_SIZE) };
             fogTiles[row][col].setPosition(temp);
             fogTiles[row][col].setSize({ Global::CELL_SIZE, Global::CELL_SIZE });
-            fogTiles[row][col].setFillColor(sf::Color::Black);
+            fogTiles[row][col].setFillColor(sf::Color(0,0,0,200));
         }
     }
 
    
     SetupClouds();
-
-   // isTutoria
 
     mainMenu.Init();
     pauseMenu.Init();
@@ -251,7 +249,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::E == t_event.key.code)
     {
-        //currentState = LOSE;
+        Game::RestartGame();
     }
     if (sf::Keyboard::R == t_event.key.code)
     {
@@ -285,14 +283,11 @@ void Game::ProcessKeyRelease(sf::Event t_event)
         isInventoryOpen = !isInventoryOpen;
     }
 }
+
 void Game::ProcessMousePress(sf::Event t_event)
 {
     if (sf::Mouse::Left == t_event.key.code)
     {
-        if(isInstructionsOpen)
-        {
-            tutorialScreen.HandleEvent(t_event, isInstructionsOpen);
-        }
 
         sf::Vector2i currentCell = Global::GetCurrentCell(m_window, gameView);
         std::cout << "X: " << currentCell.x << ", Y: " << currentCell.y << "\n";
@@ -302,6 +297,7 @@ void Game::ProcessMousePress(sf::Event t_event)
             startDragPos = Global::GetWindowMousePos(m_window, gameView);
         }
 
+      
        
     } 
     if (sf::Mouse::Right == t_event.key.code)
@@ -352,6 +348,16 @@ void Game::ProcessMouseRelease(sf::Event t_event)
         UnlockEnemyBase();
 
         gameUI.HandleEvent(t_event);
+
+        if (isInstructionsOpen)
+        {
+            tutorialScreen.HandleEvent(t_event, isInstructionsOpen);
+        }
+
+        if (currentState == LOSE)
+        {
+            loseScreen.HandleEvent(t_event);
+        }
 
     }
 
@@ -495,9 +501,11 @@ void Game::Render()
 
         break;
     case WIN:
+        view.SetHudView();
         winScreen.Draw(m_window);
         break;
     case LOSE:
+        view.SetHudView();
         loseScreen.Draw(m_window);
 
         break;
@@ -606,7 +614,12 @@ void Game::Update(sf::Time t_deltaTime)
 
         if (GameManager::enemyBasesLeftAlive <= 0)
         {
-            Display_Text("WINNER");
+            Game::currentState = GameState::WIN;
+        }
+
+        if (GameManager::headquarters->isDestroyed)
+        {
+            Game::currentState = GameState::LOSE;
         }
 
         gameUI.Update();
@@ -673,6 +686,14 @@ void Game::SaveJSON()
             });
     }
 
+    for (Item* item : GameManager::inventory.items)
+    {
+        jsonData["Inventory"].push_back({
+           {"Item Name", item->GetName()},
+           {"Item Quantity", item->GetQuantity()}
+            });
+    }
+
     SaveTilesJSON(jsonData);
 
     std::ofstream file(savePath);
@@ -704,21 +725,18 @@ void Game::SaveTilesJSON(nlohmann::json& data)
 
 void Game::LoadJSON()
 {
-    //GameManager::aliveUnits.clear();
-    //GameManager::units.clear();
-    //GameManager::aliveEnemies.clear();
-    //GameManager::enemies.clear();
-    //GameManager::buildings.clear();
-
     std::ifstream file(loadGameDataPath);
 
     if (file.is_open())
     {
+
+        GameManager::ClearAllVectors();
+
+
         nlohmann::json jsonData;
         file >> jsonData;
         file.close();
 
-        // Load character units
         for (auto& unitData : jsonData["AliveUnits"])
         {
             sf::Vector2f position(unitData["Position"][0], unitData["Position"][1]);
@@ -728,7 +746,6 @@ void Game::LoadJSON()
             CreateCharactersForLoading(position, type);
         }
 
-        // Load enemy units
         for (auto& enemyData : jsonData["AliveEnemies"])
         {
             sf::Vector2f position(enemyData["Position"][0], enemyData["Position"][1]);
@@ -738,34 +755,28 @@ void Game::LoadJSON()
             CreateEnemiesForLoading(position, type);
         }
 
-        // Load buildings
         for (auto& buildingData : jsonData["Buildings"])
         {
             sf::Vector2f position(buildingData["Position"][0], buildingData["Position"][1]);
             int type = buildingData["Type"];
 
-            //HEADQUATERS_BUILDING,
-            //    GOLD_MINE_BUILDING,
-            //    URANIUM_EXTRACTOR_BUILDING,
-            //    OIL_EXTRACTOR_BUILDING,
-
             CreateBuildingsForLoading(position, type);
-
-            // Create and initialize building using loaded data
-            // Example: Building* building = new Building(position, type);
-            // GameManager::buildings.push_back(building);
         }
 
-        // Load enemy bases
         for (auto& enemyBaseData : jsonData["EnemyBases"])
         {
             sf::Vector2f position(enemyBaseData["Position"][0], enemyBaseData["Position"][1]);
             std::string itemName = enemyBaseData["Item Required Name"];
             int itemAmount = enemyBaseData["Item Required Amount"];
+        }
 
-            // Create and initialize enemy base using loaded data
-            // Example: EnemyBase* enemyBase = new EnemyBase(position, itemName, itemAmount);
-            // GameManager::enemyBases.push_back(enemyBase);
+        for (auto& inventoryData : jsonData["Inventory"])
+        {
+            std::string itemName = inventoryData["Item Name"];
+            int itemQuantity = inventoryData["Item Quantity"];
+
+            GameManager::inventory.AddItem(itemName, itemQuantity);
+
         }
 
         // Load tile types
@@ -1213,6 +1224,7 @@ void Game::CreateGoldMine()
 void Game::CreateGoldMineWithPos(sf::Vector2f pos)
 {
     GoldMine* newGoldMine = new GoldMine(pos);
+    newGoldMine->PlaceBuilding();
     GameManager::buildings.push_back(newGoldMine);
 }
 
@@ -1225,6 +1237,7 @@ void Game::CreateOilExtractor()
 void Game::CreateOilExtractorWithPos(sf::Vector2f pos)
 {
     OilExtractor* newOilExtractor = new OilExtractor(pos);
+    newOilExtractor->PlaceBuilding();
     GameManager::buildings.push_back(newOilExtractor);
 }
 
@@ -1238,6 +1251,7 @@ void Game::CreateUraniumExtractor()
 void Game::CreateUraniumExtractorWithPos(sf::Vector2f pos)
 {
     UraniumExtractor* newUraniumExtractor = new UraniumExtractor(pos);
+    newUraniumExtractor->PlaceBuilding();
     GameManager::buildings.push_back(newUraniumExtractor);
 }
 
@@ -1260,15 +1274,15 @@ void Game::SpawnEnemyBases()
   
 
 
-    CreateEnemyBase({ 450, 150 }, goldItem );
-    CreateEnemyBase({ 250, 150 }, uraniumItem);
-    CreateEnemyBase({ 50, 150 }, sucklerHeadItem);
-    CreateEnemyBase({ 450, 550 }, sucklerTentacleItem);
+    CreateEnemyBase({ 850, 1150 }, goldItem );
+    CreateEnemyBase({ 1950, 150 }, uraniumItem);
+    CreateEnemyBase({ 2150, 2150 }, sucklerHeadItem);
+    CreateEnemyBase({ 450, 1650 }, sucklerTentacleItem);
 }
 
 void Game::SpawnSpaceships()
 {
-    if (GameManager::spaceShipTimer.getElapsedTime().asSeconds() > spaceShipSpawnDelay)
+    if (GameManager::spaceShipTimer.getElapsedTime().asSeconds() > SPACE_SHIP_SPAWN_DELAY)
     {
         CreateSpaceship();
         for (Spaceship* spaceship : GameManager::spaceships)
@@ -1389,12 +1403,14 @@ void Game::ClearFog(sf::CircleShape radius)
             else if (distance <= circleRadius + tileRadius && fogTiles[row][col].getFillColor() != sf::Color::Transparent)
             {
                 sf::Color colour = fogTiles[row][col].getFillColor();
-                colour.a = 200;
+                colour.a = 100;
                 fogTiles[row][col].setFillColor(colour);
             }
             else if (distance > circleRadius + tileRadius && fogTiles[row][col].getFillColor() != sf::Color::Transparent)
             {
-                fogTiles[row][col].setFillColor(sf::Color::Black);
+                sf::Color colour = fogTiles[row][col].getFillColor();
+                colour.a = 200;
+                fogTiles[row][col].setFillColor(colour);
             }
         }
     }
@@ -1402,7 +1418,7 @@ void Game::ClearFog(sf::CircleShape radius)
 
 void Game::SetupClouds()
 {
-    float size = (Global::ROWS_COLUMNS * Global::CELL_SIZE) / divider;
+    float size = (Global::ROWS_COLUMNS * Global::CELL_SIZE) / CLOUD_DIVIDER;
 
     sf::Vector2f topPosition(0, -size);
     sf::Vector2f bottomPosition(0, Global::ROWS_COLUMNS * Global::CELL_SIZE);
@@ -1419,42 +1435,42 @@ void Game::SetupClouds()
         cloudBackground[i].setTexture(&Textures::GetInstance().GetTexture("cloud"));
         cloudBackground[i].setSize({ size, size });
 
-        if (i < divider)
+        if (i < CLOUD_DIVIDER)
         {
             // Top
             cloudBackground[i].setPosition(i * size, topPosition.y);
         }
-        else if (i >= divider && i < divider * 2)
+        else if (i >= CLOUD_DIVIDER && i < CLOUD_DIVIDER * 2)
         {
             // Bottom
-            cloudBackground[i].setPosition((i - divider) * size, bottomPosition.y);
+            cloudBackground[i].setPosition((i - CLOUD_DIVIDER) * size, bottomPosition.y);
         }
-        else if (i >= divider * 2 && i < divider * 3)
+        else if (i >= CLOUD_DIVIDER * 2 && i < CLOUD_DIVIDER * 3)
         {
             // Left
-            cloudBackground[i].setPosition(leftPosition.x, (i - divider * 2) * size);
+            cloudBackground[i].setPosition(leftPosition.x, (i - CLOUD_DIVIDER * 2) * size);
         }
-        else if (i >= divider * 3 && i < divider * 4)
+        else if (i >= CLOUD_DIVIDER * 3 && i < CLOUD_DIVIDER * 4)
         {
             // Right
-            cloudBackground[i].setPosition(rightPosition.x, (i - divider * 3) * size);
+            cloudBackground[i].setPosition(rightPosition.x, (i - CLOUD_DIVIDER * 3) * size);
         }
-        else if (i == divider * 4)
+        else if (i == CLOUD_DIVIDER * 4)
         {
             // Top Left corner
             cloudBackground[i].setPosition(topLeftPosition);
         }
-        else if (i == divider * 4 + 1)
+        else if (i == CLOUD_DIVIDER * 4 + 1)
         {
             // Top Right corner
             cloudBackground[i].setPosition(topRightPosition);
         }
-        else if (i == divider * 4 + 2)
+        else if (i == CLOUD_DIVIDER * 4 + 2)
         {
             // Bottom Left corner
             cloudBackground[i].setPosition(bottomLeftPosition);
         }
-        else if (i == divider * 4 + 3)
+        else if (i == CLOUD_DIVIDER * 4 + 3)
         {
             // Bottom Right corner
             cloudBackground[i].setPosition(bottomRightPosition);
@@ -1497,6 +1513,17 @@ void Game::SetupTutorialPages()
     tutorialScreen.AddPage("Spaceships",
         "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
         Textures::GetInstance().GetTexture("spaceship-icon"));
+}
+
+void Game::RestartGame()
+{
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData).string();
+    loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
+    loadSave = true;
+    LoadJSON();
+    Game::currentState = GAME;
+    GameManager::spaceShipTimer.restart();
 }
 
 

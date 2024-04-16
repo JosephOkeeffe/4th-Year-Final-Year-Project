@@ -13,6 +13,7 @@ public:
     static const int CELL_SIZE{ 100 };
     static constexpr float PI = 3.14159265359f;
 
+    inline static const std::string defaultGameData = { "DefaulGameData.json" };
     inline static const std::string gameData1 = { "Game_Data_1.json" };
     inline static const std::string gameData2 = { "Game_Data_2.json" };
     inline static const std::string gameData3 = { "Game_Data_3.json" };

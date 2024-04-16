@@ -38,6 +38,7 @@
 #include "LoseScreen.h"
 
 
+
 #define Display_Text(x) std::cout << x << "\n";
 
 extern std::string savePath;
@@ -67,6 +68,8 @@ public:
     static bool isInstructionsOpen;
     static bool isControlsOpen;
     static bool isInventoryOpen;
+
+    void RestartGame();
 
 
 private:
@@ -143,8 +146,8 @@ private:
     sf::RectangleShape** fogTiles;
 
     sf::RectangleShape cloudBackground[28];
-    int divider = 6;
-    int totalAmountOfClouds = divider * 4 + 4;
+    int const CLOUD_DIVIDER = 6;
+    int totalAmountOfClouds = CLOUD_DIVIDER * 4 + 4;
 
     sf::RenderWindow m_window;
     bool m_exitGame;
@@ -162,7 +165,7 @@ private:
 
    std::vector<Characters*> selectedUnits;
    
-   int spaceShipSpawnDelay = 60;
+   int const SPACE_SHIP_SPAWN_DELAY = 60;
 
     sf::Vector2f basePos = {200, 200};
 
