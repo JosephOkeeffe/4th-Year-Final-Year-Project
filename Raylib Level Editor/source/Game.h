@@ -12,10 +12,12 @@
 #define PATH_PALETTE_SIZE 18
 #define OBSTACLE_PALETTE_SIZE 13
 #define RESOURCE_PALETTE_SIZE 3
-#define ENTIRE_PALETTE_HEIGHT 320
 
-const int screenWidth = (TILE_SIZE * GRID_SIZE) / 2;
-const int screenHeight = (TILE_SIZE * GRID_SIZE) / 3; // THESE CAN BREAK THE GAME IF CHANGED
+
+const int screenWidth = (TILE_SIZE * GRID_SIZE);
+const int screenHeight = (TILE_SIZE * GRID_SIZE) / 1.5;
+
+#define ENTIRE_PALETTE_HEIGHT screenHeight * 0.35
 
 #include "raylib.h"
 #include "rlgl.h"
@@ -149,7 +151,7 @@ public:
     Rectangle resourcePaletteRects[RESOURCE_PALETTE_SIZE];
 
 private:
-    std::string defaultData = { "DefaultSave.json" };
+    std::string defaultData = { "Default_Tile_Data.json" };
     std::string tileData1 = { "Tile_Data_1.json" };
     std::string tileData2 = { "Tile_Data_2.json" };
     std::string tileData3 = { "Tile_Data_3.json" };

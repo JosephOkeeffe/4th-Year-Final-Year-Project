@@ -40,7 +40,7 @@ private:
     sf::RectangleShape nextPageButton;
     sf::RectangleShape lastPageButton;
     sf::RectangleShape exitButton;
-    std::vector<std::string> pages;
+   // std::vector<std::string> pages;
     int currentPage;
 
     sf::Clock revealTimer; // Timer for delaying text reveal

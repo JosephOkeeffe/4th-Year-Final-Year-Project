@@ -24,7 +24,7 @@ public:
 	ParticleSystem particleSystem;
 	sf::Clock delay;
 
-	int count = 0;
+	int particleCount = 0;
 	int MAX_PARTICLES = 30;
 
 };

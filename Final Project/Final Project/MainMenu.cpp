@@ -188,7 +188,7 @@ void MainMenu::SetupButtons()
 	playButton.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
-			//loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData).string();
+			loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData).string();
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
 			loadSave = true;
 			Game::currentState = GAME;
@@ -206,7 +206,7 @@ void MainMenu::SetupButtons()
 		sf::Color::Magenta,
 		Textures::GetInstance().GetTexture("button1"));
 
-	load1Button.setLabel("Load save 1", 30, sf::Color(0, 0, 0, 150));
+	load1Button.setLabel("Play level 1", 30, sf::Color(0, 0, 0, 150));
 	load1Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -227,7 +227,7 @@ void MainMenu::SetupButtons()
 		sf::Color::Magenta,
 		Textures::GetInstance().GetTexture("button1"));
 
-	load2Button.setLabel("Load save 2", 30, sf::Color(0, 0, 0, 150));
+	load2Button.setLabel("Play level 2", 30, sf::Color(0, 0, 0, 150));
 	load2Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
@@ -248,7 +248,7 @@ void MainMenu::SetupButtons()
 		sf::Color::Magenta,
 		Textures::GetInstance().GetTexture("button1"));
 
-	load3Button.setLabel("Load save 3", 30, sf::Color(0, 0, 0, 150));
+	load3Button.setLabel("Play level 3", 30, sf::Color(0, 0, 0, 150));
 	load3Button.setCallback([]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();

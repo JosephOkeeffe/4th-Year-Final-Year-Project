@@ -76,36 +76,6 @@ public:
 			window.draw(CreateUnitCostText(370, GameManager::minerPurchaseCost));
 			window.draw(CreateUnitCostText(480, GameManager::oilManPurchaseCost));
 			window.draw(CreateUnitCostText(590, GameManager::hazmatManPurchaseCost));
-
-		/*	sf::Text warriorText;
-			warriorText.setFont(Global::font);
-			warriorText.setPosition(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
-			warriorText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::warriorPurchaseCost));
-			window.draw(warriorText);
-
-			sf::Text archerText;
-			archerText.setFont(Global::font);
-			archerText.setPosition(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
-			archerText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::archerPurchaseCost));
-			window.draw(archerText);
-
-			sf::Text minerText;
-			minerText.setFont(Global::font);
-			minerText.setPosition(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
-			minerText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::minerPurchaseCost));
-			window.draw(minerText);
-
-			sf::Text oilManText;
-			oilManText.setFont(Global::font);
-			oilManText.setPosition(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
-			oilManText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::oilManPurchaseCost));
-			window.draw(oilManText);
-
-			sf::Text hazmatManText;
-			hazmatManText.setFont(Global::font);
-			hazmatManText.setPosition(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.5));
-			hazmatManText.setString(std::to_string(currentGoldInInventory) + "/" + std::to_string(GameManager::hazmatManPurchaseCost));
-			window.draw(hazmatManText);*/
 		}
 
 
@@ -215,29 +185,14 @@ public:
 				if (canPurchaseWarrior)
 				{
 					ChangeUnitSelected(WARRIOR);
+					GameManager::inventory.RemoveItem("Gold", GameManager::warriorPurchaseCost);
 					GameManager::warriorPurchaseCost++;
 				}
 				else
 				{
+					std::cout << "Cant afford warrior \n";
 				}
-			/*	if (GameManager::warriorPurchaseCost <= 0)
-				{
 
-					ChangeUnitSelected(WARRIOR);
-					GameManager::warriorPurchaseCost++;
-				}
-				else if (GameManager::inventory.GetInventoryItemByName("Gold") != nullptr)
-				{
-					if (GameManager::inventory.GetInventoryItemByName("Gold")->GetQuantity() >= GameManager::warriorPurchaseCost)
-					{
-						ChangeUnitSelected(WARRIOR);
-						GameManager::warriorPurchaseCost++;
-					}
-					else
-					{
-						std::cout << "Cant afford warrior \n";
-					}
-				}*/
 			});
 
 		// ARCHER
@@ -251,7 +206,16 @@ public:
 		archerButton.setLabel("Archer",  30, sf::Color::Black);
 		archerButton.setCallback([]()
 			{
-				ChangeUnitSelected(ARCHER);
+				if (canPurchaseArcher)
+				{
+					ChangeUnitSelected(ARCHER);
+					GameManager::inventory.RemoveItem("Gold", GameManager::archerPurchaseCost);
+					GameManager::archerPurchaseCost++;
+				}
+				else
+				{
+					std::cout << "Cant afford archer \n";
+				}
 			});
 
 
@@ -266,7 +230,16 @@ public:
 		workerButton.setLabel("Miner",  30, sf::Color::Black);
 		workerButton.setCallback([]()
 			{
-				ChangeUnitSelected(MINER);
+				if (canPurchaseMiner)
+				{
+					ChangeUnitSelected(MINER);
+					GameManager::inventory.RemoveItem("Gold", GameManager::minerPurchaseCost);
+					GameManager::minerPurchaseCost++;
+				}
+				else
+				{
+					std::cout << "Cant afford miner \n";
+				}
 			});
 
 		// OIL MAN
@@ -280,7 +253,16 @@ public:
 		oilManButton.setLabel("Oil Man", 30, sf::Color::Black);
 		oilManButton.setCallback([]()
 			{
-				ChangeUnitSelected(OIL_MAN);
+				if (canPurchaseOilMan)
+				{
+					ChangeUnitSelected(OIL_MAN);
+					GameManager::inventory.RemoveItem("Gold", GameManager::oilManPurchaseCost);
+					GameManager::oilManPurchaseCost++;
+				}
+				else
+				{
+					std::cout << "Cant afford oil man \n";
+				}
 			});
 
 		// HAZMAT MAN
@@ -294,7 +276,16 @@ public:
 		hazmatManButton.setLabel("Hazmat Man", 30, sf::Color::Black);
 		hazmatManButton.setCallback([]()
 			{
-				ChangeUnitSelected(HAZMAT_MAN);
+				if (canPurchaseHazmatMan)
+				{
+					ChangeUnitSelected(HAZMAT_MAN);
+					GameManager::inventory.RemoveItem("Gold", GameManager::hazmatManPurchaseCost);
+					GameManager::hazmatManPurchaseCost++;
+				}
+				else
+				{
+					std::cout << "Cant afford hazmat man \n";
+				}
 			});
 
 		unitButtons.push_back(warriorButton);

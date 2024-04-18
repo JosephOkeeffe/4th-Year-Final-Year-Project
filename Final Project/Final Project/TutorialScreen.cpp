@@ -116,7 +116,7 @@ void TutorialScreen::Draw(sf::RenderWindow& window)
     window.draw(exitButton);
     window.draw(exitText);
     exitText.setOrigin(exitText.getGlobalBounds().width / 2, exitText.getGlobalBounds().height / 2);
-    if (currentPage < pages.size() - 1)
+    if (currentPage < headings.size() - 1)
     {
         window.draw(nextPageButton);
         window.draw(nextText);
@@ -140,7 +140,7 @@ void TutorialScreen::AddPage(const std::string& heading, const std::string& para
 
 void TutorialScreen::NextPage()
 {
-    if (currentPage < pages.size() - 1)
+    if (currentPage < headings.size() - 1)
     {
         currentPage++;
         paragraphText.setString("");

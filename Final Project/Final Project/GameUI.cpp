@@ -48,10 +48,22 @@ void GameUI::Init()
 	enemyBasesLeftText.setFillColor(sf::Color::Black);
 	enemyBasesLeftText.setString(std::to_string(GameManager::enemyBasesLeftAlive) + " / 4");
 
+	gold.setSize({ 50,50 });
+	gold.setPosition(background.getPosition().x, background.getPosition().y * 0.8);
+	gold.setTexture(&Textures::GetInstance().GetTexture("gold-icon"));
+	gold.setOrigin(gold.getSize().x / 2, gold.getSize().y / 2);
+
+	currentGoldText.setFont(Global::font);
+	currentGoldText.setPosition(gold.getPosition().x, gold.getPosition().y + 33);
+	currentGoldText.setCharacterSize(30);
+	currentGoldText.setFillColor(sf::Color::Black);
+	currentGoldText.setString("0");
+
 
 	background.setFillColor(colour);
 	inventoryBag.setFillColor(colour);
 	pause.setFillColor(colour);
+	gold.setFillColor(colour);
 
 	startX = background.getPosition().x;
 	endX = startX - (background.getSize().y);
@@ -60,6 +72,7 @@ void GameUI::Init()
 	uiItems.push_back(&inventoryBag);
 	uiItems.push_back(&pause);
 	uiItems.push_back(&enemyBase);
+	uiItems.push_back(&gold);
 
 }
 
@@ -73,6 +86,7 @@ void GameUI::Draw(sf::RenderWindow& window)
 	}
 
 	window.draw(enemyBasesLeftText);
+	window.draw(currentGoldText);
 }
 
 void GameUI::HandleEvent(sf::Event event)
@@ -101,6 +115,19 @@ void GameUI::Update()
 	MoveBackground();
 	enemyBasesLeftText.setString(std::to_string(GameManager::enemyBasesLeftAlive) + " / 4");
 	enemyBasesLeftText.setOrigin(enemyBasesLeftText.getGlobalBounds().width / 2, enemyBasesLeftText.getGlobalBounds().height / 2);
+
+	currentGoldText.setOrigin(currentGoldText.getGlobalBounds().width / 2, currentGoldText.getGlobalBounds().height / 2);
+
+	if (GameManager::inventory.GetInventoryItemByName("Gold") != nullptr)
+	{
+		
+		int amount = GameManager::inventory.GetInventoryItemByName("Gold")->GetQuantity();
+		currentGoldText.setString(std::to_string(amount));
+	}
+	else
+	{
+		currentGoldText.setString("0");
+	}
 	
 }
 
@@ -138,6 +165,7 @@ void GameUI::MoveBackground()
 
 			}
 			enemyBasesLeftText.move(-moveSpeed * 2, 0);
+			currentGoldText.move(-moveSpeed * 2, 0);
 			arrow.move(-moveSpeed * 2, 0);
 		}
 		else
@@ -158,6 +186,7 @@ void GameUI::MoveBackground()
 			}
 
 			enemyBasesLeftText.move(moveSpeed * 2, 0);
+			currentGoldText.move(moveSpeed * 2, 0);
 			arrow.move(moveSpeed * 2, 0);
 		}
 		else

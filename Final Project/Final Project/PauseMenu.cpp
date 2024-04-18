@@ -36,7 +36,7 @@ void PauseMenu::Init()
 			Game::currentState = GAME;
 			saveMenu = false;
 			loadMenu = false;
-			count = 0;
+			particleCount = 0;
 			particleSystem.clearParticles();
 		});
 	resumeButton.centreLabel({ resumeButton.getButtonPos().x, resumeButton.getButtonPos().y - 5 });
@@ -55,7 +55,7 @@ void PauseMenu::Init()
 	controlsButton.setCallback([=]()
 		{
 			Game::isControlsOpen = true;
-			count = 0;
+			particleCount = 0;
 			particleSystem.clearParticles();
 		});
 	controlsButton.centreLabel({ controlsButton.getButtonPos().x, controlsButton.getButtonPos().y - 5 });
@@ -74,7 +74,7 @@ void PauseMenu::Init()
 	instructionsButton.setCallback([=]()
 		{
 			Game::isInstructionsOpen = true;
-			count = 0;
+			particleCount = 0;
 			particleSystem.clearParticles();
 		});
 	instructionsButton.centreLabel({ instructionsButton.getButtonPos().x, instructionsButton.getButtonPos().y - 5 });
@@ -96,8 +96,7 @@ void PauseMenu::Init()
 			{
 				saveMenu = !saveMenu;
 				loadMenu = false;
-				count = 0;
-				particleSystem.clearParticles();
+				particleCount = 0;
 			}
 		});
 	saveMenuButton.centreLabel({ saveMenuButton.getButtonPos().x, saveMenuButton.getButtonPos().y - 5 });
@@ -106,26 +105,20 @@ void PauseMenu::Init()
 	//
 	//
 
-	Button loadMenuButton(
+	Button mainMenuButton(
 		sf::Vector2f(pauseBackground.getPosition().x, pauseBackground.getPosition().y * 1.40),
 		sf::Vector2f(buttonSize),
 		sf::Color::White,
 		sf::Color(143, 137, 137),
 		Textures::GetInstance().GetTexture("button1"));
 
-	loadMenuButton.setLabel("Load",  30, sf::Color(0, 0, 0, 150));
-	loadMenuButton.setCallback([=]()
+	mainMenuButton.setLabel("Main Menu",  30, sf::Color(0, 0, 0, 150));
+	mainMenuButton.setCallback([=]()
 		{
-			if (!saveMenu)
-			{
-				loadMenu = !loadMenu;
-				saveMenu = false;
-				count = 0;
-				particleSystem.clearParticles();
-			}
+			Game::currentState = GameState::MENU;
 		});
-	loadMenuButton.centreLabel({ loadMenuButton.getButtonPos().x, loadMenuButton.getButtonPos().y - 5 });
-	buttons.push_back(loadMenuButton);
+	mainMenuButton.centreLabel({ mainMenuButton.getButtonPos().x, mainMenuButton.getButtonPos().y - 5 });
+	buttons.push_back(mainMenuButton);
 
 	// 
 	//
@@ -190,70 +183,6 @@ void PauseMenu::Init()
 	save3Button.centreLabel({ save3Button.getButtonPos().x, save3Button.getButtonPos().y - 5 });
 	saveButtons.push_back(save3Button);
 
-	// Load
-	Button load1Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 0.92),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	load1Button.setLabel("Load 1", 25, sf::Color(0, 0, 0, 150));
-	load1Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			loadGameDataPath = (currentPath / "../../Saves/" / Global::gameData1).string();
-			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData1).string();
-			loadSave = true;
-			loadMenu = false;
-			GameManager::ClearAllVectors();
-			Game::currentState = GAME;
-		});
-	load1Button.centreLabel({ load1Button.getButtonPos().x, load1Button.getButtonPos().y - 5 });
-	loadButtons.push_back(load1Button);
-
-	Button load2Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	load2Button.setLabel("Load 2", 25, sf::Color(0, 0, 0, 150));
-	load2Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			loadGameDataPath = (currentPath / "../../Saves/" / Global::gameData2).string();
-			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData2).string();
-			loadSave = true;
-			loadMenu = false;
-			GameManager::ClearAllVectors();
-			Game::currentState = GAME;
-		});
-	load2Button.centreLabel({ load2Button.getButtonPos().x, load2Button.getButtonPos().y - 5 });
-	loadButtons.push_back(load2Button);
-
-	Button load3Button(
-		sf::Vector2f(loadBackground.getPosition().x, loadBackground.getPosition().y * 1.07),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	load3Button.setLabel("Load 3", 25, sf::Color(0, 0, 0, 150));
-	load3Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			loadGameDataPath = (currentPath / "../../Saves/" / Global::gameData3).string();
-			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData3).string();
-			loadSave = true;
-			loadMenu = false;
-			GameManager::ClearAllVectors();
-			Game::currentState = GAME;
-		});
-	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });
-	loadButtons.push_back(load3Button);
-
 }
 
 void PauseMenu::Render(sf::RenderWindow& window)
@@ -292,10 +221,10 @@ void PauseMenu::Render(sf::RenderWindow& window)
 	sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
 	float randomSize = static_cast<float>(rand() % 5 + 2);
 
-	if (delay.getElapsedTime().asMilliseconds() > 300 && count < MAX_PARTICLES)
+	if (delay.getElapsedTime().asMilliseconds() > 300 && particleCount < MAX_PARTICLES)
 	{
 		delay.restart();
-		count++;
+		particleCount++;
 		//particleSystem.addParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, randomSize, 3);
 		particleSystem.AddSpriteParticle(pauseBackground.getPosition(), Global::GetRandomVector() * 0.2f, randomColor, Textures::GetInstance().GetTexture("coin"), 600, 0.1f, 3);
 	}

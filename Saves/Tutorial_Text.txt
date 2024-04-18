@@ -1,0 +1,105 @@
+[Title]
+The Upper-Cliff Valley
+[Text]
+An excting RTS game where you can train units to fight enemies
+Create buildings to gather resources and
+Defend your base from the enemies!
+[Texture Name]
+train-units
+
+[Title]
+Headquaters
+[Text]
+This is your main building in the game
+From here, you can train units and create buildings
+If this gets destroyed you will lose the game
+So, defend it at all costs!
+[Texture Name]
+hq-icon
+
+[Title]
+Training units
+[Text]
+To train units, click on the HQ and select the icon as seen below
+A HUD menu will appear at the bottom
+Then select the unit you want to train
+[Texture Name]
+train-units
+
+[Title]
+Types of units
+[Text]
+There are 2 different types of units: Fighters and Workers
+Fighters: are used to attack enemies and destroy enemies base
+Workers: get assigned to buildings to gather resources
+[Texture Name]
+warrior-icon
+
+[Title]
+Creating buildings
+[Text]
+You an create buildings the exact same way as units
+Buildings are way to generate resources
+You do this by assigning workers to them
+[Texture Name]
+build-hammer
+
+[Title]
+Types of buildings
+[Text]
+There are 3 types of buildings you can create
+Gold mines produce gold and miners are assigned to them
+Oil extractors produce oil
+Reactors produce uranium...who's ranium?
+[Texture Name]
+mine
+
+[Title]
+Inventory
+[Text]
+Items you collect in the game go into your inventory
+You can get items by killing enemies
+You can also get them by assigning workers to gather resources
+Items can be sorted by quantity and ID
+[Texture Name]
+bag
+
+[Title]
+Formations
+[Text]
+You can select multiple units at a time and turn them into a formation
+[Texture Name]
+Empty
+
+[Title]
+Types of enemy
+[Text]
+There are two types of enemies: Suckler and Big Suckler
+Sucklers have a male and female type
+The females move towards the males and merge with them
+This creates a Big Suckler who has more health 
+[Texture Name]
+suckler
+
+[Title]
+Enemy Bases
+[Text]
+The enemy bases are what you need to destroy in order to win the game
+Each base has a different item requirement
+Once the player has all the items required, it can unlock that base
+Then the player will attack the base and destroy it
+Once they are all destroyed the game is over and you win
+[Texture Name]
+enemy-base
+
+[Title]
+Spaceships
+[Text]
+Spaceships are what spawns more enemies in the game
+They spawn at the edge of the map at set intervals
+They drop eggs randomly and after a while these eggs hatch into Sucklers
+There are 5 different types of spaceships that can spawn
+The higher the tier, the more eggs they can spawn at a time
+The amount of spaceships increases every interval
+[Texture Name]
+spaceship-icon

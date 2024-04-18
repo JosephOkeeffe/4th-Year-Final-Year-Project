@@ -88,9 +88,11 @@ void Game::Init()
 
     CreateMiner({ 450, 400 });
 
-    CreateSuckler({ 150, 150 });
-    CreateSuckler({ 250, 150 });
-    CreateSuckler({ 150, 700 });
+    CreateSuckler({ 450, 950 });
+    CreateSuckler({ 850, 1650 });
+    CreateSuckler({ 250, 1950 });
+    CreateSuckler({ 1750, 150 });
+    CreateSuckler({ 2250, 1950 });
     SpawnEnemyBases();
 
     SetupTutorialPages();
@@ -243,31 +245,31 @@ void Game::ProcessKeyPress(sf::Event t_event)
     {
         MakeFormation();
     }
-    if (sf::Keyboard::W == t_event.key.code)
+    if (sf::Keyboard::A == t_event.key.code)
     {
         CreateSuckler({ 150, 150 });
     }
-    if (sf::Keyboard::E == t_event.key.code)
+    if (sf::Keyboard::S == t_event.key.code)
     {
         Game::RestartGame();
     }
-    if (sf::Keyboard::R == t_event.key.code)
+    if (sf::Keyboard::D == t_event.key.code)
     {
         currentState = WIN;
     }
-    if (sf::Keyboard::A == t_event.key.code)
+    if (sf::Keyboard::F == t_event.key.code)
     {
         GameManager::inventory.AddItem("Gold", 5);
     }
-    if (sf::Keyboard::S == t_event.key.code)
+    if (sf::Keyboard::G == t_event.key.code)
     {
         GameManager::inventory.AddItem("Suckler Head", 5);
     }
-    if (sf::Keyboard::D == t_event.key.code)
+    if (sf::Keyboard::H == t_event.key.code)
     {
         GameManager::inventory.AddItem("Suckler Tentacle", 5);
     }
-    if (sf::Keyboard::F == t_event.key.code)
+    if (sf::Keyboard::J == t_event.key.code)
     {
         GameManager::inventory.AddItem("Uranium", 5);
     }
@@ -768,6 +770,9 @@ void Game::LoadJSON()
             sf::Vector2f position(enemyBaseData["Position"][0], enemyBaseData["Position"][1]);
             std::string itemName = enemyBaseData["Item Required Name"];
             int itemAmount = enemyBaseData["Item Required Amount"];
+            Item newItem = GameManager::itemManager.GetItemByName(itemName);
+            newItem.IncreaseQuantity(itemAmount);
+            CreateEnemyBase(position, newItem);
         }
 
         for (auto& inventoryData : jsonData["Inventory"])
@@ -1480,39 +1485,40 @@ void Game::SetupClouds()
 
 void Game::SetupTutorialPages()
 {
-    tutorialScreen.AddPage("The Upper-Cliff Valley!",
-        "An excting RTS game where you can train units to fight enemies\nCreate buildings to gather resources and\nDefend your base from the enemies!",
-        Textures::GetInstance().GetTexture("train-units"));
-    tutorialScreen.AddPage("Headquaters",
-        "This is your main building in the game\nFrom here, you can train units and create buildings\nIf this gets destroyed you will lose the game\nSo, defend it at all costs!",
-        Textures::GetInstance().GetTexture("hq-icon"));
-    tutorialScreen.AddPage("Training units",
-        "To train units, click on the HQ and select the icon as seen below\nA HUD menu will appear at the bottom\nThen select the unit you want to train",
-        Textures::GetInstance().GetTexture("train-units"));
-    tutorialScreen.AddPage("Types of units",
-        "There are 2 different types of units: Fighters and Workers\nFighters: are used to attack enemies and destroy enemies base\nWorkers: get assigned to buildings to gather resources",
-        Textures::GetInstance().GetTexture("warrior-icon"));
-    tutorialScreen.AddPage("Creating buildings",
-        "You an create buildings the exact same way as units\nBuildings are way to generate resources\n You do this by assigning workers to them",
-        Textures::GetInstance().GetTexture("build-hammer"));
-    tutorialScreen.AddPage("Types of buildings",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("mine"));
-    tutorialScreen.AddPage("Inventory",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("Empty"));
-    tutorialScreen.AddPage("Formations",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("Empty"));
-    tutorialScreen.AddPage("Types of enemy",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("suckler"));
-    tutorialScreen.AddPage("Enemy Base's",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("enemy-base"));
-    tutorialScreen.AddPage("Spaceships",
-        "There are 3 types of buildings you can create\nGold mines produce gold and miners are assigned to them\nOil extractors produce oil\nReactors produce uranium...who's ranium?\n",
-        Textures::GetInstance().GetTexture("spaceship-icon"));
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::string tutorialPath = (currentPath / "../../Saves/Tutorial_Text.txt").string();
+
+    std::ifstream file(tutorialPath);
+    if (!file.is_open()) 
+    {
+        std::cerr << "Failed to open tutorial pages file!" << std::endl;
+        return;
+    }
+
+    std::string line;
+    std::string title;
+    std::string text;
+    std::string textureName;
+
+    while (std::getline(file, line)) 
+    {
+        if (line == "[Title]")
+        {
+            std::getline(file, title);
+        }
+        else if (line == "[Text]") 
+        {
+            std::getline(file, text);
+        }
+        else if (line == "[Texture Name]")
+        {
+            std::getline(file, textureName);
+
+            tutorialScreen.AddPage(title, text, Textures::GetInstance().GetTexture(textureName));
+        }
+    }
+
+    file.close();
 }
 
 void Game::RestartGame()

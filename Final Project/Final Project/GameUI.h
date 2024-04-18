@@ -23,7 +23,9 @@ public:
 	sf::RectangleShape inventoryBag;
 	sf::RectangleShape pause;
 	sf::RectangleShape enemyBase;
+	sf::RectangleShape gold;
 	sf::Text enemyBasesLeftText;
+	sf::Text currentGoldText;
 	int enemyBasesLeft;
 
 	std::vector<sf::RectangleShape*> uiItems;

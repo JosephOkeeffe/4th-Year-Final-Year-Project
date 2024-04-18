@@ -1,4 +1,5 @@
 #include "Suckler.h"
+#include "SoundManager.h"
 Suckler::Suckler(int _id)
 {
 	srand(time(nullptr));
@@ -112,7 +113,7 @@ void Suckler::Merge()
 	body.setOrigin(body.getTextureRect().width / 2, body.getTextureRect().height / 2);
 	projectiles.clear();
 
-	stats.SetMaxHealth(stats.GetMaxHealth() + 5);
+	stats.SetMaxHealth(stats.GetMaxHealth() + mergeHealthBonus);
 	stats.SetCurrentHealth(stats.GetMaxHealth());
 }
 

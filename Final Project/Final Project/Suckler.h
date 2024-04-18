@@ -24,5 +24,7 @@ public:
 
 	int spitFireRate = 3;
 
+	int mergeHealthBonus = 2;
+
 };
 
