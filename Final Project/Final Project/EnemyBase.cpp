@@ -8,20 +8,18 @@ EnemyBase::EnemyBase(sf::Vector2f pos, Item itemNeeded) : itemRequired(itemNeede
 void EnemyBase::Init(sf::Vector2f pos)
 {
 	body.setTexture(Textures::GetInstance().GetTexture("enemy-base"));
-	body.setScale(2, 1.5);
+	body.setScale(1.8, 1.4);
 	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
-	body.setPosition({ pos.x + body.getGlobalBounds().width / 2, pos.y + 20 });
-
+	body.setPosition({ pos.x + body.getGlobalBounds().width / 2, pos.y + body.getGlobalBounds().height / 4 });
 
 	sf::Color colour = sf::Color::White;
 	colour.a = 220;
 
 	itemRequiredSprite.setTexture(&Textures::GetInstance().GetTexture(itemRequired.GetTextureName()));
-	itemRequiredSprite.setPosition({pos.x, pos.y - 80});
+	itemRequiredSprite.setPosition({pos.x + 15, pos.y - 60});
 	itemRequiredSprite.setSize({ 30, 30 });
 	itemRequiredSprite.setOrigin(itemRequiredSprite.getSize().x / 2, itemRequiredSprite.getSize().y / 2);
 	itemRequiredSprite.setFillColor(colour);
-
 
 	itemRequiredText.setFont(Global::font);
 	itemRequiredText.setCharacterSize(24);

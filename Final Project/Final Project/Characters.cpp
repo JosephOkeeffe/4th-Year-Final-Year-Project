@@ -35,6 +35,7 @@ void Characters::Update()
 
 		/*ChangeSelectedColour();*/
 		UpdateDetectionCircle();
+		ChangeSpeedDependingOnTiles();
 		particleSystem.Update();
 
 		// Dont do this for workers

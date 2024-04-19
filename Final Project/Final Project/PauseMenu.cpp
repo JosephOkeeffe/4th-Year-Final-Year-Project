@@ -34,8 +34,6 @@ void PauseMenu::Init()
 	resumeButton.setCallback([=]()
 		{
 			Game::currentState = GAME;
-			saveMenu = false;
-			loadMenu = false;
 			particleCount = 0;
 			particleSystem.clearParticles();
 		});
@@ -92,12 +90,27 @@ void PauseMenu::Init()
 	saveMenuButton.setLabel("Save", 30, sf::Color(0, 0, 0, 150));
 	saveMenuButton.setCallback([=]()
 		{
-			if(!loadMenu)
+
+			std::filesystem::path currentPath = std::filesystem::current_path();
+			if (GameManager::currentLevel == 1)
 			{
-				saveMenu = !saveMenu;
-				loadMenu = false;
-				particleCount = 0;
+				savePath = (currentPath / "../../Saves/" / Global::customGameData1).string();
 			}
+			else if (GameManager::currentLevel == 2)
+			{
+				savePath = (currentPath / "../../Saves/" / Global::customGameData2).string();
+			}
+			else if (GameManager::currentLevel == 3)
+			{
+				savePath = (currentPath / "../../Saves/" / Global::customGameData3).string();
+			}
+			
+			saveGame = true;
+			Game::currentState = GAME;
+
+
+			particleCount = 0;
+			
 		});
 	saveMenuButton.centreLabel({ saveMenuButton.getButtonPos().x, saveMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(saveMenuButton);
@@ -126,7 +139,7 @@ void PauseMenu::Init()
 
 
 	// Saves
-	Button save1Button(
+	/*Button save1Button(
 		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y * 0.9),
 		sf::Vector2f(200, 25),
 		sf::Color::White,
@@ -137,7 +150,7 @@ void PauseMenu::Init()
 	save1Button.setCallback([=]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::gameData1).string();
+			savePath = (currentPath / "../../Saves/" / Global::defaultGameData1).string();
 			saveGame = true;
 			saveMenu = false;
 			Game::currentState = GAME;
@@ -156,7 +169,7 @@ void PauseMenu::Init()
 	save2Button.setCallback([=]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::gameData2).string();
+			savePath = (currentPath / "../../Saves/" / Global::defaultGameData2).string();
 			saveGame = true;
 			saveMenu = false;
 			Game::currentState = GAME;
@@ -175,13 +188,13 @@ void PauseMenu::Init()
 	save3Button.setCallback([=]()
 		{
 			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::gameData3).string();
+			savePath = (currentPath / "../../Saves/" / Global::defaultGameData3).string();
 			saveGame = true;
 			saveMenu = false;
 			Game::currentState = GAME;
 		});
 	save3Button.centreLabel({ save3Button.getButtonPos().x, save3Button.getButtonPos().y - 5 });
-	saveButtons.push_back(save3Button);
+	saveButtons.push_back(save3Button);*/
 
 }
 
@@ -194,27 +207,6 @@ void PauseMenu::Render(sf::RenderWindow& window)
 	{
 		button.update();
 		button.render(window);
-	}
-
-	if (saveMenu)
-	{
-		window.draw(saveBackground);
-
-		for (Button& button : saveButtons)
-		{
-			button.update();
-			button.render(window);
-		}
-	}
-	if (loadMenu)
-	{
-		window.draw(loadBackground);
-
-		for (Button& button : loadButtons)
-		{
-			button.update();
-			button.render(window);
-		}
 	}
 
 
@@ -237,21 +229,6 @@ void PauseMenu::HandleEvents(sf::Event& event)
 	for (Button& button : buttons)
 	{
 		button.handleEvent(event);
-	}
-
-	if (saveMenu)
-	{
-		for (Button& button : saveButtons)
-		{
-			button.handleEvent(event);
-		}
-	}
-	if (loadMenu)
-	{
-		for (Button& button : loadButtons)
-		{
-			button.handleEvent(event);
-		}
 	}
 }
 

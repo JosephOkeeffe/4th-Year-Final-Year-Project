@@ -30,3 +30,7 @@ int GameManager::hazmatManPurchaseCost = 0;
 
 int GameManager::enemyID = 0;
 int GameManager::enemyBasesLeftAlive = 0;
+
+int GameManager::currentLevel = 0;
+
+

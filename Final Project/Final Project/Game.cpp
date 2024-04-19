@@ -84,16 +84,16 @@ void Game::Init()
     HUD::Init();
     BuildingUI::Init();
 
-    CreateHeadquarters(basePos);
+   // CreateHeadquarters(basePos);
 
-    CreateMiner({ 450, 400 });
+  //  CreateMiner({ 450, 400 });
 
-    CreateSuckler({ 450, 950 });
-    CreateSuckler({ 850, 1650 });
-    CreateSuckler({ 250, 1950 });
-    CreateSuckler({ 1750, 150 });
-    CreateSuckler({ 2250, 1950 });
-    SpawnEnemyBases();
+  //  CreateSuckler({ 450, 950 });
+  //  CreateSuckler({ 850, 1650 });
+  //  CreateSuckler({ 250, 1950 });
+  //  CreateSuckler({ 1750, 150 });
+  //  CreateSuckler({ 2250, 1950 });
+    //SpawnEnemyBases();
 
     SetupTutorialPages();
 }

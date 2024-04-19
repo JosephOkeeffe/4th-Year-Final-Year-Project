@@ -23,7 +23,11 @@ public:
 	sf::Sprite menuTreesFar[2];
 	sf::Sprite menuTreesClose[2];
 	std::vector<Button> buttons;
+	std::vector<Button> playGameButtons;
 	std::vector<sf::Text> individualLetterTexts;
+
+	bool newGame = false;
+	bool continueGame = false;
 
 	float originalYPositions[22];
 

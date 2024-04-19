@@ -64,6 +64,8 @@ public:
     static int enemyID;
     static int enemyBasesLeftAlive;
 
+    static int currentLevel;
+
 	static void InitTiles()
 	{
         srand(time(nullptr));

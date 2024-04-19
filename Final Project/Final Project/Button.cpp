@@ -20,8 +20,6 @@ Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const sf:
     label.setOrigin(size / 2.0f);
     label.setPosition(position.x + (size.x * 0.1), position.y - (size.y * 0.1));
 
-    // Center label text
-
 }
 
 void Button::setLabel(const std::string& text, unsigned characterSize, const sf::Color& textColor) 
@@ -79,12 +77,10 @@ void Button::handleEvent(sf::Event& event)
 
 void Button::update() 
 {
-    // You can add additional update logic if needed
 }
 
 void Button::render(sf::RenderWindow& window) 
 {
-  //  particleSystem.draw(window);
     window.draw(shape);
     window.draw(label);
 
@@ -96,11 +92,6 @@ void Button::render(sf::RenderWindow& window)
         );
         sf::Color randomColor(rand() % 256, rand() % 256, rand() % 256, 255);
         float randomSize = static_cast<float>(rand() % 5 + 2);
-
-        // add particles that go up
-        //particleSystem.addParticle(static_cast<sf::Vector2f>(mousePos), randomVelocity, randomColor, randomSize, 0);
-
-       // particleSystem.Update();
     }
 }
 
@@ -131,7 +122,6 @@ void Button::SetLabelPosInRelationToButton(float x, float y)
 
 void Button::SetLabelPos(float x, float y)
 {
-   // label.setPosition
 }
 
 sf::Vector2f Button::getButtonPos()

@@ -14,9 +14,13 @@ public:
     static constexpr float PI = 3.14159265359f;
 
     inline static const std::string defaultGameData = { "Default_Game_Data.json" };
-    inline static const std::string gameData1 = { "Game_Data_1.json" };
-    inline static const std::string gameData2 = { "Game_Data_2.json" };
-    inline static const std::string gameData3 = { "Game_Data_3.json" };
+    inline static const std::string defaultGameData1 = { "Default_Game_Data_1.json" };
+    inline static const std::string defaultGameData2 = { "Default_Game_Data_2.json" };
+    inline static const std::string defaultGameData3 = { "Default_Game_Data_3.json" };
+
+    inline static const std::string customGameData1 = { "Custom_Game_Data_1.json" };
+    inline static const std::string customGameData2 = { "Custom_Game_Data_2.json" };
+    inline static const std::string customGameData3 = { "Custom_Game_Data_3.json" };
     
     inline static const std::string defaultTiles = { "Default_Tile_Data.json" };
     inline static const std::string tileData1 = { "Tile_Data_1.json" };

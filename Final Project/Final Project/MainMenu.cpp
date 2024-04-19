@@ -91,11 +91,22 @@ void MainMenu::Render(sf::RenderWindow& window)
 		window.draw(menuTreesClose[i]);
 	}
 
-	for (Button& button : buttons)
+	if (!continueGame && !newGame)
 	{
-		button.update();
-		button.render(window);
+		for (Button& button : buttons)
+		{
+			button.render(window);
+		}
 	}
+	 
+	if (continueGame || newGame)
+	{
+		for (Button& button : playGameButtons)
+		{
+			button.render(window);
+		}
+	}
+	
 
 	for (const sf::Text& letterText : individualLetterTexts)
 	{
@@ -137,9 +148,20 @@ void MainMenu::HandleEvents(sf::Event& event)
 {
 	sf::Vector2f mousePosition = Global::GetMousePos(*GameManager::GetWindow());
 
-	for (Button& button : buttons)
+	if (!continueGame && !newGame)
 	{
-		button.handleEvent(event);
+		for (Button& button : buttons)
+		{
+			button.handleEvent(event);
+		}
+	}
+
+	if (continueGame || newGame)
+	{
+		for (Button& button : playGameButtons)
+		{
+			button.handleEvent(event);
+		}
 	}
 
 	for (int i = 0; i < individualLetterTexts.size(); ++i)
@@ -152,11 +174,9 @@ void MainMenu::HandleEvents(sf::Event& event)
 				individualLetterTexts[j].setFillColor(sf::Color::Red);
 			}
 
-			// Adjust background color outside the loop
 			sf::Color backgroundColor = sf::Color(255, 255 - i * 6, 255 - i * 6);
 			menuBackground.setColor(backgroundColor);
 
-			// Adjust colors of other elements outside the loop
 			menuMountainsFar[0].setColor(backgroundColor);
 			menuMountainsFar[1].setColor(backgroundColor);
 			menuMountainsClose[0].setColor(backgroundColor);
@@ -177,7 +197,136 @@ void MainMenu::HandleEvents(sf::Event& event)
 
 void MainMenu::SetupButtons()
 {
-	Button playButton(
+
+	Button newGameButton(
+		sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("button1"));
+
+	newGameButton.setLabel("New Game", 30, sf::Color(0, 0, 0, 150));
+	newGameButton.setCallback([=]()
+		{
+			newGame = true;
+		});
+
+
+	newGameButton.centreLabel({ newGameButton.getButtonPos().x, newGameButton.getButtonPos().y - 5 });
+	buttons.push_back(newGameButton);
+
+	Button continueGameButton(
+		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.6),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("button1"));
+
+	continueGameButton.setLabel("Continue Game", 30, sf::Color(0, 0, 0, 150));
+	continueGameButton.setCallback([=]()
+		{
+			continueGame = true;
+		});
+
+	continueGameButton.centreLabel({ continueGameButton.getButtonPos().x, continueGameButton.getButtonPos().y - 5 });
+	buttons.push_back(continueGameButton);
+
+	Button level1Button(
+		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.5),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("button1"));
+
+	level1Button.setLabel("Play level 1", 30, sf::Color(0, 0, 0, 150));
+	level1Button.setCallback([=]()
+		{
+			std::filesystem::path currentPath = std::filesystem::current_path();
+
+			if (newGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData1).string();
+			}
+			else if (continueGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::customGameData1).string();
+			}
+
+			GameManager::currentLevel = 1;
+			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData1).string();
+			loadSave = true;
+			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
+		});
+
+	level1Button.centreLabel({ level1Button.getButtonPos().x, level1Button.getButtonPos().y - 5 });
+	playGameButtons.push_back(level1Button);
+
+	Button level2Button(
+		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.6),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("button1"));
+
+	level2Button.setLabel("Play level 2", 30, sf::Color(0, 0, 0, 150));
+	level2Button.setCallback([=]()
+		{
+
+			std::filesystem::path currentPath = std::filesystem::current_path();
+
+			if (newGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData2).string();
+			}
+			else if (continueGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::customGameData2).string();
+			}
+			
+			GameManager::currentLevel = 2;
+			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData2).string();
+			loadSave = true;
+			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
+		});
+
+	level2Button.centreLabel({ level2Button.getButtonPos().x, level2Button.getButtonPos().y - 5 });
+	playGameButtons.push_back(level2Button);
+
+	Button level3Button(
+		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.7),
+		sf::Vector2f(200, 50),
+		sf::Color::White,
+		sf::Color::Magenta,
+		Textures::GetInstance().GetTexture("button1"));
+
+	level3Button.setLabel("Play level 3", 30, sf::Color(0, 0, 0, 150));
+	level3Button.setCallback([=]()
+		{
+
+			std::filesystem::path currentPath = std::filesystem::current_path();
+
+			if (newGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::defaultGameData3).string();
+			}
+			else if (continueGame)
+			{
+				loadGameDataPath = (currentPath / "../../Saves/" / Global::customGameData3).string();
+			}
+
+			GameManager::currentLevel = 3;
+			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData3).string();
+			loadSave = true;
+			Game::currentState = GAME;
+			GameManager::spaceShipTimer.restart();
+		});
+
+	level3Button.centreLabel({ level3Button.getButtonPos().x, level3Button.getButtonPos().y - 5 });
+	playGameButtons.push_back(level3Button);
+
+	/*Button playButton(
 		sf::Vector2f(Global::S_WIDTH / 2, Global::S_HEIGHT / 2),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
@@ -197,9 +346,9 @@ void MainMenu::SetupButtons()
 
 
 	playButton.centreLabel({ playButton.getButtonPos().x, playButton.getButtonPos().y - 5 });
-	buttons.push_back(playButton);
+	buttons.push_back(playButton);*/
 
-	Button load1Button(
+	/*Button load1Button(
 		sf::Vector2f(Global::S_WIDTH * 0.5, Global::S_HEIGHT * 0.6),
 		sf::Vector2f(200, 50),
 		sf::Color::White,
@@ -260,7 +409,7 @@ void MainMenu::SetupButtons()
 		});
 
 	load3Button.centreLabel({ load3Button.getButtonPos().x, load3Button.getButtonPos().y - 5 });
-	buttons.push_back(load3Button);
+	buttons.push_back(load3Button);*/
 }
 
 
