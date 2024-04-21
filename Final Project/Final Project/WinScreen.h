@@ -28,5 +28,8 @@ private:
     sf::Vector2f winTextVelocity;
     float winTextRotationSpeed;
     std::vector<Confetti> confetti;
-    std::mt19937 rng; // Mersenne Twister random number generator
+    std::mt19937 rng; 
+
+    sf::RectangleShape homeButton;
+    sf::Text homeText;
 };

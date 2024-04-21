@@ -9,8 +9,9 @@ void EnemyBase::Init(sf::Vector2f pos)
 {
 	body.setTexture(Textures::GetInstance().GetTexture("enemy-base"));
 	body.setScale(1.8, 1.4);
-	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
 	body.setPosition({ pos.x + body.getGlobalBounds().width / 2, pos.y + body.getGlobalBounds().height / 4 });
+	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
+
 
 	sf::Color colour = sf::Color::White;
 	colour.a = 220;
@@ -29,7 +30,11 @@ void EnemyBase::Init(sf::Vector2f pos)
 	itemRequiredText.setOutlineColor(sf::Color::Black);
 	itemRequiredText.setFillColor(colour);
 
-	itemRequired.SetQuantity(itemNeededAmount);
+
+	sf::Vector2i cellPos = Global::ConvertPositionToCell(pos);
+
+	GameManager::tiles[cellPos.x][cellPos.y].SetTileType(TILE_USED_UP);
+	
 
 }
 
@@ -37,6 +42,10 @@ void EnemyBase::Update()
 {
 	body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
 	itemRequiredText.setString("x" + std::to_string(itemRequired.GetQuantity()));
+
+	sf::Vector2i cellPos = Global::ConvertPositionToCell(body.getPosition());
+
+	GameManager::tiles[cellPos.x][cellPos.y].SetTileType(TILE_USED_UP);
 
 	if (stats.GetCurrentHealth() <= 0)
 	{

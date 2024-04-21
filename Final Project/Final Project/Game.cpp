@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "SoundManager.h"
 
 std::string savePath = "";
 std::string loadGameDataPath = "";
@@ -22,6 +23,8 @@ Game::Game() :
     GameManager::InitTiles();
 
     Init();
+   
+   //SoundManager::PlaySound("game-background");
 
 }
 Game::~Game()
@@ -52,6 +55,10 @@ void Game::Init()
     Global::font.loadFromFile("./assets/fonts/Flinton.otf");
 
     GameManager::itemManager.LoadItemsFromJSON();
+
+    SoundManager::GetInstance().PlaySound("background", 3, true);
+
+       // SoundManager::Init();
 
     fogTiles = new sf::RectangleShape * [Global::ROWS_COLUMNS];
 
@@ -249,9 +256,13 @@ void Game::ProcessKeyPress(sf::Event t_event)
     {
         CreateSuckler({ 150, 150 });
     }
-    if (sf::Keyboard::S == t_event.key.code)
+    if (sf::Keyboard::W == t_event.key.code)
     {
-        Game::RestartGame();
+        CreateSuckler({ 250, 450 });
+    }
+    if (sf::Keyboard::E == t_event.key.code)
+    {
+        CreateSuckler({ 150, 450 });
     }
     if (sf::Keyboard::D == t_event.key.code)
     {
@@ -361,6 +372,11 @@ void Game::ProcessMouseRelease(sf::Event t_event)
             loseScreen.HandleEvent(t_event);
         }
 
+        if (currentState == WIN)
+        {
+            winScreen.HandleEvent(t_event);
+        }
+
     }
 
 
@@ -418,6 +434,11 @@ void Game::Render()
                 building->Draw();
             }
 
+            for (EnemyBase* enemyBase : GameManager::enemyBases)
+            {
+                enemyBase->Draw(m_window);
+            }
+
             for (Enemy* enemy : GameManager::enemies)
             {
                 enemy->Draw();
@@ -447,11 +468,6 @@ void Game::Render()
             {
                 egg->Draw(m_window);
 
-            }
-
-            for (EnemyBase* enemyBase : GameManager::enemyBases)
-            {
-                enemyBase->Draw(m_window);
             }
 
             BuildingUI::Draw(m_window);
@@ -682,7 +698,7 @@ void Game::SaveJSON()
     for (EnemyBase* enemyBase : GameManager::enemyBases)
     {
         jsonData["EnemyBases"].push_back({
-            {"Position", {enemyBase->body.getPosition().x, enemyBase->body.getPosition().y}},
+            {"Position", {enemyBase->body.getPosition().x - enemyBase->body.getGlobalBounds().width / 2, enemyBase->body.getPosition().y - enemyBase->body.getGlobalBounds().height / 4}},
             {"Item Required Name", enemyBase->itemRequired.GetName()},
             {"Item Required Amount", enemyBase->itemNeededAmount},
             });
@@ -733,7 +749,7 @@ void Game::LoadJSON()
     {
 
         GameManager::ClearAllVectors();
-
+        GameManager::inventory.RemoveAllItems();
 
         nlohmann::json jsonData;
         file >> jsonData;
@@ -1304,12 +1320,12 @@ void Game::SpawnSpaceships()
 void Game::MergeEnemies()
 {
     // Finding Merge
-    for (Enemy* x : GameManager::enemies)
+    for (Enemy* x : GameManager::aliveEnemies)
     {
         // Skips if its not a merge and skips if it has already startedMerging
         if (x->enemyType != x->SUCKLER_MALE || x->hasFoundMerge) { continue; }
 
-        for (Enemy* y : GameManager::enemies)
+        for (Enemy* y : GameManager::aliveEnemies)
         {
             if (y->enemyType != y->SUCKLER_FEMALE || y->hasFoundMerge) { continue; }
 
@@ -1331,7 +1347,7 @@ void Game::MergeEnemies()
     }
 
     // Actually merge enemies
-    for (Enemy* x : GameManager::enemies)
+    for (Enemy* x : GameManager::aliveEnemies)
     {
         if (x->hasMerged) { continue; }
 
@@ -1373,12 +1389,13 @@ void Game::UnlockEnemyBase()
                 if (GameManager::inventory.GetInventoryItemByName(itemName) != nullptr)
                 {
                     itemInInventory = GameManager::inventory.GetInventoryItemByName(itemName);
-                    int amount = itemInInventory->GetQuantity();
+                    int amountInInventory = itemInInventory->GetQuantity();
+                    int amountRequiredByEnemyBase = enemyBase->itemRequired.GetQuantity();
 
-                    if (amount > 5) { amount = 5; }
+                    int newInventoryAmount = amountInInventory - amountRequiredByEnemyBase;
 
-                    GameManager::inventory.RemoveItem(itemName, amount);
-                    enemyBase->itemRequired.DecreaseQuantity(amount);
+                    GameManager::inventory.RemoveItem(itemName, amountRequiredByEnemyBase);
+                    enemyBase->itemRequired.DecreaseQuantity(amountInInventory);
                 }
             }
         }

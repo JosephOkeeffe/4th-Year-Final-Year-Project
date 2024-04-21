@@ -2,6 +2,7 @@
 #define GAME_HPP
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <filesystem>
 #include <iostream>
@@ -172,6 +173,9 @@ private:
     // Timers
     sf::Clock incomeTimer;
     sf::Time elapsedTime;
+
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
 
     TutorialScreen tutorialScreen;    
     GameUI gameUI;

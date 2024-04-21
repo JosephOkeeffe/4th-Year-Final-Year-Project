@@ -1,6 +1,7 @@
 #include "Characters.h"
 #include "Globals.h"
 #include <iostream>
+#include "SoundManager.h"
 
 void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& textureSize)
 {
@@ -424,6 +425,18 @@ void Characters::TakeDamage(int damage)
 	stats.LoseHealth(damage);
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
+
+	// Move this to sound manager
+	std::vector<std::string> hurtSounds;
+	hurtSounds.push_back("hurt1");
+	hurtSounds.push_back("hurt2");
+	hurtSounds.push_back("hurt3");
+	hurtSounds.push_back("hurt4");
+	hurtSounds.push_back("hurt5");
+	hurtSounds.push_back("hurt6");
+
+	//SoundManager::GetInstance().PlaySound("hurt1", 100, false);
+	SoundManager::GetInstance().PlayRandomSound(hurtSounds, 70, false);
 
 	for (int i = 0; i < 10; i++)
 	{

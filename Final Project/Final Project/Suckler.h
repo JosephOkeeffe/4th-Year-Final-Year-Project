@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "Stats.h"
+
 class Suckler : public Enemy
 {
 public:

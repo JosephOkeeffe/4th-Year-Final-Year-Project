@@ -37,6 +37,8 @@ void Spaceship::Update()
 			eggSpawnTimer.restart();
 		}
 	}
+
+	Animate();
 }
 
 void Spaceship::Draw(sf::RenderWindow& window)
@@ -156,6 +158,19 @@ void Spaceship::SpawnEgg()
 
 	}
 
+}
+
+void Spaceship::Animate()
+{
+
+	int frame = m_frameNo;
+	m_frameValue += m_frameIncrement;
+	m_frameNo = static_cast<int>(m_frameValue);
+	m_frameNo = m_frameNo % 5;
+	if (frame != m_frameNo)
+	{
+		body.setTextureRect(sf::IntRect(m_frameNo * 48, 0, 48, 50));
+	}
 }
 
 

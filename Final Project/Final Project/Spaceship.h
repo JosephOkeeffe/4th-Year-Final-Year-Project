@@ -29,6 +29,8 @@ public:
 	void Move();
 	void SpawnEgg();
 
+	void Animate();
+
 	SpaceshipType spaceshipType;
 
 	sf::Sprite body;
@@ -47,6 +49,10 @@ public:
 	int MAX_EGGS;
 	bool allEggsSpawned;
 	sf::Clock eggSpawnTimer;
+
+	int m_frameNo{ 0 }; 
+	float m_frameValue{ 0.0f };
+	float m_frameIncrement{ 0.07 };
 
 private:
 

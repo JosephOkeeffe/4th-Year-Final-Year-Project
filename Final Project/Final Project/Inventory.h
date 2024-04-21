@@ -48,6 +48,8 @@ public:
     void AddItem(std::string itemName, int amount);
     void RemoveItem(std::string itemName, int amount);
 
+    void RemoveAllItems();
+
     void SortInventorySlotsByQuantity();
     void SortInventorySlotsByID();
 

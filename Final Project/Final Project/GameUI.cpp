@@ -142,7 +142,7 @@ void GameUI::HoverArrow()
 	else
 	{
 		sf::Color colour = sf::Color::White;
-		colour.a = 100;
+		colour.a = 150;
 		arrow.setFillColor(colour);
 	}
 }

@@ -65,32 +65,32 @@
       "Item Required Amount": 1,
       "Item Required Name": "Gold",
       "Position": [
-        904.0,
-        1170.0
+        1250.0,                    
+        750.0
       ]
     },
     {
       "Item Required Amount": 1,
       "Item Required Name": "Uranium",
       "Position": [
-        2004.0,
-        170.0
+        2250.0,
+        950.0
       ]
     },
     {
       "Item Required Amount": 1,
       "Item Required Name": "Suckler Head",
       "Position": [
-        2204.0,
-        2170.0
+        1650.0,
+        550.0
       ]
     },
     {
       "Item Required Amount": 1,
       "Item Required Name": "Suckler Tentacle",
       "Position": [
-        504.0,
-        1670.0
+        150.0,
+        750.0
       ]
     }
   ],

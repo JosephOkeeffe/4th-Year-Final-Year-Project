@@ -255,6 +255,8 @@ void MainMenu::SetupButtons()
 			GameManager::currentLevel = 1;
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData1).string();
 			loadSave = true;
+			newGame = false;
+			continueGame = false;
 			Game::currentState = GAME;
 			GameManager::spaceShipTimer.restart();
 		});
@@ -287,6 +289,8 @@ void MainMenu::SetupButtons()
 			GameManager::currentLevel = 2;
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData2).string();
 			loadSave = true;
+			newGame = false;
+			continueGame = false;
 			Game::currentState = GAME;
 			GameManager::spaceShipTimer.restart();
 		});
@@ -319,6 +323,8 @@ void MainMenu::SetupButtons()
 			GameManager::currentLevel = 3;
 			loadTilesDataPath = (currentPath / "../../Saves/" / Global::tileData3).string();
 			loadSave = true;
+			newGame = false;
+			continueGame = false;
 			Game::currentState = GAME;
 			GameManager::spaceShipTimer.restart();
 		});

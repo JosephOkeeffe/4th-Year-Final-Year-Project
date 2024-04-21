@@ -1,4 +1,5 @@
 #include "WinScreen.h"
+#include "Game.h"
 
 WinScreen::WinScreen() : rng(std::random_device{}())
 {
@@ -54,6 +55,18 @@ void WinScreen::Init()
         c.rotationSpeed = static_cast<float>(rand() % 200 - 100); 
         confetti.push_back(c);
     }
+
+    homeButton.setTexture(&Textures::GetInstance().GetTexture("button1"));
+    homeButton.setSize({ 150,30 });
+    homeButton.setPosition(background.getPosition().x, background.getPosition().y * 1.4);
+    homeButton.setOrigin(homeButton.getSize().x / 2, homeButton.getSize().y / 2);
+    homeButton.setFillColor(sf::Color::Black);
+
+    homeText.setFont(Global::font);
+    homeText.setCharacterSize(30);
+    homeText.setString("Home");
+    homeText.setPosition(homeButton.getPosition().x, homeButton.getPosition().y - 5);
+    homeText.setFillColor(sf::Color::White);
 }
 
 void WinScreen::Draw(sf::RenderWindow& window)
@@ -64,18 +77,26 @@ void WinScreen::Draw(sf::RenderWindow& window)
     }
     window.draw(background);
     window.draw(winText);
+    window.draw(homeButton);
+    window.draw(homeText);
 
 }
 
 void WinScreen::HandleEvent(sf::Event event)
 {
+    sf::Vector2i mousePos = Global::GetLocalMousePos(*GameManager::GetWindow());
+
+    if (homeButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        Game::currentState = GameState::MENU;
+    }
 }
 
 void WinScreen::Update()
 {
     winText.setOrigin(winText.getGlobalBounds().width / 2, winText.getGlobalBounds().height / 2);
+    homeText.setOrigin(homeText.getGlobalBounds().width / 2, homeText.getGlobalBounds().height / 2);
 
-    // Update confetti
     for (Confetti& c : confetti)
     {
         c.sprite.move(c.velocity * 0.01f);

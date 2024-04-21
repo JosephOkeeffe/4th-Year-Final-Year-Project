@@ -211,7 +211,6 @@ void Inventory::RemoveItem(std::string itemName, int amount)
             return false;
         });
 
-    // Erase the removed items from the vector
     items.erase(it, items.end());
 }
 
@@ -357,3 +356,12 @@ void Inventory::SortInventorySlotsByID()
     }
 }
 
+void Inventory::RemoveAllItems()
+{
+    for (InventorySlots& slot : inventorySlots)
+    {
+
+        slot.ResetSlot();
+
+    }
+}

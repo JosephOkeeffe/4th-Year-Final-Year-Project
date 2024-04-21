@@ -220,7 +220,7 @@ public:
         float tileCost = 1.0; 
         if (toTile->GetTileType() == PATH)
         {
-            tileCost = 0.5;
+            tileCost = 0.2;
         }
 
         return straightCost * (dx + dy) + (diagonalCost - 2 * straightCost) * std::min(dx, dy) + tileCost;

@@ -19,7 +19,6 @@ Suckler::Suckler(int _id)
 
 	body.setScale(0.4, 0.4);
 	shieldTimer.restart();
-	
 }
 
 void Suckler::Update()
@@ -47,6 +46,9 @@ void Suckler::Update()
 		// Projectile
 		if (GetCurrentState(ATTACKING) && spitTimer.getElapsedTime().asSeconds() > spitFireRate)
 		{
+
+			//SoundManager::GetInstance().PlaySound("mumble", 100, false );
+
 			spitTimer.restart();
 			if(FindClosestEnemy() != nullptr)
 			{
@@ -57,6 +59,9 @@ void Suckler::Update()
 			{
 				ShootSpit(FindClosestBuilding()->body.getPosition());
 			}
+
+
+			
 
 		}
 		else if (GetCurrentState(ATTACKING))
