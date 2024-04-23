@@ -1511,7 +1511,7 @@ void Game::SetupTutorialPages()
     std::string tutorialPath = (currentPath / "../../Saves/Tutorial_Text.txt").string();
 
     std::ifstream file(tutorialPath);
-    if (!file.is_open()) 
+    if (!file.is_open())
     {
         std::cerr << "Failed to open tutorial pages file!" << std::endl;
         return;
@@ -1520,17 +1520,23 @@ void Game::SetupTutorialPages()
     std::string line;
     std::string title;
     std::string text;
+
     std::string textureName;
 
-    while (std::getline(file, line)) 
+    while (std::getline(file, line))
     {
         if (line == "[Title]")
         {
             std::getline(file, title);
         }
-        else if (line == "[Text]") 
+        else if (line == "[Text]")
         {
             std::getline(file, text);
+            size_t pos;
+            while ((pos = text.find("\\n")) != std::string::npos) 
+            {
+                text.replace(pos, 2, "\n");
+            }
         }
         else if (line == "[Texture Name]")
         {
@@ -1542,6 +1548,7 @@ void Game::SetupTutorialPages()
 
     file.close();
 }
+
 
 void Game::RestartGame()
 {
