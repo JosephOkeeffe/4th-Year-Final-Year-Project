@@ -33,7 +33,8 @@ void PauseMenu::Init()
 	resumeButton.setLabel("Resume", 30, sf::Color(0, 0, 0, 150));
 	resumeButton.setCallback([=]()
 		{
-			Game::currentState = GAME;
+			//Game::currentState = GAME;
+			Game::ChangeGameState(GameState::GAME);
 			particleCount = 0;
 			particleSystem.clearParticles();
 		});
@@ -106,7 +107,8 @@ void PauseMenu::Init()
 			}
 			
 			saveGame = true;
-			Game::currentState = GAME;
+			//Game::currentState = GAME;
+			Game::ChangeGameState(GameState::GAME);
 
 
 			particleCount = 0;
@@ -128,73 +130,11 @@ void PauseMenu::Init()
 	mainMenuButton.setLabel("Main Menu",  30, sf::Color(0, 0, 0, 150));
 	mainMenuButton.setCallback([=]()
 		{
-			Game::currentState = GameState::MENU;
+			//Game::currentState = GameState::MENU;
+			Game::ChangeGameState(GameState::MENU);
 		});
 	mainMenuButton.centreLabel({ mainMenuButton.getButtonPos().x, mainMenuButton.getButtonPos().y - 5 });
 	buttons.push_back(mainMenuButton);
-
-	// 
-	//
-	//
-
-
-	// Saves
-	/*Button save1Button(
-		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y * 0.9),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	save1Button.setLabel("Save 1",  25, sf::Color(0, 0, 0, 150));
-	save1Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::defaultGameData1).string();
-			saveGame = true;
-			saveMenu = false;
-			Game::currentState = GAME;
-		});
-	save1Button.centreLabel({ save1Button.getButtonPos().x, save1Button.getButtonPos().y - 5 });
-	saveButtons.push_back(save1Button);
-
-	Button save2Button(
-		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	save2Button.setLabel("Save 2", 25, sf::Color(0, 0, 0, 150));
-	save2Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::defaultGameData2).string();
-			saveGame = true;
-			saveMenu = false;
-			Game::currentState = GAME;
-		});
-	save2Button.centreLabel({ save2Button.getButtonPos().x, save2Button.getButtonPos().y - 5 });
-	saveButtons.push_back(save2Button);
-
-	Button save3Button(
-		sf::Vector2f(saveBackground.getPosition().x, saveBackground.getPosition().y * 1.1),
-		sf::Vector2f(200, 25),
-		sf::Color::White,
-		sf::Color(143, 137, 137),
-		Textures::GetInstance().GetTexture("button1"));
-
-	save3Button.setLabel("Save 3", 25, sf::Color(0, 0, 0, 150));
-	save3Button.setCallback([=]()
-		{
-			std::filesystem::path currentPath = std::filesystem::current_path();
-			savePath = (currentPath / "../../Saves/" / Global::defaultGameData3).string();
-			saveGame = true;
-			saveMenu = false;
-			Game::currentState = GAME;
-		});
-	save3Button.centreLabel({ save3Button.getButtonPos().x, save3Button.getButtonPos().y - 5 });
-	saveButtons.push_back(save3Button);*/
 
 }
 

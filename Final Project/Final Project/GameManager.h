@@ -235,6 +235,13 @@ public:
         buildings.clear();
         spaceships.clear();
         enemyBases.clear();
+
+        warriorPurchaseCost = 0;
+        archerPurchaseCost = 0;
+        minerPurchaseCost = 0;
+        oilManPurchaseCost = 0;
+        hazmatManPurchaseCost = 0;
+        enemyBasesLeftAlive = 0;
     }
 
 private:

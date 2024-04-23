@@ -104,7 +104,9 @@ void LoseScreen::HandleEvent(sf::Event event)
 
     if (homeButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
     {
-        Game::currentState = GameState::MENU;
+        //Game::currentState = GameState::MENU;
+        //SoundManager::GetInstance().PlaySound("menu", 30, true);
+        Game::ChangeGameState(GameState::MENU);
     }
   
 }

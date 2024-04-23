@@ -87,8 +87,6 @@ void Warrior::CheckAnimationState()
 	}
 }
 
-// Bug with warrior shooting to the right?
-// Fix reload delay
 void Warrior::Attack(sf::Vector2f target)
 {
 	if (m_frameNo == amountOfSprites - 1)
@@ -104,6 +102,7 @@ void Warrior::Attack(sf::Vector2f target)
 				0.1, { body.getPosition().x - 10 , body.getPosition().y }, target, stats.GetAttackSpeed(), detectionRadius + 10, -0.3));
 		}
 		reloadTimer.restart();
+		SoundManager::GetInstance().PlaySound("sword", 10, false);
 	}
 }
 

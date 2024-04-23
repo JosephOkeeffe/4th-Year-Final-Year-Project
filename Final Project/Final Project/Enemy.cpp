@@ -507,6 +507,13 @@ void Enemy::TakeDamage(int damage)
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
 
+	std::vector<std::string> hurtSounds;
+	hurtSounds.push_back("enemyHurt1");
+	hurtSounds.push_back("enemyHurt2");
+	hurtSounds.push_back("enemyHurt3");
+
+	SoundManager::GetInstance().PlayRandomSound(hurtSounds, 70, false);
+
 	for (int i = 0; i < 10; i++)
 	{ 
 		particleSystem.AddSpriteParticle(body.getPosition(), Global::GetRandomVector() * 2.0f, sf::Color::White, Textures::GetInstance().GetTexture("blood"), 20, 0.2, 1);

@@ -358,6 +358,8 @@ void Inventory::SortInventorySlotsByID()
 
 void Inventory::RemoveAllItems()
 {
+    items.clear();
+
     for (InventorySlots& slot : inventorySlots)
     {
 

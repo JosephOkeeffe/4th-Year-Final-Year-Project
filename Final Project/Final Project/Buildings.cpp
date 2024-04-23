@@ -259,14 +259,19 @@ void Buildings::TakeDamage(int damage)
 	stats.LoseHealth(damage);
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
+
+	SoundManager::GetInstance().PlaySound("building-hit", 40, false);
 }
 
 void Buildings::CreateSmokeDependingOnDamageTaken()
 {
 	sf::Vector2f velocity{ 0, -0.3 };
 	int particleDelay = { 100 };
-
 	sf::Color colour = sf::Color::White;
+
+
+
+	
 
 	if (stats.GetCurrentHealth() >= stats.GetMaxHealth() * 0.7 && stats.GetCurrentHealth() <= stats.GetMaxHealth() * 0.8)
 	{

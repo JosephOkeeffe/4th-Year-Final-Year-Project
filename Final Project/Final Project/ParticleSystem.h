@@ -68,8 +68,11 @@ public:
         }
         else if (type == 6)
         {
-            // Expand
-            size += 0.2f;
+            size += 0.01f;
+            if (color.a >= 5)
+            {
+                color.a -= 5;
+            }
         }
         else if (type == 7)
         {

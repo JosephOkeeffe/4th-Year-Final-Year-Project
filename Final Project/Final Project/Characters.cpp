@@ -109,6 +109,7 @@ void Characters::MouseRelease()
 
 	if (isSelected)
 	{
+		SoundManager::GetInstance().PlaySound("confirm", 50, false);
 		SetCurrentState(MOVING);
 		goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
 
@@ -149,7 +150,6 @@ void Characters::Draw()
 		}
 
 		particleSystem.draw(*GameManager::GetWindow());
-	//	GameManager::GetWindow()->draw(detectionCircle);
 		GameManager::GetWindow()->draw(body);		
 	}
 
@@ -186,7 +186,6 @@ void Characters::MoveCharacter()
 	}
 
 	DeselectCharacter();
-	//particleSystem.addParticle(body.getPosition(), { 0,0 }, sf::Color::Black, 3, 2);
 
 	targetPosition = path.front()->tile.getPosition();
 	targetPosition.x += pathFindingXOffset;
@@ -247,6 +246,7 @@ void Characters::SelectCharacter()
 {
 	if (HUD::currentState == HUD::NONE)
 	{
+		SoundManager::GetInstance().PlaySound("select", 50, false);
 		body.setColor(sf::Color(200, 50, 50));
 		isSelected = true;
 	}
@@ -426,7 +426,6 @@ void Characters::TakeDamage(int damage)
 	body.setColor(sf::Color::Red);
 	redTimer.restart();
 
-	// Move this to sound manager
 	std::vector<std::string> hurtSounds;
 	hurtSounds.push_back("hurt1");
 	hurtSounds.push_back("hurt2");
@@ -435,7 +434,6 @@ void Characters::TakeDamage(int damage)
 	hurtSounds.push_back("hurt5");
 	hurtSounds.push_back("hurt6");
 
-	//SoundManager::GetInstance().PlaySound("hurt1", 100, false);
 	SoundManager::GetInstance().PlayRandomSound(hurtSounds, 70, false);
 
 	for (int i = 0; i < 10; i++)

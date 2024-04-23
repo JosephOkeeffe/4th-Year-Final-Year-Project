@@ -8,6 +8,7 @@ public:
 
 	Archer();
 	void Update() override;
+	void Draw() override;
 	void Animate(float startX, float startY, float spriteWidth, float spriteHeight, sf::Sprite& sprite, int amountOfSprites) override;
 	void CheckAnimationState();
 	void Attack(sf::Vector2f target);
@@ -24,6 +25,11 @@ private:
 	// Moving
 	sf::Vector2f targetPos;
 	float moveSpeed = 2.0f;
+
+	bool isChargingUp = false;
+	bool canShoot = false;
+
+	sf::CircleShape blast;
 
 
 };

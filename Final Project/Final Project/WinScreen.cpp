@@ -88,7 +88,8 @@ void WinScreen::HandleEvent(sf::Event event)
 
     if (homeButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
     {
-        Game::currentState = GameState::MENU;
+        //Game::currentState = GameState::MENU;
+        Game::ChangeGameState(GameState::MENU);
     }
 }
 

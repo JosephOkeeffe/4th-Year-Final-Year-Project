@@ -112,7 +112,7 @@ void OilMan::UpdateWorkingStates()
 		isWorking = false;
 	}
 
-	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr)
+	if (body.getGlobalBounds().intersects(GameManager::headquarters->body.getGlobalBounds()) && workingPlace != nullptr && !GetCurrentState(SEARCH_FOR_RESOURCE))
 	{
 		SetCurrentState(SEARCH_FOR_RESOURCE);
 		GameManager::inventory.AddItem("Oil", workingPlace->resourcePerRun);

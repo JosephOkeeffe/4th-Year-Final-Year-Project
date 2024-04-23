@@ -95,7 +95,7 @@ public:
 	bool isFollowingLeader = false;
 	bool isWorking = false;
 
-	float detectionRadius = 200.0f;
+	float detectionRadius = 300.0f;
 	float tileDetectionRadius = 10;
 
 	float defaultMoveSpeed = 1.0f;
@@ -135,7 +135,7 @@ public:
 	Enemy* closestEnemy;
 	float closestEnemyDistance = INT_MAX;
 
-	Stats stats{ 5, 1, 1.5 };
+	Stats stats{ 5, 1, 3 };
 private:
 
 

@@ -23,7 +23,7 @@ public:
 	int shieldFireRate = 20;
 	int chanceToSpawnShield = 4;
 
-	int spitFireRate = 3;
+	int spitFireRate = 5;
 
 	int mergeHealthBonus = 2;
 

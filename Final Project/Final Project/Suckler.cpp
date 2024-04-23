@@ -151,8 +151,15 @@ void Suckler::ShootSpit(sf::Vector2f target)
 	targetPos.x += randomOffsetX;
 	targetPos.y += randomOffsetY;
 
+	std::vector<std::string> attackSound;
+	attackSound.push_back("enemyAttack1");
+	attackSound.push_back("enemyAttack2");
+	attackSound.push_back("enemyAttack3");
+
+	SoundManager::GetInstance().PlayRandomSound(attackSound, 70, false);
+
 	projectiles.push_back(factory.CreateBasicProjectile(Textures::GetInstance().GetTexture("spit"), Textures::GetInstance().GetTexture(""), 
-		0, body.getPosition(), targetPos, 1, 300, 0.5));
+		0, body.getPosition(), targetPos, stats.GetAttackSpeed(), 300, 0.5));
 }
 
 void Suckler::ShootShield()

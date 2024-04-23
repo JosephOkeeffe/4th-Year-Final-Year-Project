@@ -101,11 +101,20 @@ void GameUI::HandleEvent(sf::Event event)
 
 	if (inventoryBag.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
 	{
+		if (Game::isInventoryOpen)
+		{
+			SoundManager::GetInstance().PlaySound("open", 50, false);
+		}
+		else
+		{
+			SoundManager::GetInstance().PlaySound("close", 50, false);
+		}
+
 		Game::isInventoryOpen = !Game::isInventoryOpen;
 	}
 	if (pause.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
 	{
-		Game::currentState = GameState::PAUSED;
+		Game::ChangeGameState(GameState::PAUSED);
 	}
 }
 

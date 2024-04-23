@@ -1,4 +1,5 @@
 #include "EnemyBase.h"
+#include "SoundManager.h"
 
 EnemyBase::EnemyBase(sf::Vector2f pos, Item itemNeeded) : itemRequired(itemNeeded), isOpen(false), isDestroyed(false), itemNeededAmount(1)
 {
@@ -76,6 +77,9 @@ void EnemyBase::Draw(sf::RenderWindow& window)
 
 void EnemyBase::TakeDamage(int damage)
 {
+
+	SoundManager::GetInstance().PlaySound("building-hit", 40, false);
+
 	if(!isDestroyed)
 	{
 		stats.LoseHealth(damage);

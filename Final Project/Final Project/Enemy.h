@@ -12,7 +12,7 @@
 #include "Buildings.h"
 #include "ItemManager.h"
 #include "Shader.h"
-
+#include "SoundManager.h"
 
 #include "ProjectileFactory.h"
 
@@ -103,7 +103,7 @@ public:
 	Item* droppedItem;
 	bool isItemCollected = false;
 
-	float detectionRadius = 150.0f;    
+	float detectionRadius = 350.0f;    
 	float wanderRadius = 500.0f;    
 
 	Enemy* target;
@@ -144,7 +144,7 @@ public:
 
 	std::vector<sf::Vector2f> pointsOfInterest;
 
-	Stats stats{ 1, 1, 1 };
+	Stats stats{ 1, 1, 3 };
 
 	Shader shader;
 

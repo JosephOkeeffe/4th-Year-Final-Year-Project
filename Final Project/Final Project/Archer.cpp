@@ -8,27 +8,76 @@ Archer::Archer()
 	animationSpeed = 0.04;
 	body.setScale(1.5, 1.5);
 	characterType = ARCHER;
+
+	blast.setRadius(10);
+	blast.setTexture(&Textures::GetInstance().GetTexture("blast"));
+	
 }
 
 void Archer::Update()
 {
+	// IF DEAD
 	if (GetCurrentState(DEAD) && m_frameNo != amountOfSprites - 1)
 	{
+		
 		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		
 	}
 
 	if (!GetCurrentState(DEAD))
 	{
 		Characters::Update();
 		CheckAnimationState();
-		Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		if (!GetCurrentState(ATTACKING))
+		{
+			Animate(currentFrameX, currentFrameY, textureWidth, textureHeight, body, amountOfSprites);
+		}
 
 		if (GetSelected())
 		{
 			SetCurrentState(IDLE);
 		}
 
-		if (GetCurrentState(ATTACKING) && reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
+		if (GetCurrentState(ATTACKING))
+		{
+			if (!isChargingUp)
+			{
+				blast.setRadius(0);
+				isChargingUp = true;
+				reloadTimer.restart();
+				SoundManager::GetInstance().PlaySound("kamehameha", 20, false);
+			}
+			else
+			{
+				sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
+				particleSystem.addParticle(blast.getPosition(), Global::GetRandomVector(), sf::Color::Blue, 3, 1);
+				float radius = blast.getRadius();
+				radius += 0.1;
+				blast.setRadius(radius);
+				blast.rotate(radius);
+				blast.setOrigin(blast.getRadius(), blast.getRadius());
+			}
+			
+
+			if (body.getScale().x < 0)
+			{
+				blast.setPosition(body.getPosition().x - 30, body.getPosition().y);
+			}
+			else
+			{
+				blast.setPosition(body.getPosition().x + 30, body.getPosition().y);
+			}
+		}
+		else
+		{
+			SoundManager::GetInstance().StopSound("kamehameha");
+			blast.setPosition(-5000, -5000);
+			blast.setRadius(10);
+			reloadTimer.restart();
+			isChargingUp = false;
+		}
+
+		if (canShoot)
 		{
 			if(closestEnemy != nullptr)
 			{
@@ -40,15 +89,20 @@ void Archer::Update()
 			}
 		}
 
-
-
-		for (EnemyBase* enemyBase : GameManager::enemyBases)
+		if (reloadTimer.getElapsedTime().asSeconds() > reloadDelay)
 		{
-			if (IsEnemyInAttackRadius(enemyBase->body) && enemyBase->isOpen)
-			{
-
-			}
+			canShoot = true;
+			reloadTimer.restart();
 		}
+	}
+}
+
+void Archer::Draw()
+{
+	Characters::Draw();
+	if(GetCurrentState(ATTACKING))
+	{
+		GameManager::GetWindow()->draw(blast);
 	}
 }
 
@@ -58,18 +112,10 @@ void Archer::Animate(float startX, float startY, float spriteWidth, float sprite
 	m_frameValue += animationSpeed;
 	m_frameNo = static_cast<int>(m_frameValue);
 	m_frameNo = m_frameNo % amountOfSprites;
-	
+
 	if (playerAnimation != m_frameNo)
 	{
-		if (GetCurrentState(ATTACKING) && m_frameNo == amountOfSprites - 1)
-		{
-			body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth + 56, spriteHeight));
-		}
-		else
-		{
-			body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
-		}
-		
+		body.setTextureRect(sf::IntRect(m_frameNo * startX, startY, spriteWidth, spriteHeight));
 	}
 }
 
@@ -93,10 +139,7 @@ void Archer::CheckAnimationState()
 	}
 	else if (GetCurrentState(ATTACKING))
 	{
-		amountOfSprites = 3; 
-		currentFrameX = 38;
-		currentFrameY = 160;
-		textureWidth = 38;
+		body.setTextureRect(sf::IntRect(0, 160, 35, 47));
 	}
 	else if (GetCurrentState(DEAD))
 	{
@@ -106,33 +149,27 @@ void Archer::CheckAnimationState()
 		textureHeight = 52;
 		textureWidth = 50;
 	}
-
-	if (GetCurrentState(ATTACKING))
-	{
-		animationSpeed = 0.01;
-	}
-	else
-	{
-		animationSpeed = 0.04;
-	}
 }
 
 void Archer::Attack(sf::Vector2f target)
 {
-	if (m_frameNo == amountOfSprites - 1)
+
+	if (body.getScale().x > 1)
 	{
-		if (body.getScale().x > 1)
-		{
-			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
-				0.3, { body.getPosition().x + 30, body.getPosition().y }, target, 1, detectionRadius + 10, 1));
-		}
-		else
-		{
-			projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
-				0.3, { body.getPosition().x - 30 , body.getPosition().y }, target, stats.GetAttackSpeed(), detectionRadius + 10, -1));
-		}
-		reloadTimer.restart();
+		projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
+			0.3, { body.getPosition().x + 30, body.getPosition().y - 10 }, target, 1, detectionRadius + 10, 1.5));
 	}
+	else
+	{
+		projectiles.push_back(factory.CreateHomingProjectile(Textures::GetInstance().GetTexture("blast"), Textures::GetInstance().GetTexture("blast-trail"), 
+			0.3, { body.getPosition().x - 30 , body.getPosition().y - 10 }, target, stats.GetAttackSpeed(), detectionRadius + 10, -1.5));
+	}
+
+	blast.setRadius(0);
+	canShoot = false;
+	isChargingUp = false;
+	reloadTimer.restart();
+	
 }
 
 sf::Sprite& Archer::GetSprite()

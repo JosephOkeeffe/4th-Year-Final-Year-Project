@@ -69,6 +69,39 @@ public:
     static bool isInstructionsOpen;
     static bool isControlsOpen;
     static bool isInventoryOpen;
+    static void ChangeGameState(GameState state)
+    {
+        switch (state)
+        {
+        case MENU:
+            SoundManager::GetInstance().StopAllSound();
+            SoundManager::GetInstance().PlaySound("menu", 30, true);
+            currentState = MENU;
+            break;
+        case GAME:
+            SoundManager::GetInstance().StopAllSound();
+            if (currentState == PAUSED) { SoundManager::GetInstance().ResumeAllSound(); }
+            else { SoundManager::GetInstance().PlaySound("background", 3, true); }
+            currentState = GAME;
+            break;
+        case PAUSED:
+            currentState = PAUSED;
+            SoundManager::GetInstance().PauseAllSound();
+            break;
+        case WIN:
+            currentState = WIN;
+            SoundManager::GetInstance().StopAllSound();
+            SoundManager::GetInstance().PlaySound("win", 50, true);
+            break;
+        case LOSE:
+            currentState = LOSE;
+            SoundManager::GetInstance().StopAllSound();
+            SoundManager::GetInstance().PlaySound("lose", 50, false);
+            break;
+        default:
+            break;
+        }
+    }
 
     void RestartGame();
 
@@ -166,7 +199,7 @@ private:
 
    std::vector<Characters*> selectedUnits;
    
-   int const SPACE_SHIP_SPAWN_DELAY = 60;
+   int const SPACE_SHIP_SPAWN_DELAY = 90;
 
     sf::Vector2f basePos = {200, 200};
 

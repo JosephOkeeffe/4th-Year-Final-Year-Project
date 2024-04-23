@@ -56,7 +56,7 @@ void Game::Init()
 
     GameManager::itemManager.LoadItemsFromJSON();
 
-    SoundManager::GetInstance().PlaySound("background", 3, true);
+    SoundManager::GetInstance().PlaySound("menu", 30, true);
 
        // SoundManager::Init();
 
@@ -90,17 +90,6 @@ void Game::Init()
     elapsedTime = incomeTimer.getElapsedTime();
     HUD::Init();
     BuildingUI::Init();
-
-   // CreateHeadquarters(basePos);
-
-  //  CreateMiner({ 450, 400 });
-
-  //  CreateSuckler({ 450, 950 });
-  //  CreateSuckler({ 850, 1650 });
-  //  CreateSuckler({ 250, 1950 });
-  //  CreateSuckler({ 1750, 150 });
-  //  CreateSuckler({ 2250, 1950 });
-    //SpawnEnemyBases();
 
     SetupTutorialPages();
 }
@@ -266,7 +255,8 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::D == t_event.key.code)
     {
-        currentState = WIN;
+        GameManager::inventory.PrintItems();
+        ChangeGameState(GameState::WIN);
     }
     if (sf::Keyboard::F == t_event.key.code)
     {
@@ -286,7 +276,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::Enter == t_event.key.code) 
     { 
-        currentState = PAUSED; 
+        ChangeGameState(GameState::PAUSED);
     }
 }
 void Game::ProcessKeyRelease(sf::Event t_event)
@@ -632,12 +622,14 @@ void Game::Update(sf::Time t_deltaTime)
 
         if (GameManager::enemyBasesLeftAlive <= 0)
         {
-            Game::currentState = GameState::WIN;
+            //Game::currentState = GameState::WIN;
+            ChangeGameState(GameState::WIN);
         }
 
         if (GameManager::headquarters->isDestroyed)
         {
-            Game::currentState = GameState::LOSE;
+            //Game::currentState = GameState::LOSE;
+            ChangeGameState(GameState::LOSE);
         }
 
         gameUI.Update();
@@ -750,6 +742,14 @@ void Game::LoadJSON()
 
         GameManager::ClearAllVectors();
         GameManager::inventory.RemoveAllItems();
+
+        for (int row = 0; row < Global::ROWS_COLUMNS; row++)
+        {
+            for (int col = 0; col < Global::ROWS_COLUMNS; col++)
+            {
+                fogTiles[row][col].setFillColor(sf::Color(0, 0, 0, 200));
+            }
+        }
 
         nlohmann::json jsonData;
         file >> jsonData;
@@ -1205,7 +1205,7 @@ void Game::HatchEggs()
                 else if (egg->eggTier == 4)
                 {
                     // Add another enemy but normal suckler for now
-                    CreateBigSuckler(egg->body.getPosition());
+                    CreateSuckler(egg->body.getPosition());
                 }
                 else if (egg->eggTier == 5)
                 {
@@ -1369,8 +1369,6 @@ void Game::MergeEnemies()
 
 }
 
-
-
 void Game::UnlockEnemyBase()
 {
     for (EnemyBase* enemyBase : GameManager::enemyBases)
@@ -1396,6 +1394,8 @@ void Game::UnlockEnemyBase()
 
                     GameManager::inventory.RemoveItem(itemName, amountRequiredByEnemyBase);
                     enemyBase->itemRequired.DecreaseQuantity(amountInInventory);
+
+                    SoundManager::GetInstance().PlaySound("unlock", 50, false);
                 }
             }
         }
@@ -1545,7 +1545,8 @@ void Game::RestartGame()
     loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
     loadSave = true;
     LoadJSON();
-    Game::currentState = GAME;
+    //Game::currentState = GAME;
+    ChangeGameState(GameState::GAME);
     GameManager::spaceShipTimer.restart();
 }
 

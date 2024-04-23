@@ -30,17 +30,20 @@ public:
 
     void SetupSounds();
     void PlaySound(const std::string& soundName, int volume, bool isLooped);
+    void PauseSound(const std::string& soundName);
+    void PauseAllSound();
+    void StopSound(const std::string& soundName);
+    void StopAllSound();
+    void ResumeAllSound();
     void PlayRandomSound(const std::vector<std::string>& soundNames, int volume, bool isLooped);
-    void PlayBackgroundSound();
 
 private:
     SoundManager();
 
     std::map<std::string, sf::SoundBuffer> soundBufferMap;
 
-    sf::SoundBuffer shotBuffer;
-    sf::SoundBuffer backgroundBuffer;
-    sf::SoundBuffer mumbleBuffer;
+    sf::SoundBuffer menuMusicBuffer;
+    sf::SoundBuffer backgroundMusicBuffer;
 
     sf::SoundBuffer enemyAttack1Buffer;
     sf::SoundBuffer enemyAttack2Buffer;
@@ -53,13 +56,31 @@ private:
     sf::SoundBuffer hurt5Buffer;
     sf::SoundBuffer hurt6Buffer;
 
-    sf::Sound backgroundSound;
+    sf::SoundBuffer enemyHurt1Buffer;
+    sf::SoundBuffer enemyHurt2Buffer;
+    sf::SoundBuffer enemyHurt3Buffer;
 
-    sf::Sound sound;
+    sf::SoundBuffer kamehamehaBuffer;
+    sf::SoundBuffer swordBuffer;
+
+    sf::SoundBuffer buildingHitBuffer;
+    sf::SoundBuffer unlockBuffer;
+
+    sf::SoundBuffer openInventoryBuffer;
+    sf::SoundBuffer closeInventoryBuffer;
+
+    sf::SoundBuffer loseSoundBuffer;
+    sf::SoundBuffer winSoundBuffer;
+
+    sf::SoundBuffer selectBuffer;
+    sf::SoundBuffer confirmBuffer;
+
+
+
 
     std::vector<sf::Sound> soundPool;
 
-    int MAX_SOUND_INSTANCES = 50;
+    int MAX_SOUND_INSTANCES = 30;
 
 };
 
