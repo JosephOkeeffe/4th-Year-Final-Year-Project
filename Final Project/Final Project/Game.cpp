@@ -329,11 +329,16 @@ void Game::ProcessMouseRelease(sf::Event t_event)
             GameManager::buildingToPlace->DeselectBuilding();
             if (GameManager::buildingToPlace->CheckIfCanBePlaced(Global::GetCurrentCell(m_window, gameView)))
             {
+                SoundManager::GetInstance().PlaySound("confirm", 50, false);
                 GameManager::buildings.push_back(GameManager::buildingToPlace);
                 GameManager::buildingToPlace = nullptr;
             }
+            else
+            {
+                SoundManager::GetInstance().PlaySound("nope", 50, false);
+            }
         }
-
+                                        
         for (Characters* character : GameManager::aliveUnits)
         {
 

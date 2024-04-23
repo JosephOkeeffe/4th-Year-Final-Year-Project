@@ -96,7 +96,8 @@ public:
         case LOSE:
             currentState = LOSE;
             SoundManager::GetInstance().StopAllSound();
-            SoundManager::GetInstance().PlaySound("lose", 50, false);
+            SoundManager::GetInstance().PlaySound("lose2", 50, false);
+            SoundManager::GetInstance().PlaySound("lose", 100, false);
             break;
         default:
             break;

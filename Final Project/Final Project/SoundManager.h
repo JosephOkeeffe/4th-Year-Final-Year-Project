@@ -70,10 +70,13 @@ private:
     sf::SoundBuffer closeInventoryBuffer;
 
     sf::SoundBuffer loseSoundBuffer;
+    sf::SoundBuffer lose2SoundBuffer;
     sf::SoundBuffer winSoundBuffer;
 
     sf::SoundBuffer selectBuffer;
     sf::SoundBuffer confirmBuffer;
+    sf::SoundBuffer cantAffordBuffer;
+    sf::SoundBuffer pickupBuffer;
 
 
 

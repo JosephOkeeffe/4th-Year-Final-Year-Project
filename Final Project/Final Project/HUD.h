@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Globals.h"
 #include "GameManager.h"
+#include "SoundManager.h"
 
 class HUD
 {
@@ -123,6 +124,7 @@ public:
 		mineButton.setLabel("Mine", 30, sf::Color::Black);
 		mineButton.setCallback([]()
 			{
+				SoundManager::GetInstance().PlaySound("select", 50, false);
 				ChangeBuildingSelected(MINE);
 			});
 
@@ -137,6 +139,7 @@ public:
 		oilButton.setLabel("Oil Extractor", 30, sf::Color::Black);
 		oilButton.setCallback([]()
 			{
+				SoundManager::GetInstance().PlaySound("select", 50, false);
 				ChangeBuildingSelected(OIL_REFINERY);
 			});
 
@@ -151,6 +154,7 @@ public:
 		reactorButton.setLabel("Reactor", 30, sf::Color::Black);
 		reactorButton.setCallback([]()
 			{
+				SoundManager::GetInstance().PlaySound("select", 50, false);
 				ChangeBuildingSelected(URANIUM_EXTRACTOR);
 			});
 
@@ -184,12 +188,14 @@ public:
 			{
 				if (canPurchaseWarrior)
 				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
 					ChangeUnitSelected(WARRIOR);
 					GameManager::inventory.RemoveItem("Gold", GameManager::warriorPurchaseCost);
 					GameManager::warriorPurchaseCost++;
 				}
 				else
 				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
 					std::cout << "Cant afford warrior \n";
 				}
 
@@ -208,12 +214,14 @@ public:
 			{
 				if (canPurchaseArcher)
 				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
 					ChangeUnitSelected(ARCHER);
 					GameManager::inventory.RemoveItem("Gold", GameManager::archerPurchaseCost);
 					GameManager::archerPurchaseCost++;
 				}
 				else
 				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
 					std::cout << "Cant afford archer \n";
 				}
 			});
@@ -232,12 +240,14 @@ public:
 			{
 				if (canPurchaseMiner)
 				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
 					ChangeUnitSelected(MINER);
 					GameManager::inventory.RemoveItem("Gold", GameManager::minerPurchaseCost);
 					GameManager::minerPurchaseCost++;
 				}
 				else
 				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
 					std::cout << "Cant afford miner \n";
 				}
 			});
@@ -255,12 +265,14 @@ public:
 			{
 				if (canPurchaseOilMan)
 				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
 					ChangeUnitSelected(OIL_MAN);
 					GameManager::inventory.RemoveItem("Gold", GameManager::oilManPurchaseCost);
 					GameManager::oilManPurchaseCost++;
 				}
 				else
 				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
 					std::cout << "Cant afford oil man \n";
 				}
 			});
@@ -278,12 +290,14 @@ public:
 			{
 				if (canPurchaseHazmatMan)
 				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
 					ChangeUnitSelected(HAZMAT_MAN);
 					GameManager::inventory.RemoveItem("Gold", GameManager::hazmatManPurchaseCost);
 					GameManager::hazmatManPurchaseCost++;
 				}
 				else
 				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
 					std::cout << "Cant afford hazmat man \n";
 				}
 			});

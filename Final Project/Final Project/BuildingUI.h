@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Globals.h"
 #include "HUD.h"
+#include "SoundManager.h"
 
 class BuildingUI
 {
@@ -83,6 +84,7 @@ public:
         {
             if (buildButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
+                SoundManager::GetInstance().PlaySound("select", 50, false);
                HUD::currentState = HUD::BUILD_HUD;
                isActive = false;
             }
@@ -96,6 +98,7 @@ public:
         {
             if (trainButton.getGlobalBounds().contains(sf::Vector2f(mousePos)))
             {
+                SoundManager::GetInstance().PlaySound("select", 50, false);
                 HUD::currentState = HUD::TRAIN_HUD;
                 isActive = false;
             }

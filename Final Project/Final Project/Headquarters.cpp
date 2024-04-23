@@ -61,6 +61,7 @@ void Headquarters::MouseRelease()
 		else
 		{
 			SelectBuilding();
+			SoundManager::GetInstance().PlaySound("select", 50, false);
 		}
 		ChangeSelectedColour();
 	}

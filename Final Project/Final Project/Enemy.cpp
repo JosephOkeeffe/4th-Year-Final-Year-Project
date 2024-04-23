@@ -694,6 +694,7 @@ void Enemy::UnitsCanCollectItemDrop()
 		{
 			if (unit->body.getGlobalBounds().intersects(itemDropSprite.getGlobalBounds()))
 			{
+				SoundManager::GetInstance().PlaySound("pickup", 30, false);
 				GameManager::inventory.AddItem(droppedItem->GetName(), droppedItem->GetQuantity());
 				isItemCollected = true;
 				delete droppedItem;

@@ -72,6 +72,9 @@ void SoundManager::SetupSounds()
     loseSoundBuffer.loadFromFile("./assets/sounds/lose.ogg");
     soundBufferMap["lose"] = loseSoundBuffer;
 
+    lose2SoundBuffer.loadFromFile("./assets/sounds/lose2.ogg");
+    soundBufferMap["lose2"] = lose2SoundBuffer;
+
     winSoundBuffer.loadFromFile("./assets/sounds/win.ogg");
     soundBufferMap["win"] = winSoundBuffer;
 
@@ -86,6 +89,12 @@ void SoundManager::SetupSounds()
 
     confirmBuffer.loadFromFile("./assets/sounds/confirm.ogg");
     soundBufferMap["confirm"] = confirmBuffer;
+
+    cantAffordBuffer.loadFromFile("./assets/sounds/nope.ogg");
+    soundBufferMap["nope"] = cantAffordBuffer;
+
+    pickupBuffer.loadFromFile("./assets/sounds/pickup.ogg");
+    soundBufferMap["pickup"] = pickupBuffer;
 
 
     for (int i = 0; i < MAX_SOUND_INSTANCES; ++i) 
