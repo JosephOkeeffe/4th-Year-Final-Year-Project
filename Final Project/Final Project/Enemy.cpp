@@ -57,16 +57,6 @@ void Enemy::Draw()
 	}
 } 
 
-// TO DO
-// SOUNDS - MAKE WEBSITE AND ADD MORE SOUNDS
-
-// PROBLEMS IN DOCUMENT AND HOW I FIXED THEM
-// CHOICES MADE FROM DIFFERENT GAME ENGINES/SPFTWARE
-// THINGS COULD HAVE DONE DIFFERENTLY
-// MENTION RAYLIB, THIS GENRE OF GAME, WHY I CHOSE THIS GAME AND SFML
-// UML DIAGRAM (DOESNT NEED TO BE 100% ACCURATE)
-
-
 void Enemy::Update()
 {
 	if (stats.GetCurrentHealth() <= 0 && !GetCurrentState(DEAD))
@@ -81,7 +71,6 @@ void Enemy::Update()
 
 		for (Enemy* temp : GameManager::enemies)
 		{
-			// Bug with items merging into one
 			if (temp == this || !temp->GetCurrentState(DEAD)) { continue; }
 
 			if (itemDropSprite.getGlobalBounds().intersects(temp->itemDropSprite.getGlobalBounds()))

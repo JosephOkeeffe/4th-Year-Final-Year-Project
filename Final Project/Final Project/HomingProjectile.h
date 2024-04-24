@@ -7,7 +7,6 @@ public:
     HomingProjectile(sf::Texture& texture, sf::Vector2f startPosition, sf::Vector2f targetPosition, float _speed, float _range, float _scale);
 
     void Update() override;
-   //void Draw(sf::RenderWindow& window) override;
 
     bool operator==(const HomingProjectile& other) const
     {

@@ -24,8 +24,6 @@ Game::Game() :
 
     Init();
    
-   //SoundManager::PlaySound("game-background");
-
 }
 Game::~Game()
 {}
@@ -57,8 +55,6 @@ void Game::Init()
     GameManager::itemManager.LoadItemsFromJSON();
 
     SoundManager::GetInstance().PlaySound("menu", 30, true);
-
-       // SoundManager::Init();
 
     fogTiles = new sf::RectangleShape * [Global::ROWS_COLUMNS];
 
@@ -627,13 +623,11 @@ void Game::Update(sf::Time t_deltaTime)
 
         if (GameManager::enemyBasesLeftAlive <= 0)
         {
-            //Game::currentState = GameState::WIN;
             ChangeGameState(GameState::WIN);
         }
 
         if (GameManager::headquarters->isDestroyed)
         {
-            //Game::currentState = GameState::LOSE;
             ChangeGameState(GameState::LOSE);
         }
 
@@ -1557,7 +1551,6 @@ void Game::RestartGame()
     loadTilesDataPath = (currentPath / "../../Saves/" / Global::defaultTiles).string();
     loadSave = true;
     LoadJSON();
-    //Game::currentState = GAME;
     ChangeGameState(GameState::GAME);
     GameManager::spaceShipTimer.restart();
 }

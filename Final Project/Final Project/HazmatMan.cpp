@@ -34,11 +34,6 @@ void HazmatMan::MouseRelease()
 
 void HazmatMan::Update()
 {
-	//if (GetCurrentState(DEAD))
-	//{
-	//	body.setTextureRect(sf::IntRect{ 467, 0, 76, 67 });
-	//	StopWorking();
-	//}
 
 	if (GetCurrentState(DEAD) && m_frameNo != amountOfSprites - 1)
 	{
@@ -169,7 +164,6 @@ void HazmatMan::CheckAnimationState()
 {
 	if (GetCurrentState(IDLE) && !GetSelected())
 	{
-		// 267 / 10 = 24
 		currentFrameX = 28;
 		currentFrameY = 100;
 		textureWidth = 28;
@@ -187,7 +181,6 @@ void HazmatMan::CheckAnimationState()
 	} 
 	else if (GetCurrentState(GATHERING))
 	{
-		// 222 / 5 = 44
 		currentFrameX = 44;
 		currentFrameY = 47;
 		textureWidth = 44;

@@ -9,7 +9,6 @@ HomingProjectile::HomingProjectile(sf::Texture& texture, sf::Vector2f startPos, 
     range = _range;
     scale = _scale;
 
-    //float yScale = (scale < 1) ? (scale * -1) : scale;
 
     body.setTexture(texture);
     body.setPosition(startPos);
@@ -22,7 +21,6 @@ HomingProjectile::HomingProjectile(sf::Texture& texture, sf::Vector2f startPos, 
 void HomingProjectile::Update()
 {
     Projectile::Update();
-    //particleSystem.AddSpriteParticle(body.getPosition(), { 0,0 }, sf::Color::White, Textures::GetInstance().GetTexture("blast-trail"), 200, 0.3, 7);
     sf::Vector2f targetDirection = Global::Normalize(targetPosition - body.getPosition());
     
 
@@ -78,11 +76,5 @@ void HomingProjectile::Update()
 
 
 }
-
-
-//void HomingProjectile::Draw(sf::RenderWindow& window)
-//{
-//
-//}
 
 

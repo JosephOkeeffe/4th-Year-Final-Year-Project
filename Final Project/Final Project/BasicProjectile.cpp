@@ -1,4 +1,3 @@
-// BasicProjectile.cpp
 #include "BasicProjectile.h"
 
 BasicProjectile::BasicProjectile(sf::Texture& texture, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale)
@@ -24,7 +23,3 @@ void BasicProjectile::Update()
     
 }
 
-//void BasicProjectile::Draw(sf::RenderWindow& window) 
-//{
-//    window.draw(body);
-//}

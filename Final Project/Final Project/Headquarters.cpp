@@ -9,10 +9,8 @@ Headquarters::Headquarters(sf::Vector2f pos)
 	BuildingUI::Activate({ body.getPosition().x, body.getPosition().y + 80 });
 	BuildingUI::Deactivate();
 	SetBuildingType(HEADQUATERS_BUILDING);
-	//detectionRadius = 0;
 
 
-	// Initialize rotate handle
 	rotateHandle.setSize(sf::Vector2f(20.0f, 20.0f));
 	rotateHandle.setOrigin(rotateHandle.getSize() / 2.0f);
 	rotateHandle.setFillColor(sf::Color::Green);  
@@ -22,7 +20,6 @@ Headquarters::Headquarters(sf::Vector2f pos)
 
 
 
-	// Initialize scale handle
 	scaleHandle.setSize(sf::Vector2f(20.0f, 20.0f));
 	scaleHandle.setOrigin(scaleHandle.getSize() / 2.0f);
 	scaleHandle.setFillColor(sf::Color::Blue);
@@ -72,9 +69,6 @@ void Headquarters::MouseRelease()
 void Headquarters::Update()
 {
 	Buildings::Update();
-
-	//
-
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{

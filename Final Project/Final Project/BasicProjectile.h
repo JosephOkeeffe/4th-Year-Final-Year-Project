@@ -9,11 +9,10 @@ public:
     BasicProjectile(sf::Texture& texture, sf::Vector2f startPos, sf::Vector2f targetPos, float _speed, float _range, float _scale);
 
     void Update() override;
-   // void Draw(sf::RenderWindow& window) override;
 
 private:
 
 
 };
 
-#endif // BASIC_PROJECTILE_H
+#endif

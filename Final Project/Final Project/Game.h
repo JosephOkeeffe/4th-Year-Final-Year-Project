@@ -11,7 +11,7 @@
 #include "BuildingUI.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
-//#include "Tile.h"
+
 #include "View.h"
 #include "Textures.h"
 #include "Characters.h"
@@ -123,7 +123,6 @@ private:
     void LoadJSON();
     void LoadTilesJSON();
     void FixLoadedGrass(int type, int row, int col);
-   // void ChangeThingsDependingOnTileType();
 
     void ManageTimers();
 

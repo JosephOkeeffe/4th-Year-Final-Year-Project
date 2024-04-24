@@ -127,7 +127,6 @@ public:
         // Calculate the random vector with values between -1 and 1
         randomVector = { std::cos(angleRad), std::sin(angleRad) };
 
-        // Normalize the vector
         float length = std::sqrt(randomVector.x * randomVector.x + randomVector.y * randomVector.y);
         if (length != 0)
         {

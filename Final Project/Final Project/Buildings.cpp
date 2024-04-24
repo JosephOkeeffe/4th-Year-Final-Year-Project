@@ -27,9 +27,6 @@ void Buildings::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& tex
 	resourceText.setOutlineColor(sf::Color::White);
 	resourceText.setOrigin(resourceText.getGlobalBounds().width / 2, resourceText.getGlobalBounds().height / 2);
 
-
-
-	// Initialize original size
 	 sf::Vector2f(sprite.getLocalBounds().width * scale, sprite.getLocalBounds().height * scale);
 }
 
@@ -321,18 +318,4 @@ void Buildings::DestroyBuilding()
 
 	isDestroyed = true;
 
-	//switch (buildingType)
-	//{
-	//case Buildings::HEADQUATERS_BUILDING:
-	//	currentTile->SetTileType()
-	//	break;
-	//case Buildings::GOLD_MINE_BUILDING:
-	//	break;
-	//case Buildings::URANIUM_EXTRACTOR_BUILDING:
-	//	break;
-	//case Buildings::OIL_EXTRACTOR_BUILDING:
-	//	break;
-	//default:
-	//	break;
-	//}
 }

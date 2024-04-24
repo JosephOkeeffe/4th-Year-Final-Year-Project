@@ -18,8 +18,6 @@ void Characters::Init(sf::Texture& _texture, sf::Sprite& sprite, sf::IntRect& te
 	InitDetectionCircle(detectionRadius);
 }
 
-// TO DO
-// Formations - changed radius to the centre of the whole formation, get the distance, get the average and make a new formation radius
 void Characters::Update()
 {
 	if (!GetCurrentState(DEAD))
@@ -34,12 +32,10 @@ void Characters::Update()
 			MoveIntoFormation();
 		}
 
-		/*ChangeSelectedColour();*/
 		UpdateDetectionCircle();
 		ChangeSpeedDependingOnTiles();
 		particleSystem.Update();
 
-		// Dont do this for workers
 		if (characterType == ARCHER || characterType == WARRIOR)
 		{
 			if (GameManager::aliveEnemies.size() < 1)
@@ -66,19 +62,11 @@ void Characters::Update()
 			{
 				sf::Vector2f randomVelocity((rand() % 5 - 2) * 2.0f, (rand() % 5 - 2) * 2.0f);
 				particleSystem.addParticle(tileDetectionCircle.getPosition(), randomVelocity, sf::Color::Yellow, 3, 1);
-				//particleSystem.Update();
 
 				int x = body.getPosition().x / Global::CELL_SIZE;
 				int y = body.getPosition().y / Global::CELL_SIZE;
 
 				startTile = &GameManager::tiles[x][y];
-			}
-			else
-			{
-				if (!GetCurrentState(MOVING))
-				{
-					//particleSystem.clearParticles();
-				}
 			}
 		}
 
