@@ -1224,6 +1224,7 @@ void Game::CreateHeadquarters(sf::Vector2f pos)
 {
     int x = pos.x / Global::CELL_SIZE;
     int y = pos.y / Global::CELL_SIZE;
+    basePos = pos;
 
     float newX = (GameManager::tiles[x][y].tile.getPosition().x + Global::CELL_SIZE / 2) - 2;
     float newY = (GameManager::tiles[x][y].tile.getPosition().y + Global::CELL_SIZE / 2) - 20;

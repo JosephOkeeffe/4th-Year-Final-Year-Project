@@ -6,8 +6,6 @@ void Shader::InitShader(sf::String shaderName)
     {
         sf::err() << "Error while loading custom fragment shader" << std::endl;
     }
-    //m_shaderTexture.setRepeated(true);
-    //m_shaderTexture.setSmooth(true);
 }
 
 void Shader::Update()

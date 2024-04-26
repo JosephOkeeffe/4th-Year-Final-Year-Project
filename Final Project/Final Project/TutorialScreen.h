@@ -19,10 +19,7 @@ public:
     void LastPage();
     void Exit(bool& exit);
 
-    void ParagraphTextDelay();
-    void WrapParagraph(const std::string& text, sf::Text& textObject, float maxWidth);
-    void TextDelay(sf::Text& textObject, const std::string& text, sf::Clock& timer, sf::Time delay);
-    
+    void ParagraphTextDelay();    
 private:
 
     std::vector<std::string> headings;
@@ -30,7 +27,6 @@ private:
     std::vector<sf::Texture> textures;
 
     sf::RectangleShape background;
-    //sf::Sprite pageImage;
     sf::RectangleShape pageImage;
     sf::Text headingText;
     sf::Text paragraphText;
@@ -40,10 +36,9 @@ private:
     sf::RectangleShape nextPageButton;
     sf::RectangleShape lastPageButton;
     sf::RectangleShape exitButton;
-   // std::vector<std::string> pages;
     int currentPage;
 
-    sf::Clock revealTimer; // Timer for delaying text reveal
+    sf::Clock revealTimer; 
     sf::Time revealDelay = sf::milliseconds(50);
 
 

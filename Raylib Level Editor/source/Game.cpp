@@ -210,18 +210,17 @@ void Game::PlacingTiles()
         if (!isDragging)
         {
             startDragPos = GetMousePosition();
-            startDragPosWorld = GetScreenToWorld2D(startDragPos, cam); // Transform to world coordinates
+            startDragPosWorld = GetScreenToWorld2D(startDragPos, cam);
             isDragging = true;
         }
 
         endDragPos = GetMousePosition();
-        endDragPosWorld = GetScreenToWorld2D(endDragPos, cam); // Transform to world coordinates
+        endDragPosWorld = GetScreenToWorld2D(endDragPos, cam);
     }
     else if (IsMouseButtonUp(MOUSE_LEFT_BUTTON) && isDragging)
     {
         isDragging = false;
 
-        // Determine the min and max coordinates for iteration
         int minX = std::min(static_cast<int>(startDragPosWorld.x / TILE_SIZE), static_cast<int>(endDragPosWorld.x / TILE_SIZE));
         int minY = std::min(static_cast<int>(startDragPosWorld.y / TILE_SIZE), static_cast<int>(endDragPosWorld.y / TILE_SIZE));
         int maxX = std::max(static_cast<int>(startDragPosWorld.x / TILE_SIZE), static_cast<int>(endDragPosWorld.x / TILE_SIZE));
@@ -576,17 +575,13 @@ void Game::RenderLoadButton()
 
 //void Game::SaveGameWorldAsPNG(const char* filename)
 //{
-//    // Specify the desired path
 //    const char* savePath = "../Saves/";
 //
-//    // Concatenate the path and filename
 //    char fullPath[256];
 //    snprintf(fullPath, sizeof(fullPath), "%s%s", savePath, filename);
 //
-//    // Take a screenshot of the current render
 //    TakeScreenshot(fullPath);
 //
-//    // Print a message indicating successful save
 //    printf("Game world saved as %s\n", fullPath);
 //}
 

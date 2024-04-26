@@ -3,42 +3,42 @@
         {
             "CurrentHealth": 1,
             "Position": [
-                450.0,
-                950.0
+                254.29046630859375,
+                744.3032836914063
             ],
-            "Type": 0
+            "Type": 1
         },
         {
             "CurrentHealth": 1,
             "Position": [
                 850.0,
-                1650.0
-            ],
-            "Type": 1
-        },
-        {
-            "CurrentHealth": 1,
-            "Position": [
-                250.0,
-                1950.0
+                1245.0
             ],
             "Type": 0
         },
         {
             "CurrentHealth": 1,
             "Position": [
-                1750.0,
-                150.0
+                349.99468994140625,
+                2235.9150390625
             ],
             "Type": 1
         },
         {
             "CurrentHealth": 1,
             "Position": [
-                2250.0,
-                1950.0
+                1553.50927734375,
+                336.502197265625
             ],
             "Type": 0
+        },
+        {
+            "CurrentHealth": 1,
+            "Position": [
+                2050.006591796875,
+                1544.9273681640625
+            ],
+            "Type": 1
         }
     ],
     "AliveUnits": [
@@ -49,6 +49,22 @@
                 400.0
             ],
             "Type": 2
+        },
+        {
+            "CurrentHealth": 4,
+            "Position": [
+                150.0760498046875,
+                418.78955078125
+            ],
+            "Type": 0
+        },
+        {
+            "CurrentHealth": 5,
+            "Position": [
+                446.59088134765625,
+                143.49497985839844
+            ],
+            "Type": 1
         }
     ],
     "Buildings": [
@@ -92,6 +108,12 @@
                 350.0,
                 1150.0
             ]
+        }
+    ],
+    "Inventory": [
+        {
+            "Item Name": "Gold",
+            "Item Quantity": 5
         }
     ],
     "TileType": [

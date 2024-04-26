@@ -7,7 +7,6 @@
 #include "ItemManager.h"
 #include "Inventory.h"
 
-
 class Buildings;
 class Characters;
 class Headquarters;
