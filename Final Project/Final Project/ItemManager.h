@@ -15,7 +15,6 @@ public:
     Item(int id, std::string name, int quantity, sf::Texture& texture, std::string textureName) 
         : itemID(id), itemName(name), itemQuantity(quantity), itemTexture(texture), itemTextureName(textureName) {}
 
-    // Getters
     sf::Texture& GetTexture() { return itemTexture; }
     int GetID() const { return itemID; }
     int GetQuantity() const { return itemQuantity; }

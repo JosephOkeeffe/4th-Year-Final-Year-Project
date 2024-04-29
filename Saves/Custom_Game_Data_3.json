@@ -48,7 +48,7 @@
                 650.0,
                 250.0
             ],
-            "Type": 2
+            "Type": 3
         }
     ],
     "Buildings": [
@@ -92,12 +92,6 @@
                 150.0,
                 750.0
             ]
-        }
-    ],
-    "Inventory": [
-        {
-            "Item Name": "Uranium",
-            "Item Quantity": 10
         }
     ],
     "TileType": [

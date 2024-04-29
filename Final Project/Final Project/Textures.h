@@ -18,6 +18,7 @@ private:
     sf::Texture warriorTexture;
     sf::Texture archerTexture;
     sf::Texture minerTexture;
+    sf::Texture healerTexture;
     sf::Texture miner2Texture;
     sf::Texture miner3Texture;
     sf::Texture miner4Texture;
@@ -44,6 +45,7 @@ private:
     sf::Texture shieldTexture;
     sf::Texture flamingSwordTexture;
     sf::Texture flamingTrailTexture;
+    sf::Texture healTexture;
 
     // Buildings
     sf::Texture baseTexture;
@@ -57,6 +59,7 @@ private:
     // Buttons
     sf::Texture warriorButtonIconTexture;
     sf::Texture archerButtonIconTexture;
+    sf::Texture healerButtonIconTexture;
     sf::Texture minerButtonIconTexture;
     sf::Texture oilManButtonIconTexture;
     sf::Texture hazmatManButtonIconTexture;

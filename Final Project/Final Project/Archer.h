@@ -32,6 +32,8 @@ private:
 	sf::CircleShape blast;
 
 
+
+
 };
 
  

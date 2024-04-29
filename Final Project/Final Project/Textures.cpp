@@ -81,6 +81,9 @@ void Textures::SetupTextures()
     flamingTrailTexture.loadFromFile("./assets/images/fire-trail.png");
     textureMap["fire-trail"] = flamingTrailTexture;
 
+    healerTexture.loadFromFile("./assets/images/heal.png");
+    textureMap["heal"] = healerTexture;
+
 
     // Characters
         warriorTexture.loadFromFile("./assets/images/warrior.png");
@@ -88,6 +91,9 @@ void Textures::SetupTextures()
 
         archerTexture.loadFromFile("./assets/images/mage.png");
         textureMap["archer"] = archerTexture;
+
+        healerTexture.loadFromFile("./assets/images/buu.png");
+        textureMap["healer"] = healerTexture;
 
         minerTexture.loadFromFile("./assets/images/worker.png");
         textureMap["miner"] = minerTexture;
@@ -197,6 +203,9 @@ void Textures::SetupTextures()
 
             archerButtonIconTexture.loadFromFile("./assets/images/archer-icon.png");
             textureMap["archer-icon"] = archerButtonIconTexture;
+
+            healerButtonIconTexture.loadFromFile("./assets/images/healer-icon.png");
+            textureMap["healer-icon"] = healerButtonIconTexture;
 
             minerButtonIconTexture.loadFromFile("./assets/images/worker-icon.png");
             textureMap["miner-icon"] = minerButtonIconTexture;

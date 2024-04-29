@@ -1,44 +1,28 @@
 {
     "AliveEnemies": [
         {
+            "CurrentHealth": 3,
+            "Position": [
+                150.2197265625,
+                1832.8050537109375
+            ],
+            "Type": 2
+        },
+        {
             "CurrentHealth": 1,
             "Position": [
-                254.29046630859375,
-                744.3032836914063
+                1765.6710205078125,
+                749.7709350585938
             ],
             "Type": 1
         },
         {
             "CurrentHealth": 1,
             "Position": [
-                850.0,
-                1245.0
+                1700.414306640625,
+                1792.161376953125
             ],
             "Type": 0
-        },
-        {
-            "CurrentHealth": 1,
-            "Position": [
-                349.99468994140625,
-                2235.9150390625
-            ],
-            "Type": 1
-        },
-        {
-            "CurrentHealth": 1,
-            "Position": [
-                1553.50927734375,
-                336.502197265625
-            ],
-            "Type": 0
-        },
-        {
-            "CurrentHealth": 1,
-            "Position": [
-                2050.006591796875,
-                1544.9273681640625
-            ],
-            "Type": 1
         }
     ],
     "AliveUnits": [
@@ -46,25 +30,41 @@
             "CurrentHealth": 5,
             "Position": [
                 450.0,
-                400.0
+                245.0
             ],
-            "Type": 2
+            "Type": 3
         },
         {
-            "CurrentHealth": 4,
+            "CurrentHealth": 5,
             "Position": [
-                150.0760498046875,
-                418.78955078125
+                345.5205078125,
+                439.9997863769531
             ],
             "Type": 0
         },
         {
             "CurrentHealth": 5,
             "Position": [
-                446.59088134765625,
-                143.49497985839844
+                295.5205078125,
+                389.9997863769531
+            ],
+            "Type": 2
+        },
+        {
+            "CurrentHealth": 5,
+            "Position": [
+                295.5205078125,
+                439.9997863769531
             ],
             "Type": 1
+        },
+        {
+            "CurrentHealth": 5,
+            "Position": [
+                445.1747741699219,
+                240.0001678466797
+            ],
+            "Type": 5
         }
     ],
     "Buildings": [
@@ -112,8 +112,12 @@
     ],
     "Inventory": [
         {
-            "Item Name": "Gold",
-            "Item Quantity": 5
+            "Item Name": "Suckler Head",
+            "Item Quantity": 1
+        },
+        {
+            "Item Name": "Suckler Tentacle",
+            "Item Quantity": 1
         }
     ],
     "TileType": [

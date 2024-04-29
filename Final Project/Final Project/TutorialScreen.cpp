@@ -56,7 +56,7 @@ TutorialScreen::TutorialScreen() : currentPage(0)
     lastText.setFillColor(sf::Color::Black);
     lastText.setCharacterSize(25);
     lastText.setPosition(lastPageButton.getPosition().x, lastPageButton.getPosition().y);
-    lastText.setString("Last");
+    lastText.setString("Prev");
 
     exitText.setFont(Global::tutorialFont);
     exitText.setFillColor(sf::Color::White);

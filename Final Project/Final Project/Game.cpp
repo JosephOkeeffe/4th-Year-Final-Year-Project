@@ -88,6 +88,8 @@ void Game::Init()
     BuildingUI::Init();
 
     SetupTutorialPages();
+
+   // CreateHealer({ 500, 500 });
 }
 
 void Game::ProcessEvents()
@@ -147,6 +149,15 @@ void Game::ProcessEvents()
             else if (HUD::currentUnitSelected == HUD::ARCHER)
             {
                 CreateArcher({ basePos.x + 50, basePos.y + 150 });
+                HUD::ChangeUnitSelected(HUD::NO_UNIT);
+                for (Buildings* object : GameManager::buildings)
+                {
+                    object->DeselectBuilding();
+                }
+            }
+            else if (HUD::currentUnitSelected == HUD::HEALER)
+            {
+                CreateHealer({ basePos.x + 50, basePos.y + 150 });
                 HUD::ChangeUnitSelected(HUD::NO_UNIT);
                 for (Buildings* object : GameManager::buildings)
                 {
@@ -239,7 +250,7 @@ void Game::ProcessKeyPress(sf::Event t_event)
     }
     if (sf::Keyboard::A == t_event.key.code)
     {
-        CreateSuckler({ 150, 150 });
+        CreateHealer({ 500, 500 });
     }
     if (sf::Keyboard::W == t_event.key.code)
     {
@@ -902,6 +913,15 @@ void Game::CreateArcher(sf::Vector2f pos)
     GameManager::aliveUnits.push_back(newArcher);
 }
 
+void Game::CreateHealer(sf::Vector2f pos)
+{
+    Healer* newHealer = new Healer;
+    newHealer->SetPosition(pos);
+
+    GameManager::units.push_back(newHealer);
+    GameManager::aliveUnits.push_back(newHealer);
+}
+
 void Game::CreateMiner(sf::Vector2f pos)
 {
     Miner* newWorker = new Miner;
@@ -939,6 +959,9 @@ void Game::CreateCharactersForLoading(sf::Vector2f pos, int type)
         break;
     case Characters::ARCHER:
         CreateArcher(pos);
+        break;
+    case Characters::HEALER:
+        CreateHealer(pos);
         break;
     case Characters::MINER:
         CreateMiner(pos);
@@ -1050,7 +1073,7 @@ void Game::MakeFormation()
 
     for (Characters* unit : selectedUnits)
     {
-        if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR)
+        if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR || unit->characterType == unit->HEALER)
         {
             newFormation->leader = unit;
             leader = unit;
@@ -1069,7 +1092,7 @@ void Game::MakeFormation()
         int i = -1;
         for (Characters* unit : selectedUnits)
         {
-            if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR)
+            if (unit->characterType == unit->ARCHER || unit->characterType == unit->WARRIOR || unit->characterType == unit->HEALER)
             {
                 unit->DeselectCharacter();
 

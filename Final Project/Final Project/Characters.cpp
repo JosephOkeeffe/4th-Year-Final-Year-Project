@@ -36,13 +36,16 @@ void Characters::Update()
 		ChangeSpeedDependingOnTiles();
 		particleSystem.Update();
 
-		if (characterType == ARCHER || characterType == WARRIOR)
+		if (characterType == ARCHER || characterType == WARRIOR || characterType == HEALER)
 		{
 			if (GameManager::aliveEnemies.size() < 1)
 			{
 				if (!GetCurrentState(MOVING))
 				{
-					SetCurrentState(IDLE);
+					//if (characterType == HEALER && isHealChargingUp)
+					//{
+						SetCurrentState(IDLE);
+					//}
 					detectionCircle.setFillColor(sf::Color(255, 255, 255, 100));
 				}
 			}
@@ -101,7 +104,7 @@ void Characters::MouseRelease()
 		SetCurrentState(MOVING);
 		goalTile = &GameManager::tiles[cellPos.x][cellPos.y];
 
-		if (characterType == ARCHER || characterType == WARRIOR)
+		if (characterType == ARCHER || characterType == WARRIOR || characterType == HEALER)
 		{
 			path = GameManager::FindPath(startTile, goalTile, false);
 		}
@@ -359,7 +362,18 @@ void Characters::FindClosestEnemy()
 		}
 		else if (!GetCurrentState(MOVING))
 		{
-			SetCurrentState(IDLE);
+			if (characterType == HEALER)
+			{
+				if(isHealChargingUp)
+				{
+					SetCurrentState(IDLE);
+				}
+			}
+			else
+			{
+				SetCurrentState(IDLE);
+			}
+			
 		}
 	}
 

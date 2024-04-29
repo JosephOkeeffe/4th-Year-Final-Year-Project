@@ -24,6 +24,7 @@ sf::Clock GameManager::spaceShipTimer;
 
 int GameManager::warriorPurchaseCost = 0;
 int GameManager::archerPurchaseCost = 0;
+int GameManager::healerPurchaseCost = 0;
 int GameManager::minerPurchaseCost = 0;
 int GameManager::oilManPurchaseCost = 0;
 int GameManager::hazmatManPurchaseCost = 0;

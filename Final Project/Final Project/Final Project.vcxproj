@@ -146,6 +146,7 @@
     <ClCompile Include="Characters.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Healer.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="LoseScreen.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Characters.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Healer.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LoseScreen.h" />
@@ -223,6 +225,7 @@
     <FxCompile Include="shader.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="GlowShader.frag" />
     <None Include="SelectedShader.frag" />
   </ItemGroup>

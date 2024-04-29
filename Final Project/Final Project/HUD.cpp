@@ -9,6 +9,7 @@ HUD::BuildingButtonType HUD::currentBuildingSelected = HUD::NO_BUILDING;
 int HUD::currentGoldInInventory = 0;
 bool HUD::canPurchaseWarrior = false;
 bool HUD::canPurchaseArcher = false;
+bool HUD::canPurchaseHealer = false;
 bool HUD::canPurchaseMiner = false;
 bool HUD::canPurchaseOilMan = false;
 bool HUD::canPurchaseHazmatMan = false;

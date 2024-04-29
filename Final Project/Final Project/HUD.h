@@ -22,6 +22,7 @@ public:
 		NO_UNIT,
 		WARRIOR,
 		ARCHER,
+		HEALER,
 		MINER,
 		OIL_MAN,
 		HAZMAT_MAN
@@ -71,26 +72,22 @@ public:
 				button.update();
 				button.render(window);
 			}
-
-			window.draw(CreateUnitCostText(150, GameManager::warriorPurchaseCost));
-			window.draw(CreateUnitCostText(260, GameManager::archerPurchaseCost));
-			window.draw(CreateUnitCostText(370, GameManager::minerPurchaseCost));
-			window.draw(CreateUnitCostText(480, GameManager::oilManPurchaseCost));
-			window.draw(CreateUnitCostText(590, GameManager::hazmatManPurchaseCost));
+			float offset = 110;
+			
+			window.draw(CreateUnitCostText(150 + offset * 0, GameManager::warriorPurchaseCost));
+			window.draw(CreateUnitCostText(150 + offset * 1, GameManager::archerPurchaseCost));
+			window.draw(CreateUnitCostText(150 + offset * 2, GameManager::healerPurchaseCost));
+			window.draw(CreateUnitCostText(150 + offset * 3, GameManager::minerPurchaseCost));
+			window.draw(CreateUnitCostText(150 + offset * 4, GameManager::oilManPurchaseCost));
+			window.draw(CreateUnitCostText(150 + offset * 5, GameManager::hazmatManPurchaseCost));
 		}
-
-
-
 
 		CheckIfCanPurchaseUnit(GameManager::warriorPurchaseCost, canPurchaseWarrior);
 		CheckIfCanPurchaseUnit(GameManager::archerPurchaseCost, canPurchaseArcher);
+		CheckIfCanPurchaseUnit(GameManager::healerPurchaseCost, canPurchaseHealer);
 		CheckIfCanPurchaseUnit(GameManager::minerPurchaseCost, canPurchaseMiner);
 		CheckIfCanPurchaseUnit(GameManager::oilManPurchaseCost, canPurchaseOilMan);
 		CheckIfCanPurchaseUnit(GameManager::hazmatManPurchaseCost, canPurchaseHazmatMan);
-
-
-		
-	
 	}
 	static void HandleEvents(sf::Event& event)
 	{
@@ -174,10 +171,10 @@ public:
 
 	static void InitUnitButtons()
 	{
-
+		int offset = 110;
 		// WARRIOR
 		Button warriorButton(
-			sf::Vector2f(150, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150 + offset * 0, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
@@ -203,7 +200,7 @@ public:
 
 		// ARCHER
 		Button archerButton(
-			sf::Vector2f(260, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150 + offset * 1, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
@@ -225,11 +222,36 @@ public:
 					std::cout << "Cant afford archer \n";
 				}
 			});
+		
+		// HEALER
+		Button healerButton(
+			sf::Vector2f(150 + offset * 2, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(100, 100),
+			sf::Color::White,
+			sf::Color(210, 210, 210),
+			Textures::GetInstance().GetTexture("healer-icon"));
+
+		healerButton.setLabel("Healer", 30, sf::Color::Black);
+		healerButton.setCallback([]()
+			{
+				if (canPurchaseHealer)
+				{
+					SoundManager::GetInstance().PlaySound("confirm", 50, false);
+					ChangeUnitSelected(HEALER);
+					GameManager::inventory.RemoveItem("Gold", GameManager::healerPurchaseCost);
+					GameManager::healerPurchaseCost++;
+				}
+				else
+				{
+					SoundManager::GetInstance().PlaySound("nope", 50, false);
+					std::cout << "Cant afford healer \n";
+				}
+			});
 
 
 		// MINER
 		Button workerButton(
-			sf::Vector2f(370, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150 + offset * 3, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
@@ -254,7 +276,7 @@ public:
 
 		// OIL MAN
 		Button oilManButton(
-			sf::Vector2f(480, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150 + offset * 4, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
@@ -279,7 +301,7 @@ public:
 
 		// HAZMAT MAN
 		Button hazmatManButton(
-			sf::Vector2f(590, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
+			sf::Vector2f(150 + offset * 5, hudBackground.getPosition().y + (hudBackground.getSize().y * 0.4)),
 			sf::Vector2f(100, 100),
 			sf::Color::White,
 			sf::Color(210, 210, 210),
@@ -304,6 +326,7 @@ public:
 
 		unitButtons.push_back(warriorButton);
 		unitButtons.push_back(archerButton);
+		unitButtons.push_back(healerButton);
 		unitButtons.push_back(workerButton);
 		unitButtons.push_back(oilManButton);
 		unitButtons.push_back(hazmatManButton);
@@ -369,6 +392,7 @@ public:
 	
 	static bool canPurchaseWarrior;
 	static bool canPurchaseArcher;
+	static bool canPurchaseHealer;
 	static bool canPurchaseMiner;
 	static bool canPurchaseOilMan;
 	static bool canPurchaseHazmatMan;

@@ -20,6 +20,7 @@ public:
 	{
 		WARRIOR,
 		ARCHER,
+		HEALER,
 		MINER,
 		OIL_MAN,
 		HAZMAT_MAN
@@ -134,6 +135,8 @@ public:
 	sf::Vector2f closestEnemyBase;
 	Enemy* closestEnemy;
 	float closestEnemyDistance = INT_MAX;
+
+	bool isHealChargingUp = false;
 
 	Stats stats{ 5, 1, 3 };
 private:

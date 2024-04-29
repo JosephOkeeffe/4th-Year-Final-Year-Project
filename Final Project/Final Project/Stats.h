@@ -49,6 +49,15 @@ public:
         }
     }
 
+    void GainHealth(int healthToGain)
+    {
+        currentHealth += healthToGain;
+        if (currentHealth > MAX_HEALTH)
+        {
+            currentHealth = MAX_HEALTH;
+        }
+    }
+
     void LoseHealth(int healthToLose)
     {
         currentHealth -= healthToLose;

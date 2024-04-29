@@ -56,6 +56,7 @@ public:
 
     static int warriorPurchaseCost;
     static int archerPurchaseCost;
+    static int healerPurchaseCost;
     static int minerPurchaseCost;
     static int oilManPurchaseCost;
     static int hazmatManPurchaseCost;
@@ -237,6 +238,7 @@ public:
 
         warriorPurchaseCost = 0;
         archerPurchaseCost = 0;
+        healerPurchaseCost = 0;
         minerPurchaseCost = 0;
         oilManPurchaseCost = 0;
         hazmatManPurchaseCost = 0;
